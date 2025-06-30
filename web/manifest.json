@@ -1,6 +1,6 @@
 {
-    "name": "phase_10_app",
-    "short_name": "phase_10_app",
+    "name": "fs_game_score",
+    "short_name": "fs_game_score",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

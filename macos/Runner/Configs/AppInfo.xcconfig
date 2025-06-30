@@ -5,7 +5,7 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = phase_10_app
+PRODUCT_NAME = fs_game_score
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = com.fs.fsscore
