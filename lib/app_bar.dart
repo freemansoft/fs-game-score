@@ -5,7 +5,7 @@ import '../new_game_panel.dart';
 final themeProvider = StateProvider<bool>((ref) => false);
 
 class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
-  Phase10AppBar({Key? key}) : super(key: key);
+  const Phase10AppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
