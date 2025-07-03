@@ -12,6 +12,7 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   int _selectedPlayers = 2;
+  int _selectedMaxRounds = 14;
   String _sheetStyle = 'Basic Sheet';
 
   @override
@@ -60,6 +61,28 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Text('Maximum Rounds:', style: TextStyle(fontSize: 18)),
+                const SizedBox(width: 12),
+                DropdownButton<int>(
+                  value: _selectedMaxRounds,
+                  items: [
+                    for (var i = 1; i <= 20; i++)
+                      DropdownMenuItem(value: i, child: Text(i.toString())),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _selectedMaxRounds = value;
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 const Text('Sheet Style:', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
@@ -88,6 +111,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ElevatedButton(
               onPressed: () {
                 ref.read(gameProvider.notifier).setNumPlayers(_selectedPlayers);
+                ref
+                    .read(gameProvider.notifier)
+                    .setMaxRounds(_selectedMaxRounds);
                 ref
                     .read(gameProvider.notifier)
                     .setEnablePhases(_sheetStyle == 'Include Phases');

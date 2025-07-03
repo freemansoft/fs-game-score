@@ -1,6 +1,22 @@
 # fs_game_score
 
-This is a generic game scoring app created with virtually zero hand coding but a **lot** of AI agent prompts using copilot
+This is a generic game scoring app created with virtually zero hand coding but a **lot** of AI agent prompts using copilot. Virtually no hand coding was done.
+
+## This app
+
+Implements a scorecard for an arbitrary number of players and game _rounds_
+
+Two scorecard types are supported
+
+1. Basic scorecard with individual round scores and player total scores
+2. Phase capture plus individual round scores and player total scores _plus_ dropdowns that let you pick a completed phase.  Hovering over the player's total score will show you which phases have been captured (the set of phase dropdown selections)
+
+Notes
+
+1. Player's names can be edited in place in the scoring table.
+2. Round scores can be edited in place in the appropriate columns.  Scores will be totaled under the player's name.
+3. The "New Game" icon will clear the board scores and optionally the player names for times you want to change the order
+4. The "Home" or "Change Scoreboard Type" icon will let you return to the start screen that lets you change the number of players and the data entry types (score & phase)
 
 ## Looking to run the working scoring app?
 

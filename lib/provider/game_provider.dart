@@ -2,6 +2,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/model/game.dart';
 
 class GameNotifier extends StateNotifier<Game> {
+  void setMaxRounds(int maxRounds) {
+    state = Game(
+      maxRounds: maxRounds,
+      numPhases: state.numPhases,
+      numPlayers: state.numPlayers,
+      enablePhases: state.enablePhases,
+    );
+  }
+
   GameNotifier() : super(const Game());
 
   void newGame({
