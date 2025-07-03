@@ -24,7 +24,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Game scoring aid',
+              'FreemanS Game Scorecard',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
