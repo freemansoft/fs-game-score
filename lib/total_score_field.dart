@@ -22,7 +22,7 @@ class TotalScoreField extends StatelessWidget {
       child: Text(
         '$totalScore',
         key: fieldKey,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.normal),
         textAlign: TextAlign.center,
       ),
     );

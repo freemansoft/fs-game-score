@@ -47,7 +47,7 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
         contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 2),
         border: InputBorder.none,
       ),
-      style: const TextStyle(fontWeight: FontWeight.bold),
+      style: const TextStyle(fontWeight: FontWeight.normal),
       onChanged: widget.onChanged,
       onTap: () {
         _controller.selection = TextSelection(

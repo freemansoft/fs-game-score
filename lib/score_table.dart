@@ -25,8 +25,8 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
     final isEven = playerIdx % 2 == 0;
     final colorScheme = Theme.of(context).colorScheme;
     return isEven
-        ? colorScheme.primary.withAlpha(60)
-        : colorScheme.tertiary.withAlpha(60);
+        ? colorScheme.primaryFixed.withAlpha(60)
+        : colorScheme.primaryFixedDim.withAlpha(60);
   }
 
   @override
@@ -44,13 +44,21 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
       isHorizontalScrollBarVisible: true,
       isVerticalScrollBarVisible: true,
       dataRowHeight: 74,
+      fixedCornerColor: Theme.of(
+        context,
+      ).colorScheme.secondaryFixed.withAlpha(60),
+      fixedColumnsColor: Theme.of(
+        context,
+      ).colorScheme.secondaryFixed.withAlpha(60),
+
       border: TableBorder.all(
         color: Theme.of(context).colorScheme.outline.withAlpha(100),
         width: 1,
       ),
       columns: [
         const DataColumn2(
-          label: Text('Player/Total'),
+          label: Text('Player\nTotal'),
+          headingRowAlignment: MainAxisAlignment.center,
           size: ColumnSize.L,
           fixedWidth: 80,
         ),
