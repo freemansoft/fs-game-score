@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../new_game_panel.dart';
+import 'package:fs_game_score/new_scorecard.dart';
 
 final themeProvider = StateProvider<bool>((ref) => false);
 
@@ -16,6 +17,7 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text('Scorecard'),
       actions: [
+        const NewScoreCardPanel(),
         const NewGamePanel(),
         Row(
           children: [

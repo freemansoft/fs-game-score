@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/app_bar.dart';
 import 'package:fs_game_score/score_table.dart';
 import 'package:fs_game_score/splash_screen.dart';
+import 'package:fs_game_score/new_scorecard.dart';
 
 class Phase10App extends ConsumerStatefulWidget {
   const Phase10App({super.key});
@@ -24,7 +25,7 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
   Widget build(BuildContext context) {
     final isDark = ref.watch(themeProvider);
     return MaterialApp(
-      title: 'Phase-10 Scoreboard',
+      title: 'FS Game Scorecard',
       theme: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white, // Set background to white
@@ -33,16 +34,24 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      home:
-          _showSplash
-              ? SplashScreen(onContinue: _onSplashContinue)
-              : Scaffold(
-                appBar: Phase10AppBar(),
-                body: const Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: ScoreTable(),
+      home: NotificationListener<NewScoreCardNotification>(
+        onNotification: (notification) {
+          setState(() {
+            _showSplash = true;
+          });
+          return true;
+        },
+        child:
+            _showSplash
+                ? SplashScreen(onContinue: _onSplashContinue)
+                : Scaffold(
+                  appBar: Phase10AppBar(),
+                  body: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: ScoreTable(),
+                  ),
                 ),
-              ),
+      ),
     );
   }
 }
