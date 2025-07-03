@@ -21,6 +21,14 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
     super.dispose();
   }
 
+  Color? getRowColor(BuildContext context, int playerIdx) {
+    final isEven = playerIdx % 2 == 0;
+    final colorScheme = Theme.of(context).colorScheme;
+    return isEven
+        ? colorScheme.primary.withAlpha(60)
+        : colorScheme.tertiary.withAlpha(60);
+  }
+
   @override
   Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
@@ -57,17 +65,11 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
       ],
       rows: List<DataRow2>.generate(players.length, (playerIdx) {
         final player = players[playerIdx];
-        final isEven = playerIdx % 2 == 0;
 
         return DataRow2(
-          color: WidgetStateProperty.resolveWith<Color?>((
-            Set<WidgetState> states,
-          ) {
-            final colorScheme = Theme.of(context).colorScheme;
-            return isEven
-                ? colorScheme.primary.withAlpha(60)
-                : colorScheme.tertiary.withAlpha(60);
-          }),
+          color: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) => getRowColor(context, playerIdx),
+          ),
           cells: [
             DataCell(
               SizedBox(
