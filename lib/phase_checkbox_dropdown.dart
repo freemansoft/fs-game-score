@@ -12,6 +12,7 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
   final int round;
   final List<int?> completedPhases;
   final Key? fieldKey;
+  final bool enabled;
 
   const PhaseCheckboxDropdown({
     this.fieldKey,
@@ -20,6 +21,7 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
     required this.playerIdx,
     required this.round,
     required this.completedPhases,
+    this.enabled = true,
     super.key,
   });
 
@@ -29,15 +31,22 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
     return PopupMenuButton<int?>(
       key: fieldKey,
       tooltip: 'Select completed phase(s)',
+      enabled: enabled,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(
+            color: enabled ? Colors.grey : Colors.grey.shade400,
+          ),
           borderRadius: BorderRadius.circular(4),
+          color: enabled ? null : Colors.grey.shade200,
         ),
         child: Text(
           selectedPhase != null ? 'Phase $selectedPhase' : 'None',
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: enabled ? null : Colors.grey,
+          ),
         ),
       ),
       itemBuilder:

@@ -10,5 +10,11 @@ class Player {
     : scores = Scores(maxRounds),
       phases = Phases(numPhases);
 
+  Player.withData({
+    required this.name,
+    required this.scores,
+    required this.phases,
+  });
+
   int get totalScore => scores.total;
 }

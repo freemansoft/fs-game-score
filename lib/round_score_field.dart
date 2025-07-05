@@ -4,11 +4,13 @@ import 'package:flutter/services.dart';
 class RoundScoreField extends StatefulWidget {
   final int? score;
   final ValueChanged<int?> onChanged;
+  final bool enabled;
 
   const RoundScoreField({
     super.key,
     required this.score,
     required this.onChanged,
+    this.enabled = true,
   });
 
   @override
@@ -44,11 +46,14 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
     return TextFormField(
       controller: _controller,
       keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
+      enabled: widget.enabled,
+      decoration: InputDecoration(
         hintText: 'Score',
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-        border: OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+        border: const OutlineInputBorder(),
+        fillColor: widget.enabled ? null : Colors.grey.shade200,
+        filled: !widget.enabled,
       ),
       onChanged: (val) {
         final parsed = int.tryParse(val);

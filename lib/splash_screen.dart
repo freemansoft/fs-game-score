@@ -32,6 +32,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ),
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 16),
+            const Text(
+              'Copyright (C) 2025 Joe Freeman',
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

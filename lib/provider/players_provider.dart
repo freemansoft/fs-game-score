@@ -36,10 +36,10 @@ class PlayersNotifier extends StateNotifier<List<Player>> {
 
   void updatePlayerName(int playerIdx, String name) {
     final player = state[playerIdx];
-    state[playerIdx] = Player(
+    state[playerIdx] = Player.withData(
       name: name,
-      maxRounds: player.scores.roundScores.length,
-      numPhases: player.phases.completedPhases.length,
+      scores: player.scores,
+      phases: player.phases,
     );
     state = [...state];
   }
@@ -56,5 +56,13 @@ class PlayersNotifier extends StateNotifier<List<Player>> {
           numPhases: numPhases,
         ),
     ];
+  }
+
+  void toggleRoundEnabled(int round, bool enabled) {
+    for (var player in state) {
+      player.scores.setEnabled(round, enabled);
+      player.phases.setEnabled(round, enabled);
+    }
+    state = [...state];
   }
 }

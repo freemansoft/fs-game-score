@@ -62,14 +62,39 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           size: ColumnSize.L,
           fixedWidth: 80,
         ),
-        ...List.generate(
-          game.maxRounds,
-          (round) => DataColumn2(
-            label: Text('Round ${round + 1}'),
+        ...List.generate(game.maxRounds, (round) {
+          // Check if all players have this round enabled
+          final allEnabled = players.every(
+            (p) => p.scores.isEnabled(round) && p.phases.isEnabled(round),
+          );
+          return DataColumn2(
+            label: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Round ${round + 1}'),
+                const SizedBox(width: 4),
+                IconButton(
+                  icon: Icon(
+                    allEnabled ? Icons.lock_open : Icons.lock,
+                    color: allEnabled ? Colors.green : Colors.red,
+                    size: 20,
+                  ),
+                  tooltip: allEnabled ? 'Lock column' : 'Unlock column',
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () {
+                    // Toggle enabled state for all players for this round
+                    ref
+                        .read(playersProvider.notifier)
+                        .toggleRoundEnabled(round, !allEnabled);
+                  },
+                ),
+              ],
+            ),
             size: ColumnSize.S,
             headingRowAlignment: MainAxisAlignment.center,
-          ),
-        ),
+          );
+        }),
       ],
       rows: List<DataRow2>.generate(players.length, (playerIdx) {
         final player = players[playerIdx];
@@ -106,6 +131,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
             ),
             ...List<DataCell>.generate(game.maxRounds, (round) {
               final score = player.scores.getScore(round);
+              final enabled =
+                  player.scores.isEnabled(round) &&
+                  player.phases.isEnabled(round);
               return DataCell(
                 SizedBox(
                   width: 90,
@@ -119,25 +147,33 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                             'phase_checkbox_dropdown_p${playerIdx}_r$round',
                           ),
                           selectedPhase: player.phases.getPhase(round),
-                          onChanged: (val) {
-                            ref
-                                .read(playersProvider.notifier)
-                                .updatePhase(playerIdx, round, val);
-                          },
+                          onChanged:
+                              enabled
+                                  ? (val) {
+                                    ref
+                                        .read(playersProvider.notifier)
+                                        .updatePhase(playerIdx, round, val);
+                                  }
+                                  : (val) {},
                           playerIdx: playerIdx,
                           round: round,
                           completedPhases: player.phases.completedPhasesList(),
+                          enabled: enabled,
                         ),
                         const SizedBox(height: 4),
                       ],
                       RoundScoreField(
                         key: ValueKey('round_score_p${playerIdx}_r$round'),
                         score: score,
-                        onChanged: (parsed) {
-                          ref
-                              .read(playersProvider.notifier)
-                              .updateScore(playerIdx, round, parsed);
-                        },
+                        onChanged:
+                            enabled
+                                ? (parsed) {
+                                  ref
+                                      .read(playersProvider.notifier)
+                                      .updateScore(playerIdx, round, parsed);
+                                }
+                                : (parsed) {},
+                        enabled: enabled,
                       ),
                     ],
                   ),
