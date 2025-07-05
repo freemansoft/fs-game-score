@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/provider/game_provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   final VoidCallback? onContinue;
@@ -11,6 +12,28 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  String? _appVersion;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+
+  Future<void> _loadVersion() async {
+    try {
+      // package_info_plus is already in pubspec.yaml
+      final packageInfo = await PackageInfo.fromPlatform();
+      setState(() {
+        _appVersion = packageInfo.version;
+      });
+    } catch (_) {
+      setState(() {
+        _appVersion = null;
+      });
+    }
+  }
+
   int _selectedPlayers = 2;
   int _selectedMaxRounds = 14;
   String _sheetStyle = 'Basic Sheet';
@@ -32,13 +55,19 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             const Text(
               'Copyright (C) 2025 Joe Freeman',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: TextStyle(fontSize: 12, color: Colors.grey),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 40),
+            if (_appVersion != null)
+              Text(
+                'Version: $_appVersion',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -46,7 +75,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   'Number of Players:',
                   style: TextStyle(fontSize: 18),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 16),
                 DropdownButton<int>(
                   value: _selectedPlayers,
                   items: [
@@ -63,7 +92,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -85,7 +114,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -113,7 +142,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 ref.read(gameProvider.notifier).setNumPlayers(_selectedPlayers);

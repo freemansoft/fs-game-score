@@ -71,9 +71,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
             label: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Round ${round + 1}'),
+                Text('  ${round + 1}'),
                 const SizedBox(width: 4),
                 IconButton(
+                  visualDensity: VisualDensity.comfortable,
                   icon: Icon(
                     allEnabled ? Icons.lock_open : Icons.lock,
                     color: allEnabled ? Colors.green : Colors.red,
