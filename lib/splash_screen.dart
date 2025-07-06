@@ -77,6 +77,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
                 const SizedBox(width: 16),
                 DropdownButton<int>(
+                  key: const ValueKey('splash_num_players_dropdown'),
                   value: _selectedPlayers,
                   items: [
                     for (var i = 2; i <= 8; i++)
@@ -99,6 +100,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 const Text('Maximum Rounds:', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 12),
                 DropdownButton<int>(
+                  key: const ValueKey('splash_max_rounds_dropdown'),
                   value: _selectedMaxRounds,
                   items: [
                     for (var i = 1; i <= 20; i++)
@@ -121,6 +123,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 const Text('Sheet Style:', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
+                  key: const ValueKey('splash_sheet_style_dropdown'),
                   value: _sheetStyle,
                   items: const [
                     DropdownMenuItem(
@@ -144,6 +147,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
+              key: const ValueKey('splash_continue_button'),
               onPressed: () {
                 ref.read(gameProvider.notifier).setNumPlayers(_selectedPlayers);
                 ref
