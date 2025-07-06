@@ -152,6 +152,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                       width: 90,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (game.enablePhases) ...[
                             const SizedBox(height: 4),
