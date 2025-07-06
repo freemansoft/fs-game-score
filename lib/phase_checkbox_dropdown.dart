@@ -11,11 +11,9 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
   final int playerIdx;
   final int round;
   final List<int?> completedPhases;
-  final Key? fieldKey;
   final bool enabled;
 
   const PhaseCheckboxDropdown({
-    this.fieldKey,
     required this.selectedPhase,
     required this.onChanged,
     required this.playerIdx,
@@ -29,7 +27,6 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameProvider);
     return PopupMenuButton<int?>(
-      key: fieldKey,
       tooltip: 'Select completed phase(s)',
       enabled: enabled,
       child: Container(

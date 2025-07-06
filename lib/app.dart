@@ -26,6 +26,7 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
     final isDark = ref.watch(themeProvider);
     return MaterialApp(
       title: 'FS Game Scorecard',
+      showSemanticsDebugger: false, // shows outlines for the semantics tree
       theme: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white, // Set background to white

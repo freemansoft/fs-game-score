@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 class TotalScoreField extends StatelessWidget {
   final int totalScore;
   final List<int> completedPhases;
-  final Key? fieldKey;
   final bool enablePhases;
 
   const TotalScoreField({
     required this.totalScore,
     required this.completedPhases,
-    this.fieldKey,
     this.enablePhases = true,
     super.key,
   });
@@ -21,7 +19,6 @@ class TotalScoreField extends StatelessWidget {
       width: double.infinity,
       child: Text(
         '$totalScore',
-        key: fieldKey,
         style: const TextStyle(fontWeight: FontWeight.normal),
         textAlign: TextAlign.center,
       ),

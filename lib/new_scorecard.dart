@@ -7,23 +7,26 @@ class NewScoreCardPanel extends StatelessWidget {
   Future<void> _showDialog(BuildContext context) async {
     final result = await showDialog<bool>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Change Scorecard Type'),
-            content: const Text(
-              'Are you sure you want to change the scorecard type? The scorecard will be cleared.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Change Scorecard'),
-              ),
-            ],
+      builder: (context) => Semantics(
+        container: true,
+        explicitChildNodes: true,
+        child: AlertDialog(
+          title: const Text('Change Scorecard Type'),
+          content: const Text(
+            'Are you sure you want to change the scorecard type? The scorecard will be cleared.',
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Change Scorecard'),
+            ),
+          ],
+        ),
+      ),
     );
     if (result == true) {
       NewScoreCardNotification().dispatch(context);
@@ -32,10 +35,14 @@ class NewScoreCardPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.home),
-      tooltip: 'Change Scorecard Type',
-      onPressed: () => _showDialog(context),
+    return Semantics(
+      button: true,
+      label: 'Change Scorecard Type',
+      child: IconButton(
+        icon: const Icon(Icons.home),
+        tooltip: 'Change Scorecard Type',
+        onPressed: () => _showDialog(context),
+      ),
     );
   }
 }

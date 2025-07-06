@@ -35,155 +35,174 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
     final game = ref.watch(gameProvider);
     final minWidth = 100 + game.maxRounds * 100;
 
-    return DataTable2(
-      columnSpacing: 12,
-      horizontalMargin: 12,
-      minWidth: minWidth.toDouble(),
-      fixedLeftColumns: 1,
-      fixedTopRows: 1,
-      isHorizontalScrollBarVisible: true,
-      isVerticalScrollBarVisible: true,
-      dataRowHeight: 74,
-      fixedCornerColor: Theme.of(
-        context,
-      ).colorScheme.secondaryFixed.withAlpha(60),
-      fixedColumnsColor: Theme.of(
-        context,
-      ).colorScheme.secondaryFixed.withAlpha(60),
-
-      border: TableBorder.all(
-        color: Theme.of(context).colorScheme.outline.withAlpha(100),
-        width: 1,
-      ),
-      columns: [
-        const DataColumn2(
-          label: Text('Player\nTotal'),
-          headingRowAlignment: MainAxisAlignment.center,
-          size: ColumnSize.L,
-          fixedWidth: 80,
+    return Semantics(
+      label: 'Score Table',
+      child: DataTable2(
+        columnSpacing: 12,
+        horizontalMargin: 12,
+        minWidth: minWidth.toDouble(),
+        fixedLeftColumns: 1,
+        fixedTopRows: 1,
+        isHorizontalScrollBarVisible: true,
+        isVerticalScrollBarVisible: true,
+        dataRowHeight: 74,
+        fixedCornerColor: Theme.of(
+          context,
+        ).colorScheme.secondaryFixed.withAlpha(60),
+        fixedColumnsColor: Theme.of(
+          context,
+        ).colorScheme.secondaryFixed.withAlpha(60),
+        border: TableBorder.all(
+          color: Theme.of(context).colorScheme.outline.withAlpha(100),
+          width: 1,
         ),
-        ...List.generate(game.maxRounds, (round) {
-          // Check if all players have this round enabled
-          final allEnabled = players.every(
-            (p) => p.scores.isEnabled(round) && p.phases.isEnabled(round),
-          );
-          return DataColumn2(
-            label: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('  ${round + 1}'),
-                const SizedBox(width: 4),
-                IconButton(
-                  visualDensity: VisualDensity.comfortable,
-                  icon: Icon(
-                    allEnabled ? Icons.lock_open : Icons.lock,
-                    color: allEnabled ? Colors.green : Colors.red,
-                    size: 20,
-                  ),
-                  tooltip: allEnabled ? 'Lock column' : 'Unlock column',
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  onPressed: () {
-                    // Toggle enabled state for all players for this round
-                    ref
-                        .read(playersProvider.notifier)
-                        .toggleRoundEnabled(round, !allEnabled);
-                  },
-                ),
-              ],
+        columns: [
+          DataColumn2(
+            label: Semantics(
+              label: 'Player and Total',
+              child: Text('Player\nTotal'),
             ),
-            size: ColumnSize.S,
             headingRowAlignment: MainAxisAlignment.center,
-          );
-        }),
-      ],
-      rows: List<DataRow2>.generate(players.length, (playerIdx) {
-        final player = players[playerIdx];
-
-        return DataRow2(
-          color: WidgetStateProperty.resolveWith<Color?>(
-            (Set<WidgetState> states) => getRowColor(context, playerIdx),
+            size: ColumnSize.L,
+            fixedWidth: 80,
           ),
-          cells: [
-            DataCell(
-              SizedBox(
-                width: 120,
-                child: Column(
+          ...List.generate(game.maxRounds, (round) {
+            // Check if all players have this round enabled
+            final allEnabled = players.every(
+              (p) => p.scores.isEnabled(round) && p.phases.isEnabled(round),
+            );
+            return DataColumn2(
+              label: Semantics(
+                label: 'Round ${round + 1}',
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    PlayerNameField(
-                      key: ValueKey('player_name_field_$playerIdx'),
-                      name: player.name,
-                      onChanged: (val) {
+                    Text('  ${round + 1}'),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      visualDensity: VisualDensity.comfortable,
+                      icon: Icon(
+                        allEnabled ? Icons.lock_open : Icons.lock,
+                        color: allEnabled ? Colors.green : Colors.red,
+                        size: 20,
+                      ),
+                      tooltip: allEnabled ? 'Lock column' : 'Unlock column',
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () {
+                        // Toggle enabled state for all players for this round
                         ref
                             .read(playersProvider.notifier)
-                            .updatePlayerName(playerIdx, val);
+                            .toggleRoundEnabled(round, !allEnabled);
                       },
-                    ),
-                    TotalScoreField(
-                      totalScore: player.totalScore,
-                      completedPhases: player.phases.completedPhasesList(),
-                      fieldKey: ValueKey('player_total_score_$playerIdx'),
-                      enablePhases: game.enablePhases,
                     ),
                   ],
                 ),
               ),
+              size: ColumnSize.S,
+              headingRowAlignment: MainAxisAlignment.center,
+            );
+          }),
+        ],
+        rows: List<DataRow2>.generate(players.length, (playerIdx) {
+          final player = players[playerIdx];
+
+          return DataRow2(
+            color: WidgetStateProperty.resolveWith<Color?>(
+              (Set<WidgetState> states) => getRowColor(context, playerIdx),
             ),
-            ...List<DataCell>.generate(game.maxRounds, (round) {
-              final score = player.scores.getScore(round);
-              final enabled =
-                  player.scores.isEnabled(round) &&
-                  player.phases.isEnabled(round);
-              return DataCell(
-                SizedBox(
-                  width: 90,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (game.enablePhases) ...[
-                        const SizedBox(height: 4),
-                        PhaseCheckboxDropdown(
-                          fieldKey: ValueKey(
-                            'phase_checkbox_dropdown_p${playerIdx}_r$round',
-                          ),
-                          selectedPhase: player.phases.getPhase(round),
-                          onChanged:
-                              enabled
-                                  ? (val) {
-                                    ref
-                                        .read(playersProvider.notifier)
-                                        .updatePhase(playerIdx, round, val);
-                                  }
-                                  : (val) {},
-                          playerIdx: playerIdx,
-                          round: round,
-                          completedPhases: player.phases.completedPhasesList(),
-                          enabled: enabled,
+            cells: [
+              DataCell(
+                Semantics(
+                  label: 'Player ${playerIdx + 1} name and total score',
+                  child: SizedBox(
+                    width: 120,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PlayerNameField(
+                          key: ValueKey('player_name_field_$playerIdx'),
+                          name: player.name,
+                          onChanged: (val) {
+                            ref
+                                .read(playersProvider.notifier)
+                                .updatePlayerName(playerIdx, val);
+                          },
                         ),
-                        const SizedBox(height: 4),
+                        TotalScoreField(
+                          key: ValueKey('player_total_score_$playerIdx'),
+                          totalScore: player.totalScore,
+                          completedPhases: player.phases.completedPhasesList(),
+                          enablePhases: game.enablePhases,
+                        ),
                       ],
-                      RoundScoreField(
-                        key: ValueKey('round_score_p${playerIdx}_r$round'),
-                        score: score,
-                        onChanged:
-                            enabled
-                                ? (parsed) {
-                                  ref
-                                      .read(playersProvider.notifier)
-                                      .updateScore(playerIdx, round, parsed);
-                                }
-                                : (parsed) {},
-                        enabled: enabled,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              );
-            }),
-          ],
-        );
-      }),
+              ),
+              ...List<DataCell>.generate(game.maxRounds, (round) {
+                final score = player.scores.getScore(round);
+                final enabled =
+                    player.scores.isEnabled(round) &&
+                    player.phases.isEnabled(round);
+                return DataCell(
+                  Semantics(
+                    label: 'Player ${playerIdx + 1} round ${round + 1} score',
+                    child: SizedBox(
+                      width: 90,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (game.enablePhases) ...[
+                            const SizedBox(height: 4),
+                            PhaseCheckboxDropdown(
+                              key: ValueKey(
+                                'phase_checkbox_dropdown_p${playerIdx}_r$round',
+                              ),
+                              selectedPhase: player.phases.getPhase(round),
+                              onChanged:
+                                  enabled
+                                      ? (val) {
+                                        ref
+                                            .read(playersProvider.notifier)
+                                            .updatePhase(playerIdx, round, val);
+                                      }
+                                      : (val) {},
+                              playerIdx: playerIdx,
+                              round: round,
+                              completedPhases:
+                                  player.phases.completedPhasesList(),
+                              enabled: enabled,
+                            ),
+                            const SizedBox(height: 4),
+                          ],
+                          RoundScoreField(
+                            key: ValueKey('round_score_p${playerIdx}_r$round'),
+                            score: score,
+                            onChanged:
+                                enabled
+                                    ? (parsed) {
+                                      ref
+                                          .read(playersProvider.notifier)
+                                          .updateScore(
+                                            playerIdx,
+                                            round,
+                                            parsed,
+                                          );
+                                    }
+                                    : (parsed) {},
+                            enabled: enabled,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ],
+          );
+        }),
+      ),
     );
   }
 }
