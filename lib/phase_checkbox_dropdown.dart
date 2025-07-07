@@ -26,16 +26,32 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameProvider);
+    final theme = Theme.of(context);
+    final Color backgroundColor =
+        !enabled
+            ? (theme.brightness == Brightness.dark
+                ? Color.alphaBlend(theme.disabledColor.withAlpha(51), theme.colorScheme.surface)
+                : Color.alphaBlend(theme.disabledColor.withAlpha(26), theme.colorScheme.surface))
+            : theme.colorScheme.surface;
+    final Color textColor =
+        !enabled
+            ? theme.disabledColor
+            : theme.textTheme.bodyMedium?.color ?? Colors.black;
+
     return PopupMenuButton<int?>(
       tooltip: 'Select completed phase(s)',
       enabled: enabled,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         decoration: BoxDecoration(
+          color: backgroundColor,
           border: Border.all(),
           borderRadius: BorderRadius.circular(4),
         ),
-        child: Text(selectedPhase != null ? 'Phase $selectedPhase' : 'None'),
+        child: Text(
+          selectedPhase != null ? 'Phase $selectedPhase' : 'None',
+          style: TextStyle(color: textColor),
+        ),
       ),
       itemBuilder:
           (context) => [
