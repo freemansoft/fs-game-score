@@ -104,3 +104,7 @@ flutter test integration_test/*_test.dart
 ## Icons
 
 Android and IOS icons generated using the [appicon.co App Icon Generator](https://www.appicon.co/)
+
+## Known Issues
+
+* Locked cells are not legible when the app runs in dark mode
