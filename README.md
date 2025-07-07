@@ -1,6 +1,18 @@
 # fs_game_score
 
-This is a generic game scoring app created with virtually zero hand coding but a **lot** of AI agent prompts using copilot. Virtually no hand coding was done.
+This is a generic game scoring app created almost completely using VSCode's copilot agent mode with virtually zero hand coding.  There was a **lot** of AI agent prompts using copilot.
+
+Lessons learned.
+
+1. It helps if you know what libraries you want to use. That lets you direct the copilot to the most up to date or best practice libraries.  I knew I wanted to use Riverpod 3.x and that I needed somethign beyond the default Flutter table. I prompted to add the libraries I wanted and then built on top of that because the pubspec.yaml was in context for my prompts. Copilot only knows the code it nows and there is more _older_ code out there than code using newer libraries.
+2. The agent tends to generate long functions or methods when building the UI layout. I wanted smaller discrete components so I either prompted to build the components or prompted to extract the code from the scoring table or other layouts into their own components.
+3. I had to provide guidance for model objects especially if I wanted scope management or had cases where I wanted to retain state for various pieces of data.  There as a fair amount of trial and error when adding things like the "new game" panel to make sure things didn't get completely erased when I added the column locking controls or reset player names.
+4. The Riverpod code was finicky because the notifiers scope or data objects didn't handle the corner cases.  Describing the broken nature was enough for Copilot to fix the problem about 50% of the time.
+5. I wanted the code to be testable and for the widgets to be findable by `ID`. I prompted to get IDs added everywhere. Most of my widgets were wrappers for the actual field or text that the component represented.  This created tension between where we wanted a `key` to be bound too.  Some of the components were generated passing in a `key`.  Some were generated supporting a `FieldKey` that was actually set on the wrapped component. I ended up standardizing on a key for the custom component.  This meant the actual text or field had to be found in test by searching for descendants of the ID I knew. The alternative was to pass in two keys or only support the `field key`
+6. There were a lot of iterations around state management trying to get the lifespan correct for various Riverpod notifiers and `ref.watch` `ref.read` operations.
+7. I had to do some fiddling to get the `Semantics` I wanted.  There were a couple cases where providing the same prompt twice in a row solved my problem.  There first one did most of the work and the 2nd one fixed the broken part.
+8. In integration tests: Long droplist are not fully visible when pressed on if the number of options is too long.  Getting the CoPilot to scroll to find the items I was looking for was painful.  It never did generate exactly the code I would have wanted.
+9. In Integration tests: Copilot mostly got the field keys right when using finders byKey. Sometimes it completely lost the plot when trying to iterate fixes.
 
 ## This app
 
