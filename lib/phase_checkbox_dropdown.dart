@@ -32,19 +32,10 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: enabled ? Colors.grey : Colors.grey.shade400,
-          ),
+          border: Border.all(),
           borderRadius: BorderRadius.circular(4),
-          color: enabled ? null : Colors.grey.shade200,
         ),
-        child: Text(
-          selectedPhase != null ? 'Phase $selectedPhase' : 'None',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: enabled ? null : Colors.grey,
-          ),
-        ),
+        child: Text(selectedPhase != null ? 'Phase $selectedPhase' : 'None'),
       ),
       itemBuilder:
           (context) => [
@@ -54,6 +45,7 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
               final phaseNum = i + 1;
               return CheckedPopupMenuItem<int?>(
                 value: phaseNum,
+                enabled: enabled,
                 checked: completedPhases.contains(phaseNum),
                 child: Text('Phase $phaseNum'),
               );

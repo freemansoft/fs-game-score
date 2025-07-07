@@ -52,7 +52,6 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         border: const OutlineInputBorder(),
-        fillColor: widget.enabled ? null : Colors.grey.shade200,
         filled: !widget.enabled,
       ),
       onChanged: (val) {
