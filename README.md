@@ -1,5 +1,7 @@
 # fs_game_score
 
+I wanted a scoring app for game night around the same time I needed a reason to push to actually use an LLM to do the heavy lifting for app development.  This project is the result.
+
 This is a generic game scoring app created almost completely using VSCode's copilot agent mode with virtually zero hand coding.  There was a **lot** of AI agent prompts using copilot.
 
 Lessons learned.
