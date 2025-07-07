@@ -108,3 +108,4 @@ Android and IOS icons generated using the [appicon.co App Icon Generator](https:
 ## Known Issues
 
 * Locked cells are not legible when the app runs in dark mode
+* The disabled color for the phase dropdown isn't quite right. Both light and dark are incorrect.
