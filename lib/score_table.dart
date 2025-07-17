@@ -80,7 +80,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     Text('  ${round + 1}'),
                     const SizedBox(width: 4),
                     IconButton(
-                      key: ValueKey('lock_round_${round}'),
+                      key: ValueKey('lock_round_$round'),
                       visualDensity: VisualDensity.comfortable,
                       icon: Icon(
                         allEnabled ? Icons.lock_open : Icons.lock,

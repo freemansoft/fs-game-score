@@ -73,9 +73,9 @@ void main() {
     // Verify 5 round columns for each player (score and phase fields)
     for (int playerIdx = 0; playerIdx < 4; playerIdx++) {
       for (int round = 0; round < 5; round++) {
-        final scoreKey = ValueKey('round_score_p${playerIdx}_r${round}');
+        final scoreKey = ValueKey('round_score_p${playerIdx}_r$round');
         final phaseKey = ValueKey(
-          'phase_checkbox_dropdown_p${playerIdx}_r${round}',
+          'phase_checkbox_dropdown_p${playerIdx}_r$round',
         );
         expect(
           find.byKey(scoreKey),
