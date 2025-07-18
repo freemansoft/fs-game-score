@@ -7,6 +7,8 @@ import 'package:data_table_2/data_table_2.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  /// Navigates to the scoring table and verifies the table functionality
+  /// matches what was specified in th esplash screen
   testWidgets('Score table displays correct rows, columns, and widgets', (
     WidgetTester tester,
   ) async {

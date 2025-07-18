@@ -7,6 +7,8 @@ import 'package:data_table_2/data_table_2.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  /// Navigates to the scoring table and verifies the table functionality
+  /// including changing the player name, cell score and column locking
   testWidgets('Score table displays correct rows and widgets for 2 players', (
     WidgetTester tester,
   ) async {
