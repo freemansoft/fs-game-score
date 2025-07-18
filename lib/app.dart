@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/app_bar.dart';
 import 'package:fs_game_score/score_table.dart';
+import 'package:fs_game_score/score_table_screen.dart';
 import 'package:fs_game_score/splash_screen.dart';
 import 'package:fs_game_score/new_scorecard.dart';
 
@@ -45,13 +46,7 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
         child:
             _showSplash
                 ? SplashScreen(onContinue: _onSplashContinue)
-                : Scaffold(
-                  appBar: Phase10AppBar(),
-                  body: const Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: ScoreTable(),
-                  ),
-                ),
+                : const ScoreTableScreen(),
       ),
     );
   }
