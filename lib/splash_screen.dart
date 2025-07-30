@@ -25,7 +25,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       // package_info_plus is already in pubspec.yaml
       final packageInfo = await PackageInfo.fromPlatform();
       setState(() {
-        _appVersion = packageInfo.version;
+        _appVersion = '${packageInfo.version}+${packageInfo.buildNumber}';
       });
     } catch (_) {
       setState(() {
@@ -55,7 +55,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
             const Text(
               'Copyright (C) 2025 Joe Freeman',
               style: TextStyle(fontSize: 12, color: Colors.grey),
@@ -116,7 +115,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -145,7 +144,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             ElevatedButton(
               key: const ValueKey('splash_continue_button'),
               onPressed: () {

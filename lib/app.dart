@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/app_bar.dart';
-import 'package:fs_game_score/score_table.dart';
 import 'package:fs_game_score/score_table_screen.dart';
 import 'package:fs_game_score/splash_screen.dart';
 import 'package:fs_game_score/new_scorecard.dart';
