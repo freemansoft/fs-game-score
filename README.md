@@ -57,6 +57,15 @@ Notes
 3. Run the Flutter application using the debug button or by pressing `F5`
 4. The application will run on an emulator or connected device.
 
+## Testing the App
+
+Options
+
+1. Run this with the IDE
+2. (Android) Create an apk and downloaded it to a device
+   1. Build the package `flutter build apk --target-platform android-arm64`
+   2. Share `build/app/outputs/flutter-apk/app-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage and then having the tester downloaded it.
+
 ## Integration tests
 
 Integration tests can't be run against browsers.  Web based integration tests are not supported (2025/07)
