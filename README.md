@@ -65,6 +65,7 @@ Options
 2. (Android) Create an apk and downloaded it to a device
    1. Build the package `flutter build apk --target-platform android-arm64`
    2. Share `build/app/outputs/flutter-apk/app-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage and then having the tester downloaded it.
+3. Validate the version number on the splash screen. It should match the value in `pubps pec.yaml`.  The version number is set in `pubspec.yaml`.
 
 ## Integration tests
 
