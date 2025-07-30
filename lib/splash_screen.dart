@@ -22,10 +22,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> _loadVersion() async {
     try {
-      // package_info_plus is already in pubspec.yaml
       final packageInfo = await PackageInfo.fromPlatform();
       setState(() {
-        _appVersion = '${packageInfo.version}+${packageInfo.buildNumber}';
+        if (packageInfo.buildNumber.isNotEmpty) {
+          _appVersion = '${packageInfo.version}+${packageInfo.buildNumber}';
+        } else {
+          _appVersion = packageInfo.version;
+        }
       });
     } catch (_) {
       setState(() {
