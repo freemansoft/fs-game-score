@@ -4,7 +4,7 @@ I wanted a scoring app for game night. At around the same time, I was looking fo
 
 The end result is a multi-platform Flutter app, fs_game_score that can be found on GitHub.  This is a generic game scoring app created almost completely using VSCode's copilot agent mode with virtually zero hand coding. There were many AI agent prompts with **a lot** of undo/redo. The application has been tested on Android, IOS, Chrome, macOS, and Windows 11.
 
-Lessons learned.
+## Lessons learned
 
 1. It helps if you know what libraries you want to use. That lets you direct the copilot to the most up-to-date or best practice libraries. I knew I wanted to use Riverpod 3.x and that I needed something beyond the default Flutter table. I prompted the LLM to add the libraries I wanted and then built on top of that because the pubspec.yaml was in context for my prompts. Copilot only knows the code it knows, and there is more older code out there than code using newer libraries.
 2. I fought a lot with the data table behavior for the score sheet. There were cases where the content was too big for the cell, or the scrolling behavior wasn't right. Going out and finding the generally recommended library and having CoPilot add that library cut out days of troubleshooting.
