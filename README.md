@@ -59,7 +59,7 @@ Notes
 
 ## Testing the App
 
-Android options:
+### Android options
 
 1. Run this on a connected iOS or Android device using the IDE
 2. (Android) Create an apk and downloaded it to a device
@@ -67,6 +67,14 @@ Android options:
    2. Share `build/app/outputs/flutter-apk/app-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage and then having the tester downloaded it.
 
 Validate the version number on the splash screen. It should match the value in `pubps pec.yaml`.  The version number is set in `pubspec.yaml`.
+
+### Web options
+
+1. Run this locally using the IDE and a web browser like Chrome
+2. Create a distributable web package that can be distributed for people to web test locally
+   1. Build the package `flutter build web` or `flutter build web --release`
+   2. create a zip file of `build/web`
+   3. Share the zip. They can unzip it and put the contents of the `web` folder in the web server docroot. The `web` folder should not be part of the path.
 
 ## Integration tests
 
