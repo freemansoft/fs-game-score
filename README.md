@@ -22,6 +22,8 @@ The end result is a multi-platform Flutter app, fs_game_score that can be found 
 14. Integration tests: Copilot mostly got the field keys right when using finders `byKey`. Sometimes it completely lost the plot when trying to iterate fixes, hallucinating `key` names, especially if they were generated.
 15. Integration tests: My custom components had `keys`.  The actual Flutter component we needed to enter data in or validate against was some wrapped component. I had trouble prompting for a solution.
 16. Integration tests: Working with component navigation in tests was a lot easier to prompt for once we had a project example. Then it was almost automatic.
+17. This uses Riverpod which I sort of understand.  There have been a couple times AI made changes to the Riverpod code that broke the app. Often I didn't know enough to describe how to fix it so I'd iterate with the Agent having it "fix".  A couple times this came to a bad result and I'd rollback and try again. This was especially true when I converted the Notifier for a `List<Player>` to a `Players` object that contained a `List<Player>`.  If it breaks again I may not understand why.
+18. Construction was often done closest to use.  This makes mocking or other types of things like a global initializer difficult and things like game restore from preferences difficult. _not yet impemented at the time of this note_
 
 ## This app
 

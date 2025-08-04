@@ -68,9 +68,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           ),
           ...List.generate(game.maxRounds, (round) {
             // Check if all players have this round enabled
-            final allEnabled = players.every(
-              (p) => p.scores.isEnabled(round) && p.phases.isEnabled(round),
-            );
+            final allEnabled = players.allPlayersEnabledForRound(round);
             return DataColumn2(
               label: Semantics(
                 label: 'Round ${round + 1}',
