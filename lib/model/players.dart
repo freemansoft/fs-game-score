@@ -6,23 +6,30 @@ class Players {
     newPlayers[index] = player;
     final first = newPlayers.isNotEmpty ? newPlayers[0] : null;
     return Players(
-      newPlayers.length,
-      first?.scores.roundScores.length ?? 0,
-      first?.phases.completedPhases.length ?? 0,
-    )..players.setAll(0, newPlayers);
+      numPlayers: newPlayers.length,
+      maxRounds: first?.scores.roundScores.length ?? 0,
+      numPhases: first?.phases.completedPhases.length ?? 0,
+      initialPlayers: newPlayers,
+    );
   }
 
   final List<Player> players;
 
-  Players(int numPlayers, int maxRounds, int numPhases)
-    : players = List.generate(
-        numPlayers,
-        (i) => Player(
-          name: 'Player ${i + 1}',
-          maxRounds: maxRounds,
-          numPhases: numPhases,
-        ),
-      );
+  Players({
+    required int numPlayers,
+    required int maxRounds,
+    required int numPhases,
+    List<Player>? initialPlayers,
+  }) : players =
+           initialPlayers ??
+           List.generate(
+             numPlayers,
+             (i) => Player(
+               name: 'Player ${i + 1}',
+               maxRounds: maxRounds,
+               numPhases: numPhases,
+             ),
+           );
   bool allPlayersEnabledForRound(int round) {
     return players.every(
       (p) => p.scores.isEnabled(round) && p.phases.isEnabled(round),

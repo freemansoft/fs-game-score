@@ -158,6 +158,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ref
                     .read(gameProvider.notifier)
                     .setEnablePhases(_sheetStyle == 'Include Phases');
+                ref.read(gameProvider.notifier).setVersion(_appVersion);
                 if (widget.onContinue != null) widget.onContinue!();
               },
               child: const Text('Continue'),

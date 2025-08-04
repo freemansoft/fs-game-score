@@ -2,13 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/model/game.dart';
 
 class GameNotifier extends StateNotifier<Game> {
+  void setVersion(String? version) {
+    state = state.copyWith(version: version);
+  }
+
   void setMaxRounds(int maxRounds) {
-    state = Game(
-      maxRounds: maxRounds,
-      numPhases: state.numPhases,
-      numPlayers: state.numPlayers,
-      enablePhases: state.enablePhases,
-    );
+    state = state.copyWith(maxRounds: maxRounds);
   }
 
   GameNotifier() : super(const Game());
@@ -28,21 +27,11 @@ class GameNotifier extends StateNotifier<Game> {
   }
 
   void setNumPlayers(int numPlayers) {
-    state = Game(
-      maxRounds: state.maxRounds,
-      numPhases: state.numPhases,
-      numPlayers: numPlayers,
-      enablePhases: state.enablePhases,
-    );
+    state = state.copyWith(numPlayers: numPlayers);
   }
 
   void setEnablePhases(bool enablePhases) {
-    state = Game(
-      maxRounds: state.maxRounds,
-      numPhases: state.numPhases,
-      numPlayers: state.numPlayers,
-      enablePhases: enablePhases,
-    );
+    state = state.copyWith(enablePhases: enablePhases);
   }
 
   // Add more setters as needed

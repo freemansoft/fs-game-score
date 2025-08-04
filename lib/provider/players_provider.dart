@@ -6,7 +6,11 @@ import 'package:fs_game_score/provider/game_provider.dart';
 final playersProvider = StateNotifierProvider<PlayersNotifier, Players>((ref) {
   final game = ref.watch(gameProvider);
   return PlayersNotifier(
-    Players(game.numPlayers, game.maxRounds, game.numPhases),
+    Players(
+      numPlayers: game.numPlayers,
+      maxRounds: game.maxRounds,
+      numPhases: game.numPhases,
+    ),
   );
 });
 
@@ -40,7 +44,7 @@ class PlayersNotifier extends StateNotifier<Players> {
         state.length > 0 ? state.players[0].scores.roundScores.length : 0;
     final numPhases =
         state.length > 0 ? state.players[0].phases.completedPhases.length : 0;
-    var newState = state;
+    var newPlayers = <Player>[];
     for (int i = 0; i < state.length; i++) {
       final oldPlayer = state.players[i];
       final newName = clearNames ? 'Player ${i + 1}' : oldPlayer.name;
@@ -49,9 +53,14 @@ class PlayersNotifier extends StateNotifier<Players> {
         maxRounds: maxRounds,
         numPhases: numPhases,
       );
-      newState = newState.withPlayer(newPlayer, i);
+      newPlayers.add(newPlayer);
     }
-    state = newState;
+    state = Players(
+      numPlayers: state.length,
+      maxRounds: maxRounds,
+      numPhases: numPhases,
+      initialPlayers: newPlayers,
+    );
   }
 
   void toggleRoundEnabled(int round, bool enabled) {
