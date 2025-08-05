@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/provider/game_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fs_game_score/model/game.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   final VoidCallback? onContinue;
@@ -12,12 +14,35 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  static const String _gamePrefsKey = 'game_state';
   String? _appVersion;
 
   @override
   void initState() {
     super.initState();
     _loadVersion();
+    _loadGameFromPrefs();
+  }
+
+  Future<void> _loadGameFromPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    final gameJson = prefs.getString(_gamePrefsKey);
+    if (gameJson != null && gameJson.isNotEmpty) {
+      try {
+        final game = Game.fromJson(gameJson);
+        ref.read(gameProvider.notifier).setNumPlayers(game.numPlayers);
+        ref.read(gameProvider.notifier).setMaxRounds(game.maxRounds);
+        ref.read(gameProvider.notifier).setEnablePhases(game.enablePhases);
+        ref.read(gameProvider.notifier).setVersion(game.version);
+        setState(() {
+          _selectedPlayers = game.numPlayers;
+          _selectedMaxRounds = game.maxRounds;
+          _sheetStyle = game.enablePhases ? 'Include Phases' : 'Basic Sheet';
+        });
+      } catch (_) {
+        // Ignore errors and start fresh
+      }
+    }
   }
 
   Future<void> _loadVersion() async {
@@ -150,7 +175,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             const SizedBox(height: 12),
             ElevatedButton(
               key: const ValueKey('splash_continue_button'),
-              onPressed: () {
+              onPressed: () async {
                 ref.read(gameProvider.notifier).setNumPlayers(_selectedPlayers);
                 ref
                     .read(gameProvider.notifier)
@@ -159,6 +184,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     .read(gameProvider.notifier)
                     .setEnablePhases(_sheetStyle == 'Include Phases');
                 ref.read(gameProvider.notifier).setVersion(_appVersion);
+
+                // Save game state to shared preferences
+                final prefs = await SharedPreferences.getInstance();
+                final game = ref.read(gameProvider.notifier).stateValue();
+                await prefs.setString(_gamePrefsKey, game.toJson());
+
                 if (widget.onContinue != null) widget.onContinue!();
               },
               child: const Text('Continue'),

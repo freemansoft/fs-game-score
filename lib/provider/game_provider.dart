@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_game_score/model/game.dart';
 
 class GameNotifier extends StateNotifier<Game> {
+  Game stateValue() => state;
   void setVersion(String? version) {
     state = state.copyWith(version: version);
   }

@@ -3,9 +3,16 @@ import 'package:integration_test/integration_test.dart';
 import 'package:fs_game_score/main.dart' as app;
 import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() async {
+    // Clear SharedPreferences for 'game_state' before each test
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('game_state');
+  });
 
   /// Navigates to the scoring table and verifies the table functionality
   /// matches what was specified in th esplash screen

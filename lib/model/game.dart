@@ -48,7 +48,7 @@ class Game {
     this.numPhases = 10,
     this.numPlayers = 8,
     this.enablePhases = true,
-    this.version,
+    this.version = '0.0.0+0',
   });
 
   Game copyWith({

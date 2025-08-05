@@ -34,6 +34,11 @@ Two scorecard types are supported
 1. Basic scorecard with individual round scores and player total scores
 2. Phase capture plus individual round scores and player total scores _plus_ dropdowns that let you pick a completed phase.  Hovering over the player's total score will show you which phases have been captured (the set of phase dropdown selections)
 
+Preferences
+
+1. The game configuration is saved to SharedPreferneces when a game is started
+2. The game configuration is loaded as the default when showing the spalsh screen to start a new game
+
 Notes
 
 1. Player's names can be edited in place in the scoring table.
@@ -128,5 +133,4 @@ Android and IOS icons generated using the [appicon.co App Icon Generator](https:
 
 ## Known Issues
 
-* Locked cells are not legible when the app runs in dark mode
 * The disabled color for the phase dropdown isn't quite right. Both light and dark are incorrect.
