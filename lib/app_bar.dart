@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../new_game_panel.dart';
-import 'package:fs_game_score/new_scorecard.dart';
+import 'package:fs_score_card/new_scorecard.dart';
 
 final themeProvider = StateProvider<bool>((ref) => false);
 

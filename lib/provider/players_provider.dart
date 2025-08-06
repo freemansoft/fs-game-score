@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_game_score/model/player.dart';
-import 'package:fs_game_score/model/players.dart';
-import 'package:fs_game_score/provider/game_provider.dart';
+import 'package:fs_score_card/model/player.dart';
+import 'package:fs_score_card/model/players.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
 
 final playersProvider = StateNotifierProvider<PlayersNotifier, Players>((ref) {
   final game = ref.watch(gameProvider);

@@ -1,4 +1,4 @@
-package com.fs.fs_game_score
+package com.fs.fs_score_card
 
 import io.flutter.embedding.android.FlutterActivity
 

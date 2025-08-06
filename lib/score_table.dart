@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:fs_game_score/player_name_field.dart';
-import 'package:fs_game_score/round_score_field.dart';
-import 'package:fs_game_score/provider/players_provider.dart';
-import 'package:fs_game_score/phase_checkbox_dropdown.dart';
-import 'package:fs_game_score/provider/game_provider.dart';
-import 'package:fs_game_score/total_score_field.dart';
+import 'package:fs_score_card/player_name_field.dart';
+import 'package:fs_score_card/round_score_field.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
+import 'package:fs_score_card/phase_checkbox_dropdown.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/total_score_field.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});

@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_game_score/provider/game_provider.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
 
 class PhaseCheckboxDropdown extends ConsumerWidget {
   final int? selectedPhase;
@@ -30,8 +30,14 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
     final Color backgroundColor =
         !enabled
             ? (theme.brightness == Brightness.dark
-                ? Color.alphaBlend(theme.disabledColor.withAlpha(51), theme.colorScheme.surface)
-                : Color.alphaBlend(theme.disabledColor.withAlpha(26), theme.colorScheme.surface))
+                ? Color.alphaBlend(
+                  theme.disabledColor.withAlpha(51),
+                  theme.colorScheme.surface,
+                )
+                : Color.alphaBlend(
+                  theme.disabledColor.withAlpha(26),
+                  theme.colorScheme.surface,
+                ))
             : theme.colorScheme.surface;
     final Color textColor =
         !enabled

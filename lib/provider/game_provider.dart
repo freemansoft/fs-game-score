@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_game_score/model/game.dart';
+import 'package:fs_score_card/model/game.dart';
 
 class GameNotifier extends StateNotifier<Game> {
   Game stateValue() => state;

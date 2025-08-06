@@ -1,6 +1,6 @@
 {
-    "name": "fs_game_score",
-    "short_name": "fs_game_score",
+    "name": "fs_score_card",
+    "short_name": "fs_score_card",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

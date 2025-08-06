@@ -1,8 +1,8 @@
-# fs_game_score
+# fs_score_card
 
 I wanted a scoring app for game night. At around the same time, I was looking for a reason to push to actually use an LLM to do the heavy lifting for app development. This project is the result.
 
-The end result is a multi-platform Flutter app, fs_game_score that can be found on GitHub.  This is a generic game scoring app created almost completely using VSCode's copilot agent mode with virtually zero hand coding. There were many AI agent prompts with **a lot** of undo/redo. The application has been tested on Android, IOS, Chrome, macOS, and Windows 11.
+The end result is a multi-platform Flutter app, fs_score_card that can be found on GitHub.  This is a generic game scoring app created almost completely using VSCode's copilot agent mode with virtually zero hand coding. There were many AI agent prompts with **a lot** of undo/redo. The application has been tested on Android, IOS, Chrome, macOS, and Windows 11.
 
 ## Lessons learned
 
@@ -44,7 +44,7 @@ Notes
 1. Player's names can be edited in place in the scoring table.
 2. Round scores can be edited in place in the appropriate columns.  Scores will be totaled under the player's name.
 3. The "New Game" icon will clear the board scores and optionally the player names for times you want to change the order
-4. The "Home" or "Change Scoreboard Type" icon will let you return to the start screen that lets you change the number of players and the data entry types (score & phase)
+4. The "Home" or "Change Score Card Type" icon will let you return to the start screen that lets you change the number of players and the data entry types (score & phase)
 
 ## Looking to run the working scoring app?
 
@@ -53,14 +53,14 @@ Notes
 1. Clone this repo.
 2. Open the whole repo in VSCode
 3. Select the run view on the left hand side
-4. Select fs_game_score in the run drop down menu
+4. Select fs_score_card in the run drop down menu
 5. Press the green run button
 6. The application will run on an emulator or connected device.
 
 ### Option 2
 
 1. Clone this repo.
-2. Open the `fs_game_score` directory in VSCode.
+2. Open the `fs_score_card` directory in VSCode.
 3. Run the Flutter application using the debug button or by pressing `F5`
 4. The application will run on an emulator or connected device.
 
@@ -134,3 +134,11 @@ Android and IOS icons generated using the [appicon.co App Icon Generator](https:
 ## Known Issues
 
 * The disabled color for the phase dropdown isn't quite right. Both light and dark are incorrect.
+
+## Tag management hints
+
+* Create a local tag `git tag 1.1.0+1`
+* Delete a local tag `git tag -d 1.1.0+1`
+* Push tags to remote `git push origin --tags`
+* Delete a remote tag `git push origin --delete 1.1.0+1`
+  * Deleting a remote tag will **not** work if there is a release tied to the tag

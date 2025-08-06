@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_game_score/app_bar.dart';
-import 'package:fs_game_score/score_table_screen.dart';
-import 'package:fs_game_score/splash_screen.dart';
-import 'package:fs_game_score/new_scorecard.dart';
+import 'package:fs_score_card/app_bar.dart';
+import 'package:fs_score_card/score_table_screen.dart';
+import 'package:fs_score_card/splash_screen.dart';
+import 'package:fs_score_card/new_scorecard.dart';
 
 class Phase10App extends ConsumerStatefulWidget {
   const Phase10App({super.key});
@@ -25,7 +25,7 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
   Widget build(BuildContext context) {
     final isDark = ref.watch(themeProvider);
     return MaterialApp(
-      title: 'FS Game Scorecard',
+      title: 'FS Score Ccard',
       showSemanticsDebugger: false, // shows outlines for the semantics tree
       theme: ThemeData(
         brightness: Brightness.light,

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fs_game_score/model/game.dart';
+import 'package:fs_score_card/model/game.dart';
 
 Game defaultGame() => const Game();
 

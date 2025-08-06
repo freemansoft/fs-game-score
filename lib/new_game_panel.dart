@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_game_score/provider/players_provider.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
 
 class NewGamePanel extends ConsumerWidget {
   const NewGamePanel({super.key});
@@ -23,7 +23,7 @@ class NewGamePanel extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Text(
-                          'Are you sure you want to start a new game? The scoreboard will be wiped.',
+                          'Are you sure you want to start a new game? The score card will be erased.',
                         ),
                         const SizedBox(height: 16),
                         CheckboxListTile(

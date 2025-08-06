@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_game_score/provider/game_provider.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fs_game_score/model/game.dart';
+import 'package:fs_score_card/model/game.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   final VoidCallback? onContinue;
@@ -75,7 +75,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'FreemanS Game Scorecard',
+              'FreemanS Score Card',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,

@@ -5,20 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "fs_game_score",
+            "name": "fs_score_card",
             "program": "lib/main.dart",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "fs_game_score (profile mode)",
+            "name": "fs_score_card (profile mode)",
             "program": "lib/main.dart",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "fs_game_score (release mode)",
+            "name": "fs_score_card (release mode)",
             "program": "lib/main.dart",
             "request": "launch",
             "type": "dart",

@@ -1,5 +1,5 @@
-import 'package:fs_game_score/model/scores.dart';
-import 'package:fs_game_score/model/phases.dart';
+import 'package:fs_score_card/model/scores.dart';
+import 'package:fs_score_card/model/phases.dart';
 
 class Player {
   final String name;
