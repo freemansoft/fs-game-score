@@ -37,6 +37,22 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+        // Customize APK output filename to include project name and version
+    applicationVariants.all {
+        val variant = this
+        variant.outputs
+            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val buildTypeSuffix = when (variant.buildType.name) {
+                    "release" -> "-release"
+                    "debug" -> "-debug"
+                    else -> "-${variant.buildType.name}"
+                }
+                val outputFileName = "fs_score_card-v${variant.versionName}-${variant.versionCode}${buildTypeSuffix}.apk"
+                output.outputFileName = outputFileName
+            }
+    }
+
 }
 
 flutter {

@@ -68,10 +68,23 @@ Notes
 
 ### Android options
 
+Android apks end up bult in two places.
+
+* Including app name and version in the `apk` filename.
+  * `fs_score_card-v<version>-release.apk` `build/app/outputs/apk/release`
+  * `fs_score_card-v<version>-debug.apk` `build/app/outputs/apk/debug`
+* Generic apk without the app name and version in the `apk` filename. These include sha1 files.
+  * `apk-release.apk` `build/app/outputs/flutter-apk/apk-release.apk`
+  * `apk-debug.apk` `build/app/outputs/flutter-apk/app-debug.apk`
+
 1. Run this on a connected iOS or Android device using the IDE
 2. (Android) Create an apk and downloaded it to a device
-   1. Build the package `flutter build apk --target-platform android-arm64`
-   2. Share `build/app/outputs/flutter-apk/app-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage and then having the tester downloaded it.
+   1. Build the android arm64 package. Including the `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB
+      1. `flutter build apk --target-platform android-arm64`
+      2. including the `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB
+   2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage
+      1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
+3. (ios) This is complicated by the Apple store
 
 Validate the version number on the splash screen. It should match the value in `pubps pec.yaml`.  The version number is set in `pubspec.yaml`.
 
