@@ -68,14 +68,14 @@ Notes
 
 ### Android options
 
-Android apks end up bult in two places.
+Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.com/questions/62910148/flutter-what-is-the-difference-between-the-apk-release-directory-and-flutter-ap)
 
-* Including app name and version in the `apk` filename.
-  * `fs_score_card-v<version>-release.apk` `build/app/outputs/apk/release`
-  * `fs_score_card-v<version>-debug.apk` `build/app/outputs/apk/debug`
-* Generic apk without the app name and version in the `apk` filename. These include sha1 files.
-  * `apk-release.apk` `build/app/outputs/flutter-apk/apk-release.apk`
-  * `apk-debug.apk` `build/app/outputs/flutter-apk/app-debug.apk`
+* `build/app/outputs/apk` Including app name and version in the `apk` filename.
+  * `build/app/outputs/apk/releasefs_score_card-v<version>-release.apk`
+  * `build/app/outputs/apk/debug/fs_score_card-v<version>-debug.apk`
+* `build/app/outputs/flutter-apk` Generic apk without the app name and version in the `apk` filename. These include sha1 files.
+  * `build/app/outputs/flutter-apk/apk-release.apkk`
+  * `build/app/outputs/flutter-apk/app-debug.ap`
 
 1. Run this on a connected iOS or Android device using the IDE
 2. (Android) Create an apk and downloaded it to a device
