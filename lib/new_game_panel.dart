@@ -54,12 +54,14 @@ class NewGamePanel extends ConsumerWidget {
         );
         if (result == true) {
           ref.read(playersProvider.notifier).resetGame(clearNames: clearNames);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Game reset!'),
-              duration: Duration(seconds: 2),
-            ),
-          );
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Game reset!'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
         }
       },
     );

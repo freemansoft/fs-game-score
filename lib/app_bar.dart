@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../new_game_panel.dart';
 import 'package:fs_score_card/new_scorecard.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
 
 final themeProvider = StateProvider<bool>((ref) => false);
 
@@ -19,6 +21,40 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
       actions: [
         const NewScoreCardPanel(),
         const NewGamePanel(),
+        Consumer(
+          builder: (context, ref, child) {
+            return IconButton(
+              icon: Icon(
+                Theme.of(context).platform == TargetPlatform.iOS ||
+                        Theme.of(context).platform == TargetPlatform.macOS
+                    ? Icons.ios_share
+                    : Icons.share,
+              ),
+              tooltip: 'Share Scores',
+              onPressed: () {
+                final players = ref.read(playersProvider);
+                if (players.players.isNotEmpty) {
+                  final csvData = players.toCsv();
+                  final now = DateTime.now();
+                  final dateTime =
+                      '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+                  final title = 'fs score card $dateTime';
+
+                  SharePlus.instance.share(
+                    ShareParams(text: csvData, title: title, subject: title),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('No scores to share'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+            );
+          },
+        ),
         Row(
           children: [
             const Icon(Icons.light_mode),

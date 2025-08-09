@@ -30,7 +30,7 @@ class NewScoreCardPanel extends StatelessWidget {
             ),
           ),
     );
-    if (result == true) {
+    if (result == true && context.mounted) {
       NewScoreCardNotification().dispatch(context);
     }
   }
