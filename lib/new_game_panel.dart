@@ -10,7 +10,7 @@ class NewGamePanel extends ConsumerWidget {
     bool clearNames = false;
     return IconButton(
       icon: const Icon(Icons.replay),
-      tooltip: 'New Game',
+      tooltip: 'New Game - Using same scorecard type',
       onPressed: () async {
         final result = await showDialog<bool>(
           context: context,

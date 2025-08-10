@@ -92,6 +92,13 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           _focusNode.requestFocus();
+          // Show SnackBar message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Invalid Score for this round'),
+              duration: Duration(seconds: 2),
+            ),
+          );
         }
       });
     }

@@ -10,7 +10,7 @@ class NewScoreCardPanel extends StatelessWidget {
       builder:
           (context) => Semantics(
             container: true,
-            label: 'Change Scorecard Type',
+            label: 'New Game - Change Scorecard Type',
             explicitChildNodes: true,
             child: AlertDialog(
               title: const Text('Change Scorecard Type'),
