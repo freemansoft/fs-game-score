@@ -192,6 +192,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                                     }
                                     : (parsed) {},
                             enabled: enabled,
+                            scoreFilter: game.scoreFilter,
                           ),
                         ],
                       ),

@@ -10,6 +10,7 @@ class Game {
       'numPhases': numPhases,
       'numPlayers': numPlayers,
       'enablePhases': enablePhases,
+      'scoreFilter': scoreFilter,
       'version': version,
     });
   }
@@ -23,6 +24,7 @@ class Game {
       numPhases: json['numPhases'] ?? 10,
       numPlayers: json['numPlayers'] ?? 8,
       enablePhases: json['enablePhases'] ?? true,
+      scoreFilter: json['scoreFilter'] ?? '',
       version: json['version'],
     );
   }
@@ -41,6 +43,7 @@ class Game {
   final int numPhases;
   final int numPlayers;
   final bool enablePhases;
+  final String scoreFilter;
   final String? version;
 
   const Game({
@@ -48,6 +51,7 @@ class Game {
     this.numPhases = 10,
     this.numPlayers = 8,
     this.enablePhases = true,
+    this.scoreFilter = '',
     this.version = '0.0.0+0',
   });
 
@@ -56,6 +60,7 @@ class Game {
     int? numPhases,
     int? numPlayers,
     bool? enablePhases,
+    String? scoreFilter,
     String? version,
   }) {
     return Game(
@@ -63,6 +68,7 @@ class Game {
       numPhases: numPhases ?? this.numPhases,
       numPlayers: numPlayers ?? this.numPlayers,
       enablePhases: enablePhases ?? this.enablePhases,
+      scoreFilter: scoreFilter ?? this.scoreFilter,
       version: version ?? this.version,
     );
   }

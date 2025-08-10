@@ -35,6 +35,10 @@ class GameNotifier extends StateNotifier<Game> {
     state = state.copyWith(enablePhases: enablePhases);
   }
 
+  void setScoreFilter(String scoreFilter) {
+    state = state.copyWith(scoreFilter: scoreFilter);
+  }
+
   // Add more setters as needed
 }
 

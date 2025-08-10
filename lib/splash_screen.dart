@@ -38,6 +38,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           _selectedPlayers = game.numPlayers;
           _selectedMaxRounds = game.maxRounds;
           _sheetStyle = game.enablePhases ? 'Include Phases' : 'Basic Sheet';
+          _scoreFilter = game.scoreFilter;
         });
       } catch (_) {
         // Ignore errors and start fresh
@@ -65,6 +66,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   int _selectedPlayers = 2;
   int _selectedMaxRounds = 14;
   String _sheetStyle = 'Basic Sheet';
+  String _scoreFilter = '';
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 style: const TextStyle(fontSize: 12, color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -120,7 +122,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -143,7 +145,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -172,7 +174,33 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Score Filter:', style: TextStyle(fontSize: 18)),
+                const SizedBox(width: 12),
+                DropdownButton<String>(
+                  key: const ValueKey('splash_score_filter_dropdown'),
+                  value: _scoreFilter,
+                  items: const [
+                    DropdownMenuItem(value: '', child: Text('Any Score')),
+                    DropdownMenuItem(
+                      value: r'^[0-9]*[05]$',
+                      child: Text('Scores ending in 5 or 0'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _scoreFilter = value;
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
             ElevatedButton(
               key: const ValueKey('splash_continue_button'),
               onPressed: () async {
@@ -183,6 +211,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ref
                     .read(gameProvider.notifier)
                     .setEnablePhases(_sheetStyle == 'Include Phases');
+                ref.read(gameProvider.notifier).setScoreFilter(_scoreFilter);
                 ref.read(gameProvider.notifier).setVersion(_appVersion);
 
                 // Save game state to shared preferences
