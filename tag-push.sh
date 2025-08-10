@@ -98,8 +98,13 @@ fi
 
 git add pubspec.yaml "$CHANGELOG_FILE"
 
-# Always commit changes
-git commit -m "chore: bump version to $VERSION_BUILD" pubspec.yaml "$CHANGELOG_FILE"
+
+# Only commit if there are staged changes
+if git diff --cached --quiet; then
+  echo "No changes to commit."
+else
+  git commit -m "chore: bump version to $VERSION_BUILD" pubspec.yaml "$CHANGELOG_FILE"
+fi
 
 # Tag after commit
 if $FORCE; then
@@ -113,7 +118,7 @@ fi
 # Only push if --push is set
 if $PUSH; then
   git push
-  git push origin "$tag_name"
+  git push --force origin "$tag_name"
   echo "Committed and pushed changes and tag to remote."
 else
   echo "Changes committed and tagged locally. Use --push to push to remote."
