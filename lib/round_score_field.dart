@@ -62,10 +62,10 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
 
     final regex = RegExp(widget.scoreFilter);
     if (!regex.hasMatch(value)) {
-      setState(() {
-        _errorText = 'Score must end in 5 or 0';
-        _hasValidationError = true;
-      });
+              setState(() {
+          _errorText = 'Must end in 5 or 0';
+          _hasValidationError = true;
+        });
     } else {
       setState(() {
         _errorText = null;
