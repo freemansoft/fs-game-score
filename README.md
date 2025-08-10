@@ -144,6 +144,16 @@ flutter test integration_test/*_test.dart
 
 Android and IOS icons generated using the [appicon.co App Icon Generator](https://www.appicon.co/)
 
+## creating a release
+
+Create a tag, update the CHANGELOG
+
+```bash tag-push.sh --version <major.minor.patch> --force```
+
+Edit the CHANGELOG.md updating the new section
+
+```bash tag-push.sh --version <major.minor.patch> --force --push```
+
 ## Known Issues
 
 * The disabled color for the phase dropdown isn't quite right. Both light and dark are incorrect.
