@@ -22,7 +22,6 @@ class RoundScoreField extends StatefulWidget {
 class _RoundScoreFieldState extends State<RoundScoreField> {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
-  String? _errorText;
   bool _hasValidationError = false;
 
   @override
@@ -30,6 +29,7 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
     super.initState();
     _controller = TextEditingController(text: widget.score?.toString() ?? '');
     _focusNode = FocusNode();
+    _focusNode.addListener(_onFocusChange);
   }
 
   @override
@@ -54,7 +54,6 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
   void _validateInput(String value) {
     if (widget.scoreFilter.isEmpty || value.isEmpty) {
       setState(() {
-        _errorText = null;
         _hasValidationError = false;
       });
       return;
@@ -63,12 +62,10 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
     final regex = RegExp(widget.scoreFilter);
     if (!regex.hasMatch(value)) {
       setState(() {
-        _errorText = 'Must end in 5 or 0';
         _hasValidationError = true;
       });
     } else {
       setState(() {
-        _errorText = null;
         _hasValidationError = false;
       });
     }
@@ -84,6 +81,20 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
     // Only call onChanged if validation passes
     final parsed = int.tryParse(value);
     widget.onChanged(parsed);
+  }
+
+  void _onFocusChange() {
+    // If the field is about to lose focus and has a validation error, prevent it
+    if (!_focusNode.hasFocus &&
+        _hasValidationError &&
+        _controller.text.isNotEmpty) {
+      // Re-request focus to prevent leaving the field
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _focusNode.requestFocus();
+        }
+      });
+    }
   }
 
   void _onInputChanged(String value) {
@@ -109,7 +120,6 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
         contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         border: const OutlineInputBorder(),
         filled: !widget.enabled,
-        errorText: _errorText,
       ),
       onChanged: _onInputChanged,
       onFieldSubmitted: _onFieldSubmitted,
