@@ -1,0 +1,34 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.2.0] - 2025-08-09
+
+### Added
+
+- Ability to share CSV via device share functionality
+- Share button in app bar with platform-specific icons (iOS share icon on macOS/iOS)
+- CSV export with quoted player names for comma handling
+- Share functionality with title and subject including date/time
+
+## [1.1.0] - 2024-08-04
+
+### Added
+
+- Save/load last game configuration
+- Persistent game state using SharedPreferences
+- Automatic game state restoration on app restart
+
+## [1.0.0] - 2024-12-19
+
+### Added
+
+- Initial release
+- Basic score tracking functionality
+- Player management
+- Round-based scoring system
+- Data table interface
+- Game reset functionality
