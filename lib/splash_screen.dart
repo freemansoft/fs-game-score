@@ -100,9 +100,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Number of Players:',
-                  style: TextStyle(fontSize: 18),
+                const Tooltip(
+                  message: 'Select the number of players for the game',
+                  child: Text(
+                    'Number of Players:',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 DropdownButton<int>(
@@ -126,7 +129,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Maximum Rounds:', style: TextStyle(fontSize: 18)),
+                const Tooltip(
+                  message: 'Set the maximum number of rounds for the game',
+                  child: Text(
+                    'Maximum Rounds:',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
                 const SizedBox(width: 12),
                 DropdownButton<int>(
                   key: const ValueKey('splash_max_rounds_dropdown'),
@@ -149,7 +158,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Sheet Style:', style: TextStyle(fontSize: 18)),
+                const Tooltip(
+                  message: 'Choose the score sheet style: basic or with phases',
+                  child: Text('Sheet Style:', style: TextStyle(fontSize: 18)),
+                ),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
                   key: const ValueKey('splash_sheet_style_dropdown'),
@@ -178,7 +190,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Score Filter:', style: TextStyle(fontSize: 18)),
+                const Tooltip(
+                  message:
+                      'Limit score input values (e.g., any score or those ending in 5 or 0)',
+                  child: Text('Score Filter:', style: TextStyle(fontSize: 18)),
+                ),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
                   key: const ValueKey('splash_score_filter_dropdown'),

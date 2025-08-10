@@ -42,7 +42,7 @@ class NewScoreCardPanel extends StatelessWidget {
       label: 'Request Change Scorecard Type',
       child: IconButton(
         icon: const Icon(Icons.home),
-        tooltip: 'Change Scorecard Type',
+        tooltip: 'New Game - Change Scorecard Type',
         onPressed: () => _showDialog(context),
       ),
     );
