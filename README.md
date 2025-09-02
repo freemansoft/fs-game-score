@@ -146,19 +146,19 @@ Android and IOS icons generated using the [appicon.co App Icon Generator](https:
 
 ## creating a release
 
-Create a tag, update the CHANGELOG
-
-```bash tag-push.sh --version <major.minor.patch> --force```
-
-Edit the CHANGELOG.md updating the new section
-
-```bash tag-push.sh --version <major.minor.patch> --force --push```
+* Create a tag, update the pubspec.yaml update the CHANGELOG to add the new release
+  * `bash tag-push.sh --version <major.minor.patch> --force`
+* Edit the CHANGELOG.md updating the new section to include the changes you want
+* Commit the changelog and the pubspec.yaml and push the tags, changelog and pubspec.yaml to the remote server
+  * `bash tag-push.sh --version <major.minor.patch> --force --push`
 
 ## Known Issues
 
 * The disabled color for the phase dropdown isn't quite right. Both light and dark are incorrect.
 
 ## Tag management hints
+
+In case you need to manually update release tags
 
 * Create a local tag `git tag 1.1.0+1`
 * Delete a local tag `git tag -d 1.1.0+1`
