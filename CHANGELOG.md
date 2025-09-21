@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- upgrade gradle plugin from 8.5.0 to 8.6.2 and kotlin from 1.8.22 to 2.2.0
 - migrated from Riverpod 2 to Riverpod 3
 - icons set using `flutter_launcher_icons` for android,ios,macos,linux,web
 
