@@ -5,7 +5,22 @@ import 'package:fs_score_card/new_scorecard.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
-final themeProvider = StateProvider<bool>((ref) => false);
+final themeProvider = NotifierProvider<ThemeNotifier, bool>(
+  () => ThemeNotifier(),
+);
+
+class ThemeNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void toggle() {
+    state = !state;
+  }
+
+  void setTheme(bool isDark) {
+    state = isDark;
+  }
+}
 
 class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
   const Phase10AppBar({super.key});
@@ -60,7 +75,8 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
             const Icon(Icons.light_mode),
             Switch(
               value: isDark,
-              onChanged: (val) => ref.read(themeProvider.notifier).state = val,
+              onChanged:
+                  (val) => ref.read(themeProvider.notifier).setTheme(val),
             ),
             const Icon(Icons.dark_mode),
           ],

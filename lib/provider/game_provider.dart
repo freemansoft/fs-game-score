@@ -1,8 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/model/game.dart';
 
-class GameNotifier extends StateNotifier<Game> {
+class GameNotifier extends Notifier<Game> {
+  @override
+  Game build() => const Game();
+
   Game stateValue() => state;
+
   void setVersion(String? version) {
     state = state.copyWith(version: version);
   }
@@ -10,8 +14,6 @@ class GameNotifier extends StateNotifier<Game> {
   void setMaxRounds(int maxRounds) {
     state = state.copyWith(maxRounds: maxRounds);
   }
-
-  GameNotifier() : super(const Game());
 
   void newGame({
     int? maxRounds,
@@ -42,6 +44,4 @@ class GameNotifier extends StateNotifier<Game> {
   // Add more setters as needed
 }
 
-final gameProvider = StateNotifierProvider<GameNotifier, Game>(
-  (ref) => GameNotifier(),
-);
+final gameProvider = NotifierProvider<GameNotifier, Game>(() => GameNotifier());

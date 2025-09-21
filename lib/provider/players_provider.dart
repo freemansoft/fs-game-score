@@ -3,19 +3,20 @@ import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 
-final playersProvider = StateNotifierProvider<PlayersNotifier, Players>((ref) {
-  final game = ref.watch(gameProvider);
-  return PlayersNotifier(
-    Players(
+final playersProvider = NotifierProvider<PlayersNotifier, Players>(
+  () => PlayersNotifier(),
+);
+
+class PlayersNotifier extends Notifier<Players> {
+  @override
+  Players build() {
+    final game = ref.watch(gameProvider);
+    return Players(
       numPlayers: game.numPlayers,
       maxRounds: game.maxRounds,
       numPhases: game.numPhases,
-    ),
-  );
-});
-
-class PlayersNotifier extends StateNotifier<Players> {
-  PlayersNotifier(super.players);
+    );
+  }
 
   void updateScore(int playerIdx, int round, int? score) {
     final player = state.players[playerIdx];

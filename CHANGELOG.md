@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- migrated from Riverpod 2 to Riverpod 3
 - icons set using `flutter_launcher_icons` for android,ios,macos,linux,web
 
 ## [1.3.0] - 2025-08-10
