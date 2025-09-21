@@ -142,7 +142,13 @@ flutter test integration_test/*_test.dart
 
 ## Icons
 
-Android and IOS icons generated using the [appicon.co App Icon Generator](https://www.appicon.co/)
+Android and IOS icons generated using the [appicon.co App Icon Generator](https://www.appicon.co/). The resulting icon is in `/assets/logos` All icons are derived from this 1024x1024 image.
+
+Use [flutter_launcher_icons](https://github.com/fluttercommunity/flutter_launcher_icons) to create change the icons for all the targets.  `flutter_launcher_icons` configuration is in `pubspec.yaml`
+
+```bash
+dart run flutter_launcher_icons
+```
 
 ## creating a release
 
