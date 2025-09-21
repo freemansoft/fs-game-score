@@ -150,7 +150,7 @@ Use [flutter_launcher_icons](https://github.com/fluttercommunity/flutter_launche
 dart run flutter_launcher_icons
 ```
 
-## creating a release
+## Creating a release
 
 * Create a tag, update the pubspec.yaml update the CHANGELOG to add the new release
   * `bash tag-push.sh --version <major.minor.patch> --force`
