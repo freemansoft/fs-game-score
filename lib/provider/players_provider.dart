@@ -40,6 +40,7 @@ class PlayersNotifier extends Notifier<Players> {
     state = state.withPlayer(updatedPlayer, playerIdx);
   }
 
+  // used when a new game is started usually via a modal dialog
   void resetGame({bool clearNames = false}) {
     final maxRounds =
         state.length > 0 ? state.players[0].scores.roundScores.length : 0;
