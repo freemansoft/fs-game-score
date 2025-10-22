@@ -14,6 +14,9 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  static const String _basicSheet = 'Basic Sheet';
+  static const String _phasesSheet = 'Include Phases';
+
   static const String _gamePrefsKey = 'game_state';
   String? _appVersion;
 
@@ -33,11 +36,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         ref.read(gameProvider.notifier).setNumPlayers(game.numPlayers);
         ref.read(gameProvider.notifier).setMaxRounds(game.maxRounds);
         ref.read(gameProvider.notifier).setEnablePhases(game.enablePhases);
-        ref.read(gameProvider.notifier).setVersion(game.version);
+        ref.read(gameProvider.notifier).setScoreFilter(game.scoreFilter);
+        // version from prefs does not override version of game in app
         setState(() {
-          _selectedPlayers = game.numPlayers;
+          _selectedNumPlayers = game.numPlayers;
           _selectedMaxRounds = game.maxRounds;
-          _sheetStyle = game.enablePhases ? 'Include Phases' : 'Basic Sheet';
+          _sheetStyle = game.enablePhases ? _phasesSheet : _basicSheet;
           _scoreFilter = game.scoreFilter;
         });
       } catch (_) {
@@ -63,10 +67,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     }
   }
 
-  int _selectedPlayers = 2;
-  int _selectedMaxRounds = 14;
-  String _sheetStyle = 'Basic Sheet';
-  String _scoreFilter = '';
+  int _selectedNumPlayers = Game.defaultNumPlayers;
+  int _selectedMaxRounds = Game.defaultMaxRounds;
+  String _sheetStyle = Game.defaultEnablePhases ? _phasesSheet : _basicSheet;
+  String _scoreFilter = Game.defaultScoreFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +114,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 const SizedBox(width: 16),
                 DropdownButton<int>(
                   key: const ValueKey('splash_num_players_dropdown'),
-                  value: _selectedPlayers,
+                  value: _selectedNumPlayers,
                   items: [
                     for (var i = 2; i <= 8; i++)
                       DropdownMenuItem(value: i, child: Text(i.toString())),
@@ -118,7 +122,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   onChanged: (value) {
                     if (value != null) {
                       setState(() {
-                        _selectedPlayers = value;
+                        _selectedNumPlayers = value;
                       });
                     }
                   },
@@ -168,12 +172,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   value: _sheetStyle,
                   items: const [
                     DropdownMenuItem(
-                      value: 'Basic Sheet',
-                      child: Text('Basic Sheet'),
+                      value: _basicSheet,
+                      child: Text(_basicSheet),
                     ),
                     DropdownMenuItem(
-                      value: 'Include Phases',
-                      child: Text('Include Phases'),
+                      value: _phasesSheet,
+                      child: Text(_phasesSheet),
                     ),
                   ],
                   onChanged: (value) {
@@ -225,8 +229,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     .read(gameProvider.notifier)
                     .newGame(
                       maxRounds: _selectedMaxRounds,
-                      numPlayers: _selectedPlayers,
-                      enablePhases: _sheetStyle == 'Include Phases',
+                      numPlayers: _selectedNumPlayers,
+                      enablePhases: _sheetStyle == _phasesSheet,
                       scoreFilter: _scoreFilter,
                       version: _appVersion,
                     );

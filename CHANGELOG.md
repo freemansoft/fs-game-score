@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.5.0] - 2025-10-21
 
 ### Added
-- gameId for new games - not for restarts
 
+- gameId for new games - not for restarts
 
 ## [1.4.0] -- 2025-09-21
 

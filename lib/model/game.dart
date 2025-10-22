@@ -3,6 +3,12 @@ import 'package:uuid/uuid.dart';
 
 // Game configuration model for Phase 10
 class Game {
+  static const int defaultMaxRounds = 14;
+  static const int defaultNumPhases = 10;
+  static const int defaultNumPlayers = 8;
+  static const bool defaultEnablePhases = true;
+  static const String defaultScoreFilter = '';
+
   /// Serializes the game configuration to a JSON string.
   /// This is useful for saving and loading game state.
   String toJson() {
@@ -13,6 +19,7 @@ class Game {
       'enablePhases': enablePhases,
       'scoreFilter': scoreFilter,
       'version': version,
+      // gameId is intentionally omitted - will generate new UUID via constructor
     });
   }
 
@@ -22,11 +29,11 @@ class Game {
   factory Game.fromJson(String jsonString) {
     final json = _decodeJson(jsonString);
     return Game(
-      maxRounds: json['maxRounds'] ?? 14,
-      numPhases: json['numPhases'] ?? 10,
-      numPlayers: json['numPlayers'] ?? 8,
-      enablePhases: json['enablePhases'] ?? true,
-      scoreFilter: json['scoreFilter'] ?? '',
+      maxRounds: json['maxRounds'] ?? defaultMaxRounds,
+      numPhases: json['numPhases'] ?? defaultNumPhases,
+      numPlayers: json['numPlayers'] ?? defaultNumPlayers,
+      enablePhases: json['enablePhases'] ?? defaultEnablePhases,
+      scoreFilter: json['scoreFilter'] ?? defaultScoreFilter,
       version: json['version'],
       // gameId is intentionally omitted - will generate new UUID via constructor
     );
@@ -51,11 +58,11 @@ class Game {
   final String gameId; // the gameId is really a game session id
 
   Game({
-    this.maxRounds = 14,
-    this.numPhases = 10,
-    this.numPlayers = 8,
-    this.enablePhases = true,
-    this.scoreFilter = '',
+    this.maxRounds = defaultMaxRounds,
+    this.numPhases = defaultNumPhases,
+    this.numPlayers = defaultNumPlayers,
+    this.enablePhases = defaultEnablePhases,
+    this.scoreFilter = defaultScoreFilter,
     this.version = '0.0.0+0',
     String? gameId,
   }) : gameId = gameId ?? const Uuid().v4();
