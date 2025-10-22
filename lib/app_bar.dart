@@ -4,6 +4,7 @@ import '../new_game_panel.dart';
 import 'package:fs_score_card/new_scorecard.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
 
 final themeProvider = NotifierProvider<ThemeNotifier, bool>(
   () => ThemeNotifier(),
@@ -53,10 +54,17 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
                   final now = DateTime.now();
                   final dateTime =
                       '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+                  final game = ref.read(gameProvider);
+                  final gameId = game.gameId;
                   final title = 'fs score card $dateTime';
+                  final subject = 'fs score card $gameId $dateTime';
 
                   SharePlus.instance.share(
-                    ShareParams(text: csvData, title: title, subject: title),
+                    ShareParams(
+                      text: '$subject\n$csvData',
+                      title: title,
+                      subject: subject,
+                    ),
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

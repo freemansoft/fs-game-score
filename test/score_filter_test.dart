@@ -4,27 +4,27 @@ import 'package:fs_score_card/model/game.dart';
 void main() {
   group('Game Score Filter Tests', () {
     test('should create game with default empty score filter', () {
-      const game = Game();
+      final game = Game();
       expect(game.scoreFilter, equals(''));
     });
 
     test('should create game with custom score filter', () {
-      const game = Game(scoreFilter: r'^[0-9]*[05]$');
+      final game = Game(scoreFilter: r'^[0-9]*[05]$');
       expect(game.scoreFilter, equals(r'^[0-9]*[05]$'));
     });
 
     test('should serialize and deserialize score filter correctly', () {
-      const originalGame = Game(scoreFilter: r'^[0-9]*[05]$');
+      final originalGame = Game(scoreFilter: r'^[0-9]*[05]$');
       final jsonString = originalGame.toJson();
       final deserializedGame = Game.fromJson(jsonString);
-      
+
       expect(deserializedGame.scoreFilter, equals(originalGame.scoreFilter));
     });
 
     test('should copy game with new score filter', () {
-      const originalGame = Game(scoreFilter: '');
+      final originalGame = Game(scoreFilter: '');
       final newGame = originalGame.copyWith(scoreFilter: r'^[0-9]*[05]$');
-      
+
       expect(newGame.scoreFilter, equals(r'^[0-9]*[05]$'));
       expect(originalGame.scoreFilter, equals('')); // Original unchanged
     });
@@ -33,7 +33,7 @@ void main() {
   group('Score Filter Regex Validation Tests', () {
     test('should validate scores ending in 5 or 0', () {
       final regex = RegExp(r'^[0-9]*[05]$');
-      
+
       // Valid scores
       expect(regex.hasMatch('0'), isTrue);
       expect(regex.hasMatch('5'), isTrue);
@@ -43,7 +43,7 @@ void main() {
       expect(regex.hasMatch('25'), isTrue);
       expect(regex.hasMatch('100'), isTrue);
       expect(regex.hasMatch('105'), isTrue);
-      
+
       // Invalid scores
       expect(regex.hasMatch('1'), isFalse);
       expect(regex.hasMatch('2'), isFalse);

@@ -220,15 +220,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ElevatedButton(
               key: const ValueKey('splash_continue_button'),
               onPressed: () async {
-                ref.read(gameProvider.notifier).setNumPlayers(_selectedPlayers);
+                // Create a new game with fresh gameId and selected configuration
                 ref
                     .read(gameProvider.notifier)
-                    .setMaxRounds(_selectedMaxRounds);
-                ref
-                    .read(gameProvider.notifier)
-                    .setEnablePhases(_sheetStyle == 'Include Phases');
-                ref.read(gameProvider.notifier).setScoreFilter(_scoreFilter);
-                ref.read(gameProvider.notifier).setVersion(_appVersion);
+                    .newGame(
+                      maxRounds: _selectedMaxRounds,
+                      numPlayers: _selectedPlayers,
+                      enablePhases: _sheetStyle == 'Include Phases',
+                      scoreFilter: _scoreFilter,
+                      version: _appVersion,
+                    );
 
                 // Save game state to shared preferences
                 final prefs = await SharedPreferences.getInstance();

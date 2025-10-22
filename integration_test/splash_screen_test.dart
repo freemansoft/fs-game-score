@@ -4,6 +4,8 @@ import 'package:fs_score_card/main.dart' as app;
 import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -98,5 +100,53 @@ void main() {
         );
       }
     }
+  });
+
+  /// Tests that pressing Continue on splash screen creates a new gameId
+  testWidgets('Continue button creates new gameId', (
+    WidgetTester tester,
+  ) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Get the initial gameId before any user interaction
+    const splashContinueButtonKey = ValueKey('splash_continue_button');
+
+    final container = ProviderScope.containerOf(
+      tester.element(find.byKey(splashContinueButtonKey)),
+    );
+
+    final initialGame = container.read(gameProvider);
+    final initialGameId = initialGame.gameId;
+    expect(initialGameId, isNotEmpty);
+
+    // Press Continue button to start a new game
+    final continueButton = find.byKey(const ValueKey('splash_continue_button'));
+    expect(continueButton, findsOneWidget);
+    await tester.tap(continueButton);
+    await tester.pumpAndSettle();
+
+    // Verify score table is displayed
+    expect(find.byType(DataTable2), findsOneWidget);
+
+    // Get the new gameId after Continue
+    final newGame = container.read(gameProvider);
+    final newGameId = newGame.gameId;
+
+    // Verify the gameId has changed (new game was created)
+    expect(newGameId, isNot(equals(initialGameId)));
+    expect(newGameId, isNotEmpty);
+
+    // Verify the gameId format is valid UUID
+    expect(
+      newGameId,
+      matches(
+        RegExp(
+          r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+        ),
+      ),
+    );
+
+    // Using the app's ProviderScope container; do not dispose it here.
   });
 }

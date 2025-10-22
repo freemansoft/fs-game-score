@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:uuid/uuid.dart';
 
 // Game configuration model for Phase 10
 class Game {
@@ -17,6 +18,7 @@ class Game {
 
   /// Creates a Game instance from a JSON string.
   /// If a key is missing, it uses default values.
+  /// Note: gameId is not deserialized - each load creates a new game instance with a fresh UUID.
   factory Game.fromJson(String jsonString) {
     final json = _decodeJson(jsonString);
     return Game(
@@ -26,6 +28,7 @@ class Game {
       enablePhases: json['enablePhases'] ?? true,
       scoreFilter: json['scoreFilter'] ?? '',
       version: json['version'],
+      // gameId is intentionally omitted - will generate new UUID via constructor
     );
   }
 
@@ -44,16 +47,18 @@ class Game {
   final int numPlayers;
   final bool enablePhases;
   final String scoreFilter;
-  final String? version;
+  final String? version; // initialized from app version - stored in prefs
+  final String gameId; // the gameId is really a game session id
 
-  const Game({
+  Game({
     this.maxRounds = 14,
     this.numPhases = 10,
     this.numPlayers = 8,
     this.enablePhases = true,
     this.scoreFilter = '',
     this.version = '0.0.0+0',
-  });
+    String? gameId,
+  }) : gameId = gameId ?? const Uuid().v4();
 
   Game copyWith({
     int? maxRounds,
@@ -62,6 +67,7 @@ class Game {
     bool? enablePhases,
     String? scoreFilter,
     String? version,
+    String? gameId,
   }) {
     return Game(
       maxRounds: maxRounds ?? this.maxRounds,
@@ -70,6 +76,7 @@ class Game {
       enablePhases: enablePhases ?? this.enablePhases,
       scoreFilter: scoreFilter ?? this.scoreFilter,
       version: version ?? this.version,
+      gameId: gameId ?? this.gameId,
     );
   }
 }

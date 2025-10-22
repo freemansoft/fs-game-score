@@ -3,7 +3,7 @@ import 'package:fs_score_card/model/game.dart';
 
 class GameNotifier extends Notifier<Game> {
   @override
-  Game build() => const Game();
+  Game build() => Game();
 
   Game stateValue() => state;
 
@@ -20,12 +20,17 @@ class GameNotifier extends Notifier<Game> {
     int? numPhases,
     int? numPlayers,
     bool? enablePhases,
+    String? scoreFilter,
+    String? version,
   }) {
     state = Game(
       maxRounds: maxRounds ?? state.maxRounds,
       numPhases: numPhases ?? state.numPhases,
       numPlayers: numPlayers ?? state.numPlayers,
       enablePhases: enablePhases ?? state.enablePhases,
+      scoreFilter: scoreFilter ?? state.scoreFilter,
+      version: version ?? state.version,
+      // gameId will be automatically generated as a new UUID
     );
   }
 
