@@ -1,13 +1,10 @@
 class Phases {
   final List<int?> completedPhases;
-  final List<bool> enabledRounds;
 
-  Phases(int numPhases)
-    : completedPhases = List.filled(numPhases, null),
-      enabledRounds = List.filled(numPhases, true); // default enabled
+  Phases(int numPhases) : completedPhases = List.filled(numPhases, null);
 
   void setPhase(int round, int? phase) {
-    if (round >= 0 && round < completedPhases.length && enabledRounds[round]) {
+    if (round >= 0 && round < completedPhases.length) {
       if (phase != null && phase < 0) {
         completedPhases[round] = null;
       } else {
@@ -21,32 +18,6 @@ class Phases {
       return completedPhases[round];
     }
     return null;
-  }
-
-  // Enable/disable methods
-  void setEnabled(int round, bool enabled) {
-    if (round >= 0 && round < enabledRounds.length) {
-      enabledRounds[round] = enabled;
-    }
-  }
-
-  bool isEnabled(int round) {
-    if (round >= 0 && round < enabledRounds.length) {
-      return enabledRounds[round];
-    }
-    return true;
-  }
-
-  void enableAll() {
-    for (var i = 0; i < enabledRounds.length; i++) {
-      enabledRounds[i] = true;
-    }
-  }
-
-  void disableAll() {
-    for (var i = 0; i < enabledRounds.length; i++) {
-      enabledRounds[i] = false;
-    }
   }
 
   List<int> completedPhasesList() {

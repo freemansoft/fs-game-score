@@ -141,9 +141,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
               ),
               ...List<DataCell>.generate(game.maxRounds, (round) {
                 final score = player.scores.getScore(round);
-                final enabled =
-                    player.scores.isEnabled(round) &&
-                    player.phases.isEnabled(round);
+                final enabled = player.roundStates.isEnabled(round);
                 return DataCell(
                   Semantics(
                     label: 'Player ${playerIdx + 1} round ${round + 1} score',

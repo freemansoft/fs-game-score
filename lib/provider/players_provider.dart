@@ -36,6 +36,7 @@ class PlayersNotifier extends Notifier<Players> {
       name: name,
       scores: player.scores,
       phases: player.phases,
+      roundStates: player.roundStates,
     );
     state = state.withPlayer(updatedPlayer, playerIdx);
   }
@@ -69,8 +70,7 @@ class PlayersNotifier extends Notifier<Players> {
     var newState = state;
     for (int i = 0; i < state.length; i++) {
       final player = state.players[i];
-      player.scores.setEnabled(round, enabled);
-      player.phases.setEnabled(round, enabled);
+      player.roundStates.setEnabled(round, enabled);
       newState = newState.withPlayer(player, i);
     }
     state = newState;

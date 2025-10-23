@@ -32,9 +32,7 @@ class Players {
              ),
            );
   bool allPlayersEnabledForRound(int round) {
-    return players.every(
-      (p) => p.scores.isEnabled(round) && p.phases.isEnabled(round),
-    );
+    return players.every((p) => p.roundStates.isEnabled(round));
   }
 
   Player operator [](int index) => players[index];

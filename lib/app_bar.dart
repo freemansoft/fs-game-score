@@ -56,7 +56,7 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
                       '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
                   final game = ref.read(gameProvider);
                   final gameId = game.gameId;
-                  final title = 'fs score card $dateTime';
+                  final title = 'fs score card $gameId $dateTime';
                   final subject = 'fs score card $gameId $dateTime';
 
                   SharePlus.instance.share(
