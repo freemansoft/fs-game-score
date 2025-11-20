@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:fs_score_card/player_name_field.dart';
-import 'package:fs_score_card/round_score_field.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
-import 'package:fs_score_card/phase_checkbox_dropdown.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
-import 'package:fs_score_card/total_score_field.dart';
+import 'package:fs_score_card/player_game_cell.dart';
+import 'package:fs_score_card/player_round_cell.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
@@ -112,89 +110,40 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
             ),
             cells: [
               DataCell(
-                Semantics(
-                  label: 'Player ${playerIdx + 1} name and total score',
-                  child: SizedBox(
-                    width: 120,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        PlayerNameField(
-                          key: ValueKey('player_name_field_$playerIdx'),
-                          name: player.name,
-                          onChanged: (val) {
-                            ref
-                                .read(playersProvider.notifier)
-                                .updatePlayerName(playerIdx, val);
-                          },
-                        ),
-                        TotalScoreField(
-                          key: ValueKey('player_total_score_$playerIdx'),
-                          totalScore: player.totalScore,
-                          completedPhases: player.phases.completedPhasesList(),
-                          enablePhases: game.enablePhases,
-                        ),
-                      ],
-                    ),
-                  ),
+                PlayerGameCell(
+                  playerIdx: playerIdx,
+                  name: player.name,
+                  onNameChanged: (val) {
+                    ref
+                        .read(playersProvider.notifier)
+                        .updatePlayerName(playerIdx, val);
+                  },
+                  totalScore: player.totalScore,
+                  completedPhases: player.phases.completedPhasesList(),
+                  enablePhases: game.enablePhases,
                 ),
               ),
               ...List<DataCell>.generate(game.maxRounds, (round) {
-                final score = player.scores.getScore(round);
-                final enabled = player.roundStates.isEnabled(round);
                 return DataCell(
-                  Semantics(
-                    label: 'Player ${playerIdx + 1} round ${round + 1} score',
-                    child: SizedBox(
-                      width: 90,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (game.enablePhases) ...[
-                            const SizedBox(height: 4),
-                            PhaseCheckboxDropdown(
-                              key: ValueKey(
-                                'phase_checkbox_dropdown_p${playerIdx}_r$round',
-                              ),
-                              selectedPhase: player.phases.getPhase(round),
-                              onChanged:
-                                  enabled
-                                      ? (val) {
-                                        ref
-                                            .read(playersProvider.notifier)
-                                            .updatePhase(playerIdx, round, val);
-                                      }
-                                      : (val) {},
-                              playerIdx: playerIdx,
-                              round: round,
-                              completedPhases:
-                                  player.phases.completedPhasesList(),
-                              enabled: enabled,
-                            ),
-                            const SizedBox(height: 4),
-                          ],
-                          RoundScoreField(
-                            key: ValueKey('round_score_p${playerIdx}_r$round'),
-                            score: score,
-                            onChanged:
-                                enabled
-                                    ? (parsed) {
-                                      ref
-                                          .read(playersProvider.notifier)
-                                          .updateScore(
-                                            playerIdx,
-                                            round,
-                                            parsed,
-                                          );
-                                    }
-                                    : (parsed) {},
-                            enabled: enabled,
-                            scoreFilter: game.scoreFilter,
-                          ),
-                        ],
-                      ),
-                    ),
+                  PlayerRoundCell(
+                    playerIdx: playerIdx,
+                    round: round,
+                    score: player.scores.getScore(round),
+                    enabled: player.roundStates.isEnabled(round),
+                    enablePhases: game.enablePhases,
+                    selectedPhase: player.phases.getPhase(round),
+                    completedPhases: player.phases.completedPhasesList(),
+                    onPhaseChanged: (val) {
+                      ref
+                          .read(playersProvider.notifier)
+                          .updatePhase(playerIdx, round, val);
+                    },
+                    onScoreChanged: (parsed) {
+                      ref
+                          .read(playersProvider.notifier)
+                          .updateScore(playerIdx, round, parsed);
+                    },
+                    scoreFilter: game.scoreFilter,
                   ),
                 );
               }),
