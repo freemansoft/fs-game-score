@@ -5,6 +5,7 @@ import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/player_game_cell.dart';
 import 'package:fs_score_card/player_round_cell.dart';
+import 'package:fs_score_card/player_game_modal.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
@@ -113,14 +114,23 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                 PlayerGameCell(
                   playerIdx: playerIdx,
                   name: player.name,
-                  onNameChanged: (val) {
-                    ref
-                        .read(playersProvider.notifier)
-                        .updatePlayerName(playerIdx, val);
-                  },
                   totalScore: player.totalScore,
-                  completedPhases: player.phases.completedPhasesList(),
-                  enablePhases: game.enablePhases,
+                  onTap: () {
+                    PlayerGameModal.show(
+                      context,
+                      playerIdx: playerIdx,
+                      name: player.name,
+                      onNameChanged: (val) {
+                        ref
+                            .read(playersProvider.notifier)
+                            .updatePlayerName(playerIdx, val);
+                      },
+                      totalScore: player.totalScore,
+                      phases: player.phases,
+                      enablePhases: game.enablePhases,
+                      maxRounds: game.maxRounds,
+                    );
+                  },
                 ),
               ),
               ...List<DataCell>.generate(game.maxRounds, (round) {
