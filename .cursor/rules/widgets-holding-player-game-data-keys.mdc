@@ -1,0 +1,12 @@
+---
+alwaysApply: true
+---
+
+- Flutter widgets containing player or game data must have well formatted "key" properties using the ValueKey and some string
+- Widget "key" properties for widgets showing a specific player's info should include specify the player number with 'p' followed by the index of the player in the player collection. The 'p' section should be at the start of the key string.
+- Widget "key" properties for widgets showing a specific round's info should include the round number with 'r' followed by the index of the round. The 'r' section should follow the 'p0' section if if it exists else the 'r' section should be at the start of the key string.
+- Files containing widgets with custom keys should define the ValueKey in static functions.  The function should accept player number or round number if appropriate.
+- Tests involving those keys should use the key functions and not define the ValueKey objects using static strings
+
+- Fields in global modal panels should have specific keys set
+- Fields in modal panels tied to players or rounds should have repeatable keys that include the player number and/or round number

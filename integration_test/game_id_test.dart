@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/player_game_modal.dart';
+import 'package:fs_score_card/player_round_modal.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:flutter/material.dart';
@@ -142,8 +144,19 @@ void main() {
 
     // Define ValueKeys used in the test
     const splashContinueButtonKey = ValueKey('splash_continue_button');
-    const playerNameField0Key = ValueKey('player_name_field_0');
-    const roundScoreP0R0Key = ValueKey('round_score_p0_r0');
+
+    const playerGameCell0Key = ValueKey('p0_game_cell');
+    const playerName0Key = ValueKey('p0_name');
+    const playerTotalScore0Key = ValueKey('p0_total_score');
+
+    // part of the PlayerGameModal
+    const playerNameField0Key = ValueKey('p0_name_field');
+
+    // can be clicked on to open the PlayerRoundModal
+    const playerRoundCellP0R0Key = ValueKey('p0_r0_score');
+
+    // part of the PlayerRoundModal
+    const roundScoreFieldP0R0Key = ValueKey('p0_r0_score_field');
 
     // Press Continue to start the game
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -157,6 +170,16 @@ void main() {
 
     // Verify score table is displayed
     expect(find.byType(DataTable2), findsOneWidget);
+    // verify the player game cell is displayed
+    expect(find.byKey(playerGameCell0Key), findsOneWidget);
+    expect(find.byKey(playerName0Key), findsOneWidget);
+    expect(find.byKey(playerTotalScore0Key), findsOneWidget);
+
+    // click on the player game cell to open the PlayerGameModal
+    await tester.tap(find.byKey(playerGameCell0Key));
+    await tester.pumpAndSettle();
+    // verify the PlayerGameModal is displayed
+    expect(find.byType(PlayerGameModal), findsOneWidget);
 
     // Enter some data to make sharing meaningful
     final playerNameField = find.byKey(playerNameField0Key);
@@ -164,9 +187,23 @@ void main() {
     await tester.enterText(playerNameField, 'Test Player');
     await tester.pumpAndSettle();
 
-    final scoreField = find.byKey(roundScoreP0R0Key);
+    // close the modal
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+
+    // click on the player round cell to open the PlayerRoundModal
+    await tester.tap(find.byKey(playerRoundCellP0R0Key));
+    await tester.pumpAndSettle();
+    // verify the PlayerRoundModal is displayed
+    expect(find.byType(PlayerRoundModal), findsOneWidget);
+
+    final scoreField = find.byKey(roundScoreFieldP0R0Key);
     expect(scoreField, findsOneWidget);
     await tester.enterText(scoreField, '25');
+    await tester.pumpAndSettle();
+
+    // close the modal
+    await tester.tap(find.text('Close'));
     await tester.pumpAndSettle();
 
     final game = container.read(gameProvider);
@@ -174,10 +211,7 @@ void main() {
     expect(gameId, isNotEmpty);
 
     // Find and tap the share button
-    var shareButton = find.byIcon(Icons.share);
-    if (!shareButton.hasFound) {
-      shareButton = find.byIcon(Icons.ios_share);
-    }
+    var shareButton = find.byKey(ValueKey('share_button'));
 
     // Note: We can't actually test the share functionality in integration tests
     // as it involves platform-specific sharing mechanisms. However, we can
@@ -185,7 +219,8 @@ void main() {
     // which would be used in the share subject.
 
     // Verify the share button is present and the game has a valid gameId
-    expect(shareButton, findsOneWidget);
+    expect(shareButton, findsOneWidget, reason: 'Did not find share button');
+    // do we really need to verify the gameId format?
     expect(
       gameId,
       matches(

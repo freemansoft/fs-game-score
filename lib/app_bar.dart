@@ -40,6 +40,7 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
         Consumer(
           builder: (context, ref, child) {
             return IconButton(
+              key: ValueKey('share_button'),
               icon: Icon(
                 Theme.of(context).platform == TargetPlatform.iOS ||
                         Theme.of(context).platform == TargetPlatform.macOS

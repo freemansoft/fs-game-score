@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fs_score_card/round_score_field.dart';
-import 'package:fs_score_card/phase_checkbox_dropdown.dart';
+import 'package:fs_score_card/player_round_modal.dart';
 
 class PlayerRoundCell extends StatelessWidget {
   final int playerIdx;
@@ -14,8 +13,8 @@ class PlayerRoundCell extends StatelessWidget {
   final ValueChanged<int?> onScoreChanged;
   final String scoreFilter;
 
-  const PlayerRoundCell({
-    super.key,
+  PlayerRoundCell({
+    Key? key,
     required this.playerIdx,
     required this.round,
     required this.score,
@@ -26,38 +25,67 @@ class PlayerRoundCell extends StatelessWidget {
     required this.onPhaseChanged,
     required this.onScoreChanged,
     required this.scoreFilter,
-  });
+  }) : super(key: key ?? ValueKey('p${playerIdx}_r${round}_cell'));
+
+  void _openModal(BuildContext context) {
+    PlayerRoundModal.show(
+      context,
+      playerIdx: playerIdx,
+      round: round,
+      enabled: enabled,
+      enablePhases: enablePhases,
+      onPhaseChanged: onPhaseChanged,
+      onScoreChanged: onScoreChanged,
+      scoreFilter: scoreFilter,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: 'Player ${playerIdx + 1} round ${round + 1} score',
+    return InkWell(
+      onTap: enabled ? () => _openModal(context) : null,
       child: SizedBox(
         width: 90,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (enablePhases) ...[
-              const SizedBox(height: 4),
-              PhaseCheckboxDropdown(
-                key: ValueKey('phase_checkbox_dropdown_p${playerIdx}_r$round'),
-                selectedPhase: selectedPhase,
-                onChanged: enabled ? onPhaseChanged : (val) {},
-                playerIdx: playerIdx,
-                round: round,
-                completedPhases: completedPhases,
-                enabled: enabled,
+            Semantics(
+              label: 'Player ${playerIdx + 1} round ${round + 1} score',
+              button: enabled,
+              child: Text(
+                score?.toString() ?? '---',
+                key: ValueKey('p${playerIdx}_r${round}_score'),
+
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: enabled ? null : Theme.of(context).disabledColor,
+                ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 4),
-            ],
-            RoundScoreField(
-              key: ValueKey('round_score_p${playerIdx}_r$round'),
-              score: score,
-              onChanged: enabled ? onScoreChanged : (parsed) {},
-              enabled: enabled,
-              scoreFilter: scoreFilter,
             ),
+            if (enablePhases) ...[
+              const SizedBox(height: 2),
+              Semantics(
+                label: 'Player ${playerIdx + 1} round ${round + 1} phase',
+                button: enabled,
+                key: ValueKey('p${playerIdx}_r${round}_phase'),
+                child: Text(
+                  selectedPhase != null && selectedPhase! > 0
+                      ? 'Phase $selectedPhase'
+                      : '---',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color:
+                        enabled
+                            ? Theme.of(context).colorScheme.secondary
+                            : Theme.of(context).disabledColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ],
         ),
       ),

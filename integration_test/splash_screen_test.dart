@@ -75,19 +75,30 @@ void main() {
     expect(find.byType(DataTable2), findsOneWidget);
 
     // Verify 4 player rows (excluding header)
-    final playerNameFields = find.byKey(const ValueKey('player_name_field_0'));
-    expect(playerNameFields, findsOneWidget);
-    expect(find.byKey(const ValueKey('player_name_field_1')), findsOneWidget);
-    expect(find.byKey(const ValueKey('player_name_field_2')), findsOneWidget);
-    expect(find.byKey(const ValueKey('player_name_field_3')), findsOneWidget);
+    for (int playerIdx = 0; playerIdx < 4; playerIdx++) {
+      final playerNameFields = find.byKey(
+        ValueKey('p${playerIdx}_total_score'),
+      );
+      expect(
+        playerNameFields,
+        findsOneWidget,
+        reason: 'Name field for player $playerIdx',
+      );
+      final playerScoreFields = find.byKey(
+        ValueKey('p${playerIdx}_total_score'),
+      );
+      expect(
+        playerScoreFields,
+        findsOneWidget,
+        reason: 'Total score field for player $playerIdx',
+      );
+    }
 
     // Verify 5 round columns for each player (score and phase fields)
     for (int playerIdx = 0; playerIdx < 4; playerIdx++) {
       for (int round = 0; round < 5; round++) {
-        final scoreKey = ValueKey('round_score_p${playerIdx}_r$round');
-        final phaseKey = ValueKey(
-          'phase_checkbox_dropdown_p${playerIdx}_r$round',
-        );
+        final scoreKey = ValueKey('p${playerIdx}_r${round}_score');
+        final phaseKey = ValueKey('p${playerIdx}_r${round}_phase');
         expect(
           find.byKey(scoreKey),
           findsOneWidget,

@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+- Widgets holding player game data should be directly wrapped with semantics
+- Widgets on the configuraiton screens should be direclty wrapped with semantics if the widget does not have a semantic property

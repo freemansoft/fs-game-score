@@ -76,23 +76,26 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   children: [
                     Text('  ${round + 1}'),
                     const SizedBox(width: 4),
-                    IconButton(
-                      key: ValueKey('lock_round_$round'),
-                      visualDensity: VisualDensity.comfortable,
-                      icon: Icon(
-                        allEnabled ? Icons.lock_open : Icons.lock,
-                        color: allEnabled ? Colors.green : Colors.red,
-                        size: 20,
+                    Semantics(
+                      label: 'Round ${round + 1} lock button',
+                      child: IconButton(
+                        key: ValueKey('lock_r$round'),
+                        visualDensity: VisualDensity.comfortable,
+                        icon: Icon(
+                          allEnabled ? Icons.lock_open : Icons.lock,
+                          color: allEnabled ? Colors.green : Colors.red,
+                          size: 20,
+                        ),
+                        tooltip: allEnabled ? 'Lock column' : 'Unlock column',
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        onPressed: () {
+                          // Toggle enabled state for all players for this round
+                          ref
+                              .read(playersProvider.notifier)
+                              .toggleRoundEnabled(round, !allEnabled);
+                        },
                       ),
-                      tooltip: allEnabled ? 'Lock column' : 'Unlock column',
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      onPressed: () {
-                        // Toggle enabled state for all players for this round
-                        ref
-                            .read(playersProvider.notifier)
-                            .toggleRoundEnabled(round, !allEnabled);
-                      },
                     ),
                   ],
                 ),

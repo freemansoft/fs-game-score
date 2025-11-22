@@ -1,4 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/player_round_cell.dart';
+import 'package:fs_score_card/player_round_modal.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:flutter/material.dart';
@@ -24,15 +27,28 @@ void main() {
 
     // Define all ValueKeys used in the test
     const splashContinueButtonKey = ValueKey('splash_continue_button');
-    const playerNameField0Key = ValueKey('player_name_field_0');
-    const playerNameField1Key = ValueKey('player_name_field_1');
-    const roundScoreP0R0Key = ValueKey('round_score_p0_r0');
-    const roundScoreP0R1Key = ValueKey('round_score_p0_r1');
-    const roundScoreP0R3Key = ValueKey('round_score_p0_r3');
-    const roundScoreP1R3Key = ValueKey('round_score_p1_r3');
-    const playerTotalScore0Key = ValueKey('player_total_score_0');
-    const playerTotalScore1Key = ValueKey('player_total_score_1');
-    const lockRound3Key = ValueKey('lock_round_3');
+    const playerNameFieldP0Key = ValueKey('p0_name');
+    const playerNameFieldP1Key = ValueKey('p1_name');
+
+    // for lock/unlock tests
+    const playerRoundCellP0R3Key = ValueKey('p0_r3_cell');
+    const playerRoundCellP1R3Key = ValueKey('p1_r3_cell');
+
+    // to tap and open the panel
+    const playerRoundScoreP0R0Key = ValueKey('p0_r0_score');
+    const playerRoundScoreP0R1Key = ValueKey('p0_r1_score');
+    const playerRoundScoreP0R3Key = ValueKey('p0_r3_score');
+    const playerRoundScoreP1R3Key = ValueKey('p1_r3_score');
+
+    // actual fields in the modal
+    const roundScoreFieldP0R0Key = ValueKey('p0_r0_score_field');
+    const roundScoreFieldP0R1Key = ValueKey('p0_r1_score_field');
+    const roundScoreFieldP0R3Key = ValueKey('p0_r3_score_field');
+    const roundScoreFieldP1R3Key = ValueKey('p1_r3_score_field');
+
+    const playerTotalScoreP0Key = ValueKey('p0_total_score');
+    const playerTotalScoreP1Key = ValueKey('p1_total_score');
+    const lockRound3Key = ValueKey('lock_r3');
 
     // Only press Continue (no dropdown changes)
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -44,111 +60,131 @@ void main() {
     expect(find.byType(DataTable2), findsOneWidget);
 
     // Verify 2 player rows (excluding header)
-    final playerNameFields = find.byKey(playerNameField0Key);
+    final playerNameFields = find.byKey(playerNameFieldP0Key);
     expect(playerNameFields, findsOneWidget);
-    expect(find.byKey(playerNameField1Key), findsOneWidget);
+    expect(find.byKey(playerNameFieldP1Key), findsOneWidget);
 
     // Verify 5 round columns for each player (score fields only)
     for (int playerIdx = 0; playerIdx < 2; playerIdx++) {
       for (int round = 0; round < 5; round++) {
-        final scoreKey = ValueKey('round_score_p${playerIdx}_r$round');
+        final scoreKey = ValueKey('p${playerIdx}_r${round}_score');
         expect(
           find.byKey(scoreKey),
           findsOneWidget,
-          reason: 'Score field for player $playerIdx round $round',
+          reason: 'Cannot find score field for player $playerIdx round $round',
         );
       }
     }
 
+    // tap on the roundScoreP0R0 to open the PlayerRoundCellModelPanel
+    await tester.tap(find.byKey(playerRoundScoreP0R0Key));
+    await tester.pumpAndSettle();
+    // verify the PlayerRoundModal is displayed
+    expect(find.byType(PlayerRoundModal), findsOneWidget);
+
     // Enter the value "20" in the round score field for player 1 round 1
-    final scoreField1 = find.byKey(roundScoreP0R0Key);
+    final scoreField1 = find.byKey(roundScoreFieldP0R0Key);
     expect(scoreField1, findsOneWidget);
     await tester.enterText(scoreField1, '20');
     await tester.pumpAndSettle();
 
+    // close the PlayerRoundCellModelPanel
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    // validate that the text in the table matches the input
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP0R0Key)) as Text).data,
+      '20',
+    );
+
+    // tap on the roundScoreP0R0 to open the PlayerRoundCellModelPanel
+    await tester.tap(find.byKey(playerRoundScoreP0R1Key));
+    await tester.pumpAndSettle();
+    // verify the PlayerRoundModal is displayed
+    expect(find.byType(PlayerRoundModal), findsOneWidget);
+
     // Enter the value "40" in the round score field for player 1 round 2
-    final scoreField2 = find.byKey(roundScoreP0R1Key);
+    final scoreField2 = find.byKey(roundScoreFieldP0R1Key);
     expect(scoreField2, findsOneWidget);
     await tester.enterText(scoreField2, '40');
     await tester.pumpAndSettle();
 
-    // Validate the total score value for player 1 is "60"
-    final totalScoreField = find.byKey(playerTotalScore0Key);
-    expect(totalScoreField, findsOneWidget);
-    // Find the Text descendant of the TotalScoreField
-    final textField = find.descendant(
-      of: totalScoreField,
-      matching: find.byType(Text),
+    // close the PlayerRoundCellModelPanel
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    // validate that the text in the table matches the input
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP0R1Key)) as Text).data,
+      '40',
     );
-    expect(textField, findsOneWidget);
-    final textFieldWidget = tester.widget<Text>(textField);
-    final totalScoreText = textFieldWidget.data;
-    expect(totalScoreText, '60');
 
-    // Validate the player 0 score is zero
-    final totalScoreFieldP0 = find.byKey(playerTotalScore1Key);
-    expect(totalScoreFieldP0, findsOneWidget);
-    final textFieldP0 = find.descendant(
-      of: totalScoreFieldP0,
-      matching: find.byType(Text),
+    // validate the player totals
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP0Key)) as Text).data,
+      '60',
     );
-    expect(textFieldP0, findsOneWidget);
-    final textFieldWidgetP0 = tester.widget<Text>(textFieldP0);
-    final totalScoreTextP0 = textFieldWidgetP0.data;
-    expect(totalScoreTextP0, '0');
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP1Key)) as Text).data,
+      '0',
+    );
+
+    // additional redundant data entry testing
 
     // Enter values of 5*(player number +1) in column 3 (round 3) for all players
     // Player 0: 5*(0+1) = 5, Player 1: 5*(1+1) = 10
-    final round3ScoreFieldP0 = find.byKey(roundScoreP0R3Key);
+    // tap on the roundScoreP0R0 to open the PlayerRoundCellModelPanel
+
+    // click to open the editing panel
+    await tester.tap(find.byKey(playerRoundScoreP0R3Key));
+    await tester.pumpAndSettle();
+    // verify the PlayerRoundModal is displayed
+    expect(find.byType(PlayerRoundModal), findsOneWidget);
+
+    final round3ScoreFieldP0 = find.byKey(roundScoreFieldP0R3Key);
     expect(round3ScoreFieldP0, findsOneWidget);
     await tester.enterText(round3ScoreFieldP0, '5');
     await tester.pumpAndSettle();
 
-    final round3ScoreFieldP1 = find.byKey(roundScoreP1R3Key);
+    // close the PlayerRoundCellModelPanel
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    // validate that the text in the table matches the input
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP0R3Key)) as Text).data,
+      '5',
+    );
+
+    // validate the new total
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP0Key)) as Text).data,
+      '65',
+    );
+
+    await tester.tap(find.byKey(playerRoundScoreP1R3Key));
+    await tester.pumpAndSettle();
+    // verify the PlayerRoundModal is displayed
+    expect(find.byType(PlayerRoundModal), findsOneWidget);
+
+    final round3ScoreFieldP1 = find.byKey(roundScoreFieldP1R3Key);
     expect(round3ScoreFieldP1, findsOneWidget);
     await tester.enterText(round3ScoreFieldP1, '10');
     await tester.pumpAndSettle();
 
-    // Verify the fields contain the right values
-    final textFormFieldP0R3 = find.descendant(
-      of: round3ScoreFieldP0,
-      matching: find.byType(TextFormField),
-    );
-    expect(textFormFieldP0R3, findsOneWidget);
-    final widgetP0R3 = tester.widget<TextFormField>(textFormFieldP0R3);
-    expect(widgetP0R3.controller?.text, '5');
+    // close the PlayerRoundCellModelPanel
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
 
-    final textFormFieldP1R3 = find.descendant(
-      of: round3ScoreFieldP1,
-      matching: find.byType(TextFormField),
+    // validate that the text in the table matches the input
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP1R3Key)) as Text).data,
+      '10',
     );
-    expect(textFormFieldP1R3, findsOneWidget);
-    final widgetP1R3 = tester.widget<TextFormField>(textFormFieldP1R3);
-    expect(widgetP1R3.controller?.text, '10');
 
-    // Verify the totals reflect the new values
-    // Player 0: 20 + 40 + 5 = 65, Player 1: 0 + 0 + 10 = 10
-    final totalScoreFieldP0Updated = find.byKey(playerTotalScore0Key);
-    expect(totalScoreFieldP0Updated, findsOneWidget);
-    final textFieldP0Updated = find.descendant(
-      of: totalScoreFieldP0Updated,
-      matching: find.byType(Text),
+    // validate the new total for this player
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP1Key)) as Text).data,
+      '10',
     );
-    expect(textFieldP0Updated, findsOneWidget);
-    final textFieldWidgetP0Updated = tester.widget<Text>(textFieldP0Updated);
-    final totalScoreTextP0Updated = textFieldWidgetP0Updated.data;
-    expect(totalScoreTextP0Updated, '65');
-
-    final totalScoreFieldP1Updated = find.byKey(playerTotalScore1Key);
-    expect(totalScoreFieldP1Updated, findsOneWidget);
-    final textFieldP1Updated = find.descendant(
-      of: totalScoreFieldP1Updated,
-      matching: find.byType(Text),
-    );
-    expect(textFieldP1Updated, findsOneWidget);
-    final textFieldWidgetP1Updated = tester.widget<Text>(textFieldP1Updated);
-    final totalScoreTextP1Updated = textFieldWidgetP1Updated.data;
-    expect(totalScoreTextP1Updated, '10');
 
     // Click on the lock icon in round 3 to lock the column (header row)
     final lockIcon = find.byKey(lockRound3Key);
@@ -156,59 +192,36 @@ void main() {
     await tester.tap(lockIcon);
     await tester.pumpAndSettle();
 
-    // Validate the round score field at player 1 round 3 is disabled
-    final roundScoreFieldP0R3Locked = find.byKey(roundScoreP0R3Key);
-    expect(roundScoreFieldP0R3Locked, findsOneWidget);
-    // Find the TextFormField descendant of the RoundScoreField
-    final textFormFieldP0R3Locked = find.descendant(
-      of: roundScoreFieldP0R3Locked,
-      matching: find.byType(TextFormField),
+    // Validate the round score field at player round 3 is disabled and has the same value
+    expect(
+      (tester.widget(find.byKey(playerRoundCellP0R3Key)) as PlayerRoundCell)
+          .enabled,
+      false,
     );
-    expect(textFormFieldP0R3Locked, findsOneWidget);
-    final widgetP0R3Locked = tester.widget<TextFormField>(
-      textFormFieldP0R3Locked,
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP0R3Key)) as Text).data,
+      '5',
     );
-    expect(widgetP0R3Locked.enabled, isFalse);
 
-    // Verify that the locked fields still contain the same values
-    expect(widgetP0R3Locked.controller?.text, '5');
+    expect(
+      (tester.widget(find.byKey(playerRoundCellP1R3Key)) as PlayerRoundCell)
+          .enabled,
+      false,
+    );
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP1R3Key)) as Text).data,
+      '10',
+    );
 
-    final roundScoreFieldP1R3Locked = find.byKey(roundScoreP1R3Key);
-    expect(roundScoreFieldP1R3Locked, findsOneWidget);
-    final textFormFieldP1R3Locked = find.descendant(
-      of: roundScoreFieldP1R3Locked,
-      matching: find.byType(TextFormField),
+    // validate lock/unlock does not change the totals
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP0Key)) as Text).data,
+      '65',
     );
-    expect(textFormFieldP1R3Locked, findsOneWidget);
-    final widgetP1R3Locked = tester.widget<TextFormField>(
-      textFormFieldP1R3Locked,
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP1Key)) as Text).data,
+      '10',
     );
-    expect(widgetP1R3Locked.enabled, isFalse);
-    expect(widgetP1R3Locked.controller?.text, '10');
-
-    // Validate the player 0 score is still 65 (after adding 5 to round 3)
-    final totalScoreFieldP0Again = find.byKey(playerTotalScore0Key);
-    expect(totalScoreFieldP0Again, findsOneWidget);
-    final textFieldP0Again = find.descendant(
-      of: totalScoreFieldP0Again,
-      matching: find.byType(Text),
-    );
-    expect(textFieldP0Again, findsOneWidget);
-    final textFieldWidgetP0Again = tester.widget<Text>(textFieldP0Again);
-    final totalScoreTextP0Again = textFieldWidgetP0Again.data;
-    expect(totalScoreTextP0Again, '65');
-
-    // Validate the player 1 score is still 10 (after adding 10 to round 3)
-    final totalScoreFieldP1Again = find.byKey(playerTotalScore1Key);
-    expect(totalScoreFieldP1Again, findsOneWidget);
-    final textFieldP1Again = find.descendant(
-      of: totalScoreFieldP1Again,
-      matching: find.byType(Text),
-    );
-    expect(textFieldP1Again, findsOneWidget);
-    final textFieldWidgetP1Again = tester.widget<Text>(textFieldP1Again);
-    final totalScoreTextP1Again = textFieldWidgetP1Again.data;
-    expect(totalScoreTextP1Again, '10');
 
     // Enable editing in player 1 round 3 and validate that the round_score for player 0 round 3 is enabled for editing
     // Click on the lock icon in round 3 to unlock the column (header row)
@@ -217,61 +230,35 @@ void main() {
     await tester.tap(unlockIcon);
     await tester.pumpAndSettle();
 
-    // Validate the round score field at player 1 round 3 is enabled
-    final roundScoreFieldP1R3Enabled = find.byKey(roundScoreP0R3Key);
-    expect(roundScoreFieldP1R3Enabled, findsOneWidget);
-    // Find the TextFormField descendant of the RoundScoreField
-    final textFormFieldP1R3Enabled = find.descendant(
-      of: roundScoreFieldP1R3Enabled,
-      matching: find.byType(TextFormField),
+    // Validate the round score field at player 0 round 3 is enabled and has the same values
+    expect(
+      (tester.widget(find.byKey(playerRoundCellP0R3Key)) as PlayerRoundCell)
+          .enabled,
+      true,
     );
-    expect(textFormFieldP1R3Enabled, findsOneWidget);
-    final widgetP1R3Enabled = tester.widget<TextFormField>(
-      textFormFieldP1R3Enabled,
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP0R3Key)) as Text).data,
+      '5',
     );
-    expect(widgetP1R3Enabled.enabled, isTrue);
+    // Validate the round score field at player 1 round 3 is enabled and has the same values
+    expect(
+      (tester.widget(find.byKey(playerRoundCellP1R3Key)) as PlayerRoundCell)
+          .enabled,
+      true,
+    );
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP1R3Key)) as Text).data,
+      '10',
+    );
 
-    // Verify that after unlocking, the fields still contain the same values
-    expect(widgetP1R3Enabled.controller?.text, '5');
-
-    final roundScoreFieldP1R3Enabled2 = find.byKey(roundScoreP1R3Key);
-    expect(roundScoreFieldP1R3Enabled2, findsOneWidget);
-    final textFormFieldP1R3Enabled2 = find.descendant(
-      of: roundScoreFieldP1R3Enabled2,
-      matching: find.byType(TextFormField),
+    // validate lock/unlock does not change the totals
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP0Key)) as Text).data,
+      '65',
     );
-    expect(textFormFieldP1R3Enabled2, findsOneWidget);
-    final widgetP1R3Enabled2 = tester.widget<TextFormField>(
-      textFormFieldP1R3Enabled2,
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP1Key)) as Text).data,
+      '10',
     );
-    expect(widgetP1R3Enabled2.enabled, isTrue);
-    expect(widgetP1R3Enabled2.controller?.text, '10');
-
-    // Verify that after unlocking, the totals still have the same values
-    final totalScoreFieldP0Final = find.byKey(playerTotalScore0Key);
-    expect(totalScoreFieldP0Final, findsOneWidget);
-    final textFieldP0Final = find.descendant(
-      of: totalScoreFieldP0Final,
-      matching: find.byType(Text),
-    );
-    expect(textFieldP0Final, findsOneWidget);
-    final textFieldWidgetP0Final = tester.widget<Text>(textFieldP0Final);
-    final totalScoreTextP0Final = textFieldWidgetP0Final.data;
-    expect(totalScoreTextP0Final, '65');
-
-    final totalScoreFieldP1Final = find.byKey(playerTotalScore1Key);
-    expect(totalScoreFieldP1Final, findsOneWidget);
-    final textFieldP1Final = find.descendant(
-      of: totalScoreFieldP1Final,
-      matching: find.byType(Text),
-    );
-    expect(textFieldP1Final, findsOneWidget);
-    final textFieldWidgetP1Final = tester.widget<Text>(textFieldP1Final);
-    final totalScoreTextP1Final = textFieldWidgetP1Final.data;
-    expect(totalScoreTextP1Final, '10');
-
-    // Validate the player 0 score is still 65 and player 1 score is still 10
-    expect(totalScoreTextP0Again, '65');
-    expect(totalScoreTextP1Again, '10');
   });
 }

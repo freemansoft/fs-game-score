@@ -6,6 +6,7 @@ class RoundScoreField extends StatefulWidget {
   final ValueChanged<int?> onChanged;
   final bool enabled;
   final String scoreFilter;
+  final bool autofocus;
 
   const RoundScoreField({
     super.key,
@@ -13,6 +14,7 @@ class RoundScoreField extends StatefulWidget {
     required this.onChanged,
     this.enabled = true,
     this.scoreFilter = '',
+    this.autofocus = false,
   });
 
   @override
@@ -84,6 +86,17 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
   }
 
   void _onFocusChange() {
+    // Select all text when field gains focus (especially for autofocus)
+    if (_focusNode.hasFocus && widget.autofocus) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && _controller.text.isNotEmpty) {
+          _controller.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: _controller.text.length,
+          );
+        }
+      });
+    }
     // If the field is about to lose focus and has a validation error, prevent it
     if (!_focusNode.hasFocus &&
         _hasValidationError &&
@@ -121,6 +134,7 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       focusNode: _focusNode,
       keyboardType: TextInputType.number,
       enabled: widget.enabled,
+      autofocus: widget.autofocus,
       decoration: InputDecoration(
         hintText: 'Score',
         isDense: true,

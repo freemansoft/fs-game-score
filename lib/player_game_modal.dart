@@ -50,7 +50,8 @@ class PlayerGameModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Player ${playerIdx + 1}'),
+      //title: Text('Player ${playerIdx + 1}'),
+      scrollable: true,
       content: SizedBox(
         width: 200,
         child: SingleChildScrollView(
@@ -63,30 +64,21 @@ class PlayerGameModal extends StatelessWidget {
                 'Name:',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
-              const SizedBox(height: 4),
               PlayerNameField(
-                key: ValueKey('player_name_field_modal_$playerIdx'),
+                key: ValueKey('p${playerIdx}_name_field'),
                 name: name,
                 onChanged: onNameChanged,
                 border: const OutlineInputBorder(),
                 textAlign: TextAlign.left,
               ),
-              const SizedBox(height: 16),
-              // Total score (read-only)
-              const Text(
-                'Total Score:',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              const SizedBox(height: 4),
-              Text('$totalScore', style: const TextStyle(fontSize: 16)),
               // Phases display (if enabled)
               if (enablePhases) ...[
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 const Text(
                   'Phases by Round:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Builder(
                   builder: (context) {
                     final phaseEntries = <Widget>[];
