@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fs_score_card/app_bar.dart';
-import 'package:fs_score_card/score_table.dart';
+import 'package:fs_score_card/presentation/score_table.dart';
 
 class ScoreTableScreen extends StatelessWidget {
   const ScoreTableScreen({super.key});

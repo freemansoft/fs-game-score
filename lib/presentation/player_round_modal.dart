@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_score_card/round_score_field.dart';
-import 'package:fs_score_card/round_phase_dropdown.dart';
+import 'package:fs_score_card/presentation/round_score_field.dart';
+import 'package:fs_score_card/presentation/round_phase_dropdown.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
 class PlayerRoundModal extends ConsumerStatefulWidget {

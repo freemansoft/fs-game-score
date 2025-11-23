@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fs_score_card/round_score_field.dart';
+import 'package:fs_score_card/presentation/round_score_field.dart';
 
 void main() {
   group('RoundScoreField Score Filter Validation Tests', () {

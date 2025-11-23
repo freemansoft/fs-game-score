@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../new_game_panel.dart';
-import 'package:fs_score_card/new_scorecard.dart';
+import 'presentation/new_game_panel.dart';
+import 'package:fs_score_card/presentation/new_scorecard.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:fs_score_card/provider/game_provider.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fs_score_card/player_name_field.dart';
+import 'package:fs_score_card/presentation/player_name_field.dart';
 import 'package:fs_score_card/model/phases.dart';
 
 class PlayerGameModal extends StatelessWidget {

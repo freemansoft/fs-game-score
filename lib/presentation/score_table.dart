@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
-import 'package:fs_score_card/player_game_cell.dart';
-import 'package:fs_score_card/player_round_cell.dart';
-import 'package:fs_score_card/player_game_modal.dart';
+import 'package:fs_score_card/presentation/player_game_cell.dart';
+import 'package:fs_score_card/presentation/player_round_cell.dart';
+import 'package:fs_score_card/presentation/player_game_modal.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});

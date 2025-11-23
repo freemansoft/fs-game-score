@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
-import 'package:fs_score_card/player_round_cell.dart';
-import 'package:fs_score_card/player_round_modal.dart';
+import 'package:fs_score_card/presentation/player_round_cell.dart';
+import 'package:fs_score_card/presentation/player_round_modal.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:flutter/material.dart';

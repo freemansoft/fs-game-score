@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fs_score_card/player_round_modal.dart';
+import 'package:fs_score_card/presentation/player_round_modal.dart';
 
 class PlayerRoundCell extends StatelessWidget {
   final int playerIdx;
