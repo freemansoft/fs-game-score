@@ -47,70 +47,100 @@ class PlayerGameModal extends StatelessWidget {
     );
   }
 
+  Widget _buildNameSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          'Name:',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 4),
+        PlayerNameField(
+          key: ValueKey('p${playerIdx}_name_field'),
+          name: name,
+          onChanged: onNameChanged,
+          border: const OutlineInputBorder(),
+          textAlign: TextAlign.left,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhasesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          'Phases by Round:',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 4),
+        Builder(
+          builder: (context) {
+            final phaseEntries = <Widget>[];
+            for (int round = 0; round < maxRounds; round++) {
+              final phase = phases.getPhase(round);
+              if (phase != null && phase > 0) {
+                phaseEntries.add(
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Text('Round ${round + 1}: Phase $phase'),
+                  ),
+                );
+              }
+            }
+            if (phaseEntries.isEmpty) {
+              return const Text(
+                'No phases completed',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              );
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: phaseEntries,
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Check orientation using MediaQuery
+    final orientation = MediaQuery.of(context).orientation;
+
     return AlertDialog(
       //title: Text('Player ${playerIdx + 1}'),
       key: ValueKey('p${playerIdx}_game_modal'),
       scrollable: true,
-      content: SizedBox(
-        width: 200,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Name field
-              const Text(
-                'Name:',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              PlayerNameField(
-                key: ValueKey('p${playerIdx}_name_field'),
-                name: name,
-                onChanged: onNameChanged,
-                border: const OutlineInputBorder(),
-                textAlign: TextAlign.left,
-              ),
-              // Phases display (if enabled)
-              if (enablePhases) ...[
-                const SizedBox(height: 12),
-                const Text(
-                  'Phases by Round:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+      content: SingleChildScrollView(
+        child:
+            orientation == Orientation.landscape && enablePhases
+                ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: _buildNameSection()),
+                    const SizedBox(width: 16),
+                    Expanded(child: _buildPhasesSection()),
+                  ],
+                )
+                : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildNameSection(),
+                    if (enablePhases) ...[
+                      const SizedBox(height: 12),
+                      _buildPhasesSection(),
+                    ],
+                  ],
                 ),
-                const SizedBox(height: 4),
-                Builder(
-                  builder: (context) {
-                    final phaseEntries = <Widget>[];
-                    for (int round = 0; round < maxRounds; round++) {
-                      final phase = phases.getPhase(round);
-                      if (phase != null && phase > 0) {
-                        phaseEntries.add(
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Text('Round ${round + 1}: Phase $phase'),
-                          ),
-                        );
-                      }
-                    }
-                    if (phaseEntries.isEmpty) {
-                      return const Text(
-                        'No phases completed',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      );
-                    } else {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: phaseEntries,
-                      );
-                    }
-                  },
-                ),
-              ],
-            ],
-          ),
-        ),
       ),
     );
   }
