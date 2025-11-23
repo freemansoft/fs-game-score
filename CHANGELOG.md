@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - gameId for new games - not for restarts
-- moved from in-cell editing to editing in a modal panel
-- recast all the field keys to simplify testing
+- moved from in-cell editing to editing in a modal panel without a close button
+- recast all the field key properties to same format to simplify testing
 
 ## [1.4.0] -- 2025-09-21
 

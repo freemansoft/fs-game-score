@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/app.dart';
 import 'package:fs_score_card/player_game_modal.dart';
 import 'package:fs_score_card/player_round_modal.dart';
 import 'package:integration_test/integration_test.dart';
@@ -187,9 +188,11 @@ void main() {
     await tester.enterText(playerNameField, 'Test Player');
     await tester.pumpAndSettle();
 
-    // close the modal
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
+    // find an object outside the modal - AlertDialog and tap to cclose
+    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.pumpAndSettle(); // Wait for the dialog to dismiss
+    // validate it is goine to verify this approach
+    expect(find.byType(PlayerGameModal), findsNothing);
 
     // click on the player round cell to open the PlayerRoundModal
     await tester.tap(find.byKey(playerRoundCellP0R0Key));
@@ -202,9 +205,9 @@ void main() {
     await tester.enterText(scoreField, '25');
     await tester.pumpAndSettle();
 
-    // close the modal
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
+    // find an object outside the modal - AlertDialog and tap to close
+    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.pumpAndSettle(); // Wait for the dialog to dismiss
 
     final game = container.read(gameProvider);
     final gameId = game.gameId;

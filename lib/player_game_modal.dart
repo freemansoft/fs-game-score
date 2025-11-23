@@ -51,6 +51,7 @@ class PlayerGameModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       //title: Text('Player ${playerIdx + 1}'),
+      key: ValueKey('p${playerIdx}_game_modal'),
       scrollable: true,
       content: SizedBox(
         width: 200,
@@ -110,12 +111,6 @@ class PlayerGameModal extends StatelessWidget {
           ),
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Close'),
-        ),
-      ],
     );
   }
 }

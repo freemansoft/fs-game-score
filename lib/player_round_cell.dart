@@ -43,6 +43,7 @@ class PlayerRoundCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      key: ValueKey('p${playerIdx}_r${round}_round_cell'),
       onTap: enabled ? () => _openModal(context) : null,
       child: SizedBox(
         width: 90,

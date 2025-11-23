@@ -207,7 +207,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     DropdownMenuItem(value: '', child: Text('Any Score')),
                     DropdownMenuItem(
                       value: r'^[0-9]*[05]$',
-                      child: Text('Scores ending in 5 or 0'),
+                      child: Text('Must end in 0 or 5'),
                     ),
                   ],
                   onChanged: (value) {

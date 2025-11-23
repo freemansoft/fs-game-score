@@ -64,6 +64,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     final currentScore = player.scores.getScore(widget.round);
 
     return AlertDialog(
+      key: ValueKey('p${widget.playerIdx}_r${widget.round}_round_modal'),
       title: Text('Player ${widget.playerIdx + 1} - Round ${widget.round + 1}'),
       scrollable: true,
       content: Column(
@@ -106,12 +107,6 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
           ],
         ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Close'),
-        ),
-      ],
     );
   }
 }

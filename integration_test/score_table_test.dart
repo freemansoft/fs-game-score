@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/app.dart';
 import 'package:fs_score_card/player_round_cell.dart';
 import 'package:fs_score_card/player_round_modal.dart';
 import 'package:integration_test/integration_test.dart';
@@ -89,8 +90,9 @@ void main() {
     await tester.pumpAndSettle();
 
     // close the PlayerRoundCellModelPanel
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
+    // find an object outside the modal - AlertDialog and tap to close
+    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.pumpAndSettle(); // Wait for the dialog to dismiss
     // validate that the text in the table matches the input
     expect(
       (tester.widget(find.byKey(playerRoundScoreP0R0Key)) as Text).data,
@@ -110,8 +112,10 @@ void main() {
     await tester.pumpAndSettle();
 
     // close the PlayerRoundCellModelPanel
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
+    // find an object outside the modal - AlertDialog and tap to close
+    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.pumpAndSettle(); // Wait for the dialog to dismiss
+
     // validate that the text in the table matches the input
     expect(
       (tester.widget(find.byKey(playerRoundScoreP0R1Key)) as Text).data,
@@ -146,8 +150,10 @@ void main() {
     await tester.pumpAndSettle();
 
     // close the PlayerRoundCellModelPanel
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
+    // find an object outside the modal - AlertDialog and tap to close
+    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.pumpAndSettle(); // Wait for the dialog to dismiss
+
     // validate that the text in the table matches the input
     expect(
       (tester.widget(find.byKey(playerRoundScoreP0R3Key)) as Text).data,
@@ -171,8 +177,9 @@ void main() {
     await tester.pumpAndSettle();
 
     // close the PlayerRoundCellModelPanel
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
+    // find an object outside the modal - AlertDialog and tap to close
+    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.pumpAndSettle(); // Wait for the dialog to dismiss
 
     // validate that the text in the table matches the input
     expect(
