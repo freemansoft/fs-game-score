@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - gameId for new games - not for restarts
 - moved from in-cell editing to editing in a modal panel without a close button
+- round cell editing dialog changes orientation based on device orientation
 - recast all the field key properties to same format to simplify testing
 
 ## [1.4.0] -- 2025-09-21

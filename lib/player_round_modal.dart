@@ -54,6 +54,51 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
 }
 
 class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
+  Widget _buildScoreField(int? currentScore) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          'Score:',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 4),
+        RoundScoreField(
+          key: ValueKey('p${widget.playerIdx}_r${widget.round}_score_field'),
+          score: currentScore,
+          onChanged: widget.enabled ? widget.onScoreChanged : (parsed) {},
+          enabled: widget.enabled,
+          scoreFilter: widget.scoreFilter,
+          autofocus: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhaseDropdown(int? selectedPhase, List<int?> completedPhases) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          'Phase:',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 4),
+        RoundPhaseDropdown(
+          key: ValueKey('p${widget.playerIdx}_r${widget.round}_phase_dropdown'),
+          selectedPhase: selectedPhase,
+          onChanged: widget.enabled ? widget.onPhaseChanged : (val) {},
+          playerIdx: widget.playerIdx,
+          round: widget.round,
+          completedPhases: completedPhases,
+          enabled: widget.enabled,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Watch the players provider to get the current phase and score values
@@ -63,50 +108,42 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     final completedPhases = player.phases.completedPhasesList();
     final currentScore = player.scores.getScore(widget.round);
 
+    // Check orientation using MediaQuery
+    final orientation = MediaQuery.of(context).orientation;
+
     return AlertDialog(
       key: ValueKey('p${widget.playerIdx}_r${widget.round}_round_modal'),
       title: Text('Player ${widget.playerIdx + 1} - Round ${widget.round + 1}'),
       scrollable: true,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Score field
-          const Text(
-            'Score:',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          ),
-          const SizedBox(height: 4),
-          RoundScoreField(
-            key: ValueKey('p${widget.playerIdx}_r${widget.round}_score_field'),
-            score: currentScore,
-            onChanged: widget.enabled ? widget.onScoreChanged : (parsed) {},
-            enabled: widget.enabled,
-            scoreFilter: widget.scoreFilter,
-            autofocus: true,
-          ),
-          // Phase dropdown (if enabled)
-          if (widget.enablePhases) ...[
-            const SizedBox(height: 8),
-            const Text(
-              'Phase:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            const SizedBox(height: 4),
-            RoundPhaseDropdown(
-              key: ValueKey(
-                'p${widget.playerIdx}_r${widget.round}_phase_dropdown',
+      content:
+          orientation == Orientation.landscape
+              ? Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _buildScoreField(currentScore)),
+                  if (widget.enablePhases) ...[
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _buildPhaseDropdown(
+                        selectedPhase,
+                        completedPhases,
+                      ),
+                    ),
+                  ],
+                ],
+              )
+              : Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildScoreField(currentScore),
+                  if (widget.enablePhases) ...[
+                    const SizedBox(height: 16),
+                    _buildPhaseDropdown(selectedPhase, completedPhases),
+                  ],
+                ],
               ),
-              selectedPhase: selectedPhase,
-              onChanged: widget.enabled ? widget.onPhaseChanged : (val) {},
-              playerIdx: widget.playerIdx,
-              round: widget.round,
-              completedPhases: completedPhases,
-              enabled: widget.enabled,
-            ),
-          ],
-        ],
-      ),
     );
   }
 }

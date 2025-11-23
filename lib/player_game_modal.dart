@@ -99,11 +99,12 @@ class PlayerGameModal extends StatelessWidget {
                         'No phases completed',
                         style: TextStyle(fontStyle: FontStyle.italic),
                       );
+                    } else {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: phaseEntries,
+                      );
                     }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: phaseEntries,
-                    );
                   },
                 ),
               ],
