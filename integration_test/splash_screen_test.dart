@@ -6,6 +6,9 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/presentation/splash_screen.dart';
+import 'package:fs_score_card/presentation/player_game_cell.dart';
+import 'package:fs_score_card/presentation/player_round_cell.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +29,7 @@ void main() {
 
     // Select 4 players
     final playersDropdown = find.byKey(
-      const ValueKey('splash_num_players_dropdown'),
+      SplashScreen.numPlayersDropdownKey,
     );
     expect(playersDropdown, findsOneWidget);
     await tester.tap(playersDropdown);
@@ -36,7 +39,7 @@ void main() {
 
     // Select 5 rounds
     final roundsDropdown = find.byKey(
-      const ValueKey('splash_max_rounds_dropdown'),
+      SplashScreen.maxRoundsDropdownKey,
     );
     expect(roundsDropdown, findsOneWidget);
     await tester.tap(roundsDropdown);
@@ -57,7 +60,7 @@ void main() {
 
     // Enable "Include Phases"
     final sheetDropdown = find.byKey(
-      const ValueKey('splash_sheet_style_dropdown'),
+      SplashScreen.sheetStyleDropdownKey,
     );
     expect(sheetDropdown, findsOneWidget);
     await tester.tap(sheetDropdown);
@@ -66,7 +69,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Press Continue
-    final continueButton = find.byKey(const ValueKey('splash_continue_button'));
+    final continueButton = find.byKey(SplashScreen.continueButtonKey);
     expect(continueButton, findsOneWidget);
     await tester.tap(continueButton);
     await tester.pumpAndSettle();
@@ -77,7 +80,7 @@ void main() {
     // Verify 4 player rows (excluding header)
     for (int playerIdx = 0; playerIdx < 4; playerIdx++) {
       final playerNameFields = find.byKey(
-        ValueKey('p${playerIdx}_total_score'),
+        PlayerGameCell.totalScoreKey(playerIdx),
       );
       expect(
         playerNameFields,
@@ -85,7 +88,7 @@ void main() {
         reason: 'Name field for player $playerIdx',
       );
       final playerScoreFields = find.byKey(
-        ValueKey('p${playerIdx}_total_score'),
+        PlayerGameCell.totalScoreKey(playerIdx),
       );
       expect(
         playerScoreFields,
@@ -97,8 +100,8 @@ void main() {
     // Verify 5 round columns for each player (score and phase fields)
     for (int playerIdx = 0; playerIdx < 4; playerIdx++) {
       for (int round = 0; round < 5; round++) {
-        final scoreKey = ValueKey('p${playerIdx}_r${round}_score');
-        final phaseKey = ValueKey('p${playerIdx}_r${round}_phase');
+        final scoreKey = PlayerRoundCell.scoreKey(playerIdx, round);
+        final phaseKey = PlayerRoundCell.phaseKey(playerIdx, round);
         expect(
           find.byKey(scoreKey),
           findsOneWidget,
@@ -121,7 +124,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Get the initial gameId before any user interaction
-    const splashContinueButtonKey = ValueKey('splash_continue_button');
+    final splashContinueButtonKey = SplashScreen.continueButtonKey;
 
     final container = ProviderScope.containerOf(
       tester.element(find.byKey(splashContinueButtonKey)),
@@ -132,7 +135,7 @@ void main() {
     expect(initialGameId, isNotEmpty);
 
     // Press Continue button to start a new game
-    final continueButton = find.byKey(const ValueKey('splash_continue_button'));
+    final continueButton = find.byKey(SplashScreen.continueButtonKey);
     expect(continueButton, findsOneWidget);
     await tester.tap(continueButton);
     await tester.pumpAndSettle();

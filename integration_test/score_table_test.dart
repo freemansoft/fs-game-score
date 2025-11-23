@@ -2,6 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
 import 'package:fs_score_card/presentation/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_round_modal.dart';
+import 'package:fs_score_card/presentation/player_game_cell.dart';
+import 'package:fs_score_card/presentation/score_table.dart';
+import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:flutter/material.dart';
@@ -26,29 +29,29 @@ void main() {
     await tester.pumpAndSettle();
 
     // Define all ValueKeys used in the test
-    const splashContinueButtonKey = ValueKey('splash_continue_button');
-    const playerNameFieldP0Key = ValueKey('p0_name');
-    const playerNameFieldP1Key = ValueKey('p1_name');
+    final splashContinueButtonKey = SplashScreen.continueButtonKey;
+    final playerNameFieldP0Key = PlayerGameCell.nameKey(0);
+    final playerNameFieldP1Key = PlayerGameCell.nameKey(1);
 
     // for lock/unlock tests
-    const playerRoundCellP0R3Key = ValueKey('p0_r3_cell');
-    const playerRoundCellP1R3Key = ValueKey('p1_r3_cell');
+    final playerRoundCellP0R3Key = PlayerRoundCell.cellKey(0, 3);
+    final playerRoundCellP1R3Key = PlayerRoundCell.cellKey(1, 3);
 
     // to tap and open the panel
-    const playerRoundScoreP0R0Key = ValueKey('p0_r0_score');
-    const playerRoundScoreP0R1Key = ValueKey('p0_r1_score');
-    const playerRoundScoreP0R3Key = ValueKey('p0_r3_score');
-    const playerRoundScoreP1R3Key = ValueKey('p1_r3_score');
+    final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
+    final playerRoundScoreP0R1Key = PlayerRoundCell.scoreKey(0, 1);
+    final playerRoundScoreP0R3Key = PlayerRoundCell.scoreKey(0, 3);
+    final playerRoundScoreP1R3Key = PlayerRoundCell.scoreKey(1, 3);
 
     // actual fields in the modal
-    const roundScoreFieldP0R0Key = ValueKey('p0_r0_score_field');
-    const roundScoreFieldP0R1Key = ValueKey('p0_r1_score_field');
-    const roundScoreFieldP0R3Key = ValueKey('p0_r3_score_field');
-    const roundScoreFieldP1R3Key = ValueKey('p1_r3_score_field');
+    final roundScoreFieldP0R0Key = PlayerRoundModal.scoreFieldKey(0, 0);
+    final roundScoreFieldP0R1Key = PlayerRoundModal.scoreFieldKey(0, 1);
+    final roundScoreFieldP0R3Key = PlayerRoundModal.scoreFieldKey(0, 3);
+    final roundScoreFieldP1R3Key = PlayerRoundModal.scoreFieldKey(1, 3);
 
-    const playerTotalScoreP0Key = ValueKey('p0_total_score');
-    const playerTotalScoreP1Key = ValueKey('p1_total_score');
-    const lockRound3Key = ValueKey('lock_r3');
+    final playerTotalScoreP0Key = PlayerGameCell.totalScoreKey(0);
+    final playerTotalScoreP1Key = PlayerGameCell.totalScoreKey(1);
+    final lockRound3Key = ScoreTable.lockRoundKey(3);
 
     // Only press Continue (no dropdown changes)
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -67,7 +70,7 @@ void main() {
     // Verify 5 round columns for each player (score fields only)
     for (int playerIdx = 0; playerIdx < 2; playerIdx++) {
       for (int round = 0; round < 5; round++) {
-        final scoreKey = ValueKey('p${playerIdx}_r${round}_score');
+        final scoreKey = PlayerRoundCell.scoreKey(playerIdx, round);
         expect(
           find.byKey(scoreKey),
           findsOneWidget,

@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 
 class PlayerGameCell extends StatelessWidget {
+  static ValueKey cellKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_game_cell');
+  }
+
+  static ValueKey nameKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_name');
+  }
+
+  static ValueKey totalScoreKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_total_score');
+  }
+
   final int playerIdx;
   final String name;
   final int totalScore;
@@ -20,7 +32,7 @@ class PlayerGameCell extends StatelessWidget {
       label: 'Player ${playerIdx + 1} name and total score',
       button: true,
       child: InkWell(
-        key: ValueKey('p${playerIdx}_game_cell'),
+        key: cellKey(playerIdx),
         onTap: onTap,
         child: SizedBox(
           width: 120,
@@ -31,7 +43,7 @@ class PlayerGameCell extends StatelessWidget {
                 label: 'Player name ${playerIdx + 1}',
                 child: Text(
                   name,
-                  key: ValueKey('p${playerIdx}_name'),
+                  key: nameKey(playerIdx),
                   style: const TextStyle(fontWeight: FontWeight.normal),
                   textAlign: TextAlign.center,
                 ),
@@ -41,7 +53,7 @@ class PlayerGameCell extends StatelessWidget {
                 button: true,
                 child: Text(
                   '$totalScore',
-                  key: ValueKey('p${playerIdx}_total_score'),
+                  key: totalScoreKey(playerIdx),
                   style: const TextStyle(fontWeight: FontWeight.normal),
                   textAlign: TextAlign.center,
                 ),

@@ -8,6 +8,10 @@ import 'package:fs_score_card/presentation/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_game_modal.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
+  static ValueKey lockRoundKey(int round) {
+    return ValueKey('lock_r$round');
+  }
+
   const ScoreTable({super.key});
 
   @override
@@ -79,7 +83,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     Semantics(
                       label: 'Round ${round + 1} lock button',
                       child: IconButton(
-                        key: ValueKey('lock_r$round'),
+                        key: ScoreTable.lockRoundKey(round),
                         visualDensity: VisualDensity.comfortable,
                         icon: Icon(
                           allEnabled ? Icons.lock_open : Icons.lock,

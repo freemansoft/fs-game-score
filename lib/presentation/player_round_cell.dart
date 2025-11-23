@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:fs_score_card/presentation/player_round_modal.dart';
 
 class PlayerRoundCell extends StatelessWidget {
+  static ValueKey cellKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_cell');
+  }
+
+  static ValueKey roundCellKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_round_cell');
+  }
+
+  static ValueKey scoreKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_score');
+  }
+
+  static ValueKey phaseKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_phase');
+  }
+
   final int playerIdx;
   final int round;
   final int? score;
@@ -25,7 +41,7 @@ class PlayerRoundCell extends StatelessWidget {
     required this.onPhaseChanged,
     required this.onScoreChanged,
     required this.scoreFilter,
-  }) : super(key: key ?? ValueKey('p${playerIdx}_r${round}_cell'));
+  }) : super(key: key ?? cellKey(playerIdx, round));
 
   void _openModal(BuildContext context) {
     PlayerRoundModal.show(
@@ -43,7 +59,7 @@ class PlayerRoundCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      key: ValueKey('p${playerIdx}_r${round}_round_cell'),
+      key: roundCellKey(playerIdx, round),
       onTap: enabled ? () => _openModal(context) : null,
       child: SizedBox(
         width: 90,
@@ -56,8 +72,7 @@ class PlayerRoundCell extends StatelessWidget {
               button: enabled,
               child: Text(
                 score?.toString() ?? '---',
-                key: ValueKey('p${playerIdx}_r${round}_score'),
-
+                key: scoreKey(playerIdx, round),
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   color: enabled ? null : Theme.of(context).disabledColor,
@@ -70,7 +85,7 @@ class PlayerRoundCell extends StatelessWidget {
               Semantics(
                 label: 'Player ${playerIdx + 1} round ${round + 1} phase',
                 button: enabled,
-                key: ValueKey('p${playerIdx}_r${round}_phase'),
+                key: phaseKey(playerIdx, round),
                 child: Text(
                   selectedPhase != null && selectedPhase! > 0
                       ? 'Phase $selectedPhase'

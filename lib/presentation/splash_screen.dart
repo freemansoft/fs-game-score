@@ -6,6 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fs_score_card/model/game.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
+  static const ValueKey numPlayersDropdownKey = ValueKey('splash_num_players_dropdown');
+  static const ValueKey maxRoundsDropdownKey = ValueKey('splash_max_rounds_dropdown');
+  static const ValueKey sheetStyleDropdownKey = ValueKey('splash_sheet_style_dropdown');
+  static const ValueKey scoreFilterDropdownKey = ValueKey('splash_score_filter_dropdown');
+  static const ValueKey continueButtonKey = ValueKey('splash_continue_button');
+
   final VoidCallback? onContinue;
   const SplashScreen({super.key, this.onContinue});
 
@@ -113,7 +119,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
                 const SizedBox(width: 16),
                 DropdownButton<int>(
-                  key: const ValueKey('splash_num_players_dropdown'),
+                  key: SplashScreen.numPlayersDropdownKey,
                   value: _selectedNumPlayers,
                   items: [
                     for (var i = 2; i <= 8; i++)
@@ -142,7 +148,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
                 const SizedBox(width: 12),
                 DropdownButton<int>(
-                  key: const ValueKey('splash_max_rounds_dropdown'),
+                  key: SplashScreen.maxRoundsDropdownKey,
                   value: _selectedMaxRounds,
                   items: [
                     for (var i = 1; i <= 20; i++)
@@ -168,7 +174,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
-                  key: const ValueKey('splash_sheet_style_dropdown'),
+                  key: SplashScreen.sheetStyleDropdownKey,
                   value: _sheetStyle,
                   items: const [
                     DropdownMenuItem(
@@ -201,7 +207,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
-                  key: const ValueKey('splash_score_filter_dropdown'),
+                  key: SplashScreen.scoreFilterDropdownKey,
                   value: _scoreFilter,
                   items: const [
                     DropdownMenuItem(value: '', child: Text('Any Score')),
@@ -222,7 +228,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ),
             const SizedBox(height: 6),
             ElevatedButton(
-              key: const ValueKey('splash_continue_button'),
+              key: SplashScreen.continueButtonKey,
               onPressed: () async {
                 // Create a new game with fresh gameId and selected configuration
                 ref

@@ -5,6 +5,18 @@ import 'package:fs_score_card/presentation/round_phase_dropdown.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
 class PlayerRoundModal extends ConsumerStatefulWidget {
+  static ValueKey modalKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_round_modal');
+  }
+
+  static ValueKey scoreFieldKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_score_field');
+  }
+
+  static ValueKey phaseDropdownKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_phase_dropdown');
+  }
+
   final int playerIdx;
   final int round;
   final bool enabled;
@@ -65,7 +77,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
         ),
         const SizedBox(height: 4),
         RoundScoreField(
-          key: ValueKey('p${widget.playerIdx}_r${widget.round}_score_field'),
+          key: PlayerRoundModal.scoreFieldKey(widget.playerIdx, widget.round),
           score: currentScore,
           onChanged: widget.enabled ? widget.onScoreChanged : (parsed) {},
           enabled: widget.enabled,
@@ -87,7 +99,10 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
         ),
         const SizedBox(height: 4),
         RoundPhaseDropdown(
-          key: ValueKey('p${widget.playerIdx}_r${widget.round}_phase_dropdown'),
+          key: PlayerRoundModal.phaseDropdownKey(
+            widget.playerIdx,
+            widget.round,
+          ),
           selectedPhase: selectedPhase,
           onChanged: widget.enabled ? widget.onPhaseChanged : (val) {},
           playerIdx: widget.playerIdx,
@@ -112,7 +127,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     final orientation = MediaQuery.of(context).orientation;
 
     return AlertDialog(
-      key: ValueKey('p${widget.playerIdx}_r${widget.round}_round_modal'),
+      key: PlayerRoundModal.modalKey(widget.playerIdx, widget.round),
       title: Text('Player ${widget.playerIdx + 1} - Round ${widget.round + 1}'),
       scrollable: true,
       content:

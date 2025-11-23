@@ -3,6 +3,14 @@ import 'package:fs_score_card/presentation/player_name_field.dart';
 import 'package:fs_score_card/model/phases.dart';
 
 class PlayerGameModal extends StatelessWidget {
+  static ValueKey modalKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_game_modal');
+  }
+
+  static ValueKey nameFieldKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_name_field');
+  }
+
   final int playerIdx;
   final String name;
   final void Function(String) onNameChanged;
@@ -58,7 +66,7 @@ class PlayerGameModal extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         PlayerNameField(
-          key: ValueKey('p${playerIdx}_name_field'),
+          key: nameFieldKey(playerIdx),
           name: name,
           onChanged: onNameChanged,
           border: const OutlineInputBorder(),
@@ -116,7 +124,7 @@ class PlayerGameModal extends StatelessWidget {
 
     return AlertDialog(
       //title: Text('Player ${playerIdx + 1}'),
-      key: ValueKey('p${playerIdx}_game_modal'),
+      key: modalKey(playerIdx),
       scrollable: true,
       content: SingleChildScrollView(
         child:

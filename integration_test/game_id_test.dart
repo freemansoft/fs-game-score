@@ -1,7 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
 import 'package:fs_score_card/presentation/player_game_modal.dart';
+import 'package:fs_score_card/presentation/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_round_modal.dart';
+import 'package:fs_score_card/presentation/player_game_cell.dart';
+import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:flutter/material.dart';
@@ -27,7 +30,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Define ValueKeys used in the test
-    const splashContinueButtonKey = ValueKey('splash_continue_button');
+    final splashContinueButtonKey = SplashScreen.continueButtonKey;
 
     // Press Continue to start the game
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -87,7 +90,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Define ValueKeys used in the test
-    const splashContinueButtonKey = ValueKey('splash_continue_button');
+    final splashContinueButtonKey = SplashScreen.continueButtonKey;
 
     // Press Continue to start the game
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -144,20 +147,20 @@ void main() {
     await tester.pumpAndSettle();
 
     // Define ValueKeys used in the test
-    const splashContinueButtonKey = ValueKey('splash_continue_button');
+    final splashContinueButtonKey = SplashScreen.continueButtonKey;
 
-    const playerGameCell0Key = ValueKey('p0_game_cell');
-    const playerName0Key = ValueKey('p0_name');
-    const playerTotalScore0Key = ValueKey('p0_total_score');
+    final playerGameCell0Key = PlayerGameCell.cellKey(0);
+    final playerName0Key = PlayerGameCell.nameKey(0);
+    final playerTotalScore0Key = PlayerGameCell.totalScoreKey(0);
 
     // part of the PlayerGameModal
-    const playerNameField0Key = ValueKey('p0_name_field');
+    final playerNameField0Key = PlayerGameModal.nameFieldKey(0);
 
     // can be clicked on to open the PlayerRoundModal
-    const playerRoundCellP0R0Key = ValueKey('p0_r0_score');
+    final playerRoundCellP0R0Key = PlayerRoundCell.scoreKey(0, 0);
 
     // part of the PlayerRoundModal
-    const roundScoreFieldP0R0Key = ValueKey('p0_r0_score_field');
+    final roundScoreFieldP0R0Key = PlayerRoundModal.scoreFieldKey(0, 0);
 
     // Press Continue to start the game
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -244,7 +247,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Define ValueKeys used in the test
-    const splashContinueButtonKey = ValueKey('splash_continue_button');
+    final splashContinueButtonKey = SplashScreen.continueButtonKey;
 
     // Press Continue to start the game
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -299,7 +302,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Get the initial gameId from the splash screen
-    const splashContinueButtonKey = ValueKey('splash_continue_button');
+    final splashContinueButtonKey = SplashScreen.continueButtonKey;
 
     final container = ProviderScope.containerOf(
       tester.element(find.byKey(splashContinueButtonKey)),
