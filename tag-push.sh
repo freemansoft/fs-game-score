@@ -9,6 +9,7 @@ function usage() {
   echo
   echo "Options:"
   echo "  --version <major.minor.patch>   Set the version (required, semantic versioning)"
+  echo "  --build-id <number>             Optional build id appended to version (default: 1)"
   echo "  --push                          Push committed changes and tag to remote"
   echo "  --force                         Force tag creation, overwrite existing tag if present"
   echo "  --help                          Show this help message and exit"
@@ -20,12 +21,17 @@ function usage() {
 VERSION=""
 PUSH=false
 FORCE=false
+BUILD_ID=1
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --version)
       shift
       VERSION="$1"
+      ;;
+    --build-id)
+      shift
+      BUILD_ID="$1"
       ;;
     --push)
       PUSH=true
@@ -54,8 +60,13 @@ if ! [[ $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   usage
   exit 2
 fi
+# Validate BUILD_ID is numeric and > 0
+if ! [[ $BUILD_ID =~ ^[0-9]+$ ]]; then
+  echo "Error: --build-id must be a positive integer. Received: $BUILD_ID"
+  usage
+  exit 2
+fi
 
-BUILD_ID=1
 VERSION_BUILD="$VERSION+$BUILD_ID"
 tag_name="$VERSION_BUILD"
 
