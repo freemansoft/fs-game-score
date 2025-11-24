@@ -35,7 +35,7 @@ class PlayerGameCell extends StatelessWidget {
         key: cellKey(playerIdx),
         onTap: onTap,
         child: SizedBox(
-          width: 120,
+          width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -44,6 +44,9 @@ class PlayerGameCell extends StatelessWidget {
                 child: Text(
                   name,
                   key: nameKey(playerIdx),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
                   style: const TextStyle(fontWeight: FontWeight.normal),
                   textAlign: TextAlign.center,
                 ),

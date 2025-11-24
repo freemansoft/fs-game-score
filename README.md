@@ -24,6 +24,8 @@ The end result is a multi-platform Flutter app, fs_score_card that can be found 
 16. Integration tests: Working with component navigation in tests was a lot easier to prompt for once we had a project example. Then it was almost automatic.
 17. This uses Riverpod which I sort of understand.  There have been a couple times AI made changes to the Riverpod code that broke the app. Often I didn't know enough to describe how to fix it so I'd iterate with the Agent having it "fix".  A couple times this came to a bad result and I'd rollback and try again. This was especially true when I converted the Notifier for a `List<Player>` to a `Players` object that contained a `List<Player>`.  If it breaks again I may not understand why.
 18. Construction was often done closest to use.  This makes mocking or other types of things like a global initializer difficult and things like game restore from preferences difficult. _not yet impemented at the time of this note_
+19. If you want certain patterns like ValueKeys being available via functions then you need a .cursor file or need to tell it that.
+20. Some test refactoring was difficult.  I started some of it by hand because I didn't have `key` values set everywhere to let test grab the components easily
 
 ## This app
 
@@ -85,6 +87,8 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
    2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage
       1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
 3. (ios) This is complicated by the Apple store
+   1. `flutter build ipa`
+   2. Do the store thing - upload via Apple **Transporter** app and do all the configuration in testflight and the store
 
 Validate the version number on the splash screen. It should match the value in `pubps pec.yaml`.  The version number is set in `pubspec.yaml`.
 

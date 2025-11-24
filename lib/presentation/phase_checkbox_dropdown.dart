@@ -1,5 +1,5 @@
 // We have to use -1 for the None value because onSelected is only called if there is a value
-// This ensures that selecting 'None' triggers the onSelected callback
+// This ensures that selecting 'No Phase' triggers the onSelected callback
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,14 +55,14 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Text(
-          selectedPhase != null ? 'Phase $selectedPhase' : 'None',
+          selectedPhase != null ? 'Phase $selectedPhase' : 'No Phase',
           style: TextStyle(color: textColor),
         ),
       ),
       itemBuilder:
           (context) => [
             // We have to use a -1 for the None value because onSelected is only called if there is a value
-            const PopupMenuItem<int?>(value: -1, child: Text('None')),
+            const PopupMenuItem<int?>(value: -1, child: Text('No Phase')),
             ...List.generate(game.numPhases, (i) {
               final phaseNum = i + 1;
               return CheckedPopupMenuItem<int?>(
