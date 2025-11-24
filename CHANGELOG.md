@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - recast all the field key properties to same format to simplify testing
 - added cursor rules
 - tests and views now share ValueKey definitions implemented as static functions in the views. Simplifies tests but loses any Key drift (should not be issue because keys are only used internally)
+- tweaked name display behavior to avoid overflow - use elipses
 
 ## [1.4.0] -- 2025-09-21
 
