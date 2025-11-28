@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// A widget that displays a home icon button and shows a confirmation dialog for a new scorecard.
-class NewScoreCardPanel extends StatelessWidget {
-  const NewScoreCardPanel({super.key});
+class NewScoreCardControl extends StatelessWidget {
+  const NewScoreCardControl({super.key});
 
   Future<void> _showDialog(BuildContext context) async {
     final result = await showDialog<bool>(

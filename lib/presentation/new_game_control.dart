@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
-class NewGamePanel extends ConsumerWidget {
-  const NewGamePanel({super.key});
+class NewGameControl extends ConsumerWidget {
+  const NewGameControl({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

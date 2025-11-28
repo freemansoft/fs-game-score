@@ -1,27 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'presentation/new_game_panel.dart';
-import 'package:fs_score_card/presentation/new_scorecard.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:fs_score_card/provider/players_provider.dart';
-import 'package:fs_score_card/provider/game_provider.dart';
-
-final themeProvider = NotifierProvider<ThemeNotifier, bool>(
-  () => ThemeNotifier(),
-);
-
-class ThemeNotifier extends Notifier<bool> {
-  @override
-  bool build() => false;
-
-  void toggle() {
-    state = !state;
-  }
-
-  void setTheme(bool isDark) {
-    state = isDark;
-  }
-}
+import 'presentation/new_game_control.dart';
+import 'presentation/share_game_control.dart';
+import 'presentation/light_dark_control.dart';
+import 'package:fs_score_card/presentation/new_score_card_control.dart';
 
 class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
   const Phase10AppBar({super.key});
@@ -31,65 +13,13 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = ref.watch(themeProvider);
     return AppBar(
       title: const Text('Scorecard'),
       actions: [
-        const NewScoreCardPanel(),
-        const NewGamePanel(),
-        Consumer(
-          builder: (context, ref, child) {
-            return IconButton(
-              key: ValueKey('share_button'),
-              icon: Icon(
-                Theme.of(context).platform == TargetPlatform.iOS ||
-                        Theme.of(context).platform == TargetPlatform.macOS
-                    ? Icons.ios_share
-                    : Icons.share,
-              ),
-              tooltip: 'Share Scores',
-              onPressed: () {
-                final players = ref.read(playersProvider);
-                if (players.players.isNotEmpty) {
-                  final csvData = players.toCsv();
-                  final now = DateTime.now();
-                  final dateTime =
-                      '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
-                  final game = ref.read(gameProvider);
-                  final gameId = game.gameId;
-                  final title = 'fs score card $gameId $dateTime';
-                  final subject = 'fs score card $gameId $dateTime';
-
-                  SharePlus.instance.share(
-                    ShareParams(
-                      text: '$subject\n$csvData',
-                      title: title,
-                      subject: subject,
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('No scores to share'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                }
-              },
-            );
-          },
-        ),
-        Row(
-          children: [
-            const Icon(Icons.light_mode),
-            Switch(
-              value: isDark,
-              onChanged:
-                  (val) => ref.read(themeProvider.notifier).setTheme(val),
-            ),
-            const Icon(Icons.dark_mode),
-          ],
-        ),
+        const NewScoreCardControl(),
+        const NewGameControl(),
+        const ShareGameControl(),
+        const LightDarkControl(),
       ],
     );
   }

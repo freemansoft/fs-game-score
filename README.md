@@ -87,8 +87,13 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
    2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage
       1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
 3. (ios) This is complicated by the Apple store
-   1. `flutter build ipa`
-   2. Do the store thing - upload via Apple **Transporter** app and do all the configuration in testflight and the store
+   1. open the `ios` folder in xcode if you need to.  I didn't need xcode for iOS.
+   2. `flutter build ipa`
+   3. Do the store thing - upload via Apple **Transporter** app and do all the configuration in testflight and the store
+4. (macos) this is different than ios (sad face here)
+   1. Open the `macos` folder in xcode. The isntructions require XCode for MacOS.
+   2. `flutter build macos`
+   3. Follow <https://docs.flutter.dev/deployment/macos>
 
 Validate the version number on the splash screen. It should match the value in `pubps pec.yaml`.  The version number is set in `pubspec.yaml`.
 
