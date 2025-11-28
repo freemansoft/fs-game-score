@@ -14,7 +14,8 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
-      title: const Text('Scorecard'),
+      title: const Text('Scores'),
+      actionsPadding: EdgeInsets.only(right: 12.0),
       actions: [
         const NewScoreCardControl(),
         const NewGameControl(),
