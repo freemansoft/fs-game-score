@@ -101,10 +101,11 @@ Standalone testing is complicated by the Apple store
 
 Alternatively - use the xcode archive route like we do for macOS
 
-1. Open the `ios` project in XCode
-2. `Product > Archive`
-3. `Validate App` --> `Validate`
-4. `Distribute App` --> `App Store Connect`
+1. `flutter build ipa` to build the project and copy `pubspec.yaml` into the xcode iOS files
+2. Open the `ios` project in XCode. This opens the iOS target of the Flutter project
+3. `Product > Archive`
+4. `Validate App` --> `Validate`
+5. `Distribute App` --> `App Store Connect`
 
 ### MacOS test builds
 
@@ -112,9 +113,8 @@ You can test this locally using the IDE on a Mac
 
 MacOS builds are separate from iOS builds and must be uploaded to the store separately.  Follow <https://docs.flutter.dev/deployment/macos>
 
-   1. Open the `macos` folder in xcode. The isntructions require XCode for MacOS.
-   2. `flutter build macos`
-   3. Open the macOS directory in XCode. This opens the MacOS target of the Flutter project.
+   1. `flutter build macos` to build the project and copy the `pubspec.yaml` into the xcode macOS files
+   2. Open the `macOS` directory in XCode. This opens the MacOS target of the Flutter project.
       1. XCode `Product > Archive` it will build an archive
       2. A new XCode window will pop up
       3. XCode `Validate App` --> `Validate`
