@@ -22,6 +22,10 @@ void main() {
 
   /// Navigates to the scoring table and verifies the table functionality
   /// including changing the player name, cell score and column locking
+  /// NOTE: We use Round 2 (R2) instead of Round 3 (R3) for testing lock/unlock
+  /// functionality to ensure tests pass on narrow devices in portrait mode.
+  /// Round 3 (R3) and beyond may not be fully visible without scrolling.
+  /// If testing beyond Round 2 is needed, horizontal scrolling would be required.
   testWidgets('Score table displays correct rows and widgets for 2 players', (
     WidgetTester tester,
   ) async {
@@ -34,24 +38,24 @@ void main() {
     final playerNameFieldP1Key = PlayerGameCell.nameKey(1);
 
     // for lock/unlock tests
-    final playerRoundCellP0R3Key = PlayerRoundCell.cellKey(0, 3);
-    final playerRoundCellP1R3Key = PlayerRoundCell.cellKey(1, 3);
+    final playerRoundCellP0R2Key = PlayerRoundCell.cellKey(0, 2);
+    final playerRoundCellP1R2Key = PlayerRoundCell.cellKey(1, 2);
 
     // to tap and open the panel
     final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
     final playerRoundScoreP0R1Key = PlayerRoundCell.scoreKey(0, 1);
-    final playerRoundScoreP0R3Key = PlayerRoundCell.scoreKey(0, 3);
-    final playerRoundScoreP1R3Key = PlayerRoundCell.scoreKey(1, 3);
+    final playerRoundScoreP0R2Key = PlayerRoundCell.scoreKey(0, 2);
+    final playerRoundScoreP1R2Key = PlayerRoundCell.scoreKey(1, 2);
 
     // actual fields in the modal
     final roundScoreFieldP0R0Key = PlayerRoundModal.scoreFieldKey(0, 0);
     final roundScoreFieldP0R1Key = PlayerRoundModal.scoreFieldKey(0, 1);
-    final roundScoreFieldP0R3Key = PlayerRoundModal.scoreFieldKey(0, 3);
-    final roundScoreFieldP1R3Key = PlayerRoundModal.scoreFieldKey(1, 3);
+    final roundScoreFieldP0R2Key = PlayerRoundModal.scoreFieldKey(0, 2);
+    final roundScoreFieldP1R2Key = PlayerRoundModal.scoreFieldKey(1, 2);
 
     final playerTotalScoreP0Key = PlayerGameCell.totalScoreKey(0);
     final playerTotalScoreP1Key = PlayerGameCell.totalScoreKey(1);
-    final lockRound3Key = ScoreTable.lockRoundKey(3);
+    final lockRound2Key = ScoreTable.lockRoundKey(2);
 
     // Only press Continue (no dropdown changes)
     final continueButton = find.byKey(splashContinueButtonKey);
@@ -137,18 +141,19 @@ void main() {
     // additional redundant data entry testing
 
     // Enter values of 5*(player number +1) in column 3 (round 3) for all players
+    // NOTE: Using round 2 instead of round 3 to support narrow portrait devices
     // Player 0: 5*(0+1) = 5, Player 1: 5*(1+1) = 10
-    // tap on the roundScoreP0R0 to open the PlayerRoundCellModelPanel
+    // tap on the roundScoreP0R2 to open the PlayerRoundCellModelPanel
 
     // click to open the editing panel
-    await tester.tap(find.byKey(playerRoundScoreP0R3Key));
+    await tester.tap(find.byKey(playerRoundScoreP0R2Key));
     await tester.pumpAndSettle();
     // verify the PlayerRoundModal is displayed
     expect(find.byType(PlayerRoundModal), findsOneWidget);
 
-    final round3ScoreFieldP0 = find.byKey(roundScoreFieldP0R3Key);
-    expect(round3ScoreFieldP0, findsOneWidget);
-    await tester.enterText(round3ScoreFieldP0, '5');
+    final round2ScoreFieldP0 = find.byKey(roundScoreFieldP0R2Key);
+    expect(round2ScoreFieldP0, findsOneWidget);
+    await tester.enterText(round2ScoreFieldP0, '5');
     await tester.pumpAndSettle();
 
     // close the PlayerRoundCellModelPanel
@@ -158,7 +163,7 @@ void main() {
 
     // validate that the text in the table matches the input
     expect(
-      (tester.widget(find.byKey(playerRoundScoreP0R3Key)) as Text).data,
+      (tester.widget(find.byKey(playerRoundScoreP0R2Key)) as Text).data,
       '5',
     );
 
@@ -168,14 +173,14 @@ void main() {
       '65',
     );
 
-    await tester.tap(find.byKey(playerRoundScoreP1R3Key));
+    await tester.tap(find.byKey(playerRoundScoreP1R2Key));
     await tester.pumpAndSettle();
     // verify the PlayerRoundModal is displayed
     expect(find.byType(PlayerRoundModal), findsOneWidget);
 
-    final round3ScoreFieldP1 = find.byKey(roundScoreFieldP1R3Key);
-    expect(round3ScoreFieldP1, findsOneWidget);
-    await tester.enterText(round3ScoreFieldP1, '10');
+    final round2ScoreFieldP1 = find.byKey(roundScoreFieldP1R2Key);
+    expect(round2ScoreFieldP1, findsOneWidget);
+    await tester.enterText(round2ScoreFieldP1, '10');
     await tester.pumpAndSettle();
 
     // close the PlayerRoundCellModelPanel
@@ -185,7 +190,7 @@ void main() {
 
     // validate that the text in the table matches the input
     expect(
-      (tester.widget(find.byKey(playerRoundScoreP1R3Key)) as Text).data,
+      (tester.widget(find.byKey(playerRoundScoreP1R2Key)) as Text).data,
       '10',
     );
 
@@ -195,30 +200,30 @@ void main() {
       '10',
     );
 
-    // Click on the lock icon in round 3 to lock the column (header row)
-    final lockIcon = find.byKey(lockRound3Key);
+    // Click on the lock icon in round 2 to lock the column (header row)
+    final lockIcon = find.byKey(lockRound2Key);
     expect(lockIcon, findsOneWidget);
     await tester.tap(lockIcon);
     await tester.pumpAndSettle();
 
-    // Validate the round score field at player round 3 is disabled and has the same value
+    // Validate the round score field at player round 2 is disabled and has the same value
     expect(
-      (tester.widget(find.byKey(playerRoundCellP0R3Key)) as PlayerRoundCell)
+      (tester.widget(find.byKey(playerRoundCellP0R2Key)) as PlayerRoundCell)
           .enabled,
       false,
     );
     expect(
-      (tester.widget(find.byKey(playerRoundScoreP0R3Key)) as Text).data,
+      (tester.widget(find.byKey(playerRoundScoreP0R2Key)) as Text).data,
       '5',
     );
 
     expect(
-      (tester.widget(find.byKey(playerRoundCellP1R3Key)) as PlayerRoundCell)
+      (tester.widget(find.byKey(playerRoundCellP1R2Key)) as PlayerRoundCell)
           .enabled,
       false,
     );
     expect(
-      (tester.widget(find.byKey(playerRoundScoreP1R3Key)) as Text).data,
+      (tester.widget(find.byKey(playerRoundScoreP1R2Key)) as Text).data,
       '10',
     );
 
@@ -233,30 +238,31 @@ void main() {
     );
 
     // Enable editing in player 1 round 3 and validate that the round_score for player 0 round 3 is enabled for editing
-    // Click on the lock icon in round 3 to unlock the column (header row)
-    final unlockIcon = find.byKey(lockRound3Key);
+    // Enable editing in player 1 round 2 and validate that the round_score for player 0 round 2 is enabled for editing
+    // Click on the lock icon in round 2 to unlock the column (header row)
+    final unlockIcon = find.byKey(lockRound2Key);
     expect(unlockIcon, findsOneWidget);
     await tester.tap(unlockIcon);
     await tester.pumpAndSettle();
 
-    // Validate the round score field at player 0 round 3 is enabled and has the same values
+    // Validate the round score field at player 0 round 2 is enabled and has the same values
     expect(
-      (tester.widget(find.byKey(playerRoundCellP0R3Key)) as PlayerRoundCell)
+      (tester.widget(find.byKey(playerRoundCellP0R2Key)) as PlayerRoundCell)
           .enabled,
       true,
     );
     expect(
-      (tester.widget(find.byKey(playerRoundScoreP0R3Key)) as Text).data,
+      (tester.widget(find.byKey(playerRoundScoreP0R2Key)) as Text).data,
       '5',
     );
-    // Validate the round score field at player 1 round 3 is enabled and has the same values
+    // Validate the round score field at player 1 round 2 is enabled and has the same values
     expect(
-      (tester.widget(find.byKey(playerRoundCellP1R3Key)) as PlayerRoundCell)
+      (tester.widget(find.byKey(playerRoundCellP1R2Key)) as PlayerRoundCell)
           .enabled,
       true,
     );
     expect(
-      (tester.widget(find.byKey(playerRoundScoreP1R3Key)) as Text).data,
+      (tester.widget(find.byKey(playerRoundScoreP1R2Key)) as Text).data,
       '10',
     );
 

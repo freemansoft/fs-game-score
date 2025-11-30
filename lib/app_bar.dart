@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'presentation/new_game_control.dart';
@@ -20,7 +21,7 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
         const NewScoreCardControl(),
         const NewGameControl(),
         const ShareGameControl(),
-        const LightDarkControl(),
+        if (kDebugMode) const LightDarkControl(),
       ],
     );
   }

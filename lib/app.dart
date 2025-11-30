@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/presentation/app_theme.dart';
 import 'package:fs_score_card/presentation/score_table_screen.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/presentation/new_score_card_control.dart';
@@ -27,13 +28,8 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
     return MaterialApp(
       title: 'FS Score Ccard',
       showSemanticsDebugger: false, // shows outlines for the semantics tree
-      theme: ThemeData(
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white, // Set background to white
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData.dark(),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       home: NotificationListener<NewScoreCardNotification>(
         onNotification: (notification) {

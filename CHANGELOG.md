@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.5.0] - 2025-10-21
 
-### Added
+### Added 1.5.0
 
 - gameId for new games - not for restarts
 - moved from in-cell editing to editing in a modal panel without a close button
@@ -17,10 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added cursor rules
 - tests and views now share ValueKey definitions implemented as static functions in the views. Simplifies tests but loses any Key drift (should not be issue because keys are only used internally)
 - tweaked name display behavior to avoid overflow - use elipses
+- Light/Dark test switch only in debug mode.
+- Created new them using [flex color scheme](https://rydmike.com/flexcolorscheme/themesplayground-latest/)
+- Added `ITSAppUsesNonExemptEncryption` : `No` to macos and ios `info.plist` using XCode.
 
 ## [1.4.0] -- 2025-09-21
 
-### Added
+### Added 1.4.0
 
 - upgrade gradle plugin from 8.5.0 to 8.6.2 and kotlin from 1.8.22 to 2.2.0
 - migrated from Riverpod 2 to Riverpod 3
@@ -28,14 +31,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.0] - 2025-08-10
 
-### Added
+### Added 1.3.0
 
 - Score filter configuration option to restrict entry to numbers ending in 0 and 5
 - Real-time validation for score entry fields
 
 ## [1.2.0] - 2025-08-09
 
-### Added
+### Added 1.2.0
 
 - Ability to share CSV via device share functionality
 - Share button in app bar with platform-specific icons (iOS share icon on macOS/iOS)
@@ -44,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2024-08-04
 
-### Added
+### Added 1.1.0
 
 - Save/load last game configuration
 - Persistent game state using SharedPreferences
@@ -52,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2024-12-19
 
-### Added
+### Added 1.0.0
 
 - Initial release
 - Basic score tracking functionality

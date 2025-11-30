@@ -66,9 +66,11 @@ Notes
 3. Run the Flutter application using the debug button or by pressing `F5`
 4. The application will run on an emulator or connected device.
 
-## Testing the App
+## Testing the App outside of the IDE
 
-### Android options
+### Android test builds - side loading
+
+You can test this locally using the IDE and the Android simulator or hardware connected ios device on a Mac or MS Windows PC.
 
 Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.com/questions/62910148/flutter-what-is-the-difference-between-the-apk-release-directory-and-flutter-ap)
 
@@ -86,24 +88,43 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
       2. including the `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB
    2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage
       1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
-3. (ios) This is complicated by the Apple store
+
+### iOS Test builds
+
+You can test this locally using the IDE and the iOS simulator or hardware connected ios device on a Mac.
+
+Standalone testing is complicated by the Apple store
+
    1. open the `ios` folder in xcode if you need to.  I didn't need xcode for iOS.
    2. `flutter build ipa`
    3. Do the store thing - upload via Apple **Transporter** app and do all the configuration in testflight and the store
-4. (macos) this is different than ios (sad face here)
+
+### MacOS test builds
+
+You can test this locally using the IDE on a Mac
+
+MacOS builds are separate from iOS builds and must be uploaded to the store separately.  Follow <https://docs.flutter.dev/deployment/macos>
+
    1. Open the `macos` folder in xcode. The isntructions require XCode for MacOS.
    2. `flutter build macos`
-   3. Follow <https://docs.flutter.dev/deployment/macos>
+   3. Do the store thing - upload via Apple **Transporter** app and do all the configuration in testflight and the store
 
 Validate the version number on the splash screen. It should match the value in `pubps pec.yaml`.  The version number is set in `pubspec.yaml`.
 
-### Web options
+### Web test builds
 
-1. Run this locally using the IDE and a web browser like Chrome
-2. Create a distributable web package that can be distributed for people to web test locally
+You can test this locally using the IDE and a web browser like Chrome
+
+1. Create a distributable web package that can be distributed for people to web test locally
    1. Build the package `flutter build web` or `flutter build web --release`
    2. create a zip file of `build/web`
    3. Share the zip. They can unzip it and put the contents of the `web` folder in the web server docroot. The `web` folder should not be part of the path.
+
+### Windows test builds
+
+You can test this locally using the IDE on a Mac.
+
+_to be documented_ Web standalone app packaged builds.
 
 ## Integration tests
 
@@ -160,7 +181,7 @@ Use [flutter_launcher_icons](https://github.com/fluttercommunity/flutter_launche
 dart run flutter_launcher_icons
 ```
 
-## Creating a release
+## Creating a release tag
 
 * Create a tag, update the pubspec.yaml update the CHANGELOG to add the new release
   * `bash tag-push.sh --version <major.minor.patch> --force`
