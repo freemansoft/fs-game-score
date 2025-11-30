@@ -95,9 +95,16 @@ You can test this locally using the IDE and the iOS simulator or hardware connec
 
 Standalone testing is complicated by the Apple store
 
-   1. open the `ios` folder in xcode if you need to.  I didn't need xcode for iOS.
+   1. open the `ios` folder in xcode if you need to.  I didn't need xcode for iOS builds the way I did for MacOS.
    2. `flutter build ipa`
-   3. Do the store thing - upload via Apple **Transporter** app and do all the configuration in testflight and the store
+   3. Do the store thing - upload the ipa via Apple **Transporter** app and do all the configuration in testflight and the store
+
+Alternatively - use the xcode archive route like we do for macOS
+
+1. Open the `ios` project in XCode
+2. `Product > Archive`
+3. `Validate App` --> `Validate`
+4. `Distribute App` --> `App Store Connect`
 
 ### MacOS test builds
 
@@ -107,9 +114,13 @@ MacOS builds are separate from iOS builds and must be uploaded to the store sepa
 
    1. Open the `macos` folder in xcode. The isntructions require XCode for MacOS.
    2. `flutter build macos`
-   3. Do the store thing - upload via Apple **Transporter** app and do all the configuration in testflight and the store
+   3. Open the macOS directory in XCode. This opens the MacOS target of the Flutter project.
+      1. XCode `Product > Archive` it will build an archive
+      2. A new XCode window will pop up
+      3. XCode `Validate App` --> `Validate`
+      4. XCode `Distribute App` --> `App Store Connect`
 
-Validate the version number on the splash screen. It should match the value in `pubps pec.yaml`.  The version number is set in `pubspec.yaml`.
+Validate the version number on the splash screen. It should match the value in `pubpspec.yaml`.  The version number is set in `pubspec.yaml`.
 
 ### Web test builds
 

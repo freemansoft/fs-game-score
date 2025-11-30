@@ -49,12 +49,6 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
         isHorizontalScrollBarVisible: true,
         isVerticalScrollBarVisible: true,
         dataRowHeight: 74,
-        fixedCornerColor: Theme.of(
-          context,
-        ).colorScheme.secondaryFixed.withAlpha(60),
-        fixedColumnsColor: Theme.of(
-          context,
-        ).colorScheme.secondaryFixed.withAlpha(60),
         border: TableBorder.all(
           color: Theme.of(context).colorScheme.outline.withAlpha(100),
           width: 1,
