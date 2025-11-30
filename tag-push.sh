@@ -43,6 +43,7 @@ while [[ $# -gt 0 ]]; do
       usage
       ;;
     *)
+      echo "Error: unexpected option '$1'"
       usage
       ;;
   esac

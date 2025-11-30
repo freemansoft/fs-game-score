@@ -184,10 +184,10 @@ dart run flutter_launcher_icons
 ## Creating a release tag
 
 * Create a tag, update the pubspec.yaml update the CHANGELOG to add the new release
-  * `bash tag-push.sh --version <major.minor.patch> --force`
+  * `bash tag-push.sh --version <major.minor.patch> --build-id <build-number> --force`
 * Edit the CHANGELOG.md updating the new section to include the changes you want
 * Commit the changelog and the pubspec.yaml and push the tags, changelog and pubspec.yaml to the remote server
-  * `bash tag-push.sh --version <major.minor.patch> --force --push`
+  * `bash tag-push.sh --version <major.minor.patch> --build-id <build-number> --force --push`
 
 ## Known Issues
 
