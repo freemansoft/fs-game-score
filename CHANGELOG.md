@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Light/Dark test switch only in debug mode.
 - Created new them using [flex color scheme](https://rydmike.com/flexcolorscheme/themesplayground-latest/)
 - Added `ITSAppUsesNonExemptEncryption` : `No` to macos and ios `info.plist` using XCode.
+- Added `sharePositionOrigin` after testing on ipad 16.7. Threw exception without it.
 
 ## [1.4.0] -- 2025-09-21
 
