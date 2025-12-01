@@ -37,7 +37,13 @@ void shareGame(BuildContext context, WidgetRef ref) {
     final subject = 'fs score card $gameId $dateTime';
 
     SharePlus.instance.share(
-      ShareParams(text: '$subject\n$csvData', title: title, subject: subject),
+      ShareParams(
+        text: '$subject\n$csvData',
+        title: title,
+        subject: subject,
+        // required for ipad and maybe after ios 26
+        sharePositionOrigin: Rect.fromLTWH(0, 0, 1, 1),
+      ),
     );
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
