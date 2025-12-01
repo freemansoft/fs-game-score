@@ -4,12 +4,21 @@ import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fs_score_card/model/game.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
-  static const ValueKey numPlayersDropdownKey = ValueKey('splash_num_players_dropdown');
-  static const ValueKey maxRoundsDropdownKey = ValueKey('splash_max_rounds_dropdown');
-  static const ValueKey sheetStyleDropdownKey = ValueKey('splash_sheet_style_dropdown');
-  static const ValueKey scoreFilterDropdownKey = ValueKey('splash_score_filter_dropdown');
+  static const ValueKey numPlayersDropdownKey = ValueKey(
+    'splash_num_players_dropdown',
+  );
+  static const ValueKey maxRoundsDropdownKey = ValueKey(
+    'splash_max_rounds_dropdown',
+  );
+  static const ValueKey sheetStyleDropdownKey = ValueKey(
+    'splash_sheet_style_dropdown',
+  );
+  static const ValueKey scoreFilterDropdownKey = ValueKey(
+    'splash_score_filter_dropdown',
+  );
   static const ValueKey continueButtonKey = ValueKey('splash_continue_button');
 
   final VoidCallback? onContinue;
@@ -95,16 +104,40 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            const Text(
-              'Copyright (C) 2025 Joe Freeman',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-              textAlign: TextAlign.center,
+            InkWell(
+              onTap: () async {
+                const url = 'https://www.linkedin.com/in/1freeman/';
+                if (await canLaunchUrl(Uri.parse(url))) {
+                  await launchUrl(Uri.parse(url));
+                }
+              },
+              child: Text(
+                'Copyright (C) 2025 Joe Freeman',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             if (_appVersion != null)
-              Text(
-                'Version: $_appVersion',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-                textAlign: TextAlign.center,
+              InkWell(
+                onTap: () async {
+                  const url = 'https://github.com/freemansoft/fs-game-score';
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
+                  }
+                },
+                child: Text(
+                  'Version: $_appVersion',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             const SizedBox(height: 8),
             Row(

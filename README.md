@@ -96,7 +96,7 @@ You can test this locally using the IDE and the iOS simulator or hardware connec
 Standalone testing is complicated by the Apple store
 
    1. open the `ios` folder in xcode if you need to.  I didn't need xcode for iOS builds the way I did for MacOS.
-   2. `flutter build ipa`
+   2. `flutter build ipa` or `flutter build ipa --release`
    3. Do the store thing - upload the ipa via Apple **Transporter** app and do all the configuration in testflight and the store
 
 Alternatively - use the xcode archive route like we do for macOS
