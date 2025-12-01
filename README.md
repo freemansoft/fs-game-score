@@ -93,7 +93,7 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
 
 You can test this locally using the IDE and the iOS simulator or hardware connected ios device on a Mac.
 
-Standalone testing is complicated by the Apple store
+Standalone testing is driven through [Apple store connect](https://appstoreconnect.apple.com/)
 
    1. open the `ios` folder in xcode if you need to.  I didn't need xcode for iOS builds the way I did for MacOS.
    2. `flutter build ipa` or `flutter build ipa --release`
