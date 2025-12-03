@@ -89,6 +89,19 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
    2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage
       1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
 
+#### Google Play Store (tentative)
+
+* Onboarding
+  * Enable the  in your workspace[google play store service](https://admin.google.com/ac/managedsettings/805142757380)
+  * [Create releases in the Google Play store console](https://play.google.com/console/)
+  * Onboard to the store, pay $25, verify identity
+  * Connect to <https://play.google.com/console> and verify your account
+  * Install the Google Play console app on your android device and authenticate
+  * Set up the signing keys
+* Build the app bundle with `flutter build appbundle --release`
+  * That doesn't work because it has to be signed.
+  * ...
+
 ### iOS Test builds
 
 You can test this locally using the IDE and the iOS simulator or hardware connected ios device on a Mac.
@@ -101,7 +114,7 @@ Standalone testing is driven through [Apple store connect](https://appstoreconne
 
 Alternatively - use the xcode archive route like we do for macOS
 
-1. `flutter build ipa` to build the project and copy `pubspec.yaml` into the xcode iOS files
+1. `flutter build ipa --release` to build the ios app and copy info from `pubspec.yaml` into the xcode iOS files
 2. Open the `ios` project in XCode. This opens the iOS target of the Flutter project
 3. `Product > Archive`
 4. `Validate App` --> `Validate`
@@ -113,14 +126,14 @@ You can test this locally using the IDE on a Mac
 
 MacOS builds are separate from iOS builds and must be uploaded to the store separately.  Follow <https://docs.flutter.dev/deployment/macos>
 
-   1. `flutter build macos` to build the project and copy the `pubspec.yaml` into the xcode macOS files
+   1. `flutter build macos --release` to build the project and copy the `pubspec.yaml` into the xcode macOS files
    2. Open the `macOS` directory in XCode. This opens the MacOS target of the Flutter project.
       1. XCode `Product > Archive` it will build an archive
       2. A new XCode window will pop up
       3. XCode `Validate App` --> `Validate`
       4. XCode `Distribute App` --> `App Store Connect`
 
-Validate the version number on the splash screen. It should match the value in `pubpspec.yaml`.  The version number is set in `pubspec.yaml`.
+Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`.  The version number is set in `pubspec.yaml`.
 
 ### Web test builds
 
