@@ -43,6 +43,7 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
                 ? SplashScreen(onContinue: _onSplashContinue)
                 : const ScoreTableScreen(),
       ),
+      //debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `ITSAppUsesNonExemptEncryption` : `No` to macos and ios `info.plist` using XCode.
 - Added `sharePositionOrigin` after testing on ipad 16.7. Threw exception without it.
 - Added hyperlinks to Joe's LinkedIn and this GitHub repository
+- Added no data collection privacy policy
+- Submitted to the app store
+- published to github.io as GitHub pages <https://freemansoft.github.io/freemans-score-card/>
 
 ## [1.4.0] -- 2025-09-21
 

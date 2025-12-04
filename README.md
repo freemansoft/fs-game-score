@@ -78,7 +78,7 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
   * `build/app/outputs/apk/releasefs_score_card-v<version>-release.apk`
   * `build/app/outputs/apk/debug/fs_score_card-v<version>-debug.apk`
 * `build/app/outputs/flutter-apk` Generic apk without the app name and version in the `apk` filename. These include sha1 files.
-  * `build/app/outputs/flutter-apk/apk-release.apkk`
+  * `build/app/outputs/flutter-apk/apk-release.apk`
   * `build/app/outputs/flutter-apk/app-debug.ap`
 
 1. Run this on a connected iOS or Android device using the IDE
@@ -143,6 +143,19 @@ You can test this locally using the IDE and a web browser like Chrome
    1. Build the package `flutter build web` or `flutter build web --release`
    2. create a zip file of `build/web`
    3. Share the zip. They can unzip it and put the contents of the `web` folder in the web server docroot. The `web` folder should not be part of the path.
+
+#### Web site build for github pages in a subdirectory
+
+Change this to match your deployment. These notes exist so I remember the process
+
+I host this app on my github pages <https://freemansoft.github.io/freemans-score-card>
+
+1. Build the web app with `flutter build web --base-href=/freemans-score-card/`
+2. Copy the contents of `build/web` **excluding the canvaskit directory** to a local clone of <https://github.com/freemansoft/freemansoft.github.io>
+   1. We are going to use the Google CDN CanvasKit and don't need to take up space in our repo with the binary
+3. You can test the site locally by running `python -m http.server 8000` from a terminal prompt in the root of the github.io repo and navigating to <http://localhost:8000/freemans-score-card/>
+4. Commit the files and push them to GitHub.
+5. Test with GitHub pages <https://freemansoft.github.io/freemans-score-card>
 
 ### Windows test builds
 

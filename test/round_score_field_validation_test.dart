@@ -24,6 +24,7 @@ void main() {
             scoreFilter: scoreFilter,
           ),
         ),
+        // debugShowCheckedModeBanner: false,
       );
     }
 
