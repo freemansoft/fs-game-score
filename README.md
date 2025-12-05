@@ -68,7 +68,9 @@ Notes
 
 ## Testing the App outside of the IDE
 
-### Android test builds - side loading
+### Android builds
+
+#### Android test builds - side loading
 
 You can test this locally using the IDE and the Android simulator or hardware connected ios device on a Mac or MS Windows PC.
 
@@ -102,7 +104,9 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
   * That doesn't work because it has to be signed.
   * ...
 
-### iOS Test builds
+### iOS Builds
+
+#### iOS Test builds
 
 You can test this locally using the IDE and the iOS simulator or hardware connected ios device on a Mac.
 
@@ -120,7 +124,9 @@ Alternatively - use the xcode archive route like we do for macOS
 4. `Validate App` --> `Validate`
 5. `Distribute App` --> `App Store Connect`
 
-### MacOS test builds
+### MacOS builds
+
+#### MacOS test builds
 
 You can test this locally using the IDE on a Mac
 
@@ -136,6 +142,8 @@ MacOS builds are separate from iOS builds and must be uploaded to the store sepa
 Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`.  The version number is set in `pubspec.yaml`.
 
 ### Web test builds
+
+#### Web build distribution
 
 You can test this locally using the IDE and a web browser like Chrome
 
@@ -157,11 +165,30 @@ I host this app on my github pages <https://freemansoft.github.io/freemans-score
 4. Commit the files and push them to GitHub.
 5. Test with GitHub pages <https://freemansoft.github.io/freemans-score-card>
 
-### Windows test builds
+### Windows Builds
 
-You can test this locally using the IDE on a Mac.
+#### Windows test builds
 
-_to be documented_ Web standalone app packaged builds.
+You can test this locally using the IDE on a Windows machine.
+
+1. Build the image on a windows machine with `flutter build windows`
+1. Double click on the `exe` in `build\\windows\x65\runner\Release\fs_score_card.exe`
+1. You **cannot** copy just the exe somewhere and expect it to work
+
+#### Build an installer package 
+
+An `msix` section has already been added to customize the `msi` output <https://pub.dev/packages/msix>
+
+1. Build the image on a windows machine with `flutter build windows`
+1. Use the `msix` package to create a windows installer 
+  1. `flutter pub run msix:create` 
+  1. `dart run msix:create` this will offer to install a self signed `pfx`
+1. Copy the created `msix` file located in `build\windows\x64\runner\Release\fs_score_card.msix` to the target location where it can be installed from.
+
+#### Windows store builds
+_to be documented_ Windows standalone app packaged builds.
+
+- see docs <https://docs.flutter.dev/deployment/windows>
 
 ## Integration tests
 
