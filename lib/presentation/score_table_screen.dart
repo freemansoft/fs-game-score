@@ -7,9 +7,9 @@ class ScoreTableScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const Phase10AppBar(),
-      body: const Padding(padding: EdgeInsets.all(4.0), child: ScoreTable()),
+    return const Scaffold(
+      appBar: Phase10AppBar(),
+      body: Padding(padding: EdgeInsets.all(4.0), child: ScoreTable()),
     );
   }
 }

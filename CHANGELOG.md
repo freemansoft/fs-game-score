@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Flutter to dart 3.9 or later to support built in dart mcp server <https://docs.flutter.dev/install/archive>
 - Building with Flutter 3.38.5 which is current at time of update
+- Migrated from standard linter to VGV linter
 
 ## [1.5.0] - 2025-10-21
 

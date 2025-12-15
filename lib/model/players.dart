@@ -1,21 +1,8 @@
-import 'player.dart';
 import 'dart:convert';
 
+import 'package:fs_score_card/model/player.dart';
+
 class Players {
-  Players withPlayer(Player player, int index) {
-    final newPlayers = List<Player>.from(players);
-    newPlayers[index] = player;
-    final first = newPlayers.isNotEmpty ? newPlayers[0] : null;
-    return Players(
-      numPlayers: newPlayers.length,
-      maxRounds: first?.scores.roundScores.length ?? 0,
-      numPhases: first?.phases.completedPhases.length ?? 0,
-      initialPlayers: newPlayers,
-    );
-  }
-
-  final List<Player> players;
-
   Players({
     required int numPlayers,
     required int maxRounds,
@@ -31,6 +18,19 @@ class Players {
                numPhases: numPhases,
              ),
            );
+  Players withPlayer(Player player, int index) {
+    final newPlayers = List<Player>.from(players);
+    newPlayers[index] = player;
+    final first = newPlayers.isNotEmpty ? newPlayers[0] : null;
+    return Players(
+      numPlayers: newPlayers.length,
+      maxRounds: first?.scores.roundScores.length ?? 0,
+      numPhases: first?.phases.completedPhases.length ?? 0,
+      initialPlayers: newPlayers,
+    );
+  }
+
+  final List<Player> players;
   bool allPlayersEnabledForRound(int round) {
     return players.every((p) => p.roundStates.isEnabled(round));
   }
@@ -51,8 +51,9 @@ class Players {
       final Map<String, dynamic> playerMap = {
         'name': player.name,
         'totalScore': player.totalScore,
-        'roundScores':
-            player.scores.roundScores.map((score) => score ?? 0).toList(),
+        'roundScores': player.scores.roundScores
+            .map((score) => score ?? 0)
+            .toList(),
       };
       playerData.add(playerMap);
     }
@@ -104,8 +105,9 @@ class Players {
       final Map<String, dynamic> playerMap = {
         'name': player.name,
         'totalScore': player.totalScore,
-        'roundScores':
-            player.scores.roundScores.map((score) => score ?? 0).toList(),
+        'roundScores': player.scores.roundScores
+            .map((score) => score ?? 0)
+            .toList(),
       };
       playerData.add(playerMap);
     }

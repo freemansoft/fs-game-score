@@ -1,7 +1,6 @@
 class Phases {
-  final List<int?> completedPhases;
-
   Phases(int numPhases) : completedPhases = List.filled(numPhases, null);
+  final List<int?> completedPhases;
 
   void setPhase(int round, int? phase) {
     if (round >= 0 && round < completedPhases.length) {

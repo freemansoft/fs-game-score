@@ -1,24 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fs_score_card/presentation/player_name_field.dart';
 import 'package:fs_score_card/model/phases.dart';
+import 'package:fs_score_card/presentation/player_name_field.dart';
 
 class PlayerGameModal extends StatelessWidget {
-  static ValueKey modalKey(int playerIdx) {
-    return ValueKey('p${playerIdx}_game_modal');
-  }
-
-  static ValueKey nameFieldKey(int playerIdx) {
-    return ValueKey('p${playerIdx}_name_field');
-  }
-
-  final int playerIdx;
-  final String name;
-  final void Function(String) onNameChanged;
-  final int totalScore;
-  final Phases phases;
-  final bool enablePhases;
-  final int maxRounds;
-
   const PlayerGameModal({
     super.key,
     required this.playerIdx,
@@ -29,6 +13,21 @@ class PlayerGameModal extends StatelessWidget {
     required this.enablePhases,
     required this.maxRounds,
   });
+  static ValueKey<String> modalKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_game_modal');
+  }
+
+  static ValueKey<String> nameFieldKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_name_field');
+  }
+
+  final int playerIdx;
+  final String name;
+  final void Function(String) onNameChanged;
+  final int totalScore;
+  final Phases phases;
+  final bool enablePhases;
+  final int maxRounds;
 
   static Future<void> show(
     BuildContext context, {
@@ -42,16 +41,15 @@ class PlayerGameModal extends StatelessWidget {
   }) {
     return showDialog(
       context: context,
-      builder:
-          (context) => PlayerGameModal(
-            playerIdx: playerIdx,
-            name: name,
-            onNameChanged: onNameChanged,
-            totalScore: totalScore,
-            phases: phases,
-            enablePhases: enablePhases,
-            maxRounds: maxRounds,
-          ),
+      builder: (context) => PlayerGameModal(
+        playerIdx: playerIdx,
+        name: name,
+        onNameChanged: onNameChanged,
+        totalScore: totalScore,
+        phases: phases,
+        enablePhases: enablePhases,
+        maxRounds: maxRounds,
+      ),
     );
   }
 
@@ -127,28 +125,27 @@ class PlayerGameModal extends StatelessWidget {
       key: modalKey(playerIdx),
       scrollable: true,
       content: SingleChildScrollView(
-        child:
-            orientation == Orientation.landscape && enablePhases
-                ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: _buildNameSection()),
-                    const SizedBox(width: 16),
-                    Expanded(child: _buildPhasesSection()),
+        child: orientation == Orientation.landscape && enablePhases
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _buildNameSection()),
+                  const SizedBox(width: 16),
+                  Expanded(child: _buildPhasesSection()),
+                ],
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildNameSection(),
+                  if (enablePhases) ...[
+                    const SizedBox(height: 12),
+                    _buildPhasesSection(),
                   ],
-                )
-                : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildNameSection(),
-                    if (enablePhases) ...[
-                      const SizedBox(height: 12),
-                      _buildPhasesSection(),
-                    ],
-                  ],
-                ),
+                ],
+              ),
       ),
     );
   }

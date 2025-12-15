@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TotalScoreField extends StatelessWidget {
-  final int totalScore;
-  final List<int> completedPhases;
-  final bool enablePhases;
-
   const TotalScoreField({
     required this.totalScore,
     required this.completedPhases,
     this.enablePhases = true,
     super.key,
   });
+  final int totalScore;
+  final List<int> completedPhases;
+  final bool enablePhases;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +25,9 @@ class TotalScoreField extends StatelessWidget {
     if (!enablePhases) return scoreText;
     return Tooltip(
       triggerMode: TooltipTriggerMode.tap,
-      message:
-          sortedPhases.isEmpty
-              ? 'No completed phases'
-              : 'Completed phases: ${sortedPhases.join(', ')}',
+      message: sortedPhases.isEmpty
+          ? 'No completed phases'
+          : 'Completed phases: ${sortedPhases.join(', ')}',
       child: scoreText,
     );
   }

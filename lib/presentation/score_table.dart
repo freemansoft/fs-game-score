@@ -1,18 +1,17 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:data_table_2/data_table_2.dart';
-import 'package:fs_score_card/provider/players_provider.dart';
-import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/presentation/player_game_cell.dart';
-import 'package:fs_score_card/presentation/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_game_modal.dart';
+import 'package:fs_score_card/presentation/player_round_cell.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
-  static ValueKey lockRoundKey(int round) {
+  const ScoreTable({super.key});
+  static ValueKey<String> lockRoundKey(int round) {
     return ValueKey('lock_r$round');
   }
-
-  const ScoreTable({super.key});
 
   @override
   ConsumerState<ScoreTable> createState() => _ScoreTableState();
@@ -25,7 +24,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
   }
 
   Color? getRowColor(BuildContext context, int playerIdx) {
-    final isEven = playerIdx % 2 == 0;
+    final isEven = playerIdx.isEven;
     final colorScheme = Theme.of(context).colorScheme;
     return isEven
         ? colorScheme.primaryFixed.withAlpha(60)
@@ -57,7 +56,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           DataColumn2(
             label: Semantics(
               label: 'Player and Total',
-              child: Text('Player\nTotal'),
+              child: const Text('Player\nTotal'),
             ),
             headingRowAlignment: MainAxisAlignment.center,
             size: ColumnSize.L,

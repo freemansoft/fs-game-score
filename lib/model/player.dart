@@ -1,13 +1,8 @@
-import 'package:fs_score_card/model/scores.dart';
 import 'package:fs_score_card/model/phases.dart';
 import 'package:fs_score_card/model/round_states.dart';
+import 'package:fs_score_card/model/scores.dart';
 
 class Player {
-  final String name;
-  final Scores scores;
-  final Phases phases;
-  final RoundStates roundStates;
-
   Player({required this.name, required int maxRounds, required int numPhases})
     : scores = Scores(maxRounds),
       phases = Phases(numPhases),
@@ -19,6 +14,10 @@ class Player {
     required this.phases,
     RoundStates? roundStates,
   }) : roundStates = roundStates ?? RoundStates(scores.roundScores.length);
+  final String name;
+  final Scores scores;
+  final Phases phases;
+  final RoundStates roundStates;
 
   int get totalScore => scores.total;
 }

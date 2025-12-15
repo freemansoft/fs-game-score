@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fs_score_card/model/game.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
-  static const ValueKey numPlayersDropdownKey = ValueKey(
+  const SplashScreen({super.key, this.onContinue});
+  static const ValueKey<String> numPlayersDropdownKey = ValueKey(
     'splash_num_players_dropdown',
   );
-  static const ValueKey maxRoundsDropdownKey = ValueKey(
+  static const ValueKey<String> maxRoundsDropdownKey = ValueKey(
     'splash_max_rounds_dropdown',
   );
-  static const ValueKey sheetStyleDropdownKey = ValueKey(
+  static const ValueKey<String> sheetStyleDropdownKey = ValueKey(
     'splash_sheet_style_dropdown',
   );
-  static const ValueKey scoreFilterDropdownKey = ValueKey(
+  static const ValueKey<String> scoreFilterDropdownKey = ValueKey(
     'splash_score_filter_dropdown',
   );
-  static const ValueKey continueButtonKey = ValueKey('splash_continue_button');
+  static const ValueKey<String> continueButtonKey = ValueKey(
+    'splash_continue_button',
+  );
 
   final VoidCallback? onContinue;
-  const SplashScreen({super.key, this.onContinue});
 
   @override
   ConsumerState<SplashScreen> createState() => _SplashScreenState();

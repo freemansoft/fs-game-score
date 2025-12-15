@@ -43,11 +43,13 @@ class PlayersNotifier extends Notifier<Players> {
 
   // used when a new game is started usually via a modal dialog
   void resetGame({bool clearNames = false}) {
-    final maxRounds =
-        state.length > 0 ? state.players[0].scores.roundScores.length : 0;
-    final numPhases =
-        state.length > 0 ? state.players[0].phases.completedPhases.length : 0;
-    var newPlayers = <Player>[];
+    final maxRounds = state.length > 0
+        ? state.players[0].scores.roundScores.length
+        : 0;
+    final numPhases = state.length > 0
+        ? state.players[0].phases.completedPhases.length
+        : 0;
+    final newPlayers = <Player>[];
     for (int i = 0; i < state.length; i++) {
       final oldPlayer = state.players[i];
       final newName = clearNames ? 'Player ${i + 1}' : oldPlayer.name;

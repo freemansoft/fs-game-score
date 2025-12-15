@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/presentation/app_theme.dart';
+import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/score_table_screen.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
-import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/provider/theme_provider.dart';
 
 class Phase10App extends ConsumerStatefulWidget {
@@ -38,10 +38,9 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
           });
           return true;
         },
-        child:
-            _showSplash
-                ? SplashScreen(onContinue: _onSplashContinue)
-                : const ScoreTableScreen(),
+        child: _showSplash
+            ? SplashScreen(onContinue: _onSplashContinue)
+            : const ScoreTableScreen(),
       ),
       //debugShowCheckedModeBanner: false,
     );
@@ -54,6 +53,6 @@ class Phase10AppBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(child: Phase10App());
+    return const ProviderScope(child: Phase10App());
   }
 }

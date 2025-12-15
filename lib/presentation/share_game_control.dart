@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShareGameControl extends ConsumerWidget {
   const ShareGameControl({super.key});
@@ -42,7 +42,7 @@ void shareGame(BuildContext context, WidgetRef ref) {
         title: title,
         subject: subject,
         // required for ipad and maybe after ios 26
-        sharePositionOrigin: Rect.fromLTWH(0, 0, 1, 1),
+        sharePositionOrigin: const Rect.fromLTWH(0, 0, 1, 1),
       ),
     );
   } else {

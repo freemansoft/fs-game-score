@@ -1,7 +1,6 @@
 class Scores {
-  final List<int?> roundScores;
-
   Scores(int numRounds) : roundScores = List.filled(numRounds, null);
+  final List<int?> roundScores;
 
   int get total => roundScores.whereType<int>().fold(0, (a, b) => a + b);
 

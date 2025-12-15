@@ -1,23 +1,6 @@
 import 'package:flutter/material.dart';
 
 class PlayerGameCell extends StatelessWidget {
-  static ValueKey cellKey(int playerIdx) {
-    return ValueKey('p${playerIdx}_game_cell');
-  }
-
-  static ValueKey nameKey(int playerIdx) {
-    return ValueKey('p${playerIdx}_name');
-  }
-
-  static ValueKey totalScoreKey(int playerIdx) {
-    return ValueKey('p${playerIdx}_total_score');
-  }
-
-  final int playerIdx;
-  final String name;
-  final int totalScore;
-  final VoidCallback onTap;
-
   const PlayerGameCell({
     super.key,
     required this.playerIdx,
@@ -25,6 +8,22 @@ class PlayerGameCell extends StatelessWidget {
     required this.totalScore,
     required this.onTap,
   });
+  static ValueKey<String> cellKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_game_cell');
+  }
+
+  static ValueKey<String> nameKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_name');
+  }
+
+  static ValueKey<String> totalScoreKey(int playerIdx) {
+    return ValueKey('p${playerIdx}_total_score');
+  }
+
+  final int playerIdx;
+  final String name;
+  final int totalScore;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {

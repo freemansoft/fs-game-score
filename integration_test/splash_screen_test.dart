@@ -1,14 +1,14 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
-import 'package:fs_score_card/main.dart' as app;
-import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_score_card/provider/game_provider.dart';
-import 'package:fs_score_card/presentation/splash_screen.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/main.dart' as app;
 import 'package:fs_score_card/presentation/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_round_cell.dart';
+import 'package:fs_score_card/presentation/splash_screen.dart';
+import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -124,7 +124,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Get the initial gameId before any user interaction
-    final splashContinueButtonKey = SplashScreen.continueButtonKey;
+    const splashContinueButtonKey = SplashScreen.continueButtonKey;
 
     final container = ProviderScope.containerOf(
       tester.element(find.byKey(splashContinueButtonKey)),

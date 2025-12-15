@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class RoundScoreField extends StatefulWidget {
-  final int? score;
-  final ValueChanged<int?> onChanged;
-  final bool enabled;
-  final String scoreFilter;
-  final bool autofocus;
-
   const RoundScoreField({
     super.key,
     required this.score,
@@ -16,6 +10,11 @@ class RoundScoreField extends StatefulWidget {
     this.scoreFilter = '',
     this.autofocus = false,
   });
+  final int? score;
+  final ValueChanged<int?> onChanged;
+  final bool enabled;
+  final String scoreFilter;
+  final bool autofocus;
 
   @override
   State<RoundScoreField> createState() => _RoundScoreFieldState();

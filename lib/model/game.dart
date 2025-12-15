@@ -3,6 +3,33 @@ import 'package:uuid/uuid.dart';
 
 // Game configuration model for Phase 10
 class Game {
+  // the gameId is really a game session id
+
+  Game({
+    this.maxRounds = defaultMaxRounds,
+    this.numPhases = defaultNumPhases,
+    this.numPlayers = defaultNumPlayers,
+    this.enablePhases = defaultEnablePhases,
+    this.scoreFilter = defaultScoreFilter,
+    this.version = '0.0.0+0',
+    String? gameId,
+  }) : gameId = gameId ?? const Uuid().v4();
+
+  /// Creates a Game instance from a JSON string.
+  /// If a key is missing, it uses default values.
+  /// Note: gameId is not deserialized - each load creates a new game instance with a fresh UUID.
+  factory Game.fromJson(String jsonString) {
+    final json = _decodeJson(jsonString);
+    return Game(
+      maxRounds: (json['maxRounds'] as int?) ?? defaultMaxRounds,
+      numPhases: (json['numPhases'] as int?) ?? defaultNumPhases,
+      numPlayers: (json['numPlayers'] as int?) ?? defaultNumPlayers,
+      enablePhases: (json['enablePhases'] as bool?) ?? defaultEnablePhases,
+      scoreFilter: (json['scoreFilter'] as String?) ?? defaultScoreFilter,
+      version: json['version'] as String?,
+      // gameId is intentionally omitted - will generate new UUID via constructor
+    );
+  }
   static const int defaultMaxRounds = 14;
   static const int defaultNumPhases = 10;
   static const int defaultNumPlayers = 8;
@@ -23,25 +50,11 @@ class Game {
     });
   }
 
-  /// Creates a Game instance from a JSON string.
-  /// If a key is missing, it uses default values.
-  /// Note: gameId is not deserialized - each load creates a new game instance with a fresh UUID.
-  factory Game.fromJson(String jsonString) {
-    final json = _decodeJson(jsonString);
-    return Game(
-      maxRounds: json['maxRounds'] ?? defaultMaxRounds,
-      numPhases: json['numPhases'] ?? defaultNumPhases,
-      numPlayers: json['numPlayers'] ?? defaultNumPlayers,
-      enablePhases: json['enablePhases'] ?? defaultEnablePhases,
-      scoreFilter: json['scoreFilter'] ?? defaultScoreFilter,
-      version: json['version'],
-      // gameId is intentionally omitted - will generate new UUID via constructor
-    );
-  }
-
   static Map<String, dynamic> _decodeJson(String jsonString) {
     return jsonString.isNotEmpty
-        ? Map<String, dynamic>.from(jsonDecode(jsonString))
+        ? Map<String, dynamic>.from(
+            jsonDecode(jsonString) as Map<String, dynamic>,
+          )
         : {};
   }
 
@@ -55,17 +68,7 @@ class Game {
   final bool enablePhases;
   final String scoreFilter;
   final String? version; // initialized from app version - stored in prefs
-  final String gameId; // the gameId is really a game session id
-
-  Game({
-    this.maxRounds = defaultMaxRounds,
-    this.numPhases = defaultNumPhases,
-    this.numPlayers = defaultNumPlayers,
-    this.enablePhases = defaultEnablePhases,
-    this.scoreFilter = defaultScoreFilter,
-    this.version = '0.0.0+0',
-    String? gameId,
-  }) : gameId = gameId ?? const Uuid().v4();
+  final String gameId;
 
   Game copyWith({
     int? maxRounds,

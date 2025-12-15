@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class PlayerNameField extends StatefulWidget {
-  final String name;
-  final ValueChanged<String> onChanged;
-  final InputBorder? border;
-  final TextAlign textAlign;
-
   const PlayerNameField({
     super.key,
     required this.name,
@@ -13,6 +8,10 @@ class PlayerNameField extends StatefulWidget {
     this.border,
     this.textAlign = TextAlign.center,
   });
+  final String name;
+  final ValueChanged<String> onChanged;
+  final InputBorder? border;
+  final TextAlign textAlign;
 
   @override
   State<PlayerNameField> createState() => _PlayerNameFieldState();

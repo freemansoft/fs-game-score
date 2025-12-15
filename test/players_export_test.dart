@@ -1,9 +1,10 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:fs_score_card/model/players.dart';
-import 'package:fs_score_card/model/player.dart';
-import 'package:fs_score_card/model/scores.dart';
-import 'package:fs_score_card/model/phases.dart';
 import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/model/phases.dart';
+import 'package:fs_score_card/model/player.dart';
+import 'package:fs_score_card/model/players.dart';
+import 'package:fs_score_card/model/scores.dart';
 
 void main() {
   group('Players Export Tests', () {
@@ -16,29 +17,26 @@ void main() {
       // Create test players with some scores and some empty scores
       player1 = Player.withData(
         name: 'Alice',
-        scores:
-            Scores(5)
-              ..setScore(0, 10)
-              ..setScore(1, 15)
-              ..setScore(2, 20),
+        scores: Scores(5)
+          ..setScore(0, 10)
+          ..setScore(1, 15)
+          ..setScore(2, 20),
         phases: Phases(3),
       );
 
       player2 = Player.withData(
         name: 'Bob',
-        scores:
-            Scores(5)
-              ..setScore(0, 5)
-              ..setScore(3, 25),
+        scores: Scores(5)
+          ..setScore(0, 5)
+          ..setScore(3, 25),
         phases: Phases(3),
       );
 
       player3 = Player.withData(
         name: 'Charlie',
-        scores:
-            Scores(5)
-              ..setScore(1, 30)
-              ..setScore(4, 40),
+        scores: Scores(5)
+          ..setScore(1, 30)
+          ..setScore(4, 40),
         phases: Phases(3),
       );
 
@@ -160,11 +158,10 @@ void main() {
         // Create a player with only 3 rounds for this test
         final singlePlayerData = Player.withData(
           name: 'Alice',
-          scores:
-              Scores(3)
-                ..setScore(0, 10)
-                ..setScore(1, 15)
-                ..setScore(2, 20),
+          scores: Scores(3)
+            ..setScore(0, 10)
+            ..setScore(1, 15)
+            ..setScore(2, 20),
           phases: Phases(2),
         );
 

@@ -6,13 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 
 class RoundPhaseDropdown extends ConsumerStatefulWidget {
-  final int? selectedPhase;
-  final ValueChanged<int?> onChanged;
-  final int playerIdx;
-  final int round;
-  final List<int?> completedPhases;
-  final bool enabled;
-
   const RoundPhaseDropdown({
     required this.selectedPhase,
     required this.onChanged,
@@ -22,6 +15,12 @@ class RoundPhaseDropdown extends ConsumerStatefulWidget {
     this.enabled = true,
     super.key,
   });
+  final int? selectedPhase;
+  final ValueChanged<int?> onChanged;
+  final int playerIdx;
+  final int round;
+  final List<int?> completedPhases;
+  final bool enabled;
 
   @override
   ConsumerState<RoundPhaseDropdown> createState() => _RoundPhaseDropdownState();
@@ -56,27 +55,24 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
     final theme = Theme.of(context);
     final hasFocus = _focusNode.hasFocus;
 
-    final Color backgroundColor =
-        !widget.enabled
-            ? (theme.brightness == Brightness.dark
-                ? Color.alphaBlend(
+    final Color backgroundColor = !widget.enabled
+        ? (theme.brightness == Brightness.dark
+              ? Color.alphaBlend(
                   theme.disabledColor.withAlpha(51),
                   theme.colorScheme.surface,
                 )
-                : Color.alphaBlend(
+              : Color.alphaBlend(
                   theme.disabledColor.withAlpha(26),
                   theme.colorScheme.surface,
                 ))
-            : theme.colorScheme.surface;
-    final Color textColor =
-        !widget.enabled
-            ? theme.disabledColor
-            : theme.textTheme.bodyMedium?.color ?? Colors.black;
+        : theme.colorScheme.surface;
+    final Color textColor = !widget.enabled
+        ? theme.disabledColor
+        : theme.textTheme.bodyMedium?.color ?? Colors.black;
 
-    final Color borderColor =
-        hasFocus && widget.enabled
-            ? theme.colorScheme.primary
-            : theme.colorScheme.outline;
+    final Color borderColor = hasFocus && widget.enabled
+        ? theme.colorScheme.primary
+        : theme.colorScheme.outline;
 
     return Focus(
       focusNode: _focusNode,
@@ -108,20 +104,19 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
             style: TextStyle(color: textColor),
           ),
         ),
-        itemBuilder:
-            (context) => [
-              // We have to use a -1 for the None value because onSelected is only called if there is a value
-              const PopupMenuItem<int?>(value: -1, child: Text('No Phase')),
-              ...List.generate(game.numPhases, (i) {
-                final phaseNum = i + 1;
-                return CheckedPopupMenuItem<int?>(
-                  value: phaseNum,
-                  enabled: widget.enabled,
-                  checked: widget.completedPhases.contains(phaseNum),
-                  child: Text('Phase $phaseNum'),
-                );
-              }),
-            ],
+        itemBuilder: (context) => [
+          // We have to use a -1 for the None value because onSelected is only called if there is a value
+          const PopupMenuItem<int?>(value: -1, child: Text('No Phase')),
+          ...List.generate(game.numPhases, (i) {
+            final phaseNum = i + 1;
+            return CheckedPopupMenuItem<int?>(
+              value: phaseNum,
+              enabled: widget.enabled,
+              checked: widget.completedPhases.contains(phaseNum),
+              child: Text('Phase $phaseNum'),
+            );
+          }),
+        ],
         onSelected: (val) {
           widget.onChanged(val != null && val < 0 ? val : val);
           // Remove focus when an item is selected

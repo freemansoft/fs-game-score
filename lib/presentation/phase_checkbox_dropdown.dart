@@ -6,13 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 
 class PhaseCheckboxDropdown extends ConsumerWidget {
-  final int? selectedPhase;
-  final ValueChanged<int?> onChanged;
-  final int playerIdx;
-  final int round;
-  final List<int?> completedPhases;
-  final bool enabled;
-
   const PhaseCheckboxDropdown({
     required this.selectedPhase,
     required this.onChanged,
@@ -22,27 +15,31 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
     this.enabled = true,
     super.key,
   });
+  final int? selectedPhase;
+  final ValueChanged<int?> onChanged;
+  final int playerIdx;
+  final int round;
+  final List<int?> completedPhases;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameProvider);
     final theme = Theme.of(context);
-    final Color backgroundColor =
-        !enabled
-            ? (theme.brightness == Brightness.dark
-                ? Color.alphaBlend(
+    final Color backgroundColor = !enabled
+        ? (theme.brightness == Brightness.dark
+              ? Color.alphaBlend(
                   theme.disabledColor.withAlpha(51),
                   theme.colorScheme.surface,
                 )
-                : Color.alphaBlend(
+              : Color.alphaBlend(
                   theme.disabledColor.withAlpha(26),
                   theme.colorScheme.surface,
                 ))
-            : theme.colorScheme.surface;
-    final Color textColor =
-        !enabled
-            ? theme.disabledColor
-            : theme.textTheme.bodyMedium?.color ?? Colors.black;
+        : theme.colorScheme.surface;
+    final Color textColor = !enabled
+        ? theme.disabledColor
+        : theme.textTheme.bodyMedium?.color ?? Colors.black;
 
     return PopupMenuButton<int?>(
       tooltip: 'Select completed phase(s)',
@@ -59,20 +56,19 @@ class PhaseCheckboxDropdown extends ConsumerWidget {
           style: TextStyle(color: textColor),
         ),
       ),
-      itemBuilder:
-          (context) => [
-            // We have to use a -1 for the None value because onSelected is only called if there is a value
-            const PopupMenuItem<int?>(value: -1, child: Text('No Phase')),
-            ...List.generate(game.numPhases, (i) {
-              final phaseNum = i + 1;
-              return CheckedPopupMenuItem<int?>(
-                value: phaseNum,
-                enabled: enabled,
-                checked: completedPhases.contains(phaseNum),
-                child: Text('Phase $phaseNum'),
-              );
-            }),
-          ],
+      itemBuilder: (context) => [
+        // We have to use a -1 for the None value because onSelected is only called if there is a value
+        const PopupMenuItem<int?>(value: -1, child: Text('No Phase')),
+        ...List.generate(game.numPhases, (i) {
+          final phaseNum = i + 1;
+          return CheckedPopupMenuItem<int?>(
+            value: phaseNum,
+            enabled: enabled,
+            checked: completedPhases.contains(phaseNum),
+            child: Text('Phase $phaseNum'),
+          );
+        }),
+      ],
       onSelected: (val) {
         onChanged(val != null && val < 0 ? val : val);
       },
