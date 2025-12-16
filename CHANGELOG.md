@@ -9,9 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added 1.6.0
 
-- Updated Flutter to dart 3.9 or later to support built in dart mcp server <https://docs.flutter.dev/install/archive>
+- Updated Flutter to dart 3.9 or later to support built in dart mcp server <https://docs.flutter.dev/install/archivecirsp>
 - Building with Flutter 3.38.5 which is current at time of update
 - Migrated from standard linter to VGV linter
+- Added `.cursor/rules/flutter-recommended/RULE.md` and `.github/copilot-instructions.md` based on Flutter recommended [ai rules](https://docs.flutter.dev/ai/ai-rules)
 
 ## [1.5.0] - 2025-10-21
 
