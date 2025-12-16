@@ -38,7 +38,7 @@ class GameNotifier extends Notifier<Game> {
     state = state.copyWith(numPlayers: numPlayers);
   }
 
-  void setEnablePhases(bool enablePhases) {
+  void setEnablePhases({required bool enablePhases}) {
     state = state.copyWith(enablePhases: enablePhases);
   }
 
@@ -49,4 +49,4 @@ class GameNotifier extends Notifier<Game> {
   // Add more setters as needed
 }
 
-final gameProvider = NotifierProvider<GameNotifier, Game>(() => GameNotifier());
+final gameProvider = NotifierProvider<GameNotifier, Game>(GameNotifier.new);

@@ -16,43 +16,42 @@ class NewGameControl extends ConsumerWidget {
           context: context,
           builder: (context) {
             return StatefulBuilder(
-              builder:
-                  (context, setState) => AlertDialog(
-                    title: const Text('Start New Game?'),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          'Are you sure you want to start a new game? The score card will be erased.',
-                        ),
-                        const SizedBox(height: 16),
-                        CheckboxListTile(
-                          value: clearNames,
-                          onChanged: (val) {
-                            setState(() {
-                              clearNames = val ?? false;
-                            });
-                          },
-                          title: const Text('Clear the player names'),
-                          controlAffinity: ListTileControlAffinity.leading,
-                        ),
-                      ],
+              builder: (context, setState) => AlertDialog(
+                title: const Text('Start New Game?'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Are you sure you want to start a new game? The score card will be erased.',
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: const Text('Cancel'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text('New Game'),
-                      ),
-                    ],
+                    const SizedBox(height: 16),
+                    CheckboxListTile(
+                      value: clearNames,
+                      onChanged: (val) {
+                        setState(() {
+                          clearNames = val ?? false;
+                        });
+                      },
+                      title: const Text('Clear the player names'),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Cancel'),
                   ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('New Game'),
+                  ),
+                ],
+              ),
             );
           },
         );
-        if (result == true) {
+        if (result ?? false) {
           ref.read(playersProvider.notifier).resetGame(clearNames: clearNames);
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(

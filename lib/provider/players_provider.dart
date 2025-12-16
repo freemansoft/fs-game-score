@@ -4,7 +4,7 @@ import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 
 final playersProvider = NotifierProvider<PlayersNotifier, Players>(
-  () => PlayersNotifier(),
+  PlayersNotifier.new,
 );
 
 class PlayersNotifier extends Notifier<Players> {
@@ -68,11 +68,11 @@ class PlayersNotifier extends Notifier<Players> {
     );
   }
 
-  void toggleRoundEnabled(int round, bool enabled) {
+  void toggleRoundEnabled({required int round, required bool enabled}) {
     var newState = state;
     for (int i = 0; i < state.length; i++) {
       final player = state.players[i];
-      player.roundStates.setEnabled(round, enabled);
+      player.roundStates.setEnabled(round: round, enabled: enabled);
       newState = newState.withPlayer(player, i);
     }
     state = newState;

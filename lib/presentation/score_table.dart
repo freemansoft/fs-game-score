@@ -90,7 +90,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                           // Toggle enabled state for all players for this round
                           ref
                               .read(playersProvider.notifier)
-                              .toggleRoundEnabled(round, !allEnabled);
+                              .toggleRoundEnabled(
+                                round: round,
+                                enabled: !allEnabled,
+                              );
                         },
                       ),
                     ),

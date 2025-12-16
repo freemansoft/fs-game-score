@@ -129,7 +129,7 @@ void main() {
     expect(gameAfterNumPlayersChange.numPlayers, equals(6));
 
     // Change enablePhases
-    gameNotifier.setEnablePhases(false);
+    gameNotifier.setEnablePhases(enablePhases: false);
     await tester.pumpAndSettle();
 
     final gameAfterPhasesChange = container.read(gameProvider);

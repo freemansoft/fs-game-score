@@ -2,7 +2,7 @@ class RoundStates {
   RoundStates(int numRounds) : enabledRounds = List.filled(numRounds, true);
   final List<bool> enabledRounds; // default enabled
 
-  void setEnabled(int round, bool enabled) {
+  void setEnabled({required int round, required bool enabled}) {
     if (round >= 0 && round < enabledRounds.length) {
       enabledRounds[round] = enabled;
     }

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final themeProvider = NotifierProvider<ThemeNotifier, bool>(
-  () => ThemeNotifier(),
+  ThemeNotifier.new,
 );
 
 class ThemeNotifier extends Notifier<bool> {
@@ -12,7 +12,7 @@ class ThemeNotifier extends Notifier<bool> {
     state = !state;
   }
 
-  void setTheme(bool isDark) {
+  void setTheme({required bool isDark}) {
     state = isDark;
   }
 }

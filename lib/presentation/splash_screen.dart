@@ -52,7 +52,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         final game = Game.fromJson(gameJson);
         ref.read(gameProvider.notifier).setNumPlayers(game.numPlayers);
         ref.read(gameProvider.notifier).setMaxRounds(game.maxRounds);
-        ref.read(gameProvider.notifier).setEnablePhases(game.enablePhases);
+        ref
+            .read(gameProvider.notifier)
+            .setEnablePhases(enablePhases: game.enablePhases);
         ref.read(gameProvider.notifier).setScoreFilter(game.scoreFilter);
         // version from prefs does not override version of game in app
         setState(() {
@@ -113,9 +115,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   await launchUrl(Uri.parse(url));
                 }
               },
-              child: Text(
+              child: const Text(
                 'Copyright (C) 2025 Joe Freeman',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
@@ -281,7 +283,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 final game = ref.read(gameProvider.notifier).stateValue();
                 await prefs.setString(_gamePrefsKey, game.toJson());
 
-                if (widget.onContinue != null) widget.onContinue!();
+                widget.onContinue?.call();
               },
               child: const Text('Continue'),
             ),

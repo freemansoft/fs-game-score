@@ -175,20 +175,21 @@ You can test this locally using the IDE on a Windows machine.
 1. Double click on the `exe` in `build\\windows\x65\runner\Release\fs_score_card.exe`
 1. You **cannot** copy just the exe somewhere and expect it to work
 
-#### Build an installer package 
+#### Build an installer package
 
 An `msix` section has already been added to customize the `msi` output <https://pub.dev/packages/msix>
 
 1. Build the image on a windows machine with `flutter build windows`
-1. Use the `msix` package to create a windows installer 
-  1. `flutter pub run msix:create` 
-  1. `dart run msix:create` this will offer to install a self signed `pfx`
+1. Use the `msix` package to create a windows installer
+    1. `flutter pub run msix:create`
+    1. `dart run msix:create` this will offer to install a self signed `pfx`
 1. Copy the created `msix` file located in `build\windows\x64\runner\Release\fs_score_card.msix` to the target location where it can be installed from.
 
 #### Windows store builds
+
 _to be documented_ Windows standalone app packaged builds.
 
-- see docs <https://docs.flutter.dev/deployment/windows>
+* see docs <https://docs.flutter.dev/deployment/windows>
 
 ## Integration tests
 

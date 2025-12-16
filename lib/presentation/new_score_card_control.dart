@@ -7,30 +7,29 @@ class NewScoreCardControl extends StatelessWidget {
   Future<void> _showDialog(BuildContext context) async {
     final result = await showDialog<bool>(
       context: context,
-      builder:
-          (context) => Semantics(
-            container: true,
-            label: 'New Game - Change Scorecard Type',
-            explicitChildNodes: true,
-            child: AlertDialog(
-              title: const Text('Change Scorecard Type'),
-              content: const Text(
-                'Are you sure you want to change the scorecard type? The scorecard will be cleared.',
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('Change Scorecard'),
-                ),
-              ],
-            ),
+      builder: (context) => Semantics(
+        container: true,
+        label: 'New Game - Change Scorecard Type',
+        explicitChildNodes: true,
+        child: AlertDialog(
+          title: const Text('Change Scorecard Type'),
+          content: const Text(
+            'Are you sure you want to change the scorecard type? The scorecard will be cleared.',
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Change Scorecard'),
+            ),
+          ],
+        ),
+      ),
     );
-    if (result == true && context.mounted) {
+    if ((result ?? false) && context.mounted) {
       NewScoreCardNotification().dispatch(context);
     }
   }

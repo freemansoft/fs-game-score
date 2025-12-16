@@ -13,7 +13,8 @@ class LightDarkControl extends ConsumerWidget {
         const Icon(Icons.light_mode),
         Switch(
           value: isDark,
-          onChanged: (val) => ref.read(themeProvider.notifier).setTheme(val),
+          onChanged: (val) =>
+              ref.read(themeProvider.notifier).setTheme(isDark: val),
         ),
         const Icon(Icons.dark_mode),
       ],
