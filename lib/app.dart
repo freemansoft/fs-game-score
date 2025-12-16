@@ -27,6 +27,8 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
     final isDark = ref.watch(themeProvider);
     return MaterialApp(
       title: 'FS Score Ccard',
+      // left in for debugging purposes
+      // ignore: avoid_redundant_argument_values
       showSemanticsDebugger: false, // shows outlines for the semantics tree
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,

@@ -64,6 +64,8 @@ class PlayerRoundCell extends StatelessWidget {
         width: 90,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          // ignored for developer clarity
+          // ignore: avoid_redundant_argument_values
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Semantics(

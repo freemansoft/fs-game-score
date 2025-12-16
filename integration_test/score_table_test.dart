@@ -140,11 +140,6 @@ void main() {
 
     // additional redundant data entry testing
 
-    // Enter values of 5*(player number +1) in column 3 (round 3) for all players
-    // NOTE: Using round 2 instead of round 3 to support narrow portrait devices
-    // Player 0: 5*(0+1) = 5, Player 1: 5*(1+1) = 10
-    // tap on the roundScoreP0R2 to open the PlayerRoundCellModelPanel
-
     // click to open the editing panel
     await tester.tap(find.byKey(playerRoundScoreP0R2Key));
     await tester.pumpAndSettle();

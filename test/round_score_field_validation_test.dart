@@ -32,6 +32,8 @@ void main() {
       testWidgets('should accept any valid number', (
         WidgetTester tester,
       ) async {
+        // be explicit about the test parameters
+        // ignore: avoid_redundant_argument_values
         await tester.pumpWidget(createTestWidget(scoreFilter: ''));
 
         // Enter various numbers
@@ -46,6 +48,8 @@ void main() {
       testWidgets('should accept numbers ending in 0 or 5', (
         WidgetTester tester,
       ) async {
+        // be explicit about the test parameters
+        // ignore: avoid_redundant_argument_values
         await tester.pumpWidget(createTestWidget(scoreFilter: ''));
 
         // Enter numbers ending in 0 or 5

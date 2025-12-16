@@ -44,12 +44,16 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
         horizontalMargin: 12,
         minWidth: minWidth.toDouble(),
         fixedLeftColumns: 1,
+        // ignored for developer clarity
+        // ignore: avoid_redundant_argument_values
         fixedTopRows: 1,
         isHorizontalScrollBarVisible: true,
         isVerticalScrollBarVisible: true,
         dataRowHeight: 74,
         border: TableBorder.all(
           color: Theme.of(context).colorScheme.outline.withAlpha(100),
+          // ignored for developer clarity
+          // ignore: avoid_redundant_argument_values
           width: 1,
         ),
         columns: [
