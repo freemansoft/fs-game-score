@@ -48,6 +48,7 @@ class GameNotifier extends Notifier<Game> {
 ```
 
 **State Managed**:
+
 - `numPlayers`: Number of players in the game (2-8)
 - `maxRounds`: Maximum number of rounds (1-20)
 - `numPhases`: Number of phases (default: 10)
@@ -95,6 +96,7 @@ class PlayersNotifier extends Notifier<Players> {
 ```
 
 **State Managed**:
+
 - Player names and data
 - Individual round scores for each player
 - Phase completion status
@@ -105,7 +107,7 @@ class PlayersNotifier extends Notifier<Players> {
 
 ### ThemeProvider
 
-**Location**: `lib/app_bar.dart`
+**Location**: `lib/presentation/in_game_app_bar.dart`
 
 The `ThemeProvider` manages UI theme state:
 
@@ -123,6 +125,7 @@ class ThemeNotifier extends Notifier<bool> {
 ```
 
 **State Managed**:
+
 - Light/dark mode toggle (boolean)
 
 ## State Management Patterns
@@ -132,6 +135,7 @@ class ThemeNotifier extends Notifier<bool> {
 The application persists game configuration across sessions using `SharedPreferences`:
 
 **SplashScreen State Loading** (`lib/splash_screen.dart`):
+
 ```dart
 Future<void> _loadGameFromPrefs() async {
   final prefs = await SharedPreferences.getInstance();
@@ -147,6 +151,7 @@ Future<void> _loadGameFromPrefs() async {
 ```
 
 **State Saving on Game Start**:
+
 ```dart
 ElevatedButton(
   onPressed: () async {
@@ -168,6 +173,7 @@ ElevatedButton(
 Widgets automatically update when state changes through `ref.watch()`:
 
 **Score Table Watching State** (`lib/score_table.dart`):
+
 ```dart
 Widget build(BuildContext context) {
   final players = ref.watch(playersProvider);
@@ -178,6 +184,7 @@ Widget build(BuildContext context) {
 ```
 
 **Real-time Score Updates** (`lib/round_score_field.dart`):
+
 ```dart
 void _onInputChanged(String value) {
   _validateInput(value);
@@ -342,7 +349,7 @@ TotalScoreField(
 
 - `lib/provider/game_provider.dart` - Game configuration state
 - `lib/provider/players_provider.dart` - Player data state
-- `lib/app_bar.dart` - Theme state
+- `lib/presentation/in_game_app_bar.dart` - Theme state
 - `lib/splash_screen.dart` - State initialization and persistence
 - `lib/score_table.dart` - State consumption and column locking
 - `lib/round_score_field.dart` - Real-time score updates

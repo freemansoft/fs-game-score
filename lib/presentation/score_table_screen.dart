@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fs_score_card/app_bar.dart';
+import 'package:fs_score_card/presentation/in_game_app_bar.dart';
 import 'package:fs_score_card/presentation/score_table.dart';
 
 class ScoreTableScreen extends StatelessWidget {
@@ -8,7 +8,7 @@ class ScoreTableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: Phase10AppBar(),
+      appBar: InGameAppBar(),
       body: Padding(padding: EdgeInsets.all(4), child: ScoreTable()),
     );
   }
