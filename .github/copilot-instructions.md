@@ -4,11 +4,11 @@
 Purpose: give an AI coding agent the exact, discoverable knowledge to be productive in this Flutter app.
 
 1) Big picture
-- Flutter multi-platform app (mobile, desktop, web). Entry points: [lib/main.dart](lib/main.dart) and [lib/app.dart](lib/app.dart).
+- Flutter multi-platform app (mobile, desktop, web). Entry points: [lib/main.dart](../lib/main.dart) and [lib/app.dart](../lib/app.dart).
 - Code organized by feature/concern: `lib/model/`, `lib/presentation/`, `lib/provider/`. Business logic lives in domain/data layers under `lib/model` and provider-backed state in `lib/provider`.
 
 2) Key files and places to inspect
-- App entry and routing: [lib/main.dart](lib/main.dart) and [lib/app.dart](lib/app.dart).
+- App entry and routing: [lib/main.dart](../lib/main.dart) and [lib/app.dart](../lib/app.dart).
 - Models and serialization: `lib/model/` (uses `json_serializable` conventions and generated files).
 - UI and widgets: `lib/presentation/` (widgets use small private Widget classes and `const` constructors).
 - State: `lib/provider/` (uses Flutter built-in state patterns; Riverpod used only when explicitly requested).
