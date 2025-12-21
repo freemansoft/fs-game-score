@@ -9,7 +9,6 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
     super.key,
     required this.playerIdx,
     required this.round,
-    required this.enabled,
     required this.enablePhases,
     required this.onPhaseChanged,
     required this.onScoreChanged,
@@ -29,7 +28,6 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
 
   final int playerIdx;
   final int round;
-  final bool enabled;
   final bool enablePhases;
   final ValueChanged<int?> onPhaseChanged;
   final ValueChanged<int?> onScoreChanged;
@@ -39,7 +37,6 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
     BuildContext context, {
     required int playerIdx,
     required int round,
-    required bool enabled,
     required bool enablePhases,
     required ValueChanged<int?> onPhaseChanged,
     required ValueChanged<int?> onScoreChanged,
@@ -50,7 +47,6 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
       builder: (context) => PlayerRoundModal(
         playerIdx: playerIdx,
         round: round,
-        enabled: enabled,
         enablePhases: enablePhases,
         onPhaseChanged: onPhaseChanged,
         onScoreChanged: onScoreChanged,
@@ -77,8 +73,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
         RoundScoreField(
           key: PlayerRoundModal.scoreFieldKey(widget.playerIdx, widget.round),
           score: currentScore,
-          onChanged: widget.enabled ? widget.onScoreChanged : (parsed) {},
-          enabled: widget.enabled,
+          onChanged: widget.onScoreChanged,
           scoreFilter: widget.scoreFilter,
           autofocus: true,
         ),
@@ -106,11 +101,10 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
             widget.round,
           ),
           selectedPhase: selectedPhase,
-          onChanged: widget.enabled ? widget.onPhaseChanged : (val) {},
+          onChanged: widget.onPhaseChanged,
           playerIdx: widget.playerIdx,
           round: widget.round,
           completedPhases: completedPhases,
-          enabled: widget.enabled,
         ),
       ],
     );

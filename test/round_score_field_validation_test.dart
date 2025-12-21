@@ -11,7 +11,6 @@ void main() {
     Widget createTestWidget({
       String scoreFilter = '',
       int? initialScore,
-      bool enabled = true,
     }) {
       return MaterialApp(
         home: Scaffold(
@@ -20,7 +19,6 @@ void main() {
             onChanged: (score) {
               // Score changed callback
             },
-            enabled: enabled,
             scoreFilter: scoreFilter,
           ),
         ),

@@ -47,7 +47,6 @@ class PlayerRoundCell extends StatelessWidget {
       context,
       playerIdx: playerIdx,
       round: round,
-      enabled: enabled,
       enablePhases: enablePhases,
       onPhaseChanged: onPhaseChanged,
       onScoreChanged: onScoreChanged,

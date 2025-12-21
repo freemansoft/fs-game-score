@@ -12,7 +12,6 @@ class RoundPhaseDropdown extends ConsumerStatefulWidget {
     required this.playerIdx,
     required this.round,
     required this.completedPhases,
-    this.enabled = true,
     super.key,
   });
   final int? selectedPhase;
@@ -20,7 +19,6 @@ class RoundPhaseDropdown extends ConsumerStatefulWidget {
   final int playerIdx;
   final int round;
   final List<int?> completedPhases;
-  final bool enabled;
 
   @override
   ConsumerState<RoundPhaseDropdown> createState() => _RoundPhaseDropdownState();
@@ -56,22 +54,10 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
     final theme = Theme.of(context);
     final hasFocus = _focusNode.hasFocus;
 
-    final Color backgroundColor = !widget.enabled
-        ? (theme.brightness == Brightness.dark
-              ? Color.alphaBlend(
-                  theme.disabledColor.withAlpha(51),
-                  theme.colorScheme.surface,
-                )
-              : Color.alphaBlend(
-                  theme.disabledColor.withAlpha(26),
-                  theme.colorScheme.surface,
-                ))
-        : theme.colorScheme.surface;
-    final Color textColor = !widget.enabled
-        ? theme.disabledColor
-        : theme.textTheme.bodyMedium?.color ?? Colors.black;
+    final Color backgroundColor = theme.colorScheme.surface;
+    final Color textColor = theme.textTheme.bodyMedium?.color ?? Colors.black;
 
-    final Color borderColor = hasFocus && widget.enabled
+    final Color borderColor = hasFocus
         ? theme.colorScheme.primary
         : theme.colorScheme.outline;
 
@@ -79,7 +65,6 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
       focusNode: _focusNode,
       child: PopupMenuButton<int?>(
         tooltip: 'Select completed phase(s)',
-        enabled: widget.enabled,
         onOpened: () {
           // Request focus when popup opens
           _focusNode.requestFocus();
@@ -94,7 +79,7 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
             color: backgroundColor,
             border: Border.all(
               color: borderColor,
-              width: hasFocus && widget.enabled ? 2 : 1,
+              width: hasFocus ? 2 : 1,
             ),
             borderRadius: BorderRadius.circular(4),
           ),
@@ -112,7 +97,6 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
             final phaseNum = i + 1;
             return CheckedPopupMenuItem<int?>(
               value: phaseNum,
-              enabled: widget.enabled,
               checked: widget.completedPhases.contains(phaseNum),
               child: Text('Phase $phaseNum'),
             );

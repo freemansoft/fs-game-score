@@ -6,13 +6,11 @@ class RoundScoreField extends StatefulWidget {
     super.key,
     required this.score,
     required this.onChanged,
-    this.enabled = true,
     this.scoreFilter = '',
     this.autofocus = false,
   });
   final int? score;
   final ValueChanged<int?> onChanged;
-  final bool enabled;
   final String scoreFilter;
   final bool autofocus;
 
@@ -132,14 +130,12 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       controller: _controller,
       focusNode: _focusNode,
       keyboardType: TextInputType.number,
-      enabled: widget.enabled,
       autofocus: widget.autofocus,
       decoration: InputDecoration(
         hintText: 'Score',
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         border: const OutlineInputBorder(),
-        filled: !widget.enabled,
       ),
       onChanged: _onInputChanged,
       onFieldSubmitted: _onFieldSubmitted,
