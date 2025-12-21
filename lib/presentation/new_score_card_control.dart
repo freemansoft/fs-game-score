@@ -28,7 +28,11 @@ class NewScoreCardControl extends StatelessWidget {
       ),
     );
     if ((result ?? false) && context.mounted) {
-      NewScoreCardNotification().dispatch(context);
+      // Navigate to splash screen and clear navigation stack
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/',
+        (route) => false,
+      );
     }
   }
 
@@ -45,6 +49,3 @@ class NewScoreCardControl extends StatelessWidget {
     );
   }
 }
-
-/// Notification to request showing the splash screen (home)
-class NewScoreCardNotification extends Notification {}

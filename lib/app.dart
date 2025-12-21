@@ -1,29 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/presentation/app_theme.dart';
-import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/score_table_screen.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/theme_provider.dart';
 
-class Phase10App extends ConsumerStatefulWidget {
+class Phase10App extends ConsumerWidget {
   const Phase10App({super.key});
 
   @override
-  ConsumerState<Phase10App> createState() => _Phase10AppState();
-}
-
-class _Phase10AppState extends ConsumerState<Phase10App> {
-  bool _showSplash = true;
-
-  void _onSplashContinue() {
-    setState(() {
-      _showSplash = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(themeProvider);
     return MaterialApp(
       title: 'FS Score Ccard',
@@ -33,17 +19,11 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      home: NotificationListener<NewScoreCardNotification>(
-        onNotification: (notification) {
-          setState(() {
-            _showSplash = true;
-          });
-          return true;
-        },
-        child: _showSplash
-            ? SplashScreen(onContinue: _onSplashContinue)
-            : const ScoreTableScreen(),
-      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/score-table': (context) => const ScoreTableScreen(),
+      },
       //debugShowCheckedModeBanner: false,
     );
   }

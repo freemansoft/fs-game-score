@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
-  const SplashScreen({super.key, this.onContinue});
+  const SplashScreen({super.key});
   static const ValueKey<String> numPlayersDropdownKey = ValueKey(
     'splash_num_players_dropdown',
   );
@@ -23,8 +23,6 @@ class SplashScreen extends ConsumerStatefulWidget {
   static const ValueKey<String> continueButtonKey = ValueKey(
     'splash_continue_button',
   );
-
-  final VoidCallback? onContinue;
 
   @override
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
@@ -283,7 +281,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 final game = ref.read(gameProvider.notifier).stateValue();
                 await prefs.setString(_gamePrefsKey, game.toJson());
 
-                widget.onContinue?.call();
+                // Navigate to score table screen
+                if (mounted) {
+                  Navigator.of(context).pushReplacementNamed('/score-table');
+                }
               },
               child: const Text('Continue'),
             ),

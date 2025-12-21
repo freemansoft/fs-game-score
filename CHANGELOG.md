@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.0] - 2025-12-15
+## [1.6.0] - 2025-12-21
 
 ### Added 1.6.0
 
@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Building with Flutter 3.38.5 which is current at time of update
 - Migrated from standard linter to VGV linter
 - Added `.cursor/rules/flutter-recommended/RULE.md` and `.github/copilot-instructions.md` based on Flutter recommended [ai rules](https://docs.flutter.dev/ai/ai-rules)
+- Removed unecessary Semantics instead relying on semanticLabel were available
+- Migrated to Flutter Navigation and routes
 
 ## [1.5.0] - 2025-10-21
 
