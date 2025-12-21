@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
+/// A button that, when pressed, will reset the game to its initial state.
+/// Does not change the scorecard type.
 class NewGameControl extends ConsumerWidget {
   const NewGameControl({super.key});
 
