@@ -57,10 +57,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           width: 1,
         ),
         columns: [
-          DataColumn2(
-            label: Semantics(
-              label: 'Player and Total',
-              child: const Text('Player\nTotal'),
+          const DataColumn2(
+            label: Text(
+              'Player\nTotal',
+              semanticsLabel: 'Player and Total',
             ),
             headingRowAlignment: MainAxisAlignment.center,
             size: ColumnSize.L,

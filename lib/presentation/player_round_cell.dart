@@ -68,38 +68,34 @@ class PlayerRoundCell extends StatelessWidget {
           // ignore: avoid_redundant_argument_values
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Semantics(
-              label: 'Player ${playerIdx + 1} round ${round + 1} score',
-              button: enabled,
-              child: Text(
-                score?.toString() ?? '---',
-                key: scoreKey(playerIdx, round),
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  color: enabled ? null : Theme.of(context).disabledColor,
-                ),
-                textAlign: TextAlign.center,
+            Text(
+              score?.toString() ?? '---',
+              key: scoreKey(playerIdx, round),
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                color: enabled ? null : Theme.of(context).disabledColor,
               ),
+              textAlign: TextAlign.center,
+              semanticsLabel:
+                  'Player ${playerIdx + 1} round ${round + 1} score',
             ),
             if (enablePhases) ...[
               const SizedBox(height: 2),
-              Semantics(
-                label: 'Player ${playerIdx + 1} round ${round + 1} phase',
-                button: enabled,
+              Text(
+                selectedPhase != null && selectedPhase! > 0
+                    ? 'Phase $selectedPhase'
+                    : '---',
                 key: phaseKey(playerIdx, round),
-                child: Text(
-                  selectedPhase != null && selectedPhase! > 0
-                      ? 'Phase $selectedPhase'
-                      : '---',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: enabled
-                        ? Theme.of(context).colorScheme.secondary
-                        : Theme.of(context).disabledColor,
-                  ),
-                  textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  color: enabled
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).disabledColor,
                 ),
+                textAlign: TextAlign.center,
+                semanticsLabel:
+                    'Player ${playerIdx + 1} round ${round + 1} phase',
               ),
             ],
           ],

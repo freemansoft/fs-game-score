@@ -38,27 +38,22 @@ class PlayerGameCell extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Semantics(
-                label: 'Player name ${playerIdx + 1}',
-                child: Text(
-                  name,
-                  key: nameKey(playerIdx),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: const TextStyle(fontWeight: FontWeight.normal),
-                  textAlign: TextAlign.center,
-                ),
+              Text(
+                name,
+                key: nameKey(playerIdx),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: const TextStyle(fontWeight: FontWeight.normal),
+                textAlign: TextAlign.center,
+                semanticsLabel: 'Player name ${playerIdx + 1}',
               ),
-              Semantics(
-                label: 'Player total score ${playerIdx + 1}',
-                button: true,
-                child: Text(
-                  '$totalScore',
-                  key: totalScoreKey(playerIdx),
-                  style: const TextStyle(fontWeight: FontWeight.normal),
-                  textAlign: TextAlign.center,
-                ),
+              Text(
+                '$totalScore',
+                key: totalScoreKey(playerIdx),
+                style: const TextStyle(fontWeight: FontWeight.normal),
+                textAlign: TextAlign.center,
+                semanticsLabel: 'Player total score ${playerIdx + 1}',
               ),
             ],
           ),
