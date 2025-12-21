@@ -43,28 +43,20 @@ Preferences
 
 Notes
 
-1. Player's names can be edited in place in the scoring table.
-2. Round scores can be edited in place in the appropriate columns.  Scores will be totaled under the player's name.
+1. Player's names can be edited by clicking on the name cell in the scoring table.
+2. Round scores can be edited by clicking on a score cell in the scorint table.  Scores will be totaled under the player's name.
 3. The "New Game" icon will clear the board scores and optionally the player names for times you want to change the order
 4. The "Home" or "Change Score Card Type" icon will let you return to the start screen that lets you change the number of players and the data entry types (score & phase)
 
 ## Looking to run the working scoring app?
 
-### Option 1
-
 1. Clone this repo.
 2. Open the whole repo in VSCode
-3. Select the run view on the left hand side
-4. Select fs_score_card in the run drop down menu
-5. Press the green run button
-6. The application will run on an emulator or connected device.
-
-### Option 2
-
-1. Clone this repo.
-2. Open the `fs_score_card` directory in VSCode.
-3. Run the Flutter application using the debug button or by pressing `F5`
-4. The application will run on an emulator or connected device.
+3. This project uses `fvm` to set the correct flutter version. Install `fvm`.  On a Mac you can use `install-fvm.sh`
+4. Select the run view on the left hand side
+5. Select fs_score_card in the run drop down menu
+6. Press the green run button
+7. The application will run on an emulator, simulator, macos, windows, web or connected device.
 
 ## Testing the App outside of the IDE
 

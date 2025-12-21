@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `.cursor/rules/flutter-recommended/RULE.md` and `.github/copilot-instructions.md` based on Flutter recommended [ai rules](https://docs.flutter.dev/ai/ai-rules)
 - Removed unecessary Semantics instead relying on semanticLabel were available
 - Migrated to Flutter Navigation and routes
+- Migrated to `fvm` for flutter version management
 
 ## [1.5.0] - 2025-10-21
 
