@@ -64,14 +64,14 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
 }
 
 class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
-  Widget _buildScoreField(int? currentScore) {
+  Widget _buildScoreField(BuildContext context, int? currentScore) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
+        Text(
           'Score:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
         RoundScoreField(
@@ -86,14 +86,18 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     );
   }
 
-  Widget _buildPhaseDropdown(int? selectedPhase, List<int?> completedPhases) {
+  Widget _buildPhaseDropdown(
+    BuildContext context,
+    int? selectedPhase,
+    List<int?> completedPhases,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
+        Text(
           'Phase:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
         RoundPhaseDropdown(
@@ -133,11 +137,12 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: _buildScoreField(currentScore)),
+                Expanded(child: _buildScoreField(context, currentScore)),
                 if (widget.enablePhases) ...[
                   const SizedBox(width: 16),
                   Expanded(
                     child: _buildPhaseDropdown(
+                      context,
                       selectedPhase,
                       completedPhases,
                     ),
@@ -149,10 +154,10 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildScoreField(currentScore),
+                _buildScoreField(context, currentScore),
                 if (widget.enablePhases) ...[
                   const SizedBox(height: 16),
-                  _buildPhaseDropdown(selectedPhase, completedPhases),
+                  _buildPhaseDropdown(context, selectedPhase, completedPhases),
                 ],
               ],
             ),

@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed unecessary Semantics instead relying on semanticLabel were available
 - Migrated to Flutter Navigation and routes
 - Migrated to `fvm` for flutter version management
+- Replace hard coded font size with ThemeData
+- Remove classes orphaned by AI and no longer referenced.
 
 ## [1.5.0] - 2025-10-21
 

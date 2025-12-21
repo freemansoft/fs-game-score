@@ -53,14 +53,14 @@ class PlayerGameModal extends StatelessWidget {
     );
   }
 
-  Widget _buildNameSection() {
+  Widget _buildNameSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
+        Text(
           'Name:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
         PlayerNameField(
@@ -74,14 +74,14 @@ class PlayerGameModal extends StatelessWidget {
     );
   }
 
-  Widget _buildPhasesSection() {
+  Widget _buildPhasesSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
+        Text(
           'Phases by Round:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
         Builder(
@@ -130,19 +130,19 @@ class PlayerGameModal extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: _buildNameSection()),
+                  Expanded(child: _buildNameSection(context)),
                   const SizedBox(width: 16),
-                  Expanded(child: _buildPhasesSection()),
+                  Expanded(child: _buildPhasesSection(context)),
                 ],
               )
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildNameSection(),
+                  _buildNameSection(context),
                   if (enablePhases) ...[
                     const SizedBox(height: 12),
-                    _buildPhasesSection(),
+                    _buildPhasesSection(context),
                   ],
                 ],
               ),

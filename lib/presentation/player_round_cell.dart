@@ -71,8 +71,7 @@ class PlayerRoundCell extends StatelessWidget {
             Text(
               score?.toString() ?? '---',
               key: scoreKey(playerIdx, round),
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: enabled ? null : Theme.of(context).disabledColor,
               ),
               textAlign: TextAlign.center,
@@ -86,9 +85,7 @@ class PlayerRoundCell extends StatelessWidget {
                     ? 'Phase $selectedPhase'
                     : '---',
                 key: phaseKey(playerIdx, round),
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: enabled
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).disabledColor,

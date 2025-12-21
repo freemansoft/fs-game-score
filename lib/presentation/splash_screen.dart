@@ -89,19 +89,154 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   String _sheetStyle = Game.defaultEnablePhases ? _phasesSheet : _basicSheet;
   String _scoreFilter = Game.defaultScoreFilter;
 
+  Widget _buildNumPlayersField(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Tooltip(
+          message: 'Select the number of players for the game',
+          child: Text(
+            'Number of Players:',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+        const SizedBox(width: 16),
+        DropdownButton<int>(
+          key: SplashScreen.numPlayersDropdownKey,
+          value: _selectedNumPlayers,
+          items: [
+            for (var i = 2; i <= 8; i++)
+              DropdownMenuItem(value: i, child: Text(i.toString())),
+          ],
+          onChanged: (value) {
+            if (value != null) {
+              setState(() {
+                _selectedNumPlayers = value;
+              });
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMaxRoundsField(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Tooltip(
+          message: 'Set the maximum number of rounds for the game',
+          child: Text(
+            'Maximum Rounds:',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+        const SizedBox(width: 12),
+        DropdownButton<int>(
+          key: SplashScreen.maxRoundsDropdownKey,
+          value: _selectedMaxRounds,
+          items: [
+            for (var i = 1; i <= 20; i++)
+              DropdownMenuItem(value: i, child: Text(i.toString())),
+          ],
+          onChanged: (value) {
+            if (value != null) {
+              setState(() {
+                _selectedMaxRounds = value;
+              });
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSheetStyleField(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Tooltip(
+          message: 'Choose the score sheet style: basic or with phases',
+          child: Text(
+            'Sheet Style:',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+        const SizedBox(width: 12),
+        DropdownButton<String>(
+          key: SplashScreen.sheetStyleDropdownKey,
+          value: _sheetStyle,
+          items: const [
+            DropdownMenuItem(
+              value: _basicSheet,
+              child: Text(_basicSheet),
+            ),
+            DropdownMenuItem(
+              value: _phasesSheet,
+              child: Text(_phasesSheet),
+            ),
+          ],
+          onChanged: (value) {
+            if (value != null) {
+              setState(() {
+                _sheetStyle = value;
+              });
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildScoreFilterField(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Tooltip(
+          message:
+              'Limit score input values (e.g., any score or those ending in 5 or 0)',
+          child: Text(
+            'Score Filter:',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+        const SizedBox(width: 12),
+        DropdownButton<String>(
+          key: SplashScreen.scoreFilterDropdownKey,
+          value: _scoreFilter,
+          items: const [
+            DropdownMenuItem(value: '', child: Text('Any Score')),
+            DropdownMenuItem(
+              value: r'^[0-9]*[05]$',
+              child: Text('Must end in 0 or 5'),
+            ),
+          ],
+          onChanged: (value) {
+            if (value != null) {
+              setState(() {
+                _scoreFilter = value;
+              });
+            }
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Check orientation using MediaQuery
+    final orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'FreemanS Score Card',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.deepPurple,
               ),
               textAlign: TextAlign.center,
@@ -113,10 +248,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   await launchUrl(Uri.parse(url));
                 }
               },
-              child: const Text(
+              child: Text(
                 'Copyright (C) 2025 Joe Freeman',
-                style: TextStyle(
-                  fontSize: 12,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
                 ),
@@ -133,8 +267,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 },
                 child: Text(
                   'Version: $_appVersion',
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: Colors.blue,
                     decoration: TextDecoration.underline,
                   ),
@@ -142,125 +275,48 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ),
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Tooltip(
-                  message: 'Select the number of players for the game',
-                  child: Text(
-                    'Number of Players:',
-                    style: TextStyle(fontSize: 18),
+            // Fields layout: two columns in landscape, single column in portrait
+            if (orientation == Orientation.landscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildNumPlayersField(context),
+                        const SizedBox(height: 8),
+                        _buildSheetStyleField(context),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                DropdownButton<int>(
-                  key: SplashScreen.numPlayersDropdownKey,
-                  value: _selectedNumPlayers,
-                  items: [
-                    for (var i = 2; i <= 8; i++)
-                      DropdownMenuItem(value: i, child: Text(i.toString())),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _selectedNumPlayers = value;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Tooltip(
-                  message: 'Set the maximum number of rounds for the game',
-                  child: Text(
-                    'Maximum Rounds:',
-                    style: TextStyle(fontSize: 18),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildMaxRoundsField(context),
+                        const SizedBox(height: 6),
+                        _buildScoreFilterField(context),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                DropdownButton<int>(
-                  key: SplashScreen.maxRoundsDropdownKey,
-                  value: _selectedMaxRounds,
-                  items: [
-                    for (var i = 1; i <= 20; i++)
-                      DropdownMenuItem(value: i, child: Text(i.toString())),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _selectedMaxRounds = value;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Tooltip(
-                  message: 'Choose the score sheet style: basic or with phases',
-                  child: Text('Sheet Style:', style: TextStyle(fontSize: 18)),
-                ),
-                const SizedBox(width: 12),
-                DropdownButton<String>(
-                  key: SplashScreen.sheetStyleDropdownKey,
-                  value: _sheetStyle,
-                  items: const [
-                    DropdownMenuItem(
-                      value: _basicSheet,
-                      child: Text(_basicSheet),
-                    ),
-                    DropdownMenuItem(
-                      value: _phasesSheet,
-                      child: Text(_phasesSheet),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _sheetStyle = value;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Tooltip(
-                  message:
-                      'Limit score input values (e.g., any score or those ending in 5 or 0)',
-                  child: Text('Score Filter:', style: TextStyle(fontSize: 18)),
-                ),
-                const SizedBox(width: 12),
-                DropdownButton<String>(
-                  key: SplashScreen.scoreFilterDropdownKey,
-                  value: _scoreFilter,
-                  items: const [
-                    DropdownMenuItem(value: '', child: Text('Any Score')),
-                    DropdownMenuItem(
-                      value: r'^[0-9]*[05]$',
-                      child: Text('Must end in 0 or 5'),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _scoreFilter = value;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
+                ],
+              )
+            else
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildNumPlayersField(context),
+                  const SizedBox(height: 8),
+                  _buildMaxRoundsField(context),
+                  const SizedBox(height: 6),
+                  _buildSheetStyleField(context),
+                  const SizedBox(height: 6),
+                  _buildScoreFilterField(context),
+                ],
+              ),
             const SizedBox(height: 6),
             ElevatedButton(
               key: SplashScreen.continueButtonKey,

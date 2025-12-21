@@ -54,7 +54,6 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
         enabledBorder: widget.border,
         focusedBorder: widget.border,
       ),
-      style: const TextStyle(fontWeight: FontWeight.normal),
       onChanged: widget.onChanged,
       onTap: () {
         _controller.selection = TextSelection(
