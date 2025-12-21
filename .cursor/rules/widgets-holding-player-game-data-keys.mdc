@@ -2,6 +2,8 @@
 alwaysApply: true
 ---
 
+# Widget key behaviors
+
 - Flutter widgets containing player or game data must have well formatted "key" properties using the ValueKey and some string
 - Widget "key" properties for widgets showing a specific player's info should include specify the player number with 'p' followed by the index of the player in the player collection. The 'p' section should be at the start of the key string.
 - Widget "key" properties for widgets showing a specific round's info should include the round number with 'r' followed by the index of the round. The 'r' section should follow the 'p0' section if if it exists else the 'r' section should be at the start of the key string.

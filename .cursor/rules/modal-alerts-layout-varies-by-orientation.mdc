@@ -2,7 +2,9 @@
 alwaysApply: true
 ---
 
+# modal alert behavior
+
 - The content area of modal alerts AlertDialog should change the layout based on orientation if there are only 2 to 3 fields or dropdowns or pickers in the alert panel
 - The close button is not required for alert panels
 - AlertDialog should be set with scrollable: true
-- AlertDialog should have a key set where the ValueKey includes '_model' and the player or round number if appropriate 
+- AlertDialog should have a key set where the ValueKey includes '_model' and the player or round number if appropriate
