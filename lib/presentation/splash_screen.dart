@@ -223,11 +223,113 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     );
   }
 
+  Widget _buildFieldsLayout(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+    // Fields layout: two columns in landscape, single column in portrait
+    if (orientation == Orientation.landscape) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildNumPlayersField(context),
+                const SizedBox(height: 8),
+                _buildSheetStyleField(context),
+              ],
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildMaxRoundsField(context),
+                const SizedBox(height: 6),
+                _buildScoreFilterField(context),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildNumPlayersField(context),
+          const SizedBox(height: 8),
+          _buildMaxRoundsField(context),
+          const SizedBox(height: 6),
+          _buildSheetStyleField(context),
+          const SizedBox(height: 6),
+          _buildScoreFilterField(context),
+        ],
+      );
+    }
+  }
+
+  Widget _buildFooterLinks(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+    final copyrightLink = InkWell(
+      onTap: () async {
+        const url = 'https://www.linkedin.com/in/1freeman/';
+        if (await canLaunchUrl(Uri.parse(url))) {
+          await launchUrl(Uri.parse(url));
+        }
+      },
+      child: Text(
+        'Copyright (C) 2025 Joe Freeman',
+        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+          color: Colors.blue,
+          decoration: TextDecoration.underline,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+
+    final versionLink = _appVersion != null
+        ? InkWell(
+            onTap: () async {
+              const url = 'https://github.com/freemansoft/fs-game-score';
+              if (await canLaunchUrl(Uri.parse(url))) {
+                await launchUrl(Uri.parse(url));
+              }
+            },
+            child: Text(
+              'Version: $_appVersion',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          )
+        : const SizedBox.shrink();
+
+    if (orientation == Orientation.landscape) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          copyrightLink,
+          const SizedBox(width: 16),
+          versionLink,
+        ],
+      );
+    } else {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          copyrightLink,
+          versionLink,
+        ],
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Check orientation using MediaQuery
-    final orientation = MediaQuery.of(context).orientation;
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
@@ -241,82 +343,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            InkWell(
-              onTap: () async {
-                const url = 'https://www.linkedin.com/in/1freeman/';
-                if (await canLaunchUrl(Uri.parse(url))) {
-                  await launchUrl(Uri.parse(url));
-                }
-              },
-              child: Text(
-                'Copyright (C) 2025 Joe Freeman',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            if (_appVersion != null)
-              InkWell(
-                onTap: () async {
-                  const url = 'https://github.com/freemansoft/fs-game-score';
-                  if (await canLaunchUrl(Uri.parse(url))) {
-                    await launchUrl(Uri.parse(url));
-                  }
-                },
-                child: Text(
-                  'Version: $_appVersion',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+            _buildFooterLinks(context),
             const SizedBox(height: 8),
-            // Fields layout: two columns in landscape, single column in portrait
-            if (orientation == Orientation.landscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _buildNumPlayersField(context),
-                        const SizedBox(height: 8),
-                        _buildSheetStyleField(context),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _buildMaxRoundsField(context),
-                        const SizedBox(height: 6),
-                        _buildScoreFilterField(context),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            else
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildNumPlayersField(context),
-                  const SizedBox(height: 8),
-                  _buildMaxRoundsField(context),
-                  const SizedBox(height: 6),
-                  _buildSheetStyleField(context),
-                  const SizedBox(height: 6),
-                  _buildScoreFilterField(context),
-                ],
-              ),
+            _buildFieldsLayout(context),
             const SizedBox(height: 6),
             ElevatedButton(
               key: SplashScreen.continueButtonKey,
