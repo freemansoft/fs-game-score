@@ -338,8 +338,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 await prefs.setString(_gamePrefsKey, game.toJson());
 
                 // Navigate to score table screen
-                if (mounted) {
-                  Navigator.of(context).pushReplacementNamed('/score-table');
+                if (context.mounted) {
+                  await Navigator.of(
+                    context,
+                  ).pushReplacementNamed('/score-table');
                 }
               },
               child: const Text('Continue'),

@@ -131,11 +131,11 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       focusNode: _focusNode,
       keyboardType: TextInputType.number,
       autofocus: widget.autofocus,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Score',
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-        border: const OutlineInputBorder(),
+        contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+        border: OutlineInputBorder(),
       ),
       onChanged: _onInputChanged,
       onFieldSubmitted: _onFieldSubmitted,
