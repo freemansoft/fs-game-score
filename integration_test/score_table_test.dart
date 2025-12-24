@@ -329,8 +329,9 @@ void main() {
       final nameText = tester.widget<Text>(find.byKey(playerNameP0Key));
       expect(nameText.style?.fontWeight, FontWeight.bold);
 
-      final totalScoreText =
-          tester.widget<Text>(find.byKey(playerTotalScoreP0Key));
+      final totalScoreText = tester.widget<Text>(
+        find.byKey(playerTotalScoreP0Key),
+      );
       expect(totalScoreText.style?.fontWeight, FontWeight.bold);
     },
   );

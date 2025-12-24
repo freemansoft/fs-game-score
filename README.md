@@ -56,15 +56,15 @@ Or build your own copy...
 
 1. Clone this repo.
 2. Open the whole repo in VSCode
-3. This project uses `fvm` to set the correct flutter version. Install `fvm`.  
-  *. On a Mac you can run the script `install-fvm.sh` to install the tools and the correct version of fvm from scratch
-  *. On Windows. See [fvm installation guide](https://fvm.app/documentation/getting-started/installation)
-    1. Use in an elevated command powershell prompt to install `fvm`.  Needs to be done only once
-      1. `choco install fvm` 
-      1. `choco upgrade fvm`
-    1. From a command prompt in vscode/cursor after installing `fvm`
-      1. `fvm install 3.38.5` or whatever the version you need is
-      1. `fvm use 3.38.5`
+3. This project uses `fvm` to set the correct flutter version. Install `fvm`.
+    1. Mac You can run the script `install-fvm.sh` to install the tools and the correct version of fvm from scratch
+    1. Windows See [fvm installation guide](https://fvm.app/documentation/getting-started/installation)
+      1. Use in an elevated command powershell prompt to install `fvm`.  Needs to be done only once
+          1. `choco install fvm` 
+          1. `choco upgrade fvm`
+      1. From a command prompt in vscode/cursor after installing `fvm`
+          1. `fvm install 3.38.5` or whatever the version you need is
+          1. `fvm use 3.38.5`
 4. Select the run view on the left hand side
 5. Select fs_score_card in the run drop down menu
 6. Press the green run button
