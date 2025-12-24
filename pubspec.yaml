@@ -93,7 +93,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
+# don't really need `image_path_ios` and `image_path_android` if we have `image_path`
 flutter_launcher_icons:
+  image_path: "assets/logos/flutter-phone-score.png"
   android: true
   image_path_android: "assets/logos/flutter-phone-score.png"
   ios: true
