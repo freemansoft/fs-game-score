@@ -116,6 +116,8 @@ Alternatively - use the xcode archive route like we do for macOS
 4. `Validate App` --> `Validate`
 5. `Distribute App` --> `App Store Connect`
 
+Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`.  The version number is set in `pubspec.yaml`.
+
 ### MacOS builds
 
 #### MacOS test builds
@@ -132,6 +134,14 @@ MacOS builds are separate from iOS builds and must be uploaded to the store sepa
       4. XCode `Distribute App` --> `App Store Connect`
 
 Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`.  The version number is set in `pubspec.yaml`.
+
+To release macOS after TestFlight.  This works for iOS also
+
+  1. Open AppStoreConnect web site
+  2. Navigagte to App `FreemanS Score Card`
+  3. Click on the `+` sign next to `macOS App` and create the new release
+  4. Scroll down and add the `Build` you wish to this release.
+  5. Update images, text and other data and then submit for review
 
 ### Web test builds
 
