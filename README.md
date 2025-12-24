@@ -56,7 +56,15 @@ Or build your own copy...
 
 1. Clone this repo.
 2. Open the whole repo in VSCode
-3. This project uses `fvm` to set the correct flutter version. Install `fvm`.  On a Mac you can use `install-fvm.sh`
+3. This project uses `fvm` to set the correct flutter version. Install `fvm`.  
+  *. On a Mac you can run the script `install-fvm.sh` to install the tools and the correct version of fvm from scratch
+  *. On Windows. See [fvm installation guide](https://fvm.app/documentation/getting-started/installation)
+    1. Use in an elevated command powershell prompt to install `fvm`.  Needs to be done only once
+      1. `choco install fvm` 
+      1. `choco upgrade fvm`
+    1. From a command prompt in vscode/cursor after installing `fvm`
+      1. `fvm install 3.38.5` or whatever the version you need is
+      1. `fvm use 3.38.5`
 4. Select the run view on the left hand side
 5. Select fs_score_card in the run drop down menu
 6. Press the green run button
@@ -178,12 +186,12 @@ I host this app on my [github.io pages](https://freemansoft.github.io/freemans-s
 You can test this locally using the IDE on a Windows machine.
 
 1. Build the image on a windows machine with `flutter build windows`
-1. Double click on the `exe` in `build\\windows\x65\runner\Release\fs_score_card.exe`
+1. Double click on the `exe` in `build\\windows\x64\runner\Release\fs_score_card.exe`
 1. You **cannot** copy just the exe somewhere and expect it to work
 
 #### Build an installer package
 
-An `msix` section has already been added to customize the `msi` output <https://pub.dev/packages/msix>
+An `msix` section has already been added to customize the `msi` installer creator output <https://pub.dev/packages/msix>
 
 1. Build the image on a windows machine with `flutter build windows`
 1. Use the `msix` package to create a windows installer
