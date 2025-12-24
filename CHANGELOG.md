@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.0] - 2025-12-21
+## [1.7.0] - 2025-12-23
+
+### Added 1.7.0
+
+- Nothing yet
+
+## [1.6.0] - 2025-12-23
+
+1.6.0 only exists for iOS to fix iOS 26.1 related Flutter app bar (top of window) click issue mentioned below
 
 ### Added 1.6.0
 
@@ -19,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replace hard coded font size with ThemeData
 - Remove classes orphaned by AI and no longer referenced.
 - Added new property for game finished.  Players who have finished have their names bolded in the score sheet.
-- Tap error on new game buttons in app bar on iPad only introduced with iOS 26.1 https://github.com/flutter/flutter/issues/175606#issuecomment-3453392532
+- Tap error on new game buttons in app bar on iPad only introduced with iOS 26.1 <https://github.com/flutter/flutter/issues/175606#issuecomment-3453392532>
 
 ## [1.5.0] - 2025-10-21
 
