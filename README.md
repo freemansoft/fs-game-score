@@ -50,6 +50,10 @@ Notes
 
 ## Looking to run the working scoring app?
 
+Links to latest versions are here <https://freemansoft.github.io/>
+
+Or build your own copy...
+
 1. Clone this repo.
 2. Open the whole repo in VSCode
 3. This project uses `fvm` to set the correct flutter version. Install `fvm`.  On a Mac you can use `install-fvm.sh`
@@ -79,7 +83,7 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
 2. (Android) Create an apk and downloaded it to a device
    1. Build the android arm64 package. Including the `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB
       1. `flutter build apk --target-platform android-arm64`
-      2. including the `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB
+      2. The parameter `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB. There aren't any interesting x86 android devices anyway.
    2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices.  This can be done by emailing or by pushing the apk to a shared storage
       1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
 
@@ -154,11 +158,11 @@ You can test this locally using the IDE and a web browser like Chrome
    2. create a zip file of `build/web`
    3. Share the zip. They can unzip it and put the contents of the `web` folder in the web server docroot. The `web` folder should not be part of the path.
 
-#### Web site build for github pages in a subdirectory
+#### Web site build for `github.io` pages in a subdirectory
 
-Change this to match your deployment. These notes exist so I remember the process
+Change this to match your deployment. These notes exist so I remember the process!
 
-I host this app on my github pages <https://freemansoft.github.io/freemans-score-card>
+I host this app on my [github.io pages](https://freemansoft.github.io/freemans-score-card)
 
 1. Build the web app with `flutter build web --base-href=/freemans-score-card/`
 2. Copy the contents of `build/web` **excluding the canvaskit directory** to a local clone of <https://github.com/freemansoft/freemansoft.github.io>
@@ -226,17 +230,22 @@ flutter test integration_test/*_test.dart
 4. If you go to plugin version 8.8 to work with gradle 8.10.2 you get an ndk version error
 5. So we left the "Could not create task generateLockfiles error.
 
-| Java | Gradle (min) | Android Plugin |
-| ---- | ------------ | -------------- |
-| 21   | 8.4          | 8.3            |
-| ??   | 8.6          | 8.4            |
-| ??   | 8.7          | 8.5            |
-| 22   | 8.7          | 8.6            |
-| ??   | 8.9          | 8.7            |
-| 23   | 8.10.2       | 8.8            |
+| Java | Gradle (min) | Android Plugin | API Level |
+| ---- | ------------ | -------------- | --------- |
+| 21   | 8.4          | 8.3            | 34        |
+| ??   | 8.6          | 8.4            | 34        |
+| ??   | 8.7          | 8.5            | 34        |
+| 22   | 8.7          | 8.6            | 34        |
+| ??   | 8.9          | 8.7            | 34        |
+| 23   | 8.10         | 8.8            | 35        |
+| ??   | 8.11         | 8.9            | 35        |
+| ??   | 8.11         | 8.10           | 35        |
+| ??   | 8.13         | 8.11           | 35        |
+| ??   | 8.13         | 8.12           | 35        |
 
 1. <https://docs.gradle.org/current/userguide/compatibility.html>
 2. <https://developer.android.com/build/releases/gradle-plugin>
+3. <https://developer.android.com/build/releases/past-releases>
 
 ## Icons
 
