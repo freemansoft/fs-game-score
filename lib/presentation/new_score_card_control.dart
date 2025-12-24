@@ -29,7 +29,7 @@ class NewScoreCardControl extends StatelessWidget {
     );
     if ((result ?? false) && context.mounted) {
       // Navigate to splash screen and clear navigation stack
-      Navigator.of(context).pushNamedAndRemoveUntil(
+      await Navigator.of(context).pushNamedAndRemoveUntil(
         '/',
         (route) => false,
       );
