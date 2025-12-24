@@ -24,7 +24,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # MacOS build numbers must always increase which means you can never reset the build number even if you increase the verison number
 # We will follow that for all releases
 #
-version: 1.6.0+11
+version: 1.7.0+12
 
 environment:
   sdk: ^3.10.0
