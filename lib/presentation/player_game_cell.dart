@@ -7,6 +7,7 @@ class PlayerGameCell extends StatelessWidget {
     required this.name,
     required this.totalScore,
     required this.onTap,
+    this.endGameScore = 0,
   });
   static ValueKey<String> cellKey(int playerIdx) {
     return ValueKey('p${playerIdx}_game_cell');
@@ -24,9 +25,18 @@ class PlayerGameCell extends StatelessWidget {
   final String name;
   final int totalScore;
   final VoidCallback onTap;
+  final int endGameScore;
 
   @override
   Widget build(BuildContext context) {
+    final gameOverDueToScore = endGameScore > 0 && totalScore >= endGameScore;
+    final textStyle = gameOverDueToScore
+        ? Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+          )
+        : Theme.of(context).textTheme.bodyMedium;
+
     return Semantics(
       label: 'Player ${playerIdx + 1} name and total score',
       button: true,
@@ -45,12 +55,14 @@ class PlayerGameCell extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
                 textAlign: TextAlign.center,
+                style: textStyle,
                 semanticsLabel: 'Player name ${playerIdx + 1}',
               ),
               Text(
                 '$totalScore',
                 key: totalScoreKey(playerIdx),
                 textAlign: TextAlign.center,
+                style: textStyle,
                 semanticsLabel: 'Player total score ${playerIdx + 1}',
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
@@ -20,6 +21,12 @@ class SplashScreen extends ConsumerStatefulWidget {
   static const ValueKey<String> scoreFilterDropdownKey = ValueKey(
     'splash_score_filter_dropdown',
   );
+  static const ValueKey<String> endGameScoreCheckboxKey = ValueKey(
+    'splash_end_game_score_checkbox',
+  );
+  static const ValueKey<String> endGameScoreFieldKey = ValueKey(
+    'splash_end_game_score_field',
+  );
   static const ValueKey<String> continueButtonKey = ValueKey(
     'splash_continue_button',
   );
@@ -38,8 +45,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    _endGameScoreController = TextEditingController();
     _loadVersion();
     _loadGameFromPrefs();
+  }
+
+  @override
+  void dispose() {
+    _endGameScoreController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadGameFromPrefs() async {
@@ -54,12 +68,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             .read(gameProvider.notifier)
             .setEnablePhases(enablePhases: game.enablePhases);
         ref.read(gameProvider.notifier).setScoreFilter(game.scoreFilter);
+        ref.read(gameProvider.notifier).setEndGameScore(game.endGameScore);
         // version from prefs does not override version of game in app
         setState(() {
           _selectedNumPlayers = game.numPlayers;
           _selectedMaxRounds = game.maxRounds;
           _sheetStyle = game.enablePhases ? _phasesSheet : _basicSheet;
           _scoreFilter = game.scoreFilter;
+          _endGameScoreEnabled = game.endGameScore > 0;
+          _endGameScore = game.endGameScore;
+          _endGameScoreController.text = game.endGameScore > 0
+              ? game.endGameScore.toString()
+              : '';
         });
       } catch (_) {
         // Ignore errors and start fresh
@@ -88,6 +108,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   int _selectedMaxRounds = Game.defaultMaxRounds;
   String _sheetStyle = Game.defaultEnablePhases ? _phasesSheet : _basicSheet;
   String _scoreFilter = Game.defaultScoreFilter;
+  bool _endGameScoreEnabled = false;
+  int _endGameScore = 0;
+  late final TextEditingController _endGameScoreController;
 
   Widget _buildNumPlayersField(BuildContext context) {
     return Row(
@@ -223,12 +246,65 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     );
   }
 
+  Widget _buildEndGameScoreField(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Tooltip(
+          message: 'Enable game to end when a player reaches this score',
+          child: Text(
+            'End Score',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Checkbox(
+          key: SplashScreen.endGameScoreCheckboxKey,
+          value: _endGameScoreEnabled,
+          onChanged: (value) {
+            setState(() {
+              _endGameScoreEnabled = value ?? false;
+              if (!_endGameScoreEnabled) {
+                _endGameScore = 0;
+                _endGameScoreController.clear();
+              }
+            });
+          },
+        ),
+        SizedBox(
+          width: 160,
+          child: TextField(
+            key: SplashScreen.endGameScoreFieldKey,
+            enabled: _endGameScoreEnabled,
+            keyboardType: TextInputType.number,
+            controller: _endGameScoreController,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            onChanged: (value) {
+              final parsed = int.tryParse(value);
+              setState(() {
+                _endGameScore = parsed ?? 0;
+              });
+            },
+            decoration: const InputDecoration(
+              hintText: 'Game ending score',
+              isDense: true,
+              contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildFieldsLayout(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
     // Fields layout: two columns in landscape, single column in portrait
     if (orientation == Orientation.landscape) {
       return Row(
+        // left / right
         mainAxisAlignment: MainAxisAlignment.center,
+        // up / down for a row
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -249,6 +325,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 _buildMaxRoundsField(context),
                 const SizedBox(height: 6),
                 _buildScoreFilterField(context),
+                const SizedBox(height: 6),
+                _buildEndGameScoreField(context),
               ],
             ),
           ),
@@ -259,12 +337,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildNumPlayersField(context),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           _buildMaxRoundsField(context),
           const SizedBox(height: 6),
           _buildSheetStyleField(context),
           const SizedBox(height: 6),
           _buildScoreFilterField(context),
+          const SizedBox(height: 6),
+          _buildEndGameScoreField(context),
         ],
       );
     }
@@ -358,6 +438,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       numPlayers: _selectedNumPlayers,
                       enablePhases: _sheetStyle == _phasesSheet,
                       scoreFilter: _scoreFilter,
+                      endGameScore: _endGameScore,
                       version: _appVersion,
                     );
 

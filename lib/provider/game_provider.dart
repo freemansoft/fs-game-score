@@ -21,6 +21,7 @@ class GameNotifier extends Notifier<Game> {
     int? numPlayers,
     bool? enablePhases,
     String? scoreFilter,
+    int? endGameScore,
     String? version,
   }) {
     state = Game(
@@ -29,6 +30,7 @@ class GameNotifier extends Notifier<Game> {
       numPlayers: numPlayers ?? state.numPlayers,
       enablePhases: enablePhases ?? state.enablePhases,
       scoreFilter: scoreFilter ?? state.scoreFilter,
+      endGameScore: endGameScore ?? state.endGameScore,
       version: version ?? state.version,
       // gameId will be automatically generated as a new UUID
     );
@@ -44,6 +46,10 @@ class GameNotifier extends Notifier<Game> {
 
   void setScoreFilter(String scoreFilter) {
     state = state.copyWith(scoreFilter: scoreFilter);
+  }
+
+  void setEndGameScore(int endGameScore) {
+    state = state.copyWith(endGameScore: endGameScore);
   }
 
   // Add more setters as needed

@@ -11,6 +11,7 @@ class Game {
     this.numPlayers = defaultNumPlayers,
     this.enablePhases = defaultEnablePhases,
     this.scoreFilter = defaultScoreFilter,
+    this.endGameScore = defaultEndGameScore,
     this.version = '0.0.0+0',
     String? gameId,
   }) : gameId = gameId ?? const Uuid().v4();
@@ -26,6 +27,7 @@ class Game {
       numPlayers: (json['numPlayers'] as int?) ?? defaultNumPlayers,
       enablePhases: (json['enablePhases'] as bool?) ?? defaultEnablePhases,
       scoreFilter: (json['scoreFilter'] as String?) ?? defaultScoreFilter,
+      endGameScore: (json['endGameScore'] as int?) ?? defaultEndGameScore,
       version: json['version'] as String?,
       // gameId is intentionally omitted - will generate new UUID via constructor
     );
@@ -35,6 +37,7 @@ class Game {
   static const int defaultNumPlayers = 8;
   static const bool defaultEnablePhases = true;
   static const String defaultScoreFilter = '';
+  static const int defaultEndGameScore = 0;
 
   /// Serializes the game configuration to a JSON string.
   /// This is useful for saving and loading game state.
@@ -45,6 +48,7 @@ class Game {
       'numPlayers': numPlayers,
       'enablePhases': enablePhases,
       'scoreFilter': scoreFilter,
+      'endGameScore': endGameScore,
       'version': version,
       // gameId is intentionally omitted - will generate new UUID via constructor
     });
@@ -67,6 +71,7 @@ class Game {
   final int numPlayers;
   final bool enablePhases;
   final String scoreFilter;
+  final int endGameScore;
   final String? version; // initialized from app version - stored in prefs
   final String gameId;
 
@@ -76,6 +81,7 @@ class Game {
     int? numPlayers,
     bool? enablePhases,
     String? scoreFilter,
+    int? endGameScore,
     String? version,
     String? gameId,
   }) {
@@ -85,6 +91,7 @@ class Game {
       numPlayers: numPlayers ?? this.numPlayers,
       enablePhases: enablePhases ?? this.enablePhases,
       scoreFilter: scoreFilter ?? this.scoreFilter,
+      endGameScore: endGameScore ?? this.endGameScore,
       version: version ?? this.version,
       gameId: gameId ?? this.gameId,
     );

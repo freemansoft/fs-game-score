@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Migrated to `fvm` for flutter version management
 - Replace hard coded font size with ThemeData
 - Remove classes orphaned by AI and no longer referenced.
+- Added new property for game finished.  Players who have finished have their names bolded in the score sheet.
 
 ## [1.5.0] - 2025-10-21
 

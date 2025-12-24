@@ -163,4 +163,53 @@ void main() {
 
     // Using the app's ProviderScope container; do not dispose it here.
   });
+
+  testWidgets('End game score checkbox enables and disables field', (
+    WidgetTester tester,
+  ) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Find the checkbox
+    final checkbox = find.byKey(SplashScreen.endGameScoreCheckboxKey);
+    expect(checkbox, findsOneWidget);
+
+    // Find the text field
+    final textField = find.byKey(SplashScreen.endGameScoreFieldKey);
+    expect(textField, findsOneWidget);
+
+    // Initially checkbox should be unchecked and field should be disabled
+    final checkboxWidget = tester.widget<Checkbox>(checkbox);
+    expect(checkboxWidget.value, isFalse);
+
+    final textFieldWidget = tester.widget<TextField>(textField);
+    expect(textFieldWidget.enabled, isFalse);
+
+    // Tap the checkbox to enable it
+    await tester.tap(checkbox);
+    await tester.pumpAndSettle();
+
+    // Checkbox should now be checked and field should be enabled
+    final checkboxWidgetAfter = tester.widget<Checkbox>(checkbox);
+    expect(checkboxWidgetAfter.value, isTrue);
+
+    final textFieldWidgetAfter = tester.widget<TextField>(textField);
+    expect(textFieldWidgetAfter.enabled, isTrue);
+
+    // Enter a score
+    await tester.enterText(textField, '100');
+    await tester.pumpAndSettle();
+
+    // Tap checkbox again to disable
+    await tester.tap(checkbox);
+    await tester.pumpAndSettle();
+
+    // Checkbox should be unchecked and field should be disabled and cleared
+    final checkboxWidgetFinal = tester.widget<Checkbox>(checkbox);
+    expect(checkboxWidgetFinal.value, isFalse);
+
+    final textFieldWidgetFinal = tester.widget<TextField>(textField);
+    expect(textFieldWidgetFinal.enabled, isFalse);
+    expect(textFieldWidgetFinal.controller?.text, isEmpty);
+  });
 }

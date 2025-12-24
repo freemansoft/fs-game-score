@@ -271,4 +271,67 @@ void main() {
       '10',
     );
   });
+
+  testWidgets(
+    'Player game cell shows bold text when endGameScore is set and total score >= endGameScore',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Enable end game score checkbox
+      final checkbox = find.byKey(SplashScreen.endGameScoreCheckboxKey);
+      expect(checkbox, findsOneWidget);
+      await tester.tap(checkbox);
+      await tester.pumpAndSettle();
+
+      // Enter end game score of 100
+      final endGameScoreField = find.byKey(SplashScreen.endGameScoreFieldKey);
+      expect(endGameScoreField, findsOneWidget);
+      await tester.enterText(endGameScoreField, '100');
+      await tester.pumpAndSettle();
+
+      // Press Continue to start the game
+      final continueButton = find.byKey(SplashScreen.continueButtonKey);
+      expect(continueButton, findsOneWidget);
+      await tester.tap(continueButton);
+      await tester.pumpAndSettle();
+
+      // Verify score table is displayed
+      expect(find.byType(DataTable2), findsOneWidget);
+
+      // Get player 0's round 0 score field
+      final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
+      final roundScoreFieldP0R0Key = PlayerRoundModal.scoreFieldKey(0, 0);
+      final playerTotalScoreP0Key = PlayerGameCell.totalScoreKey(0);
+      final playerNameP0Key = PlayerGameCell.nameKey(0);
+
+      // Enter score of 100 for player 0 round 0
+      await tester.tap(find.byKey(playerRoundScoreP0R0Key));
+      await tester.pumpAndSettle();
+      expect(find.byType(PlayerRoundModal), findsOneWidget);
+
+      final scoreField = find.byKey(roundScoreFieldP0R0Key);
+      expect(scoreField, findsOneWidget);
+      await tester.enterText(scoreField, '100');
+      await tester.pumpAndSettle();
+
+      // Close the modal
+      await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+      await tester.pumpAndSettle();
+
+      // Verify total score is 100
+      expect(
+        (tester.widget(find.byKey(playerTotalScoreP0Key)) as Text).data,
+        '100',
+      );
+
+      // Verify player name and total score text are bold
+      final nameText = tester.widget<Text>(find.byKey(playerNameP0Key));
+      expect(nameText.style?.fontWeight, FontWeight.bold);
+
+      final totalScoreText =
+          tester.widget<Text>(find.byKey(playerTotalScoreP0Key));
+      expect(totalScoreText.style?.fontWeight, FontWeight.bold);
+    },
+  );
 }

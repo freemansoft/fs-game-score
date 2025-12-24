@@ -122,6 +122,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   playerIdx: playerIdx,
                   name: player.name,
                   totalScore: player.totalScore,
+                  endGameScore: game.endGameScore,
                   onTap: () {
                     PlayerGameModal.show(
                       context,
