@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replace hard coded font size with ThemeData
 - Remove classes orphaned by AI and no longer referenced.
 - Added new property for game finished.  Players who have finished have their names bolded in the score sheet.
+- Tap error on new game buttons in app bar on iPad only introduced with iOS 26.1 https://github.com/flutter/flutter/issues/175606#issuecomment-3453392532
 
 ## [1.5.0] - 2025-10-21
 
