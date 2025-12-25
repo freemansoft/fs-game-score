@@ -7,15 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.0] - 2025-12-25
 
-### Added 1.7.0
+### Added 1.7.0 +11
 
-- Nothing yet
+- Landscape SplashScreen layout changed to better support wide screens.  Two columns are now the center two of 4 columns.
 
 ## [1.6.0] - 2025-12-24
 
 1.6.0 only exists for iOS to fix iOS 26.1 related Flutter app bar (top of window) click issue mentioned below
 
-### Added 1.6.0
+### Added 1.6.0 +10
 
 - Updated Flutter to dart 3.9 or later to support built in dart mcp server <https://docs.flutter.dev/install/archivecirsp>
 - Building with Flutter 3.38.5 which is current at time of update

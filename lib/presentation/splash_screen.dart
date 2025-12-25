@@ -299,7 +299,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Widget _buildFieldsLayout(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    // Fields layout: two columns in landscape, single column in portrait
+    // Fields layout: four columns in landscape (empty, content, content, empty), single column in portrait
     if (orientation == Orientation.landscape) {
       return Row(
         // left / right
@@ -307,29 +307,31 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         // up / down for a row
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildNumPlayersField(context),
-                const SizedBox(height: 8),
-                _buildSheetStyleField(context),
-              ],
-            ),
+          // Empty column at the beginning - expands to fill space
+          const Expanded(child: SizedBox()),
+          // First content column - sized to content
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildNumPlayersField(context),
+              const SizedBox(height: 8),
+              _buildSheetStyleField(context),
+            ],
           ),
           const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildMaxRoundsField(context),
-                const SizedBox(height: 6),
-                _buildScoreFilterField(context),
-                const SizedBox(height: 6),
-                _buildEndGameScoreField(context),
-              ],
-            ),
+          // Second content column - sized to content
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildMaxRoundsField(context),
+              const SizedBox(height: 6),
+              _buildScoreFilterField(context),
+              const SizedBox(height: 6),
+              _buildEndGameScoreField(context),
+            ],
           ),
+          // Empty column at the end - expands to fill space
+          const Expanded(child: SizedBox()),
         ],
       );
     } else {
