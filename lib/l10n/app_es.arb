@@ -1,0 +1,221 @@
+{
+  "@@locale": "es",
+  "appTitle": "Tarjeta de Puntaje FreemanS",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "continueButton": "Continuar",
+  "@continueButton": {
+    "description": "Button to continue from splash screen to score table"
+  },
+  "numberOfPlayers": "Número de jugadores:",
+  "@numberOfPlayers": {
+    "description": "Label for number of players dropdown"
+  },
+  "numberOfPlayersTooltip": "Seleccione el número de jugadores para el juego",
+  "@numberOfPlayersTooltip": {
+    "description": "Tooltip for number of players field"
+  },
+  "maximumRounds": "Rondas máximas:",
+  "@maximumRounds": {
+    "description": "Label for maximum rounds dropdown"
+  },
+  "maximumRoundsTooltip": "Establezca el número máximo de rondas para el juego",
+  "@maximumRoundsTooltip": {
+    "description": "Tooltip for maximum rounds field"
+  },
+  "sheetStyle": "Estilo de hoja:",
+  "@sheetStyle": {
+    "description": "Label for sheet style dropdown"
+  },
+  "sheetStyleTooltip": "Elija el estilo de la hoja de puntuación: básico o con fases",
+  "@sheetStyleTooltip": {
+    "description": "Tooltip for sheet style field"
+  },
+  "basicSheet": "Hoja Básica",
+  "@basicSheet": {
+    "description": "Option for basic sheet style"
+  },
+  "includePhases": "Incluir Fases",
+  "@includePhases": {
+    "description": "Option for sheet style with phases"
+  },
+  "scoreFilter": "Filtro de puntuación:",
+  "@scoreFilter": {
+    "description": "Label for score filter dropdown"
+  },
+  "scoreFilterTooltip": "Limitar los valores de puntuación (p. ej., cualquier puntuación o las que terminan en 5 o 0)",
+  "@scoreFilterTooltip": {
+    "description": "Tooltip for score filter field"
+  },
+  "anyScore": "Cualquier puntuación",
+  "@anyScore": {
+    "description": "Option for any score filter"
+  },
+  "mustEndIn0Or5": "Debe terminar en 0 o 5",
+  "@mustEndIn0Or5": {
+    "description": "Option for score filter that requires scores to end in 0 or 5"
+  },
+  "endScore": "Puntuación final",
+  "@endScore": {
+    "description": "Label for end game score field"
+  },
+  "endScoreTooltip": "Permitir que el juego termine cuando un jugador alcanza esta puntuación",
+  "@endScoreTooltip": {
+    "description": "Tooltip for end game score field"
+  },
+  "gameEndingScore": "Puntuación para terminar el juego",
+  "@gameEndingScore": {
+    "description": "Hint text for end game score input field"
+  },
+  "copyright": "Derechos de autor (C) 2025 Joe Freeman",
+  "@copyright": {
+    "description": "Copyright text"
+  },
+  "version": "Versión: {version}",
+  "@version": {
+    "description": "Version text with placeholder",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "scores": "Puntuaciones",
+  "@scores": {
+    "description": "App bar title for score table screen"
+  },
+  "playerTotal": "Jugador\nTotal",
+  "@playerTotal": {
+    "description": "Column header text for player and total"
+  },
+  "lockColumn": "Bloquear columna",
+  "@lockColumn": {
+    "description": "Tooltip for lock column button"
+  },
+  "unlockColumn": "Desbloquear columna",
+  "@unlockColumn": {
+    "description": "Tooltip for unlock column button"
+  },
+  "name": "Nombre:",
+  "@name": {
+    "description": "Label for name field in player game modal"
+  },
+  "phasesByRound": "Fases por ronda:",
+  "@phasesByRound": {
+    "description": "Label for phases by round section"
+  },
+  "noPhasesCompleted": "No hay fases completadas",
+  "@noPhasesCompleted": {
+    "description": "Text shown when no phases are completed"
+  },
+  "roundPhase": "Ronda {roundNumber}: Fase {phaseNumber}",
+  "@roundPhase": {
+    "description": "Text showing round and phase",
+    "placeholders": {
+      "roundNumber": {
+        "type": "int"
+      },
+      "phaseNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "score": "Puntuación:",
+  "@score": {
+    "description": "Label for score field"
+  },
+  "scoreHint": "Puntuación",
+  "@scoreHint": {
+    "description": "Hint text for score input field"
+  },
+  "phase": "Fase:",
+  "@phase": {
+    "description": "Label for phase dropdown"
+  },
+  "selectCompletedPhases": "Seleccione la(s) fase(s) completada(s)",
+  "@selectCompletedPhases": {
+    "description": "Tooltip for phase dropdown"
+  },
+  "noPhase": "Sin fase",
+  "@noPhase": {
+    "description": "Option for no phase selected"
+  },
+  "phaseNumber": "Fase {phaseNumber}",
+  "@phaseNumber": {
+    "description": "Phase option text",
+    "placeholders": {
+      "phaseNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerRoundModalTitle": "Jugador {playerNumber} - Ronda {roundNumber}",
+  "@playerRoundModalTitle": {
+    "description": "Title for player round modal",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      },
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "invalidScoreForRound": "Puntuación inválida para esta ronda",
+  "@invalidScoreForRound": {
+    "description": "Error message when score doesn't match filter"
+  },
+  "startNewGame": "¿Iniciar nuevo juego?",
+  "@startNewGame": {
+    "description": "Title for new game dialog"
+  },
+  "startNewGameMessage": "¿Está seguro de que desea iniciar un nuevo juego? La tarjeta de puntuación se borrará.",
+  "@startNewGameMessage": {
+    "description": "Message in new game dialog"
+  },
+  "clearPlayerNames": "Borrar los nombres de los jugadores",
+  "@clearPlayerNames": {
+    "description": "Checkbox label for clearing player names"
+  },
+  "cancel": "Cancelar",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "newGame": "Nuevo juego",
+  "@newGame": {
+    "description": "New game button text"
+  },
+  "gameReset": "¡Juego reiniciado!",
+  "@gameReset": {
+    "description": "Snackbar message when game is reset"
+  },
+  "newGameSameTypeTooltip": "Nuevo juego - Usando mismo tipo de tarjeta de puntuación",
+  "@newGameSameTypeTooltip": {
+    "description": "Tooltip for new game button"
+  },
+  "changeScorecardType": "Cambiar tipo de tarjeta de puntuación",
+  "@changeScorecardType": {
+    "description": "Title for change scorecard type dialog"
+  },
+  "changeScorecardTypeMessage": "¿Está seguro de que desea cambiar el tipo de tarjeta de puntuación? La tarjeta se borrará.",
+  "@changeScorecardTypeMessage": {
+    "description": "Message in change scorecard type dialog"
+  },
+  "changeScorecard": "Cambiar tarjeta de puntuación",
+  "@changeScorecard": {
+    "description": "Button text to change scorecard"
+  },
+  "newGameChangeScorecardType": "Nuevo juego - Cambiar tipo de tarjeta de puntuación",
+  "@newGameChangeScorecardType": {
+    "description": "Tooltip for change scorecard type button"
+  },
+  "shareScores": "Compartir puntuaciones",
+  "@shareScores": {
+    "description": "Tooltip for share button"
+  },
+  "noScoresToShare": "No hay puntuaciones para compartir",
+  "@noScoresToShare": {
+    "description": "Message when there are no scores to share"
+  }
+}

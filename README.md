@@ -45,6 +45,12 @@ Or build your own copy...
 6. Press the green run button
 7. The application will run on an emulator, simulator, macos, windows, web or connected device.
 
+## Internationalization
+
+Make sure to gegenerate the dart localization files after making any changes to the `arb` files. The command `flutter gen-l10n` has already been run.
+
+`flutter pub get` or do a build.
+
 ## Testing the App outside of the IDE
 
 ### Android builds

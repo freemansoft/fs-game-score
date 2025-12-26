@@ -29,6 +29,7 @@ class Phase10App extends ConsumerWidget {
       ],
       supportedLocales: const [
         Locale('en'), // English
+        Locale('es'), // Spanish
       ],
       initialRoute: '/',
       routes: {
