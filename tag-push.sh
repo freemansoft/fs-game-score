@@ -1,6 +1,6 @@
 #!/bin/zsh
 # tag-push.sh
-# Usage: ./tag-push.sh --version <semver> [--commit-and-push]
+# Usage: ./tag-push.sh --version <semver> [--commit --push]
 
 set -e
 
@@ -9,7 +9,6 @@ function usage() {
   echo
   echo "Options:"
   echo "  --version <major.minor.patch>   Set the version (required, semantic versioning)"
-  echo "  --build-id <number>             Optional build id appended to version (default: 1)"
   echo "  --push                          Push committed changes and tag to remote"
   echo "  --force                         Force tag creation, overwrite existing tag if present"
   echo "  --help                          Show this help message and exit"
@@ -21,17 +20,16 @@ function usage() {
 VERSION=""
 PUSH=false
 FORCE=false
-BUILD_ID=1
+# Build id is always generated from the MAIN commit count
+# Always incrementing, simple to use
+# Could use time of day or last commit hash if preferred
+BUILD_ID=$(git rev-list --count HEAD)
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --version)
       shift
       VERSION="$1"
-      ;;
-    --build-id)
-      shift
-      BUILD_ID="$1"
       ;;
     --push)
       PUSH=true
