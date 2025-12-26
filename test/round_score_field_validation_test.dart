@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/presentation/round_score_field.dart';
 
 void main() {
@@ -13,6 +15,15 @@ void main() {
       int? initialScore,
     }) {
       return MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'), // English
+        ],
         home: Scaffold(
           body: RoundScoreField(
             score: initialScore,

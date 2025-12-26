@@ -1,6 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/presentation/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_game_modal.dart';
 import 'package:fs_score_card/presentation/player_round_cell.dart';
@@ -57,9 +58,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           width: 1,
         ),
         columns: [
-          const DataColumn2(
+          DataColumn2(
             label: Text(
-              'Player\nTotal',
+              AppLocalizations.of(context)!.playerTotal,
               semanticsLabel: 'Player and Total',
             ),
             headingRowAlignment: MainAxisAlignment.center,
@@ -87,7 +88,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                           color: allEnabled ? Colors.green : Colors.red,
                           size: 20,
                         ),
-                        tooltip: allEnabled ? 'Lock column' : 'Unlock column',
+                        tooltip: allEnabled
+                            ? AppLocalizations.of(context)!.lockColumn
+                            : AppLocalizations.of(context)!.unlockColumn,
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                         onPressed: () {

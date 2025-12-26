@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/presentation/round_phase_dropdown.dart';
 import 'package:fs_score_card/presentation/round_score_field.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
@@ -61,12 +62,13 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
 
 class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
   Widget _buildScoreField(BuildContext context, int? currentScore) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'Score:',
+          l10n.score,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
@@ -86,12 +88,13 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     int? selectedPhase,
     List<int?> completedPhases,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'Phase:',
+          l10n.phase,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
@@ -122,9 +125,15 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     // Check orientation using MediaQuery
     final orientation = MediaQuery.of(context).orientation;
 
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       key: PlayerRoundModal.modalKey(widget.playerIdx, widget.round),
-      title: Text('Player ${widget.playerIdx + 1} - Round ${widget.round + 1}'),
+      title: Text(
+        l10n.playerRoundModalTitle(
+          widget.playerIdx + 1,
+          widget.round + 1,
+        ),
+      ),
       scrollable: true,
       content: orientation == Orientation.landscape
           ? Row(

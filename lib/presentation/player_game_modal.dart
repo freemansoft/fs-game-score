@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/model/phases.dart';
 import 'package:fs_score_card/presentation/player_name_field.dart';
 
@@ -54,12 +55,13 @@ class PlayerGameModal extends StatelessWidget {
   }
 
   Widget _buildNameSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'Name:',
+          l10n.name,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
@@ -75,12 +77,13 @@ class PlayerGameModal extends StatelessWidget {
   }
 
   Widget _buildPhasesSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'Phases by Round:',
+          l10n.phasesByRound,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 4),
@@ -93,15 +96,15 @@ class PlayerGameModal extends StatelessWidget {
                 phaseEntries.add(
                   Padding(
                     padding: const EdgeInsets.only(bottom: 4),
-                    child: Text('Round ${round + 1}: Phase $phase'),
+                    child: Text(l10n.roundPhase(round + 1, phase)),
                   ),
                 );
               }
             }
             if (phaseEntries.isEmpty) {
-              return const Text(
-                'No phases completed',
-                style: TextStyle(fontStyle: FontStyle.italic),
+              return Text(
+                l10n.noPhasesCompleted,
+                style: const TextStyle(fontStyle: FontStyle.italic),
               );
             } else {
               return Column(

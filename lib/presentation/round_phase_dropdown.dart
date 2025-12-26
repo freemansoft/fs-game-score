@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 
 class RoundPhaseDropdown extends ConsumerStatefulWidget {
@@ -50,6 +51,7 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final game = ref.watch(gameProvider);
     final theme = Theme.of(context);
     final hasFocus = _focusNode.hasFocus;
@@ -64,7 +66,7 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
     return Focus(
       focusNode: _focusNode,
       child: PopupMenuButton<int?>(
-        tooltip: 'Select completed phase(s)',
+        tooltip: l10n.selectCompletedPhases,
         onOpened: () {
           // Request focus when popup opens
           _focusNode.requestFocus();
@@ -85,20 +87,20 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
           ),
           child: Text(
             widget.selectedPhase != null
-                ? 'Phase ${widget.selectedPhase}'
-                : 'No Phase',
+                ? l10n.phaseNumber(widget.selectedPhase!)
+                : l10n.noPhase,
             style: TextStyle(color: textColor),
           ),
         ),
         itemBuilder: (context) => [
           // We have to use a -1 for the None value because onSelected is only called if there is a value
-          const PopupMenuItem<int?>(value: -1, child: Text('No Phase')),
+          PopupMenuItem<int?>(value: -1, child: Text(l10n.noPhase)),
           ...List.generate(game.numPhases, (i) {
             final phaseNum = i + 1;
             return CheckedPopupMenuItem<int?>(
               value: phaseNum,
               checked: widget.completedPhases.contains(phaseNum),
-              child: Text('Phase $phaseNum'),
+              child: Text(l10n.phaseNumber(phaseNum)),
             );
           }),
         ],

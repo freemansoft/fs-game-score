@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 
 class RoundScoreField extends StatefulWidget {
   const RoundScoreField({
@@ -104,9 +105,9 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
           _focusNode.requestFocus();
           // Show SnackBar message
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Invalid Score for this round'),
-              duration: Duration(seconds: 2),
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.invalidScoreForRound),
+              duration: const Duration(seconds: 2),
             ),
           );
         }
@@ -131,11 +132,11 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       focusNode: _focusNode,
       keyboardType: TextInputType.number,
       autofocus: widget.autofocus,
-      decoration: const InputDecoration(
-        hintText: 'Score',
+      decoration: InputDecoration(
+        hintText: AppLocalizations.of(context)!.scoreHint,
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-        border: OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+        border: const OutlineInputBorder(),
       ),
       onChanged: _onInputChanged,
       onFieldSubmitted: _onFieldSubmitted,

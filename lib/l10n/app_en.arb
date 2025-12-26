@@ -1,0 +1,222 @@
+{
+  "@@locale": "en",
+  "appTitle": "FreemanS Score Card",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "continueButton": "Continue",
+  "@continueButton": {
+    "description": "Button to continue from splash screen to score table"
+  },
+  "numberOfPlayers": "Number of Players:",
+  "@numberOfPlayers": {
+    "description": "Label for number of players dropdown"
+  },
+  "numberOfPlayersTooltip": "Select the number of players for the game",
+  "@numberOfPlayersTooltip": {
+    "description": "Tooltip for number of players field"
+  },
+  "maximumRounds": "Maximum Rounds:",
+  "@maximumRounds": {
+    "description": "Label for maximum rounds dropdown"
+  },
+  "maximumRoundsTooltip": "Set the maximum number of rounds for the game",
+  "@maximumRoundsTooltip": {
+    "description": "Tooltip for maximum rounds field"
+  },
+  "sheetStyle": "Sheet Style:",
+  "@sheetStyle": {
+    "description": "Label for sheet style dropdown"
+  },
+  "sheetStyleTooltip": "Choose the score sheet style: basic or with phases",
+  "@sheetStyleTooltip": {
+    "description": "Tooltip for sheet style field"
+  },
+  "basicSheet": "Basic Sheet",
+  "@basicSheet": {
+    "description": "Option for basic sheet style"
+  },
+  "includePhases": "Include Phases",
+  "@includePhases": {
+    "description": "Option for sheet style with phases"
+  },
+  "scoreFilter": "Score Filter:",
+  "@scoreFilter": {
+    "description": "Label for score filter dropdown"
+  },
+  "scoreFilterTooltip": "Limit score input values (e.g., any score or those ending in 5 or 0)",
+  "@scoreFilterTooltip": {
+    "description": "Tooltip for score filter field"
+  },
+  "anyScore": "Any Score",
+  "@anyScore": {
+    "description": "Option for any score filter"
+  },
+  "mustEndIn0Or5": "Must end in 0 or 5",
+  "@mustEndIn0Or5": {
+    "description": "Option for score filter that requires scores to end in 0 or 5"
+  },
+  "endScore": "End Score",
+  "@endScore": {
+    "description": "Label for end game score field"
+  },
+  "endScoreTooltip": "Enable game to end when a player reaches this score",
+  "@endScoreTooltip": {
+    "description": "Tooltip for end game score field"
+  },
+  "gameEndingScore": "Game ending score",
+  "@gameEndingScore": {
+    "description": "Hint text for end game score input field"
+  },
+  "copyright": "Copyright (C) 2025 Joe Freeman",
+  "@copyright": {
+    "description": "Copyright text"
+  },
+  "version": "Version: {version}",
+  "@version": {
+    "description": "Version text with placeholder",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "scores": "Scores",
+  "@scores": {
+    "description": "App bar title for score table screen"
+  },
+  "playerTotal": "Player\nTotal",
+  "@playerTotal": {
+    "description": "Column header text for player and total"
+  },
+  "lockColumn": "Lock column",
+  "@lockColumn": {
+    "description": "Tooltip for lock column button"
+  },
+  "unlockColumn": "Unlock column",
+  "@unlockColumn": {
+    "description": "Tooltip for unlock column button"
+  },
+  "name": "Name:",
+  "@name": {
+    "description": "Label for name field in player game modal"
+  },
+  "phasesByRound": "Phases by Round:",
+  "@phasesByRound": {
+    "description": "Label for phases by round section"
+  },
+  "noPhasesCompleted": "No phases completed",
+  "@noPhasesCompleted": {
+    "description": "Text shown when no phases are completed"
+  },
+  "roundPhase": "Round {roundNumber}: Phase {phaseNumber}",
+  "@roundPhase": {
+    "description": "Text showing round and phase",
+    "placeholders": {
+      "roundNumber": {
+        "type": "int"
+      },
+      "phaseNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "score": "Score:",
+  "@score": {
+    "description": "Label for score field"
+  },
+  "scoreHint": "Score",
+  "@scoreHint": {
+    "description": "Hint text for score input field"
+  },
+  "phase": "Phase:",
+  "@phase": {
+    "description": "Label for phase dropdown"
+  },
+  "selectCompletedPhases": "Select completed phase(s)",
+  "@selectCompletedPhases": {
+    "description": "Tooltip for phase dropdown"
+  },
+  "noPhase": "No Phase",
+  "@noPhase": {
+    "description": "Option for no phase selected"
+  },
+  "phaseNumber": "Phase {phaseNumber}",
+  "@phaseNumber": {
+    "description": "Phase option text",
+    "placeholders": {
+      "phaseNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerRoundModalTitle": "Player {playerNumber} - Round {roundNumber}",
+  "@playerRoundModalTitle": {
+    "description": "Title for player round modal",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      },
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "invalidScoreForRound": "Invalid Score for this round",
+  "@invalidScoreForRound": {
+    "description": "Error message when score doesn't match filter"
+  },
+  "startNewGame": "Start New Game?",
+  "@startNewGame": {
+    "description": "Title for new game dialog"
+  },
+  "startNewGameMessage": "Are you sure you want to start a new game? The score card will be erased.",
+  "@startNewGameMessage": {
+    "description": "Message in new game dialog"
+  },
+  "clearPlayerNames": "Clear the player names",
+  "@clearPlayerNames": {
+    "description": "Checkbox label for clearing player names"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "newGame": "New Game",
+  "@newGame": {
+    "description": "New game button text"
+  },
+  "gameReset": "Game reset!",
+  "@gameReset": {
+    "description": "Snackbar message when game is reset"
+  },
+  "newGameSameTypeTooltip": "New Game - Using same scorecard type",
+  "@newGameSameTypeTooltip": {
+    "description": "Tooltip for new game button"
+  },
+  "changeScorecardType": "Change Scorecard Type",
+  "@changeScorecardType": {
+    "description": "Title for change scorecard type dialog"
+  },
+  "changeScorecardTypeMessage": "Are you sure you want to change the scorecard type? The scorecard will be cleared.",
+  "@changeScorecardTypeMessage": {
+    "description": "Message in change scorecard type dialog"
+  },
+  "changeScorecard": "Change Scorecard",
+  "@changeScorecard": {
+    "description": "Button text to change scorecard"
+  },
+  "newGameChangeScorecardType": "New Game - Change Scorecard Type",
+  "@newGameChangeScorecardType": {
+    "description": "Tooltip for change scorecard type button"
+  },
+  "shareScores": "Share Scores",
+  "@shareScores": {
+    "description": "Tooltip for share button"
+  },
+  "noScoresToShare": "No scores to share",
+  "@noScoresToShare": {
+    "description": "Message when there are no scores to share"
+  }
+}
+

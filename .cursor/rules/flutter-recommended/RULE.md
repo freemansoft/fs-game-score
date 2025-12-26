@@ -814,3 +814,11 @@ education levels, and learning styles.
   labels for UI elements.
 * **Screen Reader Testing:** Regularly test your app with TalkBack (Android) and
   VoiceOver (iOS).
+
+## Localization (I10N)
+
+Implement localization for all strings displayed to the users following guidelines in <https://docs.flutter.dev/ui/internationalization>
+
+* **Localization:** The application should use the `intl` package to support localizaiton. Localized strings should be stored in files `arb` files in `lib/10n`. The base configuration file shoud be in a file `l10n.yaml` locaated in the project root directory.
+* **Tooltips, Field Labels and Title Localization:** All displayed tooltips labels and titles should be localized.
+* **Do not localize Semantic Labels:** Widget `semanticLabel` properties and the `label` properties on `Semantics` widgets should not be localized as they are not displayed to users

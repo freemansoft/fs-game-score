@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/presentation/player_round_modal.dart';
 
 class PlayerRoundCell extends StatelessWidget {
@@ -81,7 +82,7 @@ class PlayerRoundCell extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 selectedPhase != null && selectedPhase! > 0
-                    ? 'Phase $selectedPhase'
+                    ? AppLocalizations.of(context)!.phaseNumber(selectedPhase!)
                     : '---',
                 key: phaseKey(playerIdx, round),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(

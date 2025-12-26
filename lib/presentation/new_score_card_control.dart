@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 
 /// A widget that displays a home icon button and
 /// shows a confirmation dialog for a new scorecard
@@ -7,21 +8,20 @@ class NewScoreCardControl extends StatelessWidget {
   const NewScoreCardControl({super.key});
 
   Future<void> _showDialog(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Change Scorecard Type'),
-        content: const Text(
-          'Are you sure you want to change the scorecard type? The scorecard will be cleared.',
-        ),
+        title: Text(l10n.changeScorecardType),
+        content: Text(l10n.changeScorecardTypeMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Change Scorecard'),
+            child: Text(l10n.changeScorecard),
           ),
         ],
         semanticLabel: 'New Game - Change Scorecard Type',
@@ -38,12 +38,13 @@ class NewScoreCardControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
       label: 'Request Change Scorecard Type',
       child: IconButton(
         icon: const Icon(Icons.home),
-        tooltip: 'New Game - Change Scorecard Type',
+        tooltip: l10n.newGameChangeScorecardType,
         onPressed: () => _showDialog(context),
       ),
     );

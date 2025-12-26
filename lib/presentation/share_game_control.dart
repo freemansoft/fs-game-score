@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -9,6 +10,7 @@ class ShareGameControl extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     return IconButton(
       key: const ValueKey('share_button'),
       icon: Icon(
@@ -17,7 +19,7 @@ class ShareGameControl extends ConsumerWidget {
             ? Icons.ios_share
             : Icons.share,
       ),
-      tooltip: 'Share Scores',
+      tooltip: l10n.shareScores,
       onPressed: () => shareGame(context, ref),
     );
   }
@@ -47,9 +49,9 @@ void shareGame(BuildContext context, WidgetRef ref) {
     );
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('No scores to share'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.noScoresToShare),
+        duration: const Duration(seconds: 2),
       ),
     );
   }

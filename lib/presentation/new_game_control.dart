@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
 /// A button that, when pressed, will reset the game to its initial state.
@@ -8,19 +9,18 @@ class NewGameControl extends ConsumerWidget {
   const NewGameControl({super.key});
 
   Future<void> _showDialog(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     bool clearNames = false;
     final result = await showDialog<bool>(
       context: context,
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) => AlertDialog(
-            title: const Text('Start New Game?'),
+            title: Text(l10n.startNewGame),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'Are you sure you want to start a new game? The score card will be erased.',
-                ),
+                Text(l10n.startNewGameMessage),
                 const SizedBox(height: 16),
                 CheckboxListTile(
                   value: clearNames,
@@ -29,7 +29,7 @@ class NewGameControl extends ConsumerWidget {
                       clearNames = val ?? false;
                     });
                   },
-                  title: const Text('Clear the player names'),
+                  title: Text(l10n.clearPlayerNames),
                   controlAffinity: ListTileControlAffinity.leading,
                 ),
               ],
@@ -37,11 +37,11 @@ class NewGameControl extends ConsumerWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
+                child: Text(l10n.cancel),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('New Game'),
+                child: Text(l10n.newGame),
               ),
             ],
           ),
@@ -52,9 +52,9 @@ class NewGameControl extends ConsumerWidget {
       ref.read(playersProvider.notifier).resetGame(clearNames: clearNames);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Game reset!'),
-            duration: Duration(seconds: 2),
+          SnackBar(
+            content: Text(l10n.gameReset),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
@@ -63,12 +63,13 @@ class NewGameControl extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
       label: 'Request New Game Same Type',
       child: IconButton(
         icon: const Icon(Icons.replay),
-        tooltip: 'New Game - Using same scorecard type',
+        tooltip: l10n.newGameSameTypeTooltip,
         onPressed: () => _showDialog(context, ref),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -113,13 +114,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   late final TextEditingController _endGameScoreController;
 
   Widget _buildNumPlayersField(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Tooltip(
-          message: 'Select the number of players for the game',
+          message: l10n.numberOfPlayersTooltip,
           child: Text(
-            'Number of Players:',
+            l10n.numberOfPlayers,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
@@ -144,13 +146,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Widget _buildMaxRoundsField(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Tooltip(
-          message: 'Set the maximum number of rounds for the game',
+          message: l10n.maximumRoundsTooltip,
           child: Text(
-            'Maximum Rounds:',
+            l10n.maximumRounds,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
@@ -175,13 +178,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Widget _buildSheetStyleField(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Tooltip(
-          message: 'Choose the score sheet style: basic or with phases',
+          message: l10n.sheetStyleTooltip,
           child: Text(
-            'Sheet Style:',
+            l10n.sheetStyle,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
@@ -189,14 +193,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         DropdownButton<String>(
           key: SplashScreen.sheetStyleDropdownKey,
           value: _sheetStyle,
-          items: const [
+          items: [
             DropdownMenuItem(
               value: _basicSheet,
-              child: Text(_basicSheet),
+              child: Text(l10n.basicSheet),
             ),
             DropdownMenuItem(
               value: _phasesSheet,
-              child: Text(_phasesSheet),
+              child: Text(l10n.includePhases),
             ),
           ],
           onChanged: (value) {
@@ -212,14 +216,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Widget _buildScoreFilterField(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Tooltip(
-          message:
-              'Limit score input values (e.g., any score or those ending in 5 or 0)',
+          message: l10n.scoreFilterTooltip,
           child: Text(
-            'Score Filter:',
+            l10n.scoreFilter,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
@@ -227,11 +231,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         DropdownButton<String>(
           key: SplashScreen.scoreFilterDropdownKey,
           value: _scoreFilter,
-          items: const [
-            DropdownMenuItem(value: '', child: Text('Any Score')),
+          items: [
+            DropdownMenuItem(value: '', child: Text(l10n.anyScore)),
             DropdownMenuItem(
               value: r'^[0-9]*[05]$',
-              child: Text('Must end in 0 or 5'),
+              child: Text(l10n.mustEndIn0Or5),
             ),
           ],
           onChanged: (value) {
@@ -247,13 +251,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Widget _buildEndGameScoreField(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Tooltip(
-          message: 'Enable game to end when a player reaches this score',
+          message: l10n.endScoreTooltip,
           child: Text(
-            'End Score',
+            l10n.endScore,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
@@ -285,11 +290,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 _endGameScore = parsed ?? 0;
               });
             },
-            decoration: const InputDecoration(
-              hintText: 'Game ending score',
+            decoration: InputDecoration(
+              hintText: l10n.gameEndingScore,
               isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-              border: OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+              border: const OutlineInputBorder(),
             ),
           ),
         ),
@@ -353,6 +358,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Widget _buildFooterLinks(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final orientation = MediaQuery.of(context).orientation;
     final copyrightLink = InkWell(
       onTap: () async {
@@ -362,7 +368,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         }
       },
       child: Text(
-        'Copyright (C) 2025 Joe Freeman',
+        l10n.copyright,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
           color: Colors.blue,
           decoration: TextDecoration.underline,
@@ -380,7 +386,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               }
             },
             child: Text(
-              'Version: $_appVersion',
+              l10n.version(_appVersion!),
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: Colors.blue,
                 decoration: TextDecoration.underline,
@@ -419,7 +425,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'FreemanS Score Card',
+              AppLocalizations.of(context)!.appTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.deepPurple,
               ),
@@ -456,7 +462,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   ).pushReplacementNamed('/score-table');
                 }
               },
-              child: const Text('Continue'),
+              child: Text(AppLocalizations.of(context)!.continueButton),
             ),
           ],
         ),

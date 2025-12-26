@@ -97,7 +97,9 @@ void main() {
 
     // close the PlayerRoundCellModelPanel
     // find an object outside the modal - AlertDialog and tap to close
-    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
     await tester.pumpAndSettle(); // Wait for the dialog to dismiss
     // validate that the text in the table matches the input
     expect(
@@ -105,7 +107,7 @@ void main() {
       '20',
     );
 
-    // tap on the roundScoreP0R0 to open the PlayerRoundCellModelPanel
+    // tap on the roundScoreP0R1 to open the PlayerRoundCellModelPanel
     await tester.tap(find.byKey(playerRoundScoreP0R1Key));
     await tester.pumpAndSettle();
     // verify the PlayerRoundModal is displayed
@@ -119,7 +121,9 @@ void main() {
 
     // close the PlayerRoundCellModelPanel
     // find an object outside the modal - AlertDialog and tap to close
-    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
     await tester.pumpAndSettle(); // Wait for the dialog to dismiss
 
     // validate that the text in the table matches the input
@@ -153,7 +157,9 @@ void main() {
 
     // close the PlayerRoundCellModelPanel
     // find an object outside the modal - AlertDialog and tap to close
-    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
     await tester.pumpAndSettle(); // Wait for the dialog to dismiss
 
     // validate that the text in the table matches the input
@@ -180,7 +186,9 @@ void main() {
 
     // close the PlayerRoundCellModelPanel
     // find an object outside the modal - AlertDialog and tap to close
-    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
     await tester.pumpAndSettle(); // Wait for the dialog to dismiss
 
     // validate that the text in the table matches the input
@@ -316,7 +324,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Close the modal
-      await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+      await tester.tapAt(
+        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+      );
       await tester.pumpAndSettle();
 
       // Verify total score is 100

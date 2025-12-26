@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added 1.7.0 +11
 
 - Landscape SplashScreen layout changed to better support wide screens.  Two columns are now the center two of 4 columns.
+- Added I10n International Localization
+- iPad iOS 26.1 fix broke integration tests because it ignored 0,0 offset taps.
 
 ## [1.6.0] - 2025-12-24
 

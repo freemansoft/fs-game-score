@@ -1,6 +1,6 @@
 # fs_score_card
 
-The application Implements a scorecard for an arbitrary number of players and game _rounds_.  It has been tested on Android, IOS, Chrome, macOS, and Windows 11. 
+The application Implements a scorecard for an arbitrary number of players and game _rounds_.  It has been tested on Android, IOS, Chrome, macOS, and Windows 11.
 Two scorecard types are supported
 
 1. Basic scorecard with individual round scores and player total scores
@@ -14,7 +14,7 @@ Preferences
 Notes
 
 1. Player's names can be edited by clicking on the name cell in the scoring table. The name can be changed in the modal editing panel that appears.
-2. Round scores can be edited by clicking on a score cell in the scoring table. The round score can be changed in the modal editing panel that ppears. 
+2. Round scores can be edited by clicking on a score cell in the scoring table. The round score can be changed in the modal editing panel that ppears.
     1. The aggregated player scores will be totaled under the player's name.
 3. The "New Game" iconin the app bar. will clear the board scores and optionally the player names for times you want to change the order
 4. The "Home" or "Change Score Card Type" icon in the app bar will let you return to the start screen that lets you change the number of players and the data entry types (score & phase)

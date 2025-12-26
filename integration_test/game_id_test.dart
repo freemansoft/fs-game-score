@@ -191,8 +191,11 @@ void main() {
     await tester.enterText(playerNameField, 'Test Player');
     await tester.pumpAndSettle();
 
-    // find an object outside the modal - AlertDialog and tap to cclose
-    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    // find an object outside the modal - AlertDialog and tap to close
+    // don't use absolute top because we filter there for ios 26.1 for ipad
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
     await tester.pumpAndSettle(); // Wait for the dialog to dismiss
     // validate it is goine to verify this approach
     expect(find.byType(PlayerGameModal), findsNothing);
@@ -209,8 +212,12 @@ void main() {
     await tester.pumpAndSettle();
 
     // find an object outside the modal - AlertDialog and tap to close
-    await tester.tapAt(tester.getTopLeft(find.byType(Phase10App)));
+    // offset is because we ignore 0,0 for ipad defect in ios 26.1
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
     await tester.pumpAndSettle(); // Wait for the dialog to dismiss
+    expect(find.byType(PlayerGameModal), findsNothing);
 
     final game = container.read(gameProvider);
     final gameId = game.gameId;
