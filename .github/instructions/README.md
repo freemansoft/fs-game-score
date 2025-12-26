@@ -9,3 +9,4 @@
 - Linting rules changed from default to use VGV linter
 - Use `riverpod` instead of `provider`
 - Added **Semantic Label Keys** rule
+- Added internationalizaiton and localization rules
