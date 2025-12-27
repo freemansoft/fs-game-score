@@ -51,14 +51,30 @@ Make sure to gegenerate the dart localization files after making any changes to 
 
 `flutter pub get` or do a build.
 
-## Testing the App outside of the IDE
+## Build and Test
+
+You can test this locally using
+
+- The IDE and the Android simulator on Mac or PC
+- The IDE and the iOS emulator on Mac
+- The IDE and a hardware connected Android device on a Mac or PC
+- The IDE and a hardware connected iOS device on a Mac
+- macOS app on a Mac
+- windows fat app on PC
+- A Web App on Mac or PC
 
 ### Android builds
 
 #### Android test builds - side loading
 
-You can test this locally using the IDE and the Android simulator or hardware connected ios device on a Mac or MS Windows PC.
+1. (Android) Create an apk and downloaded it to a device
+   1. Build the android arm64 package. Including the `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB
+      1. `flutter build apk --target-platform android-arm64`
+      2. The parameter `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB. There aren't any interesting x86 android devices anyway.
+   2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices. This can be done by emailing or by pushing the apk to a shared storage
+      1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
 
+Android build notes:
 Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.com/questions/62910148/flutter-what-is-the-difference-between-the-apk-release-directory-and-flutter-ap)
 
 - `build/app/outputs/apk` Including app name and version in the `apk` filename.
@@ -67,14 +83,6 @@ Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.c
 - `build/app/outputs/flutter-apk` Generic apk without the app name and version in the `apk` filename. These include sha1 files.
   - `build/app/outputs/flutter-apk/apk-release.apk`
   - `build/app/outputs/flutter-apk/app-debug.ap`
-
-1. Run this on a connected iOS or Android device using the IDE
-2. (Android) Create an apk and downloaded it to a device
-   1. Build the android arm64 package. Including the `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB
-      1. `flutter build apk --target-platform android-arm64`
-      2. The parameter `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB. There aren't any interesting x86 android devices anyway.
-   2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices. This can be done by emailing or by pushing the apk to a shared storage
-      1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
 
 #### Google Play Store (tentative)
 
@@ -147,11 +155,11 @@ You can test this locally using the IDE and a web browser like Chrome
    2. create a zip file of `build/web`
    3. Share the zip. They can unzip it and put the contents of the `web` folder in the web server docroot. The `web` folder should not be part of the path.
 
-#### Web site build for `github.io` pages in a subdirectory
+#### Web site build when web site is rootted in a subdirectory, not in a root directory
 
 Change this to match your deployment. These notes exist so I remember the process!
 
-I host this app on my [github.io pages](https://freemansoft.github.io/freemans-score-card)
+The following works for hosting this app on my `github.io` pages. I host this app on my [github.io pages](https://freemansoft.github.io/freemans-score-card).
 
 1. Build the web app with `flutter build web --base-href=/freemans-score-card/`
 2. Copy the contents of `build/web` **excluding the canvaskit directory** to a local clone of <https://github.com/freemansoft/freemansoft.github.io>
