@@ -29,7 +29,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # This is something to be picked up with future automation - CI/CD
 # Both the version and the build number can be overridden in Flutter's build by specifying --build-name and --build-number, respectively.
 #
-version: 1.7.0+150
+version: 1.7.0+152
 
 environment:
   sdk: ^3.10.0
