@@ -5,14 +5,12 @@ import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/presentation/app_theme.dart';
 import 'package:fs_score_card/presentation/score_table_screen.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
-import 'package:fs_score_card/provider/theme_provider.dart';
 
 class Phase10App extends ConsumerWidget {
   const Phase10App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = ref.watch(themeProvider);
     return MaterialApp(
       title: 'FS Score Ccard',
       // left in for debugging purposes
@@ -20,7 +18,6 @@ class Phase10App extends ConsumerWidget {
       showSemanticsDebugger: false, // shows outlines for the semantics tree
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
