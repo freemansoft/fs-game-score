@@ -21,11 +21,21 @@ class PlayerNameField extends StatefulWidget {
 
 class _PlayerNameFieldState extends State<PlayerNameField> {
   late final TextEditingController _controller;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.name);
+    _focusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _focusNode.requestFocus();
+      _controller.selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: _controller.text.length,
+      );
+    });
   }
 
   @override
@@ -38,6 +48,7 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
 
   @override
   void dispose() {
+    _focusNode.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -45,6 +56,8 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: _focusNode,
+      autofocus: true,
       controller: _controller,
       textAlign: widget.textAlign,
       decoration: InputDecoration(
