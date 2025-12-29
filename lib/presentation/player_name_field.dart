@@ -7,11 +7,13 @@ class PlayerNameField extends StatefulWidget {
     required this.onChanged,
     this.border,
     this.textAlign = TextAlign.center,
+    this.onSubmitted,
   });
   final String name;
   final ValueChanged<String> onChanged;
   final InputBorder? border;
   final TextAlign textAlign;
+  final VoidCallback? onSubmitted;
 
   @override
   State<PlayerNameField> createState() => _PlayerNameFieldState();
@@ -55,6 +57,9 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
         focusedBorder: widget.border,
       ),
       onChanged: widget.onChanged,
+      onFieldSubmitted: (_) {
+        widget.onSubmitted?.call();
+      },
       onTap: () {
         _controller.selection = TextSelection(
           baseOffset: 0,

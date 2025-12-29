@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/model/phases.dart';
@@ -54,6 +55,15 @@ class PlayerGameModal extends StatelessWidget {
     );
   }
 
+  bool _shouldCloseOnReturnKey() {
+    return defaultTargetPlatform != TargetPlatform.iOS &&
+        defaultTargetPlatform != TargetPlatform.android;
+  }
+
+  void _closeModal(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
   Widget _buildNameSection(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Column(
@@ -71,6 +81,9 @@ class PlayerGameModal extends StatelessWidget {
           onChanged: onNameChanged,
           border: const OutlineInputBorder(),
           textAlign: TextAlign.left,
+          onSubmitted: _shouldCloseOnReturnKey()
+              ? () => _closeModal(context)
+              : null,
         ),
       ],
     );

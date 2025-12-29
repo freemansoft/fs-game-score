@@ -9,11 +9,13 @@ class RoundScoreField extends StatefulWidget {
     required this.onChanged,
     this.scoreFilter = '',
     this.autofocus = false,
+    this.onSubmitted,
   });
   final int? score;
   final ValueChanged<int?> onChanged;
   final String scoreFilter;
   final bool autofocus;
+  final VoidCallback? onSubmitted;
 
   @override
   State<RoundScoreField> createState() => _RoundScoreFieldState();
@@ -81,6 +83,7 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
     // Only call onChanged if validation passes
     final parsed = int.tryParse(value);
     widget.onChanged(parsed);
+    widget.onSubmitted?.call();
   }
 
   void _onFocusChange() {

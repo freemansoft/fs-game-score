@@ -35,7 +35,7 @@ class Game {
   static const int defaultMaxRounds = 14;
   static const int defaultNumPhases = 10;
   static const int defaultNumPlayers = 8;
-  static const bool defaultEnablePhases = true;
+  static const bool defaultEnablePhases = false;
   static const String defaultScoreFilter = '';
   static const int defaultEndGameScore = 0;
 

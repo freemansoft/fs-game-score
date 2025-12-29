@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
@@ -61,6 +62,15 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
 }
 
 class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
+  bool _shouldCloseOnReturnKey() {
+    return defaultTargetPlatform != TargetPlatform.iOS &&
+        defaultTargetPlatform != TargetPlatform.android;
+  }
+
+  void _closeModal() {
+    Navigator.of(context).pop();
+  }
+
   Widget _buildScoreField(BuildContext context, int? currentScore) {
     final l10n = AppLocalizations.of(context)!;
     return Column(
@@ -78,6 +88,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
           onChanged: widget.onScoreChanged,
           scoreFilter: widget.scoreFilter,
           autofocus: true,
+          onSubmitted: _shouldCloseOnReturnKey() ? _closeModal : null,
         ),
       ],
     );

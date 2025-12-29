@@ -22,6 +22,7 @@ Notes
 ## Known Issues
 
 - Restarting the same game config does not change the gameId. This is a "feature"
+- Reloa
 
 ## Looking to run the working scoring app?
 
