@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Move from Navigator to goRouter.
 - Load prefs on startup blocking until loading complete if they exist.
 - Player name editor highlights name when modal alert editor is made visible.
+- Moved prefs code to GameRepository and added new game button test
 
 ## [1.7.0] - 2025-12-25
 

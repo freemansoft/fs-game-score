@@ -8,6 +8,16 @@ import 'package:go_router/go_router.dart';
 class NewScoreCardControl extends StatelessWidget {
   const NewScoreCardControl({super.key});
 
+  static const ValueKey<String> iconButtonKey = ValueKey(
+    'new_scorecard_icon_button',
+  );
+  static const ValueKey<String> cancelButtonKey = ValueKey(
+    'new_scorecard_cancel_button',
+  );
+  static const ValueKey<String> changeScorecardButtonKey = ValueKey(
+    'new_scorecard_change_button',
+  );
+
   Future<void> _showDialog(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
     final result = await showDialog<bool>(
@@ -17,10 +27,12 @@ class NewScoreCardControl extends StatelessWidget {
         content: Text(l10n.changeScorecardTypeMessage),
         actions: [
           TextButton(
+            key: cancelButtonKey,
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(l10n.cancel),
           ),
           TextButton(
+            key: changeScorecardButtonKey,
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n.changeScorecard),
           ),
@@ -41,6 +53,7 @@ class NewScoreCardControl extends StatelessWidget {
       button: true,
       label: 'Request Change Scorecard Type',
       child: IconButton(
+        key: iconButtonKey,
         icon: const Icon(Icons.home),
         tooltip: l10n.newGameChangeScorecardType,
         onPressed: () => _showDialog(context),

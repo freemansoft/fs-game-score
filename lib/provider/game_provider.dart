@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_score_card/main.dart';
+import 'package:fs_score_card/data/game_repository.dart';
 import 'package:fs_score_card/model/game.dart';
 
 class GameNotifier extends Notifier<Game> {
   @override
   Game build() {
-    state = loadedPrefsGame ?? Game();
+    state = GameRepository().loadedPrefsGame ?? Game();
     return state;
   }
 
@@ -32,7 +32,7 @@ class GameNotifier extends Notifier<Game> {
       version: version ?? state.version,
       // gameId will be automatically generated as a new UUID
     );
-    unawaited(saveGameToPrefs(state));
+    unawaited(GameRepository().saveGameToPrefs(state));
   }
 }
 
