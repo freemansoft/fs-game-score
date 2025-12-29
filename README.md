@@ -22,7 +22,8 @@ Notes
 ## Known Issues
 
 - Restarting the same game config does not change the gameId. This is a "feature"
-- Reloa
+- Reloading the web app wipes out the current game because state is not stored
+- When debugging with the IDE, the LocalStorage is not persisted across sessions. This is a "feature" of the fact that the web session is on a different port every time it is run.
 
 ## Looking to run the working scoring app?
 

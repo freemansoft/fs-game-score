@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/main.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,9 +42,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   static const String _gamePrefsKey = 'game_state';
 
-  // retrieved from package info
-  String? _appVersion;
-
   // We have a local variable for this rather than watching becausae we want to
   // avoid rebuilds of the whole splash screen when changing options
   Game thisGame = Game();
@@ -56,7 +53,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     _endGameScoreController = TextEditingController();
-    _loadVersion();
+    // relies on fact the previous game config was saved to SharedPreferences
     _loadGameFromPrefs();
   }
 
@@ -66,6 +63,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.dispose();
   }
 
+  // This is called from initState() and it calls setState() - the horror!!
+  //
+  // It works because this is an unawaited async function and the setState()
+  // happens after initState() has completed
   Future<void> _loadGameFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     final gameJson = prefs.getString(_gamePrefsKey);
@@ -81,7 +82,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               enablePhases: gameFromPrefs.enablePhases,
               scoreFilter: gameFromPrefs.scoreFilter,
               endGameScore: gameFromPrefs.endGameScore,
-              version: _appVersion,
+              version: appVersion,
             );
 
         // version from prefs does not override version of game in app
@@ -95,23 +96,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       } catch (_) {
         // Ignore errors and start fresh
       }
-    }
-  }
-
-  Future<void> _loadVersion() async {
-    try {
-      final packageInfo = await PackageInfo.fromPlatform();
-      setState(() {
-        if (packageInfo.buildNumber.isNotEmpty) {
-          _appVersion = '${packageInfo.version}+${packageInfo.buildNumber}';
-        } else {
-          _appVersion = packageInfo.version;
-        }
-      });
-    } catch (_) {
-      setState(() {
-        _appVersion = null;
-      });
     }
   }
 
@@ -392,7 +376,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       ),
     );
 
-    final versionLink = _appVersion != null
+    final versionLink = appVersion != null
         ? InkWell(
             onTap: () async {
               const url = 'https://github.com/freemansoft/fs-game-score';
@@ -401,7 +385,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               }
             },
             child: Text(
-              l10n.version(_appVersion!),
+              l10n.version(appVersion!),
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: Colors.blue,
                 decoration: TextDecoration.underline,
@@ -462,7 +446,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       enablePhases: thisGame.enablePhases,
                       scoreFilter: thisGame.scoreFilter,
                       endGameScore: thisGame.endGameScore,
-                      version: _appVersion,
+                      version: appVersion,
                     );
 
                 // Save game state to shared preferences
