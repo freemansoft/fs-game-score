@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 /// A widget that displays a home icon button and
 /// shows a confirmation dialog for a new scorecard
@@ -29,10 +30,7 @@ class NewScoreCardControl extends StatelessWidget {
     );
     if ((result ?? false) && context.mounted) {
       // Navigate to splash screen and clear navigation stack
-      await Navigator.of(context).pushNamedAndRemoveUntil(
-        '/',
-        (route) => false,
-      );
+      context.goNamed('splash');
     }
   }
 

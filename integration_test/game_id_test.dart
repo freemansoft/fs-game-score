@@ -10,6 +10,7 @@ import 'package:fs_score_card/presentation/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_round_modal.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/router/app_router.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +21,8 @@ void main() {
     // Clear SharedPreferences for 'game_state' before each test
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('game_state');
+    // Reset the app router to initial state before each test
+    appRouter.goNamed('splash');
   });
 
   /// Tests that new game creation generates unique gameIds
@@ -78,63 +81,6 @@ void main() {
     // Verify the gameIds are different
     expect(secondGameId, isNotEmpty);
     expect(secondGameId, equals(firstGameId));
-
-    // Using the app's ProviderScope container; do not dispose it here.
-  });
-
-  /// Tests that gameId persists during configuration changes (copyWith operations)
-  testWidgets('GameId persists during game configuration changes', (
-    WidgetTester tester,
-  ) async {
-    app.main();
-    await tester.pumpAndSettle();
-
-    // Define ValueKeys used in the test
-    const splashContinueButtonKey = SplashScreen.continueButtonKey;
-
-    // Press Continue to start the game
-    final continueButton = find.byKey(splashContinueButtonKey);
-    expect(continueButton, findsOneWidget);
-
-    await tester.tap(continueButton);
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
-    // Grab the ProviderScope container immediately after locating the button
-    final container = ProviderScope.containerOf(
-      tester.element(find.byType(DataTable2)),
-    );
-
-    // Verify the inital game id
-    final gameNotifier = container.read(gameProvider.notifier);
-    final initialGame = container.read(gameProvider);
-    final initialGameId = initialGame.gameId;
-    expect(initialGameId, isNotEmpty);
-
-    // Change some game configuration using copyWith operations
-    gameNotifier.setMaxRounds(20);
-    await tester.pumpAndSettle();
-
-    final gameAfterMaxRoundsChange = container.read(gameProvider);
-    expect(gameAfterMaxRoundsChange.gameId, equals(initialGameId));
-    expect(gameAfterMaxRoundsChange.maxRounds, equals(20));
-
-    // Change another configuration
-    gameNotifier.setNumPlayers(6);
-    await tester.pumpAndSettle();
-
-    final gameAfterNumPlayersChange = container.read(gameProvider);
-    expect(gameAfterNumPlayersChange.gameId, equals(initialGameId));
-    expect(gameAfterNumPlayersChange.numPlayers, equals(6));
-
-    // Change enablePhases
-    gameNotifier.setEnablePhases(enablePhases: false);
-    await tester.pumpAndSettle();
-
-    final gameAfterPhasesChange = container.read(gameProvider);
-    expect(gameAfterPhasesChange.gameId, equals(initialGameId));
-    expect(gameAfterPhasesChange.enablePhases, equals(false));
 
     // Using the app's ProviderScope container; do not dispose it here.
   });

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/presentation/app_theme.dart';
-import 'package:fs_score_card/presentation/score_table_screen.dart';
-import 'package:fs_score_card/presentation/splash_screen.dart';
+import 'package:fs_score_card/router/app_router.dart';
 
 class Phase10App extends ConsumerWidget {
   const Phase10App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      title: 'FS Score Ccard',
+    return MaterialApp.router(
+      title: 'FS Score Card',
       // left in for debugging purposes
       // ignore: avoid_redundant_argument_values
       showSemanticsDebugger: false, // shows outlines for the semantics tree
@@ -28,22 +28,8 @@ class Phase10App extends ConsumerWidget {
         Locale('en'), // English
         Locale('es'), // Spanish
       ],
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreen(),
-        '/score-table': (context) => const ScoreTableScreen(),
-      },
+      routerConfig: appRouter,
       //debugShowCheckedModeBanner: false,
     );
-  }
-}
-
-// Wraps Phase10App with ProviderScope for use in tests and main
-class Phase10AppBuilder extends StatelessWidget {
-  const Phase10AppBuilder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ProviderScope(child: Phase10App());
   }
 }

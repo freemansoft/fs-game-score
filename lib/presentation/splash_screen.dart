@@ -5,7 +5,7 @@ import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/main.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -40,8 +40,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   static const String _basicSheet = 'Basic Sheet';
   static const String _phasesSheet = 'Include Phases';
 
-  static const String _gamePrefsKey = 'game_state';
-
   // We have a local variable for this rather than watching becausae we want to
   // avoid rebuilds of the whole splash screen when changing options
   Game thisGame = Game();
@@ -53,50 +51,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     _endGameScoreController = TextEditingController();
-    // relies on fact the previous game config was saved to SharedPreferences
-    _loadGameFromPrefs();
+    thisGame = ref.read(gameProvider);
+    _endGameScoreEnabled = thisGame.endGameScore > 0;
+    _endGameScoreController.text = thisGame.endGameScore > 0
+        ? thisGame.endGameScore.toString()
+        : '';
   }
 
   @override
   void dispose() {
     _endGameScoreController.dispose();
     super.dispose();
-  }
-
-  // This is called from initState() and it calls setState() - the horror!!
-  //
-  // It works because this is an unawaited async function and the setState()
-  // happens after initState() has completed
-  Future<void> _loadGameFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    final gameJson = prefs.getString(_gamePrefsKey);
-    if (gameJson != null && gameJson.isNotEmpty) {
-      try {
-        final gameFromPrefs = Game.fromJson(gameJson);
-        ref
-            .read(gameProvider.notifier)
-            .newGame(
-              maxRounds: gameFromPrefs.maxRounds,
-              numPhases: gameFromPrefs.numPhases,
-              numPlayers: gameFromPrefs.numPlayers,
-              enablePhases: gameFromPrefs.enablePhases,
-              scoreFilter: gameFromPrefs.scoreFilter,
-              endGameScore: gameFromPrefs.endGameScore,
-              version: appVersion,
-            );
-
-        // version from prefs does not override version of game in app
-        setState(() {
-          thisGame = gameFromPrefs;
-          _endGameScoreEnabled = thisGame.endGameScore > 0;
-          _endGameScoreController.text = gameFromPrefs.endGameScore > 0
-              ? gameFromPrefs.endGameScore.toString()
-              : '';
-        });
-      } catch (_) {
-        // Ignore errors and start fresh
-      }
-    }
   }
 
   Widget _buildNumPlayersField(BuildContext context) {
@@ -417,6 +382,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(gameProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
@@ -449,16 +415,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       version: appVersion,
                     );
 
-                // Save game state to shared preferences
-                final prefs = await SharedPreferences.getInstance();
-                final game = ref.read(gameProvider.notifier).stateValue();
-                await prefs.setString(_gamePrefsKey, game.toJson());
-
                 // Navigate to score table screen
                 if (context.mounted) {
-                  await Navigator.of(
-                    context,
-                  ).pushReplacementNamed('/score-table');
+                  context.goNamed('scoreTable');
                 }
               },
               child: Text(AppLocalizations.of(context)!.continueButton),

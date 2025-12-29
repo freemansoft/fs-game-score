@@ -7,7 +7,15 @@ Game gameWithValues() => Game(
   maxRounds: 20,
   numPhases: 12,
   numPlayers: 4,
+  // Being specific about the values here so the test work if defaults change
+  // ignore: avoid_redundant_argument_values
   enablePhases: false,
+  // Being specific about the values here so the test work if defaults change
+  // ignore: avoid_redundant_argument_values
+  scoreFilter: '',
+  // Being specific about the values here so the test work if defaults change
+  // ignore: avoid_redundant_argument_values
+  endGameScore: 0,
   version: '1.2.3',
 );
 

@@ -1,19 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/main.dart';
 import 'package:fs_score_card/model/game.dart';
 
 class GameNotifier extends Notifier<Game> {
   @override
-  Game build() => Game();
+  Game build() {
+    state = loadedPrefsGame ?? Game();
+    return state;
+  }
 
   Game stateValue() => state;
-
-  void setVersion(String? version) {
-    state = state.copyWith(version: version);
-  }
-
-  void setMaxRounds(int maxRounds) {
-    state = state.copyWith(maxRounds: maxRounds);
-  }
 
   void newGame({
     int? maxRounds,
@@ -34,25 +32,8 @@ class GameNotifier extends Notifier<Game> {
       version: version ?? state.version,
       // gameId will be automatically generated as a new UUID
     );
+    unawaited(saveGameToPrefs(state));
   }
-
-  void setNumPlayers(int numPlayers) {
-    state = state.copyWith(numPlayers: numPlayers);
-  }
-
-  void setEnablePhases({required bool enablePhases}) {
-    state = state.copyWith(enablePhases: enablePhases);
-  }
-
-  void setScoreFilter(String scoreFilter) {
-    state = state.copyWith(scoreFilter: scoreFilter);
-  }
-
-  void setEndGameScore(int endGameScore) {
-    state = state.copyWith(endGameScore: endGameScore);
-  }
-
-  // Add more setters as needed
 }
 
 final gameProvider = NotifierProvider<GameNotifier, Game>(GameNotifier.new);

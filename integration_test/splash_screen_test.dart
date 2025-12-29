@@ -7,6 +7,7 @@ import 'package:fs_score_card/presentation/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_round_cell.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/router/app_router.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,8 @@ void main() {
     // Clear SharedPreferences for 'game_state' before each test
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('game_state');
+    // Reset the app router to initial state before each test
+    appRouter.goNamed('splash');
   });
 
   /// Navigates to the scoring table and verifies the table functionality
