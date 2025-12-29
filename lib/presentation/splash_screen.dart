@@ -41,7 +41,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   static const String _phasesSheet = 'Include Phases';
 
   static const String _gamePrefsKey = 'game_state';
+
+  // retrieved from package info
   String? _appVersion;
+
+  // We have a local variable for this rather than watching becausae we want to
+  // avoid rebuilds of the whole splash screen when changing options
+  Game thisGame = Game();
+  // whether to enable or disable the game score ending score field
+  bool _endGameScoreEnabled = false;
+  late final TextEditingController _endGameScoreController;
 
   @override
   void initState() {
@@ -105,13 +114,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       });
     }
   }
-
-  // We have a local variable for this rather than watching becausae we want to
-  // avoid rebuilds of the whole splash screen when changing options
-  Game thisGame = Game();
-  // whether to enable or disable the game score ending score field
-  bool _endGameScoreEnabled = false;
-  late final TextEditingController _endGameScoreController;
 
   Widget _buildNumPlayersField(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
