@@ -62,19 +62,25 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     final gameJson = prefs.getString(_gamePrefsKey);
     if (gameJson != null && gameJson.isNotEmpty) {
       try {
-        final game = Game.fromJson(gameJson);
-        ref.read(gameProvider.notifier).setNumPlayers(game.numPlayers);
-        ref.read(gameProvider.notifier).setMaxRounds(game.maxRounds);
+        final gameFromPrefs = Game.fromJson(gameJson);
         ref
             .read(gameProvider.notifier)
-            .setEnablePhases(enablePhases: game.enablePhases);
-        ref.read(gameProvider.notifier).setScoreFilter(game.scoreFilter);
-        ref.read(gameProvider.notifier).setEndGameScore(game.endGameScore);
+            .newGame(
+              maxRounds: gameFromPrefs.maxRounds,
+              numPhases: gameFromPrefs.numPhases,
+              numPlayers: gameFromPrefs.numPlayers,
+              enablePhases: gameFromPrefs.enablePhases,
+              scoreFilter: gameFromPrefs.scoreFilter,
+              endGameScore: gameFromPrefs.endGameScore,
+              version: _appVersion,
+            );
+
         // version from prefs does not override version of game in app
         setState(() {
-          thisGame = game;
-          _endGameScoreController.text = game.endGameScore > 0
-              ? game.endGameScore.toString()
+          thisGame = gameFromPrefs;
+          _endGameScoreEnabled = thisGame.endGameScore > 0;
+          _endGameScoreController.text = gameFromPrefs.endGameScore > 0
+              ? gameFromPrefs.endGameScore.toString()
               : '';
         });
       } catch (_) {
@@ -100,7 +106,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     }
   }
 
+  // We have a local variable for this rather than watching becausae we want to
+  // avoid rebuilds of the whole splash screen when changing options
   Game thisGame = Game();
+  // whether to enable or disable the game score ending score field
+  bool _endGameScoreEnabled = false;
   late final TextEditingController _endGameScoreController;
 
   Widget _buildNumPlayersField(BuildContext context) {
@@ -257,18 +267,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 12),
         Builder(
           builder: (context) {
-            final endEnabled =
-                _endGameScoreController.text.isNotEmpty ||
-                thisGame.endGameScore > 0;
             return Row(
               children: [
                 Checkbox(
                   key: SplashScreen.endGameScoreCheckboxKey,
-                  value: endEnabled,
+                  value: _endGameScoreEnabled,
                   onChanged: (value) {
                     setState(() {
-                      final enabled = value ?? false;
-                      if (!enabled) {
+                      _endGameScoreEnabled = value ?? false;
+                      if (!_endGameScoreEnabled) {
                         thisGame = thisGame.copyWith(endGameScore: 0);
                         _endGameScoreController.clear();
                       }
@@ -279,7 +286,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   width: 160,
                   child: TextField(
                     key: SplashScreen.endGameScoreFieldKey,
-                    enabled: endEnabled,
+                    enabled: _endGameScoreEnabled,
                     keyboardType: TextInputType.number,
                     controller: _endGameScoreController,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
