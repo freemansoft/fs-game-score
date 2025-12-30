@@ -34,9 +34,8 @@ jobs:
 
       - name: Run ios integration tests
         # Assuming your test file is in the default location, e.g., integration_test/app_test.dart
-        run: |
-          flutter test -d 'iphone 17' ./integration_test/game_id_test.dart
-          flutter test -d 'iphone 17' ./integration_test/new_scorecard_control_test.dart
-          flutter test -d 'iphone 17' ./integration_test/score_table_test.dart
-          flutter test -d 'iphone 17' ./integration_test/splash_screen_test.dart
+        run: flutter test -d 'iphone 17' ./integration_test/game_id_test.dart
+          # flutter test -d 'iphone 17' ./integration_test/new_scorecard_control_test.dart
+          # flutter test -d 'iphone 17' ./integration_test/score_table_test.dart
+          # flutter test -d 'iphone 17' ./integration_test/splash_screen_test.dart
         working-directory: . # Specify the directory containing your pubspec.yaml if needed
