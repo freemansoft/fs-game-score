@@ -29,10 +29,6 @@ jobs:
         # While not strictly required for running the test command, this ensures the desktop environment is ready
         run: flutter build windows
 
-      - name: Run integration tests on Windows
+      - name: Run integration tests
         # The 'flutter test integration_test/' command automatically detects and runs tests using the desktop runner
-        run: |
-          flutter test -d windows ./integration_test/game_id_test.dart
-          flutter test -d windows ./integration_test/new_scorecard_control_test.dart
-          flutter test -d windows ./integration_test/score_table_test.dart
-          flutter test -d windows ./integration_test/splash_screen_test.dart
+        run: flutter test -d windows ./integration_test/app_test.dart
