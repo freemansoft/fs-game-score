@@ -14,9 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Load prefs on startup blocking until loading complete if they exist.
 - Player name editor highlights name when modal alert editor is made visible.
 - Moved prefs code to GameRepository and added new game button test
-- Added GitHub action that runs the integration tests on Windows, macOS and iOS.
-  - iOS disabled because they are currently broken.
-  - macOS disabled because need to bypass signing requirement
+- Moved all integration test to single file so can run all with single command in GitHub Actions
+- Added GitHub action that runs the integration tests on Windows, macOS and iOS, Android. See [README.md](README.md) for status
 
 ## [1.7.0] - 2025-12-25
 
