@@ -54,7 +54,7 @@ void main() {
       await tester.dragUntilVisible(
         targetItemFinder,
         dropdownListFinder,
-        const Offset(0, 100.0), // Scroll downwards
+        const Offset(0, 100), // Scroll downwards
       );
       await tester.pumpAndSettle();
       await tester.tap(targetItemFinder);
@@ -144,7 +144,7 @@ void main() {
     await tester.dragUntilVisible(
       targetItemFinder2,
       dropdownListFinder2,
-      const Offset(0, 200.0), // Scroll downwards
+      const Offset(0, 200), // Scroll downwards
     );
     await tester.pumpAndSettle();
     await tester.tap(targetItemFinder2);
