@@ -3,7 +3,7 @@ name: Flutter iOS Integration Tests
 on: [push, pull_request]
 
 jobs:
-  test:
+  integration_test_ios:
     runs-on: macos-latest # Use the macOS runner for macOS builds and tests
 
     steps:
