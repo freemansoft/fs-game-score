@@ -229,6 +229,7 @@ flutter test integration_test/*_test.dart
 Files are located in [github workflows](./.github/workflows)
 
 - iOS Actions may be disable because they fail for reasons yet to be determined.
+- macOS Actions may be disabled because work still needs to be done for signing or disabling the need for signing
 
 ## Android Notes
 

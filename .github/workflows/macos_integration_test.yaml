@@ -1,10 +1,10 @@
-name: Flutter Windows Integration Tests
+name: Flutter macOS Integration Tests
 
 on: [push, pull_request]
 
 jobs:
-  integration_test_windows:
-    runs-on: windows-latest # Specifies the Windows virtual machine runner
+  integration_test_mac:
+    runs-on: macos-latest # Use the macOS runner for macOS builds and tests
 
     steps:
       - name: Checkout repository
@@ -23,16 +23,16 @@ jobs:
 
       - name: Enable Windows desktop support
         # This step is crucial to allow Flutter to run on the Windows VM
-        run: flutter config --enable-windows-desktop
+        run: flutter config --enable-macos-desktop --enable-ios
 
-      - name: Build the Windows desktop application
+      - name: Build the macOS desktop application
         # While not strictly required for running the test command, this ensures the desktop environment is ready
-        run: flutter build windows
+        run: flutter build macos --debug
 
       - name: Run integration tests on Windows
         # The 'flutter test integration_test/' command automatically detects and runs tests using the desktop runner
         run: |
-          flutter test -d windows ./integration_test/game_id_test.dart
-          flutter test -d windows ./integration_test/new_scorecard_control_test.dart
-          flutter test -d windows ./integration_test/score_table_test.dart
-          flutter test -d windows ./integration_test/splash_screen_test.dart
+          flutter test -d macos ./integration_test/game_id_test.dart
+          flutter test -d macos ./integration_test/new_scorecard_control_test.dart
+          flutter test -d macos ./integration_test/score_table_test.dart
+          flutter test -d macos ./integration_test/splash_screen_test.dart
