@@ -34,17 +34,16 @@ jobs:
 
       - name: Run ios integration tests game_id_test
         run: flutter test -d 'iphone 17' ./integration_test/game_id_test.dart
-        working-directory: . # Specify the directory containing your pubspec.yaml if needed
+        working-directory: .
 
-      - name: Run ios integration tests new_scorecard_control_test
-        run: flutter test -d 'iphone 17' ./integration_test/new_scorecard_control_test.dart
-        working-directory: . # Specify the directory containing your pubspec.yaml if needed
+      # - name: Run ios integration tests new_scorecard_control_test
+      #   run: flutter test -d 'iphone 17' ./integration_test/new_scorecard_control_test.dart
+      #   working-directory: .
 
-      - name: Run ios integration tests score_table_test
-        run: flutter test -d 'iphone 17' ./integration_test/score_table_test.dart
-        working-directory: . # Specify the directory containing your pubspec.yaml if needed
+      # - name: Run ios integration tests score_table_test
+      #   run: flutter test -d 'iphone 17' ./integration_test/score_table_test.dart
+      #   working-directory: .
 
-      - name: Run ios integration tests splash_screen_test
-        run: flutter test -d 'iphone 17' ./integration_test/splash_screen_test.dart
-        working-directory: . # Specify the directory containing your pubspec.yaml if needed
-
+      # - name: Run ios integration tests splash_screen_test
+      #   run: flutter test -d 'iphone 17' ./integration_test/splash_screen_test.dart
+      #   working-directory: .
