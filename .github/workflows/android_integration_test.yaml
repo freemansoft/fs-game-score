@@ -27,7 +27,7 @@ jobs:
           api-level: 35 # Specify the Android API level (e.g., 31)
           target: default
           arch: x86_64
-          profile: pixel_7a
+          profile: pixel_7_pro
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
         # The action waits until the emulator is booted before running the next step
