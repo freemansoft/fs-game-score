@@ -14,12 +14,14 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # Or 'beta' or 'master' depending on your needs
+          flutter-version: 3.38.5 # should sync with fvm version
+      - run: flutter --version
 
       - name: Install Flutter dependencies
         run: flutter pub get
 
-      #   - name: Enable macOS desktop support
-      #     run: flutter config --enable-macos-desktop # Enable desktop as a target platform
+      - name: Build macOS application
+        run: flutter build macos --no-codesign
 
       - name: Run macOS integration tests
         # Assuming your test file is in the default location, e.g., integration_test/app_test.dart
