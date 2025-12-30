@@ -17,23 +17,15 @@ jobs:
           flutter-version: 3.38.5 # should sync with fvm version
       - run: flutter --version
 
-      - name: Enable MacOS
-        run: flutter config --enable-macos-desktop
 
       - name: Install Flutter dependencies
         run: flutter pub get
 
-      # - name: Build macOS application
-      #   run: flutter build macos
-
-      # - name: Run macOS integration tests
-      #   # Assuming your test file is in the default location, e.g., integration_test/app_test.dart
-      #   run: flutter test -d macos --dart-define CODE_SIGN_IDENTITY="" --dart-define CODE_SIGNING_REQUIRED=NO --dart-define CODE_SIGNING_ALLOWED=NO ./integration_test/new_scorecard_control_test.dart
-      #   working-directory: . # Specify the directory containing your pubspec.yaml if needed
+      #   Couldn't get the macos integration tests to run correctly in CI because of code signing issues.
 
       # Build the iOS app for the simulator with --no-codesign
-      - name: Build iOS app (for simulator, no codesign)
-        run: flutter build ios --debug --no-codesign --simulator
+      # - name: Build iOS app (for simulator, no codesign)
+      #   run: flutter build ios --debug --no-codesign --simulator
 
       - name: Start iOS simulator
         uses: futureware-tech/simulator-action@v3
@@ -42,5 +34,9 @@ jobs:
 
       - name: Run ios integration tests
         # Assuming your test file is in the default location, e.g., integration_test/app_test.dart
-        run: flutter test -d 'iphone 17' ./integration_test/new_scorecard_control_test.dart
+        run: |
+          flutter test -d 'iphone 17' ./integration_test/game_id_test.dart
+          flutter test -d 'iphone 17' ./integration_test/new_scorecard_control_test.dart
+          flutter test -d 'iphone 17' ./integration_test/score_table_test.dart
+          flutter test -d 'iphone 17' ./integration_test/splash_screen_test.dart
         working-directory: . # Specify the directory containing your pubspec.yaml if needed
