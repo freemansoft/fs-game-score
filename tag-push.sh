@@ -1,6 +1,8 @@
 #!/bin/zsh
 # tag-push.sh
 # Usage: ./tag-push.sh --version <semver> [--commit --push]
+#
+#
 
 set -e
 
@@ -132,4 +134,25 @@ if $PUSH; then
   echo "Committed and pushed changes and tag to remote."
 else
   echo "Changes committed and tagged locally. Use --push to push to remote."
+fi
+
+
+# Sample code inside this block can tell you all the local tags not on remote
+# Can copy and paste the code inside the if block into a terminal
+if false; then
+  for tag in $(git tag -l); do
+    if ! git ls-remote --tags origin "refs/tags/$tag" | grep -q "refs/tags/$tag"; then
+      echo "Would delete: $tag"
+    fi
+  done
+fi
+
+# Sample code inside this block remove all local tags that don't exist on remote
+# Can copy and paste the code inside the if block into a terminal
+if false; then
+  for tag in $(git tag -l); do
+    if ! git ls-remote --tags origin "refs/tags/$tag" | grep -q "refs/tags/$tag"; then
+      git tag -d "$tag"
+    fi
+  done
 fi
