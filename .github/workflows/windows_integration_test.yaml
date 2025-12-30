@@ -32,7 +32,7 @@ jobs:
       - name: Run integration tests on Windows
         # The 'flutter test integration_test/' command automatically detects and runs tests using the desktop runner
         run: |
-          flutter test ./integration_test/game_id_test.dart
-          flutter test ./integration_test/new_scorecard_control_test.dart
-          flutter test ./integration_test/score_table_test.dart
-          flutter test ./integration_test/splash_screen_test.dart
+          flutter test -d 'windows' ./integration_test/game_id_test.dart
+          flutter test -d 'windows' ./integration_test/new_scorecard_control_test.dart
+          flutter test -d 'windows' ./integration_test/score_table_test.dart
+          flutter test -d 'windows' ./integration_test/splash_screen_test.dart
