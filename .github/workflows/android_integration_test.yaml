@@ -21,14 +21,20 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
 
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - name: Run Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35 # Specify the Android API level (e.g., 31)
           target: default
-          arch: arm64-v8a
-          profile: pixel_7_pro
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
+        #   arch: x86_64
+        #   profile: pixel_7_pro
+        #   emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        #   disable-animations: true
         # The action waits until the emulator is booted before running the next step
           script: flutter test integration_test/app_test.dart # Run your specific integration tests
