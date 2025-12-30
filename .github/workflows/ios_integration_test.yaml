@@ -1,4 +1,4 @@
-name: iOS Integration Tests
+name: Flutter iOS Integration Tests
 
 on: [push, pull_request]
 
