@@ -1,0 +1,38 @@
+name: Flutter Windows Integration Tests
+
+on: [push, pull_request]
+
+jobs:
+  integration_test_windows:
+    runs-on: windows-latest # Specifies the Windows virtual machine runner
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable' # Or 'beta' or 'master' depending on your needs
+          flutter-version: 3.38.5 # should sync with fvm version
+          cache: true
+      - run: flutter --version
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Enable Windows desktop support
+        # This step is crucial to allow Flutter to run on the Windows VM
+        run: flutter config --enable-windows-desktop
+
+      - name: Build the Windows desktop application
+        # While not strictly required for running the test command, this ensures the desktop environment is ready
+        run: flutter build windows
+
+      - name: Run integration tests on Windows
+        # The 'flutter test integration_test/' command automatically detects and runs tests using the desktop runner
+        run: |
+          flutter test ./integration_test/game_id_test.dart
+          flutter test ./integration_test/new_scorecard_control_test.dart
+          flutter test ./integration_test/score_table_test.dart
+          flutter test ./integration_test/splash_screen_test.dart

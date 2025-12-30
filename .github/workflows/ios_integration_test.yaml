@@ -1,4 +1,4 @@
-name: macOS Integration Tests
+name: iOS Integration Tests
 
 on: [push, pull_request]
 
@@ -15,8 +15,8 @@ jobs:
         with:
           channel: 'stable' # Or 'beta' or 'master' depending on your needs
           flutter-version: 3.38.5 # should sync with fvm version
+          cache: true
       - run: flutter --version
-
 
       - name: Install Flutter dependencies
         run: flutter pub get
@@ -24,8 +24,8 @@ jobs:
       #   Couldn't get the macos integration tests to run correctly in CI because of code signing issues.
 
       # Build the iOS app for the simulator with --no-codesign
-      # - name: Build iOS app (for simulator, no codesign)
-      #   run: flutter build ios --debug --no-codesign --simulator
+      - name: Build iOS app (for simulator, no codesign)
+        run: flutter build ios --debug --no-codesign --simulator
 
       - name: Start iOS simulator
         uses: futureware-tech/simulator-action@v3
