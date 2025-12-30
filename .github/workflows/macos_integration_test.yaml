@@ -28,5 +28,5 @@ jobs:
 
       - name: Run macOS integration tests
         # Assuming your test file is in the default location, e.g., integration_test/app_test.dart
-        run: flutter test -d macos --dart-define="CI=true" ./integration_test/new_scorecard_control_test.dart
+        run: flutter test -d macos --dart-define CODE_SIGN_IDENTITY="" --dart-define CODE_SIGNING_REQUIRED=NO --dart-define CODE_SIGNING_ALLOWED=NO ./integration_test/new_scorecard_control_test.dart
         working-directory: . # Specify the directory containing your pubspec.yaml if needed
