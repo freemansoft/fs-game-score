@@ -24,6 +24,8 @@ Notes
 - Restarting the same game config does not change the gameId. This is a "feature"
 - Reloading the web app wipes out the current game because state is not stored
 - When debugging with the IDE, the LocalStorage is not persisted across sessions. This is a "feature" of the fact that the web session is on a different port every time it is run.
+- Unable to get macOS integration tests to run as GitHub Actions due to code signing requirement.
+- Unable to get iOS integration tests to run as GitHub Actions. Cause to be determined.
 
 ## Looking to run the working scoring app?
 
@@ -220,6 +222,13 @@ flutter test integration_test/*_test.dart
 4. Android - Yes
 5. iOS - Yes
 6. Web - integration test not supported
+
+### Integration Tests on GitHub Actions
+
+[GitHub actions](https://github.com/freemansoft/fs-game-score/actions) run integration tests on various platforms when repo receives `push` to GitHub.
+Files are located in [github workflows](./.github/workflows)
+
+- iOS Actions may be disable because they fail for reasons yet to be determined.
 
 ## Android Notes
 
