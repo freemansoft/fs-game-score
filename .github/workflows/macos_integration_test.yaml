@@ -1,0 +1,27 @@
+name: macOS Integration Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: macos-latest # Use the macOS runner for macOS builds and tests
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Use the latest checkout action
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable' # Or 'beta' or 'master' depending on your needs
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      #   - name: Enable macOS desktop support
+      #     run: flutter config --enable-macos-desktop # Enable desktop as a target platform
+
+      - name: Run macOS integration tests
+        # Assuming your test file is in the default location, e.g., integration_test/app_test.dart
+        run: flutter test ./integration_test/new_scorecard_control_test.dart -d macos --dart-define="CI=true"
+        working-directory: . # Specify the directory containing your pubspec.yaml if needed
