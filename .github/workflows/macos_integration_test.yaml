@@ -25,9 +25,17 @@ jobs:
         # This step is crucial to allow Flutter to run on the Windows VM
         run: flutter config --enable-macos-desktop --enable-ios
 
-      - name: Build the macOS desktop application
-        # While not strictly required for running the test command, this ensures the desktop environment is ready
-        run: flutter build macos --debug
+      - name: Build macOS app without code signing
+        run: |
+          # Change directory to the macos folder within your project
+          cd macos
+
+          # Run xcodebuild command to build the app and disable code signing
+          xcodebuild build -workspace Runner.xcworkspace -scheme Runner -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      # - name: Build the macOS desktop application
+      #   # While not strictly required for running the test command, this ensures the desktop environment is ready
+      #   run: flutter build macos --debug
 
       - name: Run integration tests on Windows
         # The 'flutter test integration_test/' command automatically detects and runs tests using the desktop runner
