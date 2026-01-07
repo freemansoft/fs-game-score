@@ -49,6 +49,8 @@ Or build your own copy...
 6. Press the green run button
 7. The application will run on an emulator, simulator, macos, windows, web or connected device.
 
+Your machine may require that you replace any `flutter` commands with `fvm flutter` and `dart` with `fvm dart` to use the correct version of Flutter as manged by `fvm`
+
 ## Internationalization
 
 Make sure to gegenerate the dart localization files after making any changes to the `arb` files. The command `flutter gen-l10n` has already been run.
@@ -189,7 +191,7 @@ An `msix` section has already been added to customize the `msi` installer creato
 1. Build the image on a windows machine with `flutter build windows`
 1. Use the `msix` package to create a windows installer
    1. `flutter pub run msix:create`
-   1. `dart run msix:create` this will offer to install a self signed `pfx`
+   1. `dart run msix:create` this will offer to install a self signed `pfx` ceertificate the first time it runs.  Allow this.
 1. Copy the created `msix` file located in `build\windows\x64\runner\Release\fs_score_card.msix` to the target location where it can be installed from.
 
 #### Windows store builds
