@@ -1,5 +1,10 @@
 class Phases {
   Phases(int numPhases) : completedPhases = List.filled(numPhases, null);
+
+  /// Creates a Phases instance from a JSON list
+  Phases.fromJson(List<dynamic> json)
+    : completedPhases = json.map((e) => e as int?).toList();
+
   final List<int?> completedPhases;
 
   void setPhase(int round, int? phase) {
@@ -26,4 +31,7 @@ class Phases {
         .cast<int>()
         .toList();
   }
+
+  /// Converts phases to a JSON-serializable list
+  List<int?> toJson() => completedPhases;
 }

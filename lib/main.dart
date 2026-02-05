@@ -5,6 +5,7 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/app.dart';
 import 'package:fs_score_card/data/game_repository.dart';
+import 'package:fs_score_card/data/players_repository.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 // https://github.com/flutter/flutter/issues/175606#issuecomment-3453392532
@@ -47,6 +48,7 @@ void main() async {
   _installZeroOffsetPointerGuard();
   await _loadVersion();
   await GameRepository().loadGameFromPrefs();
+  await PlayersRepository().loadPlayersFromPrefs();
 
   if (kIsWeb) {
     SemanticsBinding.instance.ensureSemantics();

@@ -13,7 +13,7 @@ class GameNotifier extends Notifier<Game> {
 
   Game stateValue() => state;
 
-  void newGame({
+  Future<void> newGame({
     int? maxRounds,
     int? numPhases,
     int? numPlayers,
@@ -21,7 +21,7 @@ class GameNotifier extends Notifier<Game> {
     String? scoreFilter,
     int? endGameScore,
     String? version,
-  }) {
+  }) async {
     state = Game(
       maxRounds: maxRounds ?? state.maxRounds,
       numPhases: numPhases ?? state.numPhases,
@@ -32,7 +32,7 @@ class GameNotifier extends Notifier<Game> {
       version: version ?? state.version,
       // gameId will be automatically generated as a new UUID
     );
-    unawaited(GameRepository().saveGameToPrefs(state));
+    await GameRepository().saveGameToPrefs(state);
   }
 }
 

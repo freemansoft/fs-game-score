@@ -21,7 +21,7 @@ void main() {
           ..setScore(0, 10)
           ..setScore(1, 15)
           ..setScore(2, 20),
-        phases: Phases(3),
+        phases: Phases(3)..setPhase(0, 100),
       );
 
       player2 = Player.withData(
@@ -29,7 +29,7 @@ void main() {
         scores: Scores(5)
           ..setScore(0, 5)
           ..setScore(3, 25),
-        phases: Phases(3),
+        phases: Phases(3)..setPhase(0, 200),
       );
 
       player3 = Player.withData(
@@ -37,7 +37,7 @@ void main() {
         scores: Scores(5)
           ..setScore(1, 30)
           ..setScore(4, 40),
-        phases: Phases(3),
+        phases: Phases(3)..setPhase(0, 300),
       );
 
       players = Players(
@@ -63,40 +63,42 @@ void main() {
           // Verify all required fields are present
           final firstPlayer = decoded[0] as Map<String, dynamic>;
           expect(firstPlayer.containsKey('name'), isTrue);
+          // totalScores are calculated and exported by not re-imported
           expect(firstPlayer.containsKey('totalScore'), isTrue);
-          expect(firstPlayer.containsKey('roundScores'), isTrue);
+          expect(firstPlayer.containsKey('scores'), isTrue);
+          expect(firstPlayer.containsKey('phases'), isTrue);
         },
       );
 
-      test('should convert null round scores to 0 in JSON', () {
+      test('not scored round null scores are retained in JSON', () {
         final jsonString = players.toJson();
         final decoded = jsonDecode(jsonString) as List;
 
         // Check Alice's scores (rounds 0,1,2 have scores, 3,4 are null)
         final alice = decoded[0] as Map<String, dynamic>;
-        final roundScores = alice['roundScores'] as List;
+        final roundScores = alice['scores'] as List;
         expect(roundScores[0], 10); // round 0
         expect(roundScores[1], 15); // round 1
         expect(roundScores[2], 20); // round 2
-        expect(roundScores[3], 0); // round 3 (null converted to 0)
-        expect(roundScores[4], 0); // round 4 (null converted to 0)
+        expect(roundScores[3], null); // round 3 (null is retained)
+        expect(roundScores[4], null); // round 4 (null is retained)
       });
 
       test('should calculate correct total scores in JSON', () {
         final jsonString = players.toJson();
-        final decoded = jsonDecode(jsonString) as List;
+        final rehydratedPlayers = Players.fromJson(jsonString);
 
         // Alice: 10 + 15 + 20 = 45
-        final alice = decoded[0] as Map<String, dynamic>;
-        expect(alice['totalScore'], 45);
+        final alice = rehydratedPlayers[0];
+        expect(alice.totalScore, 45);
 
         // Bob: 5 + 25 = 30
-        final bob = decoded[1] as Map<String, dynamic>;
-        expect(bob['totalScore'], 30);
+        final bob = rehydratedPlayers[1];
+        expect(bob.totalScore, 30);
 
         // Charlie: 30 + 40 = 70
-        final charlie = decoded[2] as Map<String, dynamic>;
-        expect(charlie['totalScore'], 70);
+        final charlie = rehydratedPlayers[2];
+        expect(charlie.totalScore, 70);
       });
 
       test('should handle empty players list', () {
@@ -237,12 +239,14 @@ void main() {
           expect(int.parse(csvRow[1]), jsonPlayer['totalScore']); // total score
 
           // Check round scores
-          final jsonRoundScores = jsonPlayer['roundScores'] as List;
+          final jsonRoundScores = jsonPlayer['scores'] as List;
           for (int j = 0; j < jsonRoundScores.length; j++) {
-            expect(
-              int.parse(csvRow[j + 2]),
-              jsonRoundScores[j],
-            ); // round scores
+            if (jsonRoundScores[j] != null) {
+              expect(
+                int.parse(csvRow[j + 2]),
+                jsonRoundScores[j],
+              ); // round scores
+            }
           }
         }
       });
@@ -261,7 +265,7 @@ void main() {
 
           expect(map['name'], json['name']);
           expect(map['totalScore'], json['totalScore']);
-          expect(map['roundScores'], json['roundScores']);
+          expect(map['scores'], json['roundScores']);
         }
       });
     });

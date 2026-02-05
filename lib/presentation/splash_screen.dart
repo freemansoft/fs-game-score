@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/main.dart';
 import 'package:fs_score_card/model/game.dart';
@@ -403,8 +404,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ElevatedButton(
               key: SplashScreen.continueButtonKey,
               onPressed: () async {
+                // new games from the splash screen clear previous game players
+                await PlayersRepository().clearPrefsPlayers();
                 // Create a new game with fresh gameId and selected configuration
-                ref
+                await ref
                     .read(gameProvider.notifier)
                     .newGame(
                       maxRounds: thisGame.maxRounds,

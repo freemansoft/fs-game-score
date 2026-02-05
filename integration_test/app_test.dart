@@ -14,15 +14,11 @@ import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/router/app_router.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    // Clear SharedPreferences for 'game_state' before each test
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('game_state');
     // Reset the app router to initial state before each test
     appRouter.goNamed('splash');
   });
@@ -228,7 +224,7 @@ void main() {
 
     // this is a hack - should have used the New Game button
     // Create a new game
-    gameNotifier.newGame();
+    await gameNotifier.newGame();
     await tester.pumpAndSettle();
 
     // Get the second gameId
@@ -238,7 +234,7 @@ void main() {
     expect(secondGameId, isNot(equals(firstGameId)));
 
     // Create another new game
-    gameNotifier.newGame();
+    await gameNotifier.newGame();
     await tester.pumpAndSettle();
 
     // Get the third gameId
@@ -423,13 +419,14 @@ void main() {
     final dropdownListFinder2 = find.byType(ListView);
     final targetItemFinder2 = find.text('3');
     // have to drag to a larger number because we are lower than the target
+    // targetItemFinder2.first is a hack that assumes the one we want is on top
     await tester.dragUntilVisible(
-      targetItemFinder2,
+      targetItemFinder2.first,
       dropdownListFinder2,
       const Offset(0, 200), // Scroll downwards
     );
     await tester.pumpAndSettle();
-    await tester.tap(targetItemFinder2);
+    await tester.tap(targetItemFinder2.first);
     await tester.pumpAndSettle();
 
     final continueButton = find.byKey(SplashScreen.continueButtonKey);
@@ -762,12 +759,16 @@ void main() {
         tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
       );
       await tester.pumpAndSettle();
+      expect(find.byType(PlayerGameModal), findsNothing);
 
       // Verify total score is 100
       expect(
         (tester.widget(find.byKey(playerTotalScoreP0Key)) as Text).data,
         '100',
       );
+
+      // wait for state to update - not sure how to do this deterministically
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       // Verify player name and total score text are bold
       final nameText = tester.widget<Text>(find.byKey(playerNameP0Key));

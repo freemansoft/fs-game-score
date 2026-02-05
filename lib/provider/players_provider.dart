@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
@@ -8,9 +11,27 @@ final playersProvider = NotifierProvider<PlayersNotifier, Players>(
 );
 
 class PlayersNotifier extends Notifier<Players> {
+  Timer? _saveTimer;
+
   @override
   Players build() {
     final game = ref.watch(gameProvider);
+
+    // Check if we have loaded players from repository
+    final loadedPlayers = PlayersRepository().loadedPrefsPlayers;
+
+    // If loaded players exist and match game configuration, use them
+    if (loadedPlayers != null &&
+        loadedPlayers.players.isNotEmpty &&
+        loadedPlayers.players.length == game.numPlayers) {
+      final firstPlayer = loadedPlayers.players[0];
+      if (firstPlayer.scores.roundScores.length == game.maxRounds &&
+          firstPlayer.phases.completedPhases.length == game.numPhases) {
+        return loadedPlayers;
+      }
+    }
+
+    // Otherwise create new players based on game configuration
     return Players(
       numPlayers: game.numPlayers,
       maxRounds: game.maxRounds,
@@ -18,16 +39,26 @@ class PlayersNotifier extends Notifier<Players> {
     );
   }
 
+  /// Schedule a save to repository after 5 seconds of idle time
+  void _scheduleSave() {
+    _saveTimer?.cancel();
+    _saveTimer = Timer(const Duration(seconds: 5), () {
+      unawaited(PlayersRepository().savePlayersToPrefs(state));
+    });
+  }
+
   void updateScore(int playerIdx, int round, int? score) {
     final player = state.players[playerIdx];
     player.scores.setScore(round, score);
     state = state.withPlayer(player, playerIdx);
+    _scheduleSave();
   }
 
   void updatePhase(int playerIdx, int round, int? phase) {
     final player = state.players[playerIdx];
     player.phases.setPhase(round, phase);
     state = state.withPlayer(player, playerIdx);
+    _scheduleSave();
   }
 
   void updatePlayerName(int playerIdx, String name) {
@@ -39,6 +70,7 @@ class PlayersNotifier extends Notifier<Players> {
       roundStates: player.roundStates,
     );
     state = state.withPlayer(updatedPlayer, playerIdx);
+    _scheduleSave();
   }
 
   // used when a new game is started usually via a modal dialog
@@ -66,6 +98,7 @@ class PlayersNotifier extends Notifier<Players> {
       numPhases: numPhases,
       initialPlayers: newPlayers,
     );
+    _scheduleSave();
   }
 
   void toggleRoundEnabled({required int round, required bool enabled}) {
@@ -76,5 +109,6 @@ class PlayersNotifier extends Notifier<Players> {
       newState = newState.withPlayer(player, i);
     }
     state = newState;
+    _scheduleSave();
   }
 }

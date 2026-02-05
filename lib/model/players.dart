@@ -18,6 +18,22 @@ class Players {
                numPhases: numPhases,
              ),
            );
+
+  /// Creates a Players instance from a JSON string
+  /// The JSON should be an array of player objects
+  Players.fromJson(String jsonString)
+    : players = _parsePlayersFromJson(jsonString);
+
+  static List<Player> _parsePlayersFromJson(String jsonString) {
+    if (jsonString.isEmpty) {
+      return [];
+    }
+    final List<dynamic> jsonList = jsonDecode(jsonString) as List<dynamic>;
+    return jsonList
+        .map((json) => Player.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
   Players withPlayer(Player player, int index) {
     final newPlayers = List<Player>.from(players);
     newPlayers[index] = player;
@@ -41,10 +57,19 @@ class Players {
 
   // Optionally, implement iterator and other List methods as needed
 
-  /// Converts player data to JSON format
+  /// Converts player data to JSON format for persistence
+  /// Returns a JSON string containing full player state including scores, phases, and round states
+  String toJson() {
+    final List<Map<String, dynamic>> playerData = players
+        .map((player) => player.toJson())
+        .toList();
+    return jsonEncode(playerData);
+  }
+
+  /// Converts player data to JSON format for export
   /// Returns a JSON string containing player names, total scores, and round scores
   /// Empty round scores are converted to 0
-  String toJson() {
+  String toJsonExport() {
     final List<Map<String, dynamic>> playerData = [];
 
     for (final player in players) {

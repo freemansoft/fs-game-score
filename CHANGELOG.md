@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-02-05
+
+### Added
+
+- Load previous game on startup if it is in Stored Preferences and jump immediately to the game. This supports accidental web reloads and mobile apps that are suspended and resumed suspended/rehydrated
+- Save the game state to disk with a 5 second delay to prevent excessive writes.
+
 ## [1.8.0] - 2025-12-28
 
 ### Added
@@ -21,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added 1.7.0 +11
 
-- Landscape SplashScreen layout changed to better support wide screens.  Two columns are now the center two of 4 columns.
+- Landscape SplashScreen layout changed to better support wide screens. Two columns are now the center two of 4 columns.
 - Added I10n Internationalization / Localization English first pass
 - Added I10n Internalionalization / Localization Spanish first pass
 - iPad iOS 26.1 fix broke integration tests because it ignored 0,0 offset taps.
@@ -41,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Migrated to `fvm` for flutter version management
 - Replace hard coded font size with ThemeData
 - Remove classes orphaned by AI and no longer referenced.
-- Added new property for game finished.  Players who have finished have their names bolded in the score sheet.
+- Added new property for game finished. Players who have finished have their names bolded in the score sheet.
 - Tap error on new game buttons in app bar on iPad only introduced with iOS 26.1 <https://github.com/flutter/flutter/issues/175606#issuecomment-3453392532>
 
 ## [1.5.0] - 2025-10-21

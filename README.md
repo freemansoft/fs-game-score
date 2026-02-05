@@ -1,6 +1,6 @@
 # fs_score_card
 
-The application Implements a scorecard for an arbitrary number of players and game _rounds_.  It has been tested on Android, IOS, Chrome, macOS, and Windows 11.
+The application Implements a scorecard for an arbitrary number of players and game _rounds_. It has been tested on Android, IOS, Chrome, macOS, and Windows 11.
 Two scorecard types are supported
 
 1. Basic scorecard with individual round scores and player total scores
@@ -15,7 +15,7 @@ Notes
 
 1. Player's names can be edited by clicking on the name cell in the scoring table. The name can be changed in the modal editing panel that appears.
 2. Round scores can be edited by clicking on a score cell in the scoring table. The round score can be changed in the modal editing panel that ppears.
-    1. The aggregated player scores will be totaled under the player's name.
+   1. The aggregated player scores will be totaled under the player's name.
 3. The "New Game" iconin the app bar. will clear the board scores and optionally the player names for times you want to change the order
 4. The "Home" or "Change Score Card Type" icon in the app bar will let you return to the start screen that lets you change the number of players and the data entry types (score & phase)
 
@@ -135,10 +135,10 @@ MacOS builds are separate from iOS builds and must be uploaded to the store sepa
 
 1. `flutter build macos --release` to build the project and copy the `pubspec.yaml` into the xcode macOS files
 2. Open the `macOS` directory in XCode. This opens the MacOS target of the Flutter project.
-    1. XCode `Product > Archive` it will build an archive
-    2. A new XCode window will pop up
-    3. XCode `Validate App` --> `Validate`
-    4. XCode `Distribute App` --> `App Store Connect`
+   1. XCode `Product > Archive` it will build an archive
+   2. A new XCode window will pop up
+   3. XCode `Validate App` --> `Validate`
+   4. XCode `Distribute App` --> `App Store Connect`
 
 Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`. The version number is set in `pubspec.yaml`.
 
@@ -260,11 +260,13 @@ dart run flutter_launcher_icons
 
 ## Creating a release tag
 
+`tag-push.sh` auto generates the <build_id> portion of the version number from the GitHub MAIN branch commit count
+
 - Create a tag, update the pubspec.yaml update the CHANGELOG to add the new release
-  - `bash tag-push.sh --version <major.minor.patch> --build-id <build-number> --force`
+  - `bash tag-push.sh --version <major.minor.patch> --force`
 - Edit the CHANGELOG.md updating the new section to include the changes you want
 - Commit the changelog and the pubspec.yaml and push the tags, changelog and pubspec.yaml to the remote server
-  - `bash tag-push.sh --version <major.minor.patch> --build-id <build-number> --force --push`
+  - `bash tag-push.sh --version <major.minor.patch> --force --push`
 
 ## Tag management hints
 
@@ -280,18 +282,18 @@ In case you need to manually update release tags
 
 ### Cursor Extensions
 
-*. Dart
-*. Flutter
-*. mardownlint
-*. Prettier (legacy) - Code formatter
+_. Dart
+_. Flutter
+_. mardownlint
+_. Prettier (legacy) - Code formatter
 
 ### VS Code Extensions
 
-*. AI Tookit for Visual Studio Code
-*. Dart
-*. Flutter
-*. Flutter coverage
-*. mardownlint
-*. Markdown All in One
-*. Makdown Preview Mermaid Support
-*. Prettier
+_. AI Tookit for Visual Studio Code
+_. Dart
+_. Flutter
+_. Flutter coverage
+_. mardownlint
+_. Markdown All in One
+_. Makdown Preview Mermaid Support
+_. Prettier
