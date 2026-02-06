@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fs_score_card/model/player.dart';
 
+/// The collection of players in a game.
 class Players {
   Players({
     required int numPlayers,
@@ -46,7 +47,9 @@ class Players {
     );
   }
 
+  /// The only actual state for this class is the list of players.
   final List<Player> players;
+
   bool allPlayersEnabledForRound(int round) {
     return players.every((p) => p.roundStates.isEnabled(round));
   }

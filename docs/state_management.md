@@ -8,7 +8,17 @@ The applicaton also saves the current game state as the game is played. This is 
 
 The new game function on the splash screen clears out any previous game state whenever it starts a new game
 
-## Overview
+## Data Model
+
+A game is represented by the `Game` class that contains a game `id` and a game `configuration` implemented by the `GameConfiguration` class. The `GameConfiguration` contains the number of players, the number of rounds, the number of phases, the enable phases flag, the score filter, and the version. The `Game` also contains a unique game id for each game played
+
+The players and their scores in a game are represented by the `Players` class that contains a list of `Player` objects.
+
+Each player is represented by a `Player` object that contains their `name`, and per round information like individual round `scores` as a `Scores` object, `phases` phase status as a `Phases` object and the `roundStates` as a `RoundStates` object.
+
+The `RoundState` represents any per round like round locks that tell the UI to block input editing for that round.
+
+## State Management
 
 This application uses **Riverpod 3** as its state management solution. Riverpod was chosen for its excellent integration with Flutter, compile-time safety, and powerul reactive programming capabilities. The architecture follows Riverpod 3's modern patterns using `Notifier` and `NotifierProvider` for state management.
 
