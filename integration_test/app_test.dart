@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
+import 'package:fs_score_card/data/game_repository.dart';
+import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/player_game_cell.dart';
@@ -21,6 +23,8 @@ void main() {
   setUp(() async {
     // Reset the app router to initial state before each test
     appRouter.goNamed('splash');
+    await GameRepository().clearGameFromPrefs();
+    await PlayersRepository().clearPlayersFromPrefs();
   });
 
   // ========== Game ID Tests ==========

@@ -48,4 +48,10 @@ class PlayersRepository {
     // save ourselves an extra load cycle
     loadedPrefsPlayers = players;
   }
+
+  Future<void> clearPlayersFromPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_playersPrefsKey);
+    loadedPrefsPlayers = null;
+  }
 }

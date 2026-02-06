@@ -51,4 +51,10 @@ class GameRepository {
     // save ourselves an extra load cycle
     loadedPrefsGame = aGame;
   }
+
+  Future<void> clearGameFromPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_gamePrefsKey);
+    loadedPrefsGame = null;
+  }
 }
