@@ -416,12 +416,16 @@ void main() {
     );
     await tester.tap(roundsDropdown);
     await tester.pumpAndSettle();
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+
     final dropdownListFinder2 = find.byType(ListView);
     final targetItemFinder2 = find.text('3');
+
     // have to drag to a larger number because we are lower than the target
     // targetItemFinder2.first is a hack that assumes the one we want is on top
     await tester.dragUntilVisible(
-      targetItemFinder2.first,
+      targetItemFinder2,
       dropdownListFinder2,
       const Offset(0, 200), // Scroll downwards
     );
@@ -768,7 +772,7 @@ void main() {
       );
 
       // wait for state to update - not sure how to do this deterministically
-      await Future<void>.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 50));
 
       // Verify player name and total score text are bold
       final nameText = tester.widget<Text>(find.byKey(playerNameP0Key));
