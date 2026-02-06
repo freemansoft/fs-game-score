@@ -426,7 +426,7 @@ void main() {
       const Offset(0, 200), // Scroll downwards
     );
     await tester.pumpAndSettle();
-    await tester.tap(targetItemFinder2.first);
+    await tester.tap(targetItemFinder2);
     await tester.pumpAndSettle();
 
     final continueButton = find.byKey(SplashScreen.continueButtonKey);

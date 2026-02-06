@@ -45,6 +45,11 @@ class PlayersNotifier extends Notifier<Players> {
     _saveTimer = Timer(const Duration(seconds: 5), () {
       unawaited(PlayersRepository().savePlayersToPrefs(state));
     });
+
+    /// Cancel any pending save timer on dispose
+    ref.onDispose(() {
+      _saveTimer?.cancel();
+    });
   }
 
   void updateScore(int playerIdx, int round, int? score) {
