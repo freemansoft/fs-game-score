@@ -2,6 +2,7 @@ import 'package:fs_score_card/model/phases.dart';
 import 'package:fs_score_card/model/round_states.dart';
 import 'package:fs_score_card/model/scores.dart';
 
+/// A Player in a game
 class Player {
   Player({required this.name, required int maxRounds, required int numPhases})
     : scores = Scores(maxRounds),

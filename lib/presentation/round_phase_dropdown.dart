@@ -95,7 +95,7 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
         itemBuilder: (context) => [
           // We have to use a -1 for the None value because onSelected is only called if there is a value
           PopupMenuItem<int?>(value: -1, child: Text(l10n.noPhase)),
-          ...List.generate(game.numPhases, (i) {
+          ...List.generate(game.configuration.numPhases, (i) {
             final phaseNum = i + 1;
             return CheckedPopupMenuItem<int?>(
               value: phaseNum,

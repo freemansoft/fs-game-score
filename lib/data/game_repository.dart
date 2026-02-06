@@ -25,13 +25,15 @@ class GameRepository {
       try {
         final gameFromPrefs = Game.fromJson(gameJson);
         loadedPrefsGame = Game(
-          enablePhases: gameFromPrefs.enablePhases,
-          endGameScore: gameFromPrefs.endGameScore,
-          maxRounds: gameFromPrefs.maxRounds,
-          numPhases: gameFromPrefs.numPhases,
-          numPlayers: gameFromPrefs.numPlayers,
-          scoreFilter: gameFromPrefs.scoreFilter,
-          version: gameFromPrefs.version,
+          configuration: GameConfiguration(
+            enablePhases: gameFromPrefs.configuration.enablePhases,
+            endGameScore: gameFromPrefs.configuration.endGameScore,
+            maxRounds: gameFromPrefs.configuration.maxRounds,
+            numPhases: gameFromPrefs.configuration.numPhases,
+            numPlayers: gameFromPrefs.configuration.numPlayers,
+            scoreFilter: gameFromPrefs.configuration.scoreFilter,
+            version: gameFromPrefs.configuration.version,
+          ),
         );
         // We don't know what all the errors could be across platforms
         // ignore: avoid_catches_without_on_clauses

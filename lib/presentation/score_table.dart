@@ -36,7 +36,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
   Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
     final game = ref.watch(gameProvider);
-    final minWidth = 100 + game.maxRounds * 100;
+    final minWidth = 100 + game.configuration.maxRounds * 100;
 
     return Semantics(
       label: 'Score Table',
@@ -57,6 +57,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           // ignore: avoid_redundant_argument_values
           width: 1,
         ),
+
         columns: [
           DataColumn2(
             label: Text(
@@ -67,7 +68,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
             size: ColumnSize.L,
             fixedWidth: 80,
           ),
-          ...List.generate(game.maxRounds, (round) {
+          ...List.generate(game.configuration.maxRounds, (round) {
             // Check if all players have this round enabled
             final allEnabled = players.allPlayersEnabledForRound(round);
             return DataColumn2(
@@ -125,7 +126,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   playerIdx: playerIdx,
                   name: player.name,
                   totalScore: player.totalScore,
-                  endGameScore: game.endGameScore,
+                  endGameScore: game.configuration.endGameScore,
                   onTap: () {
                     PlayerGameModal.show(
                       context,
@@ -138,20 +139,20 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                       },
                       totalScore: player.totalScore,
                       phases: player.phases,
-                      enablePhases: game.enablePhases,
-                      maxRounds: game.maxRounds,
+                      enablePhases: game.configuration.enablePhases,
+                      maxRounds: game.configuration.maxRounds,
                     );
                   },
                 ),
               ),
-              ...List<DataCell>.generate(game.maxRounds, (round) {
+              ...List<DataCell>.generate(game.configuration.maxRounds, (round) {
                 return DataCell(
                   PlayerRoundCell(
                     playerIdx: playerIdx,
                     round: round,
                     score: player.scores.getScore(round),
                     enabled: player.roundStates.isEnabled(round),
-                    enablePhases: game.enablePhases,
+                    enablePhases: game.configuration.enablePhases,
                     selectedPhase: player.phases.getPhase(round),
                     completedPhases: player.phases.completedPhasesList(),
                     onPhaseChanged: (val) {
@@ -164,7 +165,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                           .read(playersProvider.notifier)
                           .updateScore(playerIdx, round, parsed);
                     },
-                    scoreFilter: game.scoreFilter,
+                    scoreFilter: game.configuration.scoreFilter,
                   ),
                 );
               }),

@@ -23,19 +23,21 @@ class PlayersNotifier extends Notifier<Players> {
     // If loaded players exist and match game configuration, use them
     if (loadedPlayers != null &&
         loadedPlayers.players.isNotEmpty &&
-        loadedPlayers.players.length == game.numPlayers) {
+        loadedPlayers.players.length == game.configuration.numPlayers) {
       final firstPlayer = loadedPlayers.players[0];
-      if (firstPlayer.scores.roundScores.length == game.maxRounds &&
-          firstPlayer.phases.completedPhases.length == game.numPhases) {
+      if (firstPlayer.scores.roundScores.length ==
+              game.configuration.maxRounds &&
+          firstPlayer.phases.completedPhases.length ==
+              game.configuration.numPhases) {
         return loadedPlayers;
       }
     }
 
     // Otherwise create new players based on game configuration
     return Players(
-      numPlayers: game.numPlayers,
-      maxRounds: game.maxRounds,
-      numPhases: game.numPhases,
+      numPlayers: game.configuration.numPlayers,
+      maxRounds: game.configuration.maxRounds,
+      numPhases: game.configuration.numPhases,
     );
   }
 

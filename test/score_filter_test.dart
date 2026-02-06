@@ -5,30 +5,46 @@ void main() {
   group('Game Score Filter Tests', () {
     test('should create game with default empty score filter', () {
       final game = Game();
-      expect(game.scoreFilter, equals(''));
+      expect(game.configuration.scoreFilter, equals(''));
     });
 
     test('should create game with custom score filter', () {
-      final game = Game(scoreFilter: r'^[0-9]*[05]$');
-      expect(game.scoreFilter, equals(r'^[0-9]*[05]$'));
+      final game = Game(
+        configuration: GameConfiguration(scoreFilter: r'^[0-9]*[05]$'),
+      );
+      expect(game.configuration.scoreFilter, equals(r'^[0-9]*[05]$'));
     });
 
     test('should serialize and deserialize score filter correctly', () {
-      final originalGame = Game(scoreFilter: r'^[0-9]*[05]$');
+      final originalGame = Game(
+        configuration: GameConfiguration(scoreFilter: r'^[0-9]*[05]$'),
+      );
       final jsonString = originalGame.toJson();
       final deserializedGame = Game.fromJson(jsonString);
 
-      expect(deserializedGame.scoreFilter, equals(originalGame.scoreFilter));
+      expect(
+        deserializedGame.configuration.scoreFilter,
+        equals(originalGame.configuration.scoreFilter),
+      );
     });
 
     test('should copy game with new score filter', () {
       // be explicit about the test parameters
       // ignore: avoid_redundant_argument_values
-      final originalGame = Game(scoreFilter: '');
-      final newGame = originalGame.copyWith(scoreFilter: r'^[0-9]*[05]$');
+      final originalGame = Game(
+        configuration: GameConfiguration(scoreFilter: ''),
+      );
+      final newGame = originalGame.copyWith(
+        configuration: originalGame.configuration.copyWith(
+          scoreFilter: r'^[0-9]*[05]$',
+        ),
+      );
 
-      expect(newGame.scoreFilter, equals(r'^[0-9]*[05]$'));
-      expect(originalGame.scoreFilter, equals('')); // Original unchanged
+      expect(newGame.configuration.scoreFilter, equals(r'^[0-9]*[05]$'));
+      expect(
+        originalGame.configuration.scoreFilter,
+        equals(''),
+      ); // Original unchanged
     });
   });
 

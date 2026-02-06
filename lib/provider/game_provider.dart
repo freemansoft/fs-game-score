@@ -23,13 +23,15 @@ class GameNotifier extends Notifier<Game> {
     String? version,
   }) async {
     state = Game(
-      maxRounds: maxRounds ?? state.maxRounds,
-      numPhases: numPhases ?? state.numPhases,
-      numPlayers: numPlayers ?? state.numPlayers,
-      enablePhases: enablePhases ?? state.enablePhases,
-      scoreFilter: scoreFilter ?? state.scoreFilter,
-      endGameScore: endGameScore ?? state.endGameScore,
-      version: version ?? state.version,
+      configuration: GameConfiguration(
+        maxRounds: maxRounds ?? state.configuration.maxRounds,
+        numPhases: numPhases ?? state.configuration.numPhases,
+        numPlayers: numPlayers ?? state.configuration.numPlayers,
+        enablePhases: enablePhases ?? state.configuration.enablePhases,
+        scoreFilter: scoreFilter ?? state.configuration.scoreFilter,
+        endGameScore: endGameScore ?? state.configuration.endGameScore,
+        version: version ?? state.configuration.version,
+      ),
       // gameId will be automatically generated as a new UUID
     );
     await GameRepository().saveGameToPrefs(state);

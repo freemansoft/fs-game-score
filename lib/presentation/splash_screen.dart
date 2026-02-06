@@ -53,9 +53,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     _endGameScoreController = TextEditingController();
     thisGame = ref.read(gameProvider);
-    _endGameScoreEnabled = thisGame.endGameScore > 0;
-    _endGameScoreController.text = thisGame.endGameScore > 0
-        ? thisGame.endGameScore.toString()
+    _endGameScoreEnabled = thisGame.configuration.endGameScore > 0;
+    _endGameScoreController.text = thisGame.configuration.endGameScore > 0
+        ? thisGame.configuration.endGameScore.toString()
         : '';
   }
 
@@ -80,7 +80,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 16),
         DropdownButton<int>(
           key: SplashScreen.numPlayersDropdownKey,
-          value: thisGame.numPlayers,
+          value: thisGame.configuration.numPlayers,
           items: [
             for (var i = 2; i <= 8; i++)
               DropdownMenuItem(value: i, child: Text(i.toString())),
@@ -88,7 +88,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           onChanged: (value) {
             if (value != null) {
               setState(() {
-                thisGame = thisGame.copyWith(numPlayers: value);
+                thisGame = thisGame.copyWith(
+                  configuration: thisGame.configuration.copyWith(
+                    numPlayers: value,
+                  ),
+                );
               });
             }
           },
@@ -112,7 +116,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 12),
         DropdownButton<int>(
           key: SplashScreen.maxRoundsDropdownKey,
-          value: thisGame.maxRounds,
+          value: thisGame.configuration.maxRounds,
           items: [
             for (var i = 1; i <= 20; i++)
               DropdownMenuItem(value: i, child: Text(i.toString())),
@@ -120,7 +124,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           onChanged: (value) {
             if (value != null) {
               setState(() {
-                thisGame = thisGame.copyWith(maxRounds: value);
+                thisGame = thisGame.copyWith(
+                  configuration: thisGame.configuration.copyWith(
+                    maxRounds: value,
+                  ),
+                );
               });
             }
           },
@@ -144,7 +152,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 12),
         DropdownButton<String>(
           key: SplashScreen.sheetStyleDropdownKey,
-          value: thisGame.enablePhases ? _phasesSheet : _basicSheet,
+          value: thisGame.configuration.enablePhases
+              ? _phasesSheet
+              : _basicSheet,
           items: [
             DropdownMenuItem(
               value: _basicSheet,
@@ -159,7 +169,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             if (value != null) {
               setState(() {
                 thisGame = thisGame.copyWith(
-                  enablePhases: value == _phasesSheet,
+                  configuration: thisGame.configuration.copyWith(
+                    enablePhases: value == _phasesSheet,
+                  ),
                 );
               });
             }
@@ -184,7 +196,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 12),
         DropdownButton<String>(
           key: SplashScreen.scoreFilterDropdownKey,
-          value: thisGame.scoreFilter,
+          value: thisGame.configuration.scoreFilter,
           items: [
             DropdownMenuItem(value: '', child: Text(l10n.anyScore)),
             DropdownMenuItem(
@@ -195,7 +207,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           onChanged: (value) {
             if (value != null) {
               setState(() {
-                thisGame = thisGame.copyWith(scoreFilter: value);
+                thisGame = thisGame.copyWith(
+                  configuration: thisGame.configuration.copyWith(
+                    scoreFilter: value,
+                  ),
+                );
               });
             }
           },
@@ -228,7 +244,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     setState(() {
                       _endGameScoreEnabled = value ?? false;
                       if (!_endGameScoreEnabled) {
-                        thisGame = thisGame.copyWith(endGameScore: 0);
+                        thisGame = thisGame.copyWith(
+                          configuration: thisGame.configuration.copyWith(
+                            endGameScore: 0,
+                          ),
+                        );
                         _endGameScoreController.clear();
                       }
                     });
@@ -245,7 +265,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     onChanged: (value) {
                       final parsed = int.tryParse(value);
                       setState(() {
-                        thisGame = thisGame.copyWith(endGameScore: parsed ?? 0);
+                        thisGame = thisGame.copyWith(
+                          configuration: thisGame.configuration.copyWith(
+                            endGameScore: parsed ?? 0,
+                          ),
+                        );
                       });
                     },
                     decoration: InputDecoration(
@@ -410,11 +434,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 await ref
                     .read(gameProvider.notifier)
                     .newGame(
-                      maxRounds: thisGame.maxRounds,
-                      numPlayers: thisGame.numPlayers,
-                      enablePhases: thisGame.enablePhases,
-                      scoreFilter: thisGame.scoreFilter,
-                      endGameScore: thisGame.endGameScore,
+                      maxRounds: thisGame.configuration.maxRounds,
+                      numPlayers: thisGame.configuration.numPlayers,
+                      enablePhases: thisGame.configuration.enablePhases,
+                      scoreFilter: thisGame.configuration.scoreFilter,
+                      endGameScore: thisGame.configuration.endGameScore,
                       version: appVersion,
                     );
 

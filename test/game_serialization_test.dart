@@ -4,19 +4,21 @@ import 'package:fs_score_card/model/game.dart';
 Game defaultGame() => Game();
 
 Game gameWithValues() => Game(
-  maxRounds: 20,
-  numPhases: 12,
-  numPlayers: 4,
-  // Being specific about the values here so the test work if defaults change
-  // ignore: avoid_redundant_argument_values
-  enablePhases: false,
-  // Being specific about the values here so the test work if defaults change
-  // ignore: avoid_redundant_argument_values
-  scoreFilter: '',
-  // Being specific about the values here so the test work if defaults change
-  // ignore: avoid_redundant_argument_values
-  endGameScore: 0,
-  version: '1.2.3',
+  configuration: GameConfiguration(
+    maxRounds: 20,
+    numPhases: 12,
+    numPlayers: 4,
+    // Being specific about the values here so the test work if defaults change
+    // ignore: avoid_redundant_argument_values
+    enablePhases: false,
+    // Being specific about the values here so the test work if defaults change
+    // ignore: avoid_redundant_argument_values
+    scoreFilter: '',
+    // Being specific about the values here so the test work if defaults change
+    // ignore: avoid_redundant_argument_values
+    endGameScore: 0,
+    version: '1.2.3',
+  ),
 );
 
 void main() {
@@ -24,22 +26,28 @@ void main() {
     final game = defaultGame();
     final json = game.toJson();
     final fromJson = Game.fromJson(json);
-    expect(fromJson.maxRounds, game.maxRounds);
-    expect(fromJson.numPhases, game.numPhases);
-    expect(fromJson.numPlayers, game.numPlayers);
-    expect(fromJson.enablePhases, game.enablePhases);
-    expect(fromJson.version, game.version);
+    expect(fromJson.configuration.maxRounds, game.configuration.maxRounds);
+    expect(fromJson.configuration.numPhases, game.configuration.numPhases);
+    expect(fromJson.configuration.numPlayers, game.configuration.numPlayers);
+    expect(
+      fromJson.configuration.enablePhases,
+      game.configuration.enablePhases,
+    );
+    expect(fromJson.configuration.version, game.configuration.version);
   });
 
   test('Game serializes to JSON and back (custom values)', () {
     final game = gameWithValues();
     final json = game.toJson();
     final fromJson = Game.fromJson(json);
-    expect(fromJson.maxRounds, game.maxRounds);
-    expect(fromJson.numPhases, game.numPhases);
-    expect(fromJson.numPlayers, game.numPlayers);
-    expect(fromJson.enablePhases, game.enablePhases);
-    expect(fromJson.version, game.version);
+    expect(fromJson.configuration.maxRounds, game.configuration.maxRounds);
+    expect(fromJson.configuration.numPhases, game.configuration.numPhases);
+    expect(fromJson.configuration.numPlayers, game.configuration.numPlayers);
+    expect(
+      fromJson.configuration.enablePhases,
+      game.configuration.enablePhases,
+    );
+    expect(fromJson.configuration.version, game.configuration.version);
   });
 
   test('New Game instances have unique gameIds', () {
@@ -57,14 +65,21 @@ void main() {
   });
 
   test('copyWith preserves original gameId', () {
-    final originalGame = Game(maxRounds: 10);
+    final originalGame = Game(
+      configuration: GameConfiguration(maxRounds: 10),
+    );
     final originalGameId = originalGame.gameId;
 
-    final copiedGame = originalGame.copyWith(maxRounds: 20);
+    final copiedGame = originalGame.copyWith(
+      configuration: originalGame.configuration.copyWith(maxRounds: 20),
+    );
 
     expect(copiedGame.gameId, equals(originalGameId));
-    expect(copiedGame.maxRounds, equals(20));
-    expect(copiedGame.numPhases, equals(originalGame.numPhases));
+    expect(copiedGame.configuration.maxRounds, equals(20));
+    expect(
+      copiedGame.configuration.numPhases,
+      equals(originalGame.configuration.numPhases),
+    );
   });
 
   test('toJson does not include gameId', () {
@@ -82,15 +97,23 @@ void main() {
   });
 
   test('fromJson creates new gameId (different from original)', () {
-    final originalGame = Game(maxRounds: 15, numPlayers: 6);
+    final originalGame = Game(
+      configuration: GameConfiguration(maxRounds: 15, numPlayers: 6),
+    );
     final originalGameId = originalGame.gameId;
 
     final json = originalGame.toJson();
     final deserializedGame = Game.fromJson(json);
 
     expect(deserializedGame.gameId, isNot(equals(originalGameId)));
-    expect(deserializedGame.maxRounds, equals(originalGame.maxRounds));
-    expect(deserializedGame.numPlayers, equals(originalGame.numPlayers));
+    expect(
+      deserializedGame.configuration.maxRounds,
+      equals(originalGame.configuration.maxRounds),
+    );
+    expect(
+      deserializedGame.configuration.numPlayers,
+      equals(originalGame.configuration.numPlayers),
+    );
     expect(deserializedGame.gameId, isNotEmpty);
   });
 
