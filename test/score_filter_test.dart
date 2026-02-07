@@ -29,9 +29,9 @@ void main() {
     });
 
     test('should copy game with new score filter', () {
-      // be explicit about the test parameters
-      // ignore: avoid_redundant_argument_values
       final originalGame = Game(
+        // be explicit about the test parameters
+        // ignore: avoid_redundant_argument_values
         configuration: GameConfiguration(scoreFilter: ''),
       );
       final newGame = originalGame.copyWith(

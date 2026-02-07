@@ -2,6 +2,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/model/game.dart';
+import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/presentation/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_game_modal.dart';
 import 'package:fs_score_card/presentation/player_round_cell.dart';
@@ -127,22 +129,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   name: player.name,
                   totalScore: player.totalScore,
                   endGameScore: game.configuration.endGameScore,
-                  onTap: () {
-                    PlayerGameModal.show(
-                      context,
-                      playerIdx: playerIdx,
-                      name: player.name,
-                      onNameChanged: (val) {
-                        ref
-                            .read(playersProvider.notifier)
-                            .updatePlayerName(playerIdx, val);
-                      },
-                      totalScore: player.totalScore,
-                      phases: player.phases,
-                      enablePhases: game.configuration.enablePhases,
-                      maxRounds: game.configuration.maxRounds,
-                    );
-                  },
+                  onTap: () => _openModal(playerIdx, player, game),
                 ),
               ),
               ...List<DataCell>.generate(game.configuration.maxRounds, (round) {
@@ -173,6 +160,21 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           );
         }),
       ),
+    );
+  }
+
+  Future<void> _openModal(int playerIdx, Player player, Game game) async {
+    await PlayerGameModal.show(
+      context,
+      playerIdx: playerIdx,
+      name: player.name,
+      onNameChanged: (val) {
+        ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+      },
+      totalScore: player.totalScore,
+      phases: player.phases,
+      enablePhases: game.configuration.enablePhases,
+      maxRounds: game.configuration.maxRounds,
     );
   }
 }

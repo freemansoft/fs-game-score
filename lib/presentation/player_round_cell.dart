@@ -43,8 +43,8 @@ class PlayerRoundCell extends StatelessWidget {
   final ValueChanged<int?> onScoreChanged;
   final String scoreFilter;
 
-  void _openModal(BuildContext context) {
-    PlayerRoundModal.show(
+  Future<void> _openModal(BuildContext context) async {
+    await PlayerRoundModal.show(
       context,
       playerIdx: playerIdx,
       round: round,

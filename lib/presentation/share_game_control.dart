@@ -26,7 +26,7 @@ class ShareGameControl extends ConsumerWidget {
 }
 
 // Extracted share logic to a top-level function for reuse and clarity.
-void shareGame(BuildContext context, WidgetRef ref) {
+Future<void> shareGame(BuildContext context, WidgetRef ref) async {
   final players = ref.read(playersProvider);
   if (players.players.isNotEmpty) {
     final csvData = players.toCsv();
@@ -38,7 +38,7 @@ void shareGame(BuildContext context, WidgetRef ref) {
     final title = 'fs score card $gameId $dateTime';
     final subject = 'fs score card $gameId $dateTime';
 
-    SharePlus.instance.share(
+    await SharePlus.instance.share(
       ShareParams(
         text: '$subject\n$csvData',
         title: title,

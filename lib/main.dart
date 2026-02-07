@@ -38,6 +38,8 @@ Future<void> _loadVersion() async {
     } else {
       appVersion = packageInfo.version;
     }
+    // forgot what the fromPlatform can throw
+    // ignore: avoid_catches_without_on_clauses
   } catch (_) {
     appVersion = null;
   }
