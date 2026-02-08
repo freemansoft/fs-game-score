@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/model/phases.dart';
-import 'package:fs_score_card/presentation/player_name_field.dart';
+import 'package:fs_score_card/presentation/player_game/player_name_field.dart';
 
+/// A modal dialog for editing a player's name and viewing their phases
 class PlayerGameModal extends StatelessWidget {
   const PlayerGameModal({
     super.key,
@@ -15,10 +16,13 @@ class PlayerGameModal extends StatelessWidget {
     required this.enablePhases,
     required this.maxRounds,
   });
+
+  /// A repeatable key for the modal dialog
   static ValueKey<String> modalKey(int playerIdx) {
     return ValueKey('p${playerIdx}_game_modal');
   }
 
+  /// A repeatable key for the player's name field in the modal dialog
   static ValueKey<String> nameFieldKey(int playerIdx) {
     return ValueKey('p${playerIdx}_name_field');
   }

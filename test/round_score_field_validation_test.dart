@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
-import 'package:fs_score_card/presentation/round_score_field.dart';
+import 'package:fs_score_card/presentation/player_round/round_score_field.dart';
 
 void main() {
   group('RoundScoreField Score Filter Validation Tests', () {

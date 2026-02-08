@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/model/player.dart';
-import 'package:fs_score_card/presentation/player_game_cell.dart';
-import 'package:fs_score_card/presentation/player_game_modal.dart';
-import 'package:fs_score_card/presentation/player_round_cell.dart';
+import 'package:fs_score_card/presentation/player_game/player_game_cell.dart';
+import 'package:fs_score_card/presentation/player_game/player_game_modal.dart';
+import 'package:fs_score_card/presentation/player_round/player_round_cell.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 

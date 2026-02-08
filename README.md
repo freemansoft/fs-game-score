@@ -22,8 +22,7 @@ Notes
 ## Known Issues
 
 - Restarting the same game config does not change the gameId. This is a "feature"
-- Reloading the web app wipes out the current game because state is not stored
-- When debugging with the IDE, the LocalStorage is not persisted across sessions. This is a "feature" of the fact that the web session is on a different port every time it is run.
+- When debugging the web app with the IDE, the LocalStorage is not persisted across sessions. This is a "feature" of the fact that the web session is on a different port every time it is run.
 - Unable to get macOS integration tests to run as GitHub Actions due to code signing requirement.
 - Unable to get iOS integration tests to run reliably as GitHub Actions. Cause to be determined.
 
@@ -152,7 +151,7 @@ To release macOS after TestFlight. This works for iOS also
 
 ### Web test builds
 
-#### Web build distribution
+#### Web build distribution - standalone web app
 
 You can test this locally using the IDE and a web browser like Chrome
 
@@ -161,7 +160,7 @@ You can test this locally using the IDE and a web browser like Chrome
    2. create a zip file of `build/web`
    3. Share the zip. They can unzip it and put the contents of the `web` folder in the web server docroot. The `web` folder should not be part of the path.
 
-#### Web site build when web site is rootted in a subdirectory, not in a root directory
+#### Web build distribution - build when web site is rooted in a subdirectory, not in /
 
 Change this to match your deployment. These notes exist so I remember the process!
 
@@ -170,7 +169,7 @@ The following works for hosting this app on my `github.io` pages. I host this ap
 1. Build the web app with `flutter build web --base-href=/freemans-score-card/`
 2. Copy the contents of `build/web` **excluding the canvaskit directory** to a local clone of <https://github.com/freemansoft/freemansoft.github.io>
    1. We are going to use the Google CDN CanvasKit and don't need to take up space in our repo with the binary
-3. You can test the site locally by running `python -m http.server 8000` from a terminal prompt in the root of the github.io repo and navigating to <http://localhost:8000/freemans-score-card/>
+3. You can test the site locally by running a local web server `python -m http.server 8000` from a terminal prompt in the root of the github.io repo and navigating to <http://localhost:8000/freemans-score-card/>
 4. Commit the files and push them to GitHub.
 5. Test with GitHub pages <https://freemansoft.github.io/freemans-score-card>
 
@@ -191,7 +190,7 @@ An `msix` section has already been added to customize the `msi` installer creato
 1. Build the image on a windows machine with `flutter build windows`
 1. Use the `msix` package to create a windows installer
    1. `flutter pub run msix:create`
-   1. `dart run msix:create` this will offer to install a self signed `pfx` ceertificate the first time it runs.  Allow this.
+   1. `dart run msix:create` this will offer to install a self signed `pfx` ceertificate the first time it runs. Allow this.
 1. Copy the created `msix` file located in `build\windows\x64\runner\Release\fs_score_card.msix` to the target location where it can be installed from.
 
 #### Windows store builds

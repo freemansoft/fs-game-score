@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A text field for editing a player's name usually in a modal dialog
 class PlayerNameField extends StatefulWidget {
   const PlayerNameField({
     super.key,

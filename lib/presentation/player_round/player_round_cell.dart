@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
-import 'package:fs_score_card/presentation/player_round_modal.dart';
+import 'package:fs_score_card/presentation/player_round/player_round_modal.dart';
 
 class PlayerRoundCell extends StatelessWidget {
   PlayerRoundCell({
@@ -16,18 +16,23 @@ class PlayerRoundCell extends StatelessWidget {
     required this.onScoreChanged,
     required this.scoreFilter,
   }) : super(key: key ?? cellKey(playerIdx, round));
+
+  /// The repeatable key for this widget
   static ValueKey<String> cellKey(int playerIdx, int round) {
     return ValueKey('p${playerIdx}_r${round}_cell');
   }
 
+  /// The repeatable key for the clickable inkwell that lanches the round editor
   static ValueKey<String> roundCellKey(int playerIdx, int round) {
     return ValueKey('p${playerIdx}_r${round}_round_cell');
   }
 
+  /// The repeatable key for the score field in the cell
   static ValueKey<String> scoreKey(int playerIdx, int round) {
     return ValueKey('p${playerIdx}_r${round}_score');
   }
 
+  /// The repeatable key for the phase field in the cell
   static ValueKey<String> phaseKey(int playerIdx, int round) {
     return ValueKey('p${playerIdx}_r${round}_phase');
   }
@@ -43,6 +48,7 @@ class PlayerRoundCell extends StatelessWidget {
   final ValueChanged<int?> onScoreChanged;
   final String scoreFilter;
 
+  /// Show the round editing modal
   Future<void> _openModal(BuildContext context) async {
     await PlayerRoundModal.show(
       context,

@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 /// A widget that displays a home icon button and
 /// shows a confirmation dialog for a new scorecard
 /// Takes user back to the SplashScreen if confirmed to pick a new game type
+///
+/// Usually shown in the app bar
 class NewScoreCardControl extends StatelessWidget {
   const NewScoreCardControl({super.key});
 
