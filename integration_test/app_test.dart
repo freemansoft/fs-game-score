@@ -9,6 +9,7 @@ import 'package:fs_score_card/main.dart' as app;
 import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_modal.dart';
+import 'package:fs_score_card/presentation/player_round/french_driving_round_panel.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_modal.dart';
 import 'package:fs_score_card/presentation/score_table.dart';
@@ -830,14 +831,14 @@ void main() {
     await tester.tap(find.text('5').last);
     await tester.pumpAndSettle();
 
-    // Enable "Include Phases"
-    final sheetDropdown = find.byKey(
-      SplashScreen.sheetStyleDropdownKey,
+    // Enable "Phase 10"
+    final gameModeDropdown = find.byKey(
+      SplashScreen.gameModeDropdownKey,
     );
-    expect(sheetDropdown, findsOneWidget);
-    await tester.tap(sheetDropdown);
+    expect(gameModeDropdown, findsOneWidget);
+    await tester.tap(gameModeDropdown);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Include Phases').last);
+    await tester.tap(find.text('Phase 10').last);
     await tester.pumpAndSettle();
 
     // Press Continue
@@ -983,5 +984,63 @@ void main() {
     final textFieldWidgetFinal = tester.widget<TextField>(textField);
     expect(textFieldWidgetFinal.enabled, isFalse);
     expect(textFieldWidgetFinal.controller?.text, isEmpty);
+  });
+
+  testWidgets('French Driving mode scoring works correctly', (
+    WidgetTester tester,
+  ) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Select "French Driving" mode
+    final gameModeDropdown = find.byKey(SplashScreen.gameModeDropdownKey);
+    await tester.tap(gameModeDropdown);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('French Driving').last);
+    await tester.pumpAndSettle();
+
+    // Press Continue
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await tester.pumpAndSettle();
+
+    // Tap a cell in the score sheet (Player 1, Round 1)
+    final cellKey = PlayerRoundCell.scoreKey(0, 0);
+    await tester.tap(find.byKey(cellKey));
+    await tester.pumpAndSettle();
+
+    // Interact with French Driving fields
+    // Enter 500 Miles
+    await tester.enterText(
+      find.byKey(FrenchDrivingRoundPanel.milesFieldKey),
+      '500',
+    );
+    await tester.pumpAndSettle();
+
+    // Select 2 Safeties
+    await tester.tap(find.byKey(FrenchDrivingRoundPanel.safetiesDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('2').last);
+    await tester.pumpAndSettle();
+
+    // Select 1 Coup Fourré
+    await tester.tap(find.byKey(FrenchDrivingRoundPanel.coupFourreDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('1').last);
+    await tester.pumpAndSettle();
+
+    // Check bonuses
+    await tester.tap(find.byKey(FrenchDrivingRoundPanel.delayedActionKey));
+    await tester.tap(find.byKey(FrenchDrivingRoundPanel.safeTripKey));
+    await tester.tap(find.byKey(FrenchDrivingRoundPanel.shutOutKey));
+    await tester.pumpAndSettle();
+
+    // Close the modal
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    // Validate that the cell is showing correctly calculated score (2100)
+    expect((tester.widget(find.byKey(cellKey)) as Text).data, '2100');
   });
 }

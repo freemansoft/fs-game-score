@@ -139,7 +139,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     round: round,
                     score: player.scores.getScore(round),
                     enabled: player.roundStates.isEnabled(round),
-                    enablePhases: game.configuration.enablePhases,
+                    gameMode: game.configuration.gameMode,
                     selectedPhase: player.phases.getPhase(round),
                     completedPhases: player.phases.completedPhasesList(),
                     onPhaseChanged: (val) {
@@ -151,6 +151,15 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                       ref
                           .read(playersProvider.notifier)
                           .updateScore(playerIdx, round, parsed);
+                    },
+                    onFrenchDrivingAttributesChanged: (attrs) {
+                      ref
+                          .read(playersProvider.notifier)
+                          .updateFrenchDrivingAttributes(
+                            playerIdx,
+                            round,
+                            attrs,
+                          );
                     },
                     scoreFilter: game.configuration.scoreFilter,
                   ),
@@ -173,7 +182,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
       },
       totalScore: player.totalScore,
       phases: player.phases,
-      enablePhases: game.configuration.enablePhases,
+      enablePhases: game.configuration.gameMode == GameMode.phase10,
       maxRounds: game.configuration.maxRounds,
     );
   }

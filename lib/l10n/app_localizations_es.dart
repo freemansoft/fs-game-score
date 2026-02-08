@@ -36,6 +36,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Elija el estilo de la hoja de puntuación: básico o con fases';
 
   @override
+  String get gameMode => 'Modo de juego:';
+
+  @override
+  String get gameModeStandard => 'Estándar';
+
+  @override
+  String get gameModePhase10 => 'Fase 10';
+
+  @override
+  String get gameModeFrenchDriving => 'French Driving';
+
+  @override
   String get basicSheet => 'Hoja Básica';
 
   @override
@@ -168,4 +180,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noScoresToShare => 'No hay puntuaciones para compartir';
+
+  @override
+  String get miles => 'Millas';
+
+  @override
+  String get safeties => 'Seguridades';
+
+  @override
+  String get coupFourre => 'Coup Fourré';
+
+  @override
+  String get delayedAction => 'Acción Retrasada';
+
+  @override
+  String get safeTrip => 'Viaje Seguro';
+
+  @override
+  String get shutOut => 'Shut Out';
+
+  @override
+  String get milesTooltip =>
+      'Cada equipo suma tantos puntos como el número total de millas que ha recorrido.';
+
+  @override
+  String get safetiesTooltip =>
+      '100 puntos por cada tarjeta de Seguridad jugada.';
+
+  @override
+  String get coupFourreTooltip =>
+      '300 puntos además de los 100 puntos por la tarjeta de Seguridad.';
+
+  @override
+  String get delayedActionTooltip =>
+      'Si el viaje se completa después de que se hayan jugado todas las tarjetas de la pila de robo.';
+
+  @override
+  String get safeTripTooltip =>
+      'Si el viaje se completa sin jugar tarjetas de 200 Millas.';
+
+  @override
+  String get shutOutTooltip =>
+      'Completar el viaje de 1000 millas antes de que los oponentes hayan jugado tarjetas de Distancia.';
 }

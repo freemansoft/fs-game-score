@@ -10,9 +10,6 @@ Game gameWithValues() => Game(
     numPlayers: 4,
     // Being specific about the values here so the test work if defaults change
     // ignore: avoid_redundant_argument_values
-    enablePhases: false,
-    // Being specific about the values here so the test work if defaults change
-    // ignore: avoid_redundant_argument_values
     scoreFilter: '',
     // Being specific about the values here so the test work if defaults change
     // ignore: avoid_redundant_argument_values
@@ -30,8 +27,8 @@ void main() {
     expect(fromJson.configuration.numPhases, game.configuration.numPhases);
     expect(fromJson.configuration.numPlayers, game.configuration.numPlayers);
     expect(
-      fromJson.configuration.enablePhases,
-      game.configuration.enablePhases,
+      fromJson.configuration.gameMode,
+      game.configuration.gameMode,
     );
     expect(fromJson.configuration.version, game.configuration.version);
   });
@@ -44,8 +41,8 @@ void main() {
     expect(fromJson.configuration.numPhases, game.configuration.numPhases);
     expect(fromJson.configuration.numPlayers, game.configuration.numPlayers);
     expect(
-      fromJson.configuration.enablePhases,
-      game.configuration.enablePhases,
+      fromJson.configuration.gameMode,
+      game.configuration.gameMode,
     );
     expect(fromJson.configuration.version, game.configuration.version);
   });

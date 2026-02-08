@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/model/french_driving_round_attributes.dart';
 import 'package:fs_score_card/model/phases.dart';
 import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/model/players.dart';
@@ -22,6 +23,10 @@ void main() {
           ..setScore(1, 15)
           ..setScore(2, 20),
         phases: Phases(3)..setPhase(0, 100),
+        frenchDrivingAttributes: List.generate(
+          5,
+          (_) => FrenchDrivingRoundAttributes(),
+        ),
       );
 
       player2 = Player.withData(
@@ -30,6 +35,10 @@ void main() {
           ..setScore(0, 5)
           ..setScore(3, 25),
         phases: Phases(3)..setPhase(0, 200),
+        frenchDrivingAttributes: List.generate(
+          5,
+          (_) => FrenchDrivingRoundAttributes(),
+        ),
       );
 
       player3 = Player.withData(
@@ -38,6 +47,10 @@ void main() {
           ..setScore(1, 30)
           ..setScore(4, 40),
         phases: Phases(3)..setPhase(0, 300),
+        frenchDrivingAttributes: List.generate(
+          5,
+          (_) => FrenchDrivingRoundAttributes(),
+        ),
       );
 
       players = Players(
@@ -165,6 +178,10 @@ void main() {
             ..setScore(1, 15)
             ..setScore(2, 20),
           phases: Phases(2),
+          frenchDrivingAttributes: List.generate(
+            3,
+            (_) => FrenchDrivingRoundAttributes(),
+          ),
         );
 
         final singlePlayer = Players(

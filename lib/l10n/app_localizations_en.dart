@@ -36,6 +36,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose the score sheet style: basic or with phases';
 
   @override
+  String get gameMode => 'Game Mode:';
+
+  @override
+  String get gameModeStandard => 'Standard';
+
+  @override
+  String get gameModePhase10 => 'Phase 10';
+
+  @override
+  String get gameModeFrenchDriving => 'French Driving';
+
+  @override
   String get basicSheet => 'Basic Sheet';
 
   @override
@@ -166,4 +178,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noScoresToShare => 'No scores to share';
+
+  @override
+  String get miles => 'Miles';
+
+  @override
+  String get safeties => 'Safeties';
+
+  @override
+  String get coupFourre => 'Coup Fourré';
+
+  @override
+  String get delayedAction => 'Delayed Action';
+
+  @override
+  String get safeTrip => 'Safe Trip';
+
+  @override
+  String get shutOut => 'Shut Out';
+
+  @override
+  String get milesTooltip =>
+      'Each team scores as many points as the total number of miles that it has traveled.';
+
+  @override
+  String get safetiesTooltip => '100 points for each Safety Card played.';
+
+  @override
+  String get coupFourreTooltip =>
+      '300 points in addition to the 100 points for the Safety Card.';
+
+  @override
+  String get delayedActionTooltip =>
+      'If trip is completed after all cards have been played from the draw pile.';
+
+  @override
+  String get safeTripTooltip =>
+      'If trip is completed without playing any 200 Mile Cards.';
+
+  @override
+  String get shutOutTooltip =>
+      'Completing trip of 1000 miles before opponents have played any Distance Cards.';
 }

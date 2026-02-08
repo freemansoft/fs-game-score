@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/model/french_driving_round_attributes.dart';
+import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_modal.dart';
 
 class PlayerRoundCell extends StatelessWidget {
@@ -9,11 +11,12 @@ class PlayerRoundCell extends StatelessWidget {
     required this.round,
     required this.score,
     required this.enabled,
-    required this.enablePhases,
+    required this.gameMode,
     required this.selectedPhase,
     required this.completedPhases,
     required this.onPhaseChanged,
     required this.onScoreChanged,
+    required this.onFrenchDrivingAttributesChanged,
     required this.scoreFilter,
   }) : super(key: key ?? cellKey(playerIdx, round));
 
@@ -41,11 +44,13 @@ class PlayerRoundCell extends StatelessWidget {
   final int round;
   final int? score;
   final bool enabled;
-  final bool enablePhases;
+  final GameMode gameMode;
   final int? selectedPhase;
   final List<int?> completedPhases;
   final ValueChanged<int?> onPhaseChanged;
   final ValueChanged<int?> onScoreChanged;
+  final ValueChanged<FrenchDrivingRoundAttributes>
+  onFrenchDrivingAttributesChanged;
   final String scoreFilter;
 
   /// Show the round editing modal
@@ -54,9 +59,10 @@ class PlayerRoundCell extends StatelessWidget {
       context,
       playerIdx: playerIdx,
       round: round,
-      enablePhases: enablePhases,
+      gameMode: gameMode,
       onPhaseChanged: onPhaseChanged,
       onScoreChanged: onScoreChanged,
+      onFrenchDrivingAttributesChanged: onFrenchDrivingAttributesChanged,
       scoreFilter: scoreFilter,
     );
   }
@@ -84,7 +90,7 @@ class PlayerRoundCell extends StatelessWidget {
               semanticsLabel:
                   'Player ${playerIdx + 1} round ${round + 1} score',
             ),
-            if (enablePhases) ...[
+            if (gameMode == GameMode.phase10) ...[
               const SizedBox(height: 2),
               Text(
                 selectedPhase != null && selectedPhase! > 0

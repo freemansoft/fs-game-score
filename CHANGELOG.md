@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Load previous game on startup if it is in Stored Preferences and jump immediately to the game. This supports accidental web reloads and mobile apps that are suspended and resumed suspended/rehydrated
 - Save the game state to disk with a 5 second delay to prevent excessive writes.
 - Split the GameConfiguration from the Game model to segregate a game instance from its configuration.
+- Added French Driving game mode
 
 ## [1.8.0] - 2025-12-28
 

@@ -32,6 +32,22 @@
   "@sheetStyleTooltip": {
     "description": "Tooltip for sheet style field"
   },
+  "gameMode": "Game Mode:",
+  "@gameMode": {
+    "description": "Label for game mode dropdown"
+  },
+  "gameModeStandard": "Standard",
+  "@gameModeStandard": {
+    "description": "Standard game mode option"
+  },
+  "gameModePhase10": "Phase 10",
+  "@gameModePhase10": {
+    "description": "Phase 10 game mode option"
+  },
+  "gameModeFrenchDriving": "French Driving",
+  "@gameModeFrenchDriving": {
+    "description": "French Driving game mode option"
+  },
   "basicSheet": "Basic Sheet",
   "@basicSheet": {
     "description": "Option for basic sheet style"
@@ -217,6 +233,53 @@
   "noScoresToShare": "No scores to share",
   "@noScoresToShare": {
     "description": "Message when there are no scores to share"
+  },
+  "miles": "Miles",
+  "@miles": {
+    "description": "Miles travelled"
+  },
+  "safeties": "Safeties",
+  "@safeties": {
+    "description": "Safeties played"
+  },
+  "coupFourre": "Coup Fourré",
+  "@coupFourre": {
+    "description": "Coup fourre played"
+  },
+  "delayedAction": "Delayed Action",
+  "@delayedAction": {
+    "description": "Delayed action played"
+  },
+  "safeTrip": "Safe Trip",
+  "@safeTrip": {
+    "description": "Safe trip played"
+  },
+  "shutOut": "Shut Out",
+  "@shutOut": {
+    "description": "Bonus for completing the trip before opponents play any distance cards"
+  },
+  "milesTooltip": "Each team scores as many points as the total number of miles that it has traveled.",
+  "@milesTooltip": {
+    "description": "Tooltip for miles field"
+  },
+  "safetiesTooltip": "100 points for each Safety Card played.",
+  "@safetiesTooltip": {
+    "description": "Tooltip for safeties section"
+  },
+  "coupFourreTooltip": "300 points in addition to the 100 points for the Safety Card.",
+  "@coupFourreTooltip": {
+    "description": "Tooltip for Coup Fourre section"
+  },
+  "delayedActionTooltip": "If trip is completed after all cards have been played from the draw pile.",
+  "@delayedActionTooltip": {
+    "description": "Tooltip for Delayed Action bonus"
+  },
+  "safeTripTooltip": "If trip is completed without playing any 200 Mile Cards.",
+  "@safeTripTooltip": {
+    "description": "Tooltip for Safe Trip bonus"
+  },
+  "shutOutTooltip": "Completing trip of 1000 miles before opponents have played any Distance Cards.",
+  "@shutOutTooltip": {
+    "description": "Tooltip for Shut Out bonus"
   }
 }
-

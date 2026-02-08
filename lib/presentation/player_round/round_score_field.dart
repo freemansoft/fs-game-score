@@ -9,12 +9,14 @@ class RoundScoreField extends StatefulWidget {
     required this.onChanged,
     this.scoreFilter = '',
     this.autofocus = false,
+    this.enabled = true,
     this.onSubmitted,
   });
   final int? score;
   final ValueChanged<int?> onChanged;
   final String scoreFilter;
   final bool autofocus;
+  final bool enabled;
   final VoidCallback? onSubmitted;
 
   @override
@@ -135,6 +137,7 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       focusNode: _focusNode,
       keyboardType: TextInputType.number,
       autofocus: widget.autofocus,
+      enabled: widget.enabled,
       decoration: InputDecoration(
         hintText: AppLocalizations.of(context)!.scoreHint,
         isDense: true,

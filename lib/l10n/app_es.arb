@@ -32,6 +32,22 @@
   "@sheetStyleTooltip": {
     "description": "Tooltip for sheet style field"
   },
+  "gameMode": "Modo de juego:",
+  "@gameMode": {
+    "description": "Label for game mode dropdown"
+  },
+  "gameModeStandard": "Estándar",
+  "@gameModeStandard": {
+    "description": "Standard game mode option"
+  },
+  "gameModePhase10": "Fase 10",
+  "@gameModePhase10": {
+    "description": "Phase 10 game mode option"
+  },
+  "gameModeFrenchDriving": "French Driving",
+  "@gameModeFrenchDriving": {
+    "description": "French Driving game mode option"
+  },
   "basicSheet": "Hoja Básica",
   "@basicSheet": {
     "description": "Option for basic sheet style"
@@ -217,5 +233,53 @@
   "noScoresToShare": "No hay puntuaciones para compartir",
   "@noScoresToShare": {
     "description": "Message when there are no scores to share"
+  },
+  "miles": "Millas",
+  "@miles": {
+    "description": "Miles recorridos"
+  },
+  "safeties": "Seguridades",
+  "@safeties": {
+    "description": "Seguridades jugadas"
+  },
+  "coupFourre": "Coup Fourré",
+  "@coupFourre": {
+    "description": "Coup fourre jugado"
+  },
+  "delayedAction": "Acción Retrasada",
+  "@delayedAction": {
+    "description": "Acción retrasada jugada"
+  },
+  "safeTrip": "Viaje Seguro",
+  "@safeTrip": {
+    "description": "Viaje seguro jugado"
+  },
+  "shutOut": "Shut Out",
+  "@shutOut": {
+    "description": "Bonus for completing the trip before opponents play any distance cards"
+  },
+  "milesTooltip": "Cada equipo suma tantos puntos como el número total de millas que ha recorrido.",
+  "@milesTooltip": {
+    "description": "Tooltip for miles field"
+  },
+  "safetiesTooltip": "100 puntos por cada tarjeta de Seguridad jugada.",
+  "@safetiesTooltip": {
+    "description": "Tooltip for safeties section"
+  },
+  "coupFourreTooltip": "300 puntos además de los 100 puntos por la tarjeta de Seguridad.",
+  "@coupFourreTooltip": {
+    "description": "Tooltip for Coup Fourre section"
+  },
+  "delayedActionTooltip": "Si el viaje se completa después de que se hayan jugado todas las tarjetas de la pila de robo.",
+  "@delayedActionTooltip": {
+    "description": "Tooltip for Delayed Action bonus"
+  },
+  "safeTripTooltip": "Si el viaje se completa sin jugar tarjetas de 200 Millas.",
+  "@safeTripTooltip": {
+    "description": "Tooltip for Safe Trip bonus"
+  },
+  "shutOutTooltip": "Completar el viaje de 1000 millas antes de que los oponentes hayan jugado tarjetas de Distancia.",
+  "@shutOutTooltip": {
+    "description": "Tooltip for Shut Out bonus"
   }
 }

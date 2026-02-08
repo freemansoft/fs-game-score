@@ -26,7 +26,7 @@ class GameRepository {
         final gameFromPrefs = Game.fromJson(gameJson);
         loadedPrefsGame = Game(
           configuration: GameConfiguration(
-            enablePhases: gameFromPrefs.configuration.enablePhases,
+            gameMode: gameFromPrefs.configuration.gameMode,
             endGameScore: gameFromPrefs.configuration.endGameScore,
             maxRounds: gameFromPrefs.configuration.maxRounds,
             numPhases: gameFromPrefs.configuration.numPhases,

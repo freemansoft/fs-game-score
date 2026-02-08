@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/model/french_driving_round_attributes.dart';
 import 'package:fs_score_card/model/phases.dart';
 import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/model/players.dart';
@@ -22,6 +23,10 @@ void main() {
         phases: Phases(3)
           ..setPhase(0, 1)
           ..setPhase(1, 2),
+        frenchDrivingAttributes: List.generate(
+          5,
+          (_) => FrenchDrivingRoundAttributes(),
+        ),
         roundStates: RoundStates(5)
           ..setEnabled(round: 0, enabled: true)
           ..setEnabled(round: 1, enabled: false),
@@ -33,6 +38,10 @@ void main() {
           ..setScore(0, 5)
           ..setScore(3, 25),
         phases: Phases(3)..setPhase(0, 1),
+        frenchDrivingAttributes: List.generate(
+          5,
+          (_) => FrenchDrivingRoundAttributes(),
+        ),
         roundStates: RoundStates(5)..setEnabled(round: 2, enabled: false),
       );
 
@@ -100,6 +109,10 @@ void main() {
             ..setScore(0, 10)
             ..setScore(2, 30),
           phases: Phases(2)..setPhase(0, 1),
+          frenchDrivingAttributes: List.generate(
+            3,
+            (_) => FrenchDrivingRoundAttributes(),
+          ),
           roundStates: RoundStates(3)..setEnabled(round: 1, enabled: false),
         );
 

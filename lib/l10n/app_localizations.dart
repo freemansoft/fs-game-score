@@ -146,6 +146,30 @@ abstract class AppLocalizations {
   /// **'Choose the score sheet style: basic or with phases'**
   String get sheetStyleTooltip;
 
+  /// Label for game mode dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Game Mode:'**
+  String get gameMode;
+
+  /// Standard game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get gameModeStandard;
+
+  /// Phase 10 game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Phase 10'**
+  String get gameModePhase10;
+
+  /// French Driving game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'French Driving'**
+  String get gameModeFrenchDriving;
+
   /// Option for basic sheet style
   ///
   /// In en, this message translates to:
@@ -385,6 +409,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No scores to share'**
   String get noScoresToShare;
+
+  /// Miles travelled
+  ///
+  /// In en, this message translates to:
+  /// **'Miles'**
+  String get miles;
+
+  /// Safeties played
+  ///
+  /// In en, this message translates to:
+  /// **'Safeties'**
+  String get safeties;
+
+  /// Coup fourre played
+  ///
+  /// In en, this message translates to:
+  /// **'Coup Fourré'**
+  String get coupFourre;
+
+  /// Delayed action played
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed Action'**
+  String get delayedAction;
+
+  /// Safe trip played
+  ///
+  /// In en, this message translates to:
+  /// **'Safe Trip'**
+  String get safeTrip;
+
+  /// Bonus for completing the trip before opponents play any distance cards
+  ///
+  /// In en, this message translates to:
+  /// **'Shut Out'**
+  String get shutOut;
+
+  /// Tooltip for miles field
+  ///
+  /// In en, this message translates to:
+  /// **'Each team scores as many points as the total number of miles that it has traveled.'**
+  String get milesTooltip;
+
+  /// Tooltip for safeties section
+  ///
+  /// In en, this message translates to:
+  /// **'100 points for each Safety Card played.'**
+  String get safetiesTooltip;
+
+  /// Tooltip for Coup Fourre section
+  ///
+  /// In en, this message translates to:
+  /// **'300 points in addition to the 100 points for the Safety Card.'**
+  String get coupFourreTooltip;
+
+  /// Tooltip for Delayed Action bonus
+  ///
+  /// In en, this message translates to:
+  /// **'If trip is completed after all cards have been played from the draw pile.'**
+  String get delayedActionTooltip;
+
+  /// Tooltip for Safe Trip bonus
+  ///
+  /// In en, this message translates to:
+  /// **'If trip is completed without playing any 200 Mile Cards.'**
+  String get safeTripTooltip;
+
+  /// Tooltip for Shut Out bonus
+  ///
+  /// In en, this message translates to:
+  /// **'Completing trip of 1000 miles before opponents have played any Distance Cards.'**
+  String get shutOutTooltip;
 }
 
 class _AppLocalizationsDelegate

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/data/players_repository.dart';
+import 'package:fs_score_card/model/french_driving_round_attributes.dart';
 import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
@@ -61,6 +62,18 @@ class PlayersNotifier extends Notifier<Players> {
     _scheduleSave();
   }
 
+  void updateFrenchDrivingAttributes(
+    int playerIdx,
+    int round,
+    FrenchDrivingRoundAttributes attributes,
+  ) {
+    final player = state.players[playerIdx];
+    player.frenchDrivingAttributes[round] = attributes;
+    player.scores.setScore(round, attributes.calculateScore());
+    state = state.withPlayer(player, playerIdx);
+    _scheduleSave();
+  }
+
   void updatePhase(int playerIdx, int round, int? phase) {
     final player = state.players[playerIdx];
     player.phases.setPhase(round, phase);
@@ -74,6 +87,7 @@ class PlayersNotifier extends Notifier<Players> {
       name: name,
       scores: player.scores,
       phases: player.phases,
+      frenchDrivingAttributes: player.frenchDrivingAttributes,
       roundStates: player.roundStates,
     );
     state = state.withPlayer(updatedPlayer, playerIdx);

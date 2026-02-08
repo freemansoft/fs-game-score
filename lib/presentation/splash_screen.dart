@@ -17,8 +17,8 @@ class SplashScreen extends ConsumerStatefulWidget {
   static const ValueKey<String> maxRoundsDropdownKey = ValueKey(
     'splash_max_rounds_dropdown',
   );
-  static const ValueKey<String> sheetStyleDropdownKey = ValueKey(
-    'splash_sheet_style_dropdown',
+  static const ValueKey<String> gameModeDropdownKey = ValueKey(
+    'splash_game_mode_dropdown',
   );
   static const ValueKey<String> scoreFilterDropdownKey = ValueKey(
     'splash_score_filter_dropdown',
@@ -38,9 +38,6 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  static const String _basicSheet = 'Basic Sheet';
-  static const String _phasesSheet = 'Include Phases';
-
   // We have a local variable for this rather than watching becausae we want to
   // avoid rebuilds of the whole splash screen when changing options
   Game thisGame = Game();
@@ -137,7 +134,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     );
   }
 
-  Widget _buildSheetStyleField(BuildContext context) {
+  Widget _buildGameModeField(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -145,24 +142,26 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         Tooltip(
           message: l10n.sheetStyleTooltip,
           child: Text(
-            l10n.sheetStyle,
+            l10n.gameMode,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
         const SizedBox(width: 12),
-        DropdownButton<String>(
-          key: SplashScreen.sheetStyleDropdownKey,
-          value: thisGame.configuration.enablePhases
-              ? _phasesSheet
-              : _basicSheet,
+        DropdownButton<GameMode>(
+          key: SplashScreen.gameModeDropdownKey,
+          value: thisGame.configuration.gameMode,
           items: [
             DropdownMenuItem(
-              value: _basicSheet,
-              child: Text(l10n.basicSheet),
+              value: GameMode.standard,
+              child: Text(l10n.gameModeStandard),
             ),
             DropdownMenuItem(
-              value: _phasesSheet,
-              child: Text(l10n.includePhases),
+              value: GameMode.phase10,
+              child: Text(l10n.gameModePhase10),
+            ),
+            DropdownMenuItem(
+              value: GameMode.frenchDriving,
+              child: Text(l10n.gameModeFrenchDriving),
             ),
           ],
           onChanged: (value) {
@@ -170,7 +169,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               setState(() {
                 thisGame = thisGame.copyWith(
                   configuration: thisGame.configuration.copyWith(
-                    enablePhases: value == _phasesSheet,
+                    gameMode: value,
                   ),
                 );
               });
@@ -309,7 +308,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             children: [
               _buildNumPlayersField(context),
               const SizedBox(height: 8),
-              _buildSheetStyleField(context),
+              _buildGameModeField(context),
             ],
           ),
           const SizedBox(width: 16),
@@ -336,7 +335,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           const SizedBox(height: 6),
           _buildMaxRoundsField(context),
           const SizedBox(height: 6),
-          _buildSheetStyleField(context),
+          _buildGameModeField(context),
           const SizedBox(height: 6),
           _buildScoreFilterField(context),
           const SizedBox(height: 6),
@@ -436,7 +435,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     .newGame(
                       maxRounds: thisGame.configuration.maxRounds,
                       numPlayers: thisGame.configuration.numPlayers,
-                      enablePhases: thisGame.configuration.enablePhases,
+                      gameMode: thisGame.configuration.gameMode,
                       scoreFilter: thisGame.configuration.scoreFilter,
                       endGameScore: thisGame.configuration.endGameScore,
                       version: appVersion,
