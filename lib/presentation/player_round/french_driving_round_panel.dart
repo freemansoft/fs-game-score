@@ -111,6 +111,62 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
   Widget _buildSafetiesSection(AppLocalizations l10n) {
     final numSafeties = _localAttributes.safetyCards.where((s) => s).length;
     final numCoupFourre = _localAttributes.coupFourre.where((c) => c).length;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
+    final safetiesRow = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('${l10n.safeties}: '),
+        DropdownButton<int>(
+          key: FrenchDrivingRoundPanel.safetiesDropdownKey,
+          value: numSafeties,
+          items: List.generate(
+            5,
+            (i) => i,
+          ).map((i) => DropdownMenuItem(value: i, child: Text('$i'))).toList(),
+          onChanged: (val) {
+            if (val != null) {
+              final newSafeties = List.filled(4, false);
+              for (int i = 0; i < val; i++) {
+                newSafeties[i] = true;
+              }
+              _updateAttributes(
+                _localAttributes.copyWith(safetyCards: newSafeties),
+              );
+            }
+          },
+        ),
+      ],
+    );
+
+    final coupFourreRow = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('${l10n.coupFourre}: '),
+        Tooltip(
+          message: l10n.coupFourreTooltip,
+          child: DropdownButton<int>(
+            key: FrenchDrivingRoundPanel.coupFourreDropdownKey,
+            value: numCoupFourre,
+            items: List.generate(5, (i) => i)
+                .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
+                .toList(),
+            onChanged: (val) {
+              if (val != null) {
+                final newCoupFourre = List.filled(4, false);
+                for (int i = 0; i < val; i++) {
+                  newCoupFourre[i] = true;
+                }
+                _updateAttributes(
+                  _localAttributes.copyWith(coupFourre: newCoupFourre),
+                );
+              }
+            },
+          ),
+        ),
+      ],
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,52 +179,22 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           ),
         ),
         const SizedBox(height: 4),
-        Row(
-          children: [
-            Text('${l10n.safeties}: '),
-            DropdownButton<int>(
-              key: FrenchDrivingRoundPanel.safetiesDropdownKey,
-              value: numSafeties,
-              items: List.generate(5, (i) => i)
-                  .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
-                  .toList(),
-              onChanged: (val) {
-                if (val != null) {
-                  final newSafeties = List.filled(4, false);
-                  for (int i = 0; i < val; i++) {
-                    newSafeties[i] = true;
-                  }
-                  _updateAttributes(
-                    _localAttributes.copyWith(safetyCards: newSafeties),
-                  );
-                }
-              },
-            ),
-            const SizedBox(width: 24),
-            Text('${l10n.coupFourre}: '),
-            Tooltip(
-              message: l10n.coupFourreTooltip,
-              child: DropdownButton<int>(
-                key: FrenchDrivingRoundPanel.coupFourreDropdownKey,
-                value: numCoupFourre,
-                items: List.generate(5, (i) => i)
-                    .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
-                    .toList(),
-                onChanged: (val) {
-                  if (val != null) {
-                    final newCoupFourre = List.filled(4, false);
-                    for (int i = 0; i < val; i++) {
-                      newCoupFourre[i] = true;
-                    }
-                    _updateAttributes(
-                      _localAttributes.copyWith(coupFourre: newCoupFourre),
-                    );
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
+        if (isPortrait)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              safetiesRow,
+              coupFourreRow,
+            ],
+          )
+        else
+          Row(
+            children: [
+              safetiesRow,
+              const SizedBox(width: 24),
+              coupFourreRow,
+            ],
+          ),
       ],
     );
   }
