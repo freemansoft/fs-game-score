@@ -40,6 +40,8 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
 
       await tester.pumpWidget(
+        // I like being explicit in case the default changes
+        // ignore: avoid_redundant_argument_values
         buildTestableWidget(attributes, size: const Size(800, 600)),
       );
       await tester.pumpAndSettle();
