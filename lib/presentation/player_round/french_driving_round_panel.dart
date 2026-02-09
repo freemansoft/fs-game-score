@@ -117,25 +117,34 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
     final safetiesRow = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('${l10n.safeties}: '),
-        DropdownButton<int>(
-          key: FrenchDrivingRoundPanel.safetiesDropdownKey,
-          value: numSafeties,
-          items: List.generate(
-            5,
-            (i) => i,
-          ).map((i) => DropdownMenuItem(value: i, child: Text('$i'))).toList(),
-          onChanged: (val) {
-            if (val != null) {
-              final newSafeties = List.filled(4, false);
-              for (int i = 0; i < val; i++) {
-                newSafeties[i] = true;
+        Tooltip(
+          message: l10n.safetiesTooltip,
+          child: Text('${l10n.safeties}: '),
+        ),
+        Tooltip(
+          message: l10n.safetiesTooltip,
+          child: DropdownButton<int>(
+            key: FrenchDrivingRoundPanel.safetiesDropdownKey,
+            value: numSafeties,
+            items:
+                List.generate(
+                      5,
+                      (i) => i,
+                    )
+                    .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
+                    .toList(),
+            onChanged: (val) {
+              if (val != null) {
+                final newSafeties = List.filled(4, false);
+                for (int i = 0; i < val; i++) {
+                  newSafeties[i] = true;
+                }
+                _updateAttributes(
+                  _localAttributes.copyWith(safetyCards: newSafeties),
+                );
               }
-              _updateAttributes(
-                _localAttributes.copyWith(safetyCards: newSafeties),
-              );
-            }
-          },
+            },
+          ),
         ),
       ],
     );
@@ -143,7 +152,10 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
     final coupFourreRow = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('${l10n.coupFourre}: '),
+        Tooltip(
+          message: l10n.coupFourreTooltip,
+          child: Text('${l10n.coupFourre}: '),
+        ),
         Tooltip(
           message: l10n.coupFourreTooltip,
           child: DropdownButton<int>(
@@ -171,14 +183,6 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Tooltip(
-          message: l10n.safetiesTooltip,
-          child: Text(
-            l10n.safeties,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ),
-        const SizedBox(height: 4),
         if (isPortrait)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
