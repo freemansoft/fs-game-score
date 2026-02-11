@@ -83,7 +83,7 @@ Android build notes:
 Android apks end up bult in two places. [Stack Overflow](https://stackoverflow.com/questions/62910148/flutter-what-is-the-difference-between-the-apk-release-directory-and-flutter-ap)
 
 - `build/app/outputs/apk` Including app name and version in the `apk` filename.
-  - `build/app/outputs/apk/releasefs_score_card-v<version>-release.apk`
+  - `build/app/outputs/apk/release/fs_score_card-v<version>-release.apk`
   - `build/app/outputs/apk/debug/fs_score_card-v<version>-debug.apk`
 - `build/app/outputs/flutter-apk` Generic apk without the app name and version in the `apk` filename. These include sha1 files.
   - `build/app/outputs/flutter-apk/apk-release.apk`
