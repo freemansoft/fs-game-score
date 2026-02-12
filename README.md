@@ -52,13 +52,17 @@ Your machine may require that you replace any `flutter` commands with `fvm flutt
 
 ## Internationalization
 
-Make sure to gegenerate the dart localization files after making any changes to the `arb` files. The command `flutter gen-l10n` has already been run.
+Make sure to regenerate the dart localization files after making any changes to the internationalization `arb` files using the command `flutter gen-l10n`. The command `flutter gen-l10n` has already been run the current version of the code.
 
-`flutter pub get` or do a build.
+~~Other options include running `flutter pub get` or doing a build.~~
 
 ## Build and Test
 
-You can test this locally using
+You can test this locally using the run view in VSCode or using the command line.
+
+Release builds can be created from the command line individually for each platform or via the `build_distributable.sh` and `build_distributable.ps1` scripts.
+
+### Run View in VSCode
 
 - The IDE and the Android simulator on Mac or PC
 - The IDE and the iOS emulator on Mac

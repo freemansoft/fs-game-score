@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# The windows side of this does not work for git bash
+
 # Detect OS
 OS="$(uname)"
 echo "Detected OS: $OS"
@@ -23,7 +25,9 @@ if [[ "$OS" == "Darwin" ]]; then
   echo "Building macOS..."
   flutter build macos --release
 
-elif [[ "$OS" =~ MINGW.* || "$OS" =~ CYGWIN.* || "$OS" =~ MSYS.* ]]; then
+elif [[ "$OSTYPE" == "linux-gnu" || "$OS" =~ MINGW.* || "$OS" =~ CYGWIN.* || "$OS" =~ MSYS.* ]]; then
+  # this worked for gitbash on windows 11 at 2026-02-11
+  # this may fail with fvm
   echo "Running Windows build steps..."
 
   echo "Cleaning..."
