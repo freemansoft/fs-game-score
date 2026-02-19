@@ -13,6 +13,7 @@ import 'package:fs_score_card/presentation/player_round/french_driving_round_pan
 import 'package:fs_score_card/presentation/player_round/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_modal.dart';
 import 'package:fs_score_card/presentation/score_table.dart';
+import 'package:fs_score_card/presentation/share_game_control.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/router/app_router.dart';
@@ -175,7 +176,7 @@ void main() {
     expect(gameId, isNotEmpty);
 
     // Find and tap the share button
-    final shareButton = find.byKey(const ValueKey('share_button'));
+    final shareButton = find.byKey(ShareGameControl.shareButtonKey);
 
     // Note: We can't actually test the share functionality in integration tests
     // as it involves platform-specific sharing mechanisms. However, we can

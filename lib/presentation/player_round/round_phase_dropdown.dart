@@ -15,6 +15,12 @@ class RoundPhaseDropdown extends ConsumerStatefulWidget {
     required this.completedPhases,
     super.key,
   });
+
+  /// Repeatable key for the phase popup-menu button
+  static ValueKey<String> popupButtonKey(int playerIdx, int round) {
+    return ValueKey('p${playerIdx}_r${round}_phase_popup');
+  }
+
   final int? selectedPhase;
   final ValueChanged<int?> onChanged;
   final int playerIdx;
@@ -63,52 +69,61 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
         ? theme.colorScheme.primary
         : theme.colorScheme.outline;
 
-    return Focus(
-      focusNode: _focusNode,
-      child: PopupMenuButton<int?>(
-        tooltip: l10n.selectCompletedPhases,
-        onOpened: () {
-          // Request focus when popup opens
-          _focusNode.requestFocus();
-        },
-        onCanceled: () {
-          // Remove focus when popup is canceled (clicked outside)
-          _focusNode.unfocus();
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            border: Border.all(
-              color: borderColor,
-              width: hasFocus ? 2 : 1,
+    return Semantics(
+      button: true,
+      label:
+          'Player ${widget.playerIdx + 1} Round ${widget.round + 1} Phase Selector',
+      child: Focus(
+        focusNode: _focusNode,
+        child: PopupMenuButton<int?>(
+          key: RoundPhaseDropdown.popupButtonKey(
+            widget.playerIdx,
+            widget.round,
+          ),
+          tooltip: l10n.selectCompletedPhases,
+          onOpened: () {
+            // Request focus when popup opens
+            _focusNode.requestFocus();
+          },
+          onCanceled: () {
+            // Remove focus when popup is canceled (clicked outside)
+            _focusNode.unfocus();
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              border: Border.all(
+                color: borderColor,
+                width: hasFocus ? 2 : 1,
+              ),
+              borderRadius: BorderRadius.circular(4),
             ),
-            borderRadius: BorderRadius.circular(4),
+            child: Text(
+              widget.selectedPhase != null
+                  ? l10n.phaseNumber(widget.selectedPhase!)
+                  : l10n.noPhase,
+              style: TextStyle(color: textColor),
+            ),
           ),
-          child: Text(
-            widget.selectedPhase != null
-                ? l10n.phaseNumber(widget.selectedPhase!)
-                : l10n.noPhase,
-            style: TextStyle(color: textColor),
-          ),
+          itemBuilder: (context) => [
+            // We have to use a -1 for the None value because onSelected is only called if there is a value
+            PopupMenuItem<int?>(value: -1, child: Text(l10n.noPhase)),
+            ...List.generate(game.configuration.numPhases, (i) {
+              final phaseNum = i + 1;
+              return CheckedPopupMenuItem<int?>(
+                value: phaseNum,
+                checked: widget.completedPhases.contains(phaseNum),
+                child: Text(l10n.phaseNumber(phaseNum)),
+              );
+            }),
+          ],
+          onSelected: (val) {
+            widget.onChanged(val != null && val < 0 ? val : val);
+            // Remove focus when an item is selected
+            _focusNode.unfocus();
+          },
         ),
-        itemBuilder: (context) => [
-          // We have to use a -1 for the None value because onSelected is only called if there is a value
-          PopupMenuItem<int?>(value: -1, child: Text(l10n.noPhase)),
-          ...List.generate(game.configuration.numPhases, (i) {
-            final phaseNum = i + 1;
-            return CheckedPopupMenuItem<int?>(
-              value: phaseNum,
-              checked: widget.completedPhases.contains(phaseNum),
-              child: Text(l10n.phaseNumber(phaseNum)),
-            );
-          }),
-        ],
-        onSelected: (val) {
-          widget.onChanged(val != null && val < 0 ? val : val);
-          // Remove focus when an item is selected
-          _focusNode.unfocus();
-        },
       ),
     );
   }

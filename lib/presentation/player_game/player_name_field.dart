@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// A text field for editing a player's name usually in a modal dialog
+/// A text field for editing a player's name usually in a modal dialog.
+///
+/// Callers **must** pass a `key:` argument so the widget is locatable in tests.
+/// Use PlayerGameModal.nameFieldKey to construct a repeatable key.
 class PlayerNameField extends StatefulWidget {
   const PlayerNameField({
     super.key,
@@ -56,30 +59,33 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      focusNode: _focusNode,
-      autofocus: true,
-      controller: _controller,
-      textAlign: widget.textAlign,
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: widget.border != null
-            ? const EdgeInsets.symmetric(vertical: 12, horizontal: 12)
-            : const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
-        border: widget.border ?? InputBorder.none,
-        enabledBorder: widget.border,
-        focusedBorder: widget.border,
+    return Semantics(
+      label: 'Player Name',
+      child: TextFormField(
+        focusNode: _focusNode,
+        autofocus: true,
+        controller: _controller,
+        textAlign: widget.textAlign,
+        decoration: InputDecoration(
+          isDense: true,
+          contentPadding: widget.border != null
+              ? const EdgeInsets.symmetric(vertical: 12, horizontal: 12)
+              : const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+          border: widget.border ?? InputBorder.none,
+          enabledBorder: widget.border,
+          focusedBorder: widget.border,
+        ),
+        onChanged: widget.onChanged,
+        onFieldSubmitted: (_) {
+          widget.onSubmitted?.call();
+        },
+        onTap: () {
+          _controller.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: _controller.text.length,
+          );
+        },
       ),
-      onChanged: widget.onChanged,
-      onFieldSubmitted: (_) {
-        widget.onSubmitted?.call();
-      },
-      onTap: () {
-        _controller.selection = TextSelection(
-          baseOffset: 0,
-          extentOffset: _controller.text.length,
-        );
-      },
     );
   }
 }

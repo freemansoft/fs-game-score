@@ -91,18 +91,21 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           ),
         ),
         const SizedBox(height: 4),
-        TextField(
-          key: FrenchDrivingRoundPanel.milesFieldKey,
-          controller: _milesController,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            hintText: l10n.miles,
-            isDense: true,
+        Semantics(
+          label: 'Miles Driven',
+          child: TextField(
+            key: FrenchDrivingRoundPanel.milesFieldKey,
+            controller: _milesController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: l10n.miles,
+              isDense: true,
+            ),
+            onChanged: (val) {
+              final miles = int.tryParse(val) ?? 0;
+              _updateAttributes(_localAttributes.copyWith(miles: miles));
+            },
           ),
-          onChanged: (val) {
-            final miles = int.tryParse(val) ?? 0;
-            _updateAttributes(_localAttributes.copyWith(miles: miles));
-          },
         ),
       ],
     );
@@ -121,29 +124,33 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           message: l10n.safetiesTooltip,
           child: Text('${l10n.safeties}: '),
         ),
-        Tooltip(
-          message: l10n.safetiesTooltip,
-          child: DropdownButton<int>(
-            key: FrenchDrivingRoundPanel.safetiesDropdownKey,
-            value: numSafeties,
-            items:
-                List.generate(
-                      5,
-                      (i) => i,
-                    )
-                    .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
-                    .toList(),
-            onChanged: (val) {
-              if (val != null) {
-                final newSafeties = List.filled(4, false);
-                for (int i = 0; i < val; i++) {
-                  newSafeties[i] = true;
+        Semantics(
+          button: true,
+          label: 'Number of Safeties',
+          child: Tooltip(
+            message: l10n.safetiesTooltip,
+            child: DropdownButton<int>(
+              key: FrenchDrivingRoundPanel.safetiesDropdownKey,
+              value: numSafeties,
+              items:
+                  List.generate(
+                        5,
+                        (i) => i,
+                      )
+                      .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
+                      .toList(),
+              onChanged: (val) {
+                if (val != null) {
+                  final newSafeties = List.filled(4, false);
+                  for (int i = 0; i < val; i++) {
+                    newSafeties[i] = true;
+                  }
+                  _updateAttributes(
+                    _localAttributes.copyWith(safetyCards: newSafeties),
+                  );
                 }
-                _updateAttributes(
-                  _localAttributes.copyWith(safetyCards: newSafeties),
-                );
-              }
-            },
+              },
+            ),
           ),
         ),
       ],
@@ -156,25 +163,29 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           message: l10n.coupFourreTooltip,
           child: Text('${l10n.coupFourre}: '),
         ),
-        Tooltip(
-          message: l10n.coupFourreTooltip,
-          child: DropdownButton<int>(
-            key: FrenchDrivingRoundPanel.coupFourreDropdownKey,
-            value: numCoupFourre,
-            items: List.generate(5, (i) => i)
-                .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
-                .toList(),
-            onChanged: (val) {
-              if (val != null) {
-                final newCoupFourre = List.filled(4, false);
-                for (int i = 0; i < val; i++) {
-                  newCoupFourre[i] = true;
+        Semantics(
+          button: true,
+          label: 'Number of Coup Fourre',
+          child: Tooltip(
+            message: l10n.coupFourreTooltip,
+            child: DropdownButton<int>(
+              key: FrenchDrivingRoundPanel.coupFourreDropdownKey,
+              value: numCoupFourre,
+              items: List.generate(5, (i) => i)
+                  .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
+                  .toList(),
+              onChanged: (val) {
+                if (val != null) {
+                  final newCoupFourre = List.filled(4, false);
+                  for (int i = 0; i < val; i++) {
+                    newCoupFourre[i] = true;
+                  }
+                  _updateAttributes(
+                    _localAttributes.copyWith(coupFourre: newCoupFourre),
+                  );
                 }
-                _updateAttributes(
-                  _localAttributes.copyWith(coupFourre: newCoupFourre),
-                );
-              }
-            },
+              },
+            ),
           ),
         ),
       ],
@@ -207,34 +218,44 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
     return Wrap(
       spacing: 8,
       children: [
-        Tooltip(
-          message: l10n.delayedActionTooltip,
-          child: _buildCheckbox(
-            l10n.delayedAction,
-            _localAttributes.delayedAction,
-            (val) => _updateAttributes(
-              _localAttributes.copyWith(delayedAction: val),
+        Semantics(
+          label: 'Delayed Action Bonus',
+          child: Tooltip(
+            message: l10n.delayedActionTooltip,
+            child: _buildCheckbox(
+              l10n.delayedAction,
+              _localAttributes.delayedAction,
+              (val) => _updateAttributes(
+                _localAttributes.copyWith(delayedAction: val),
+              ),
+              FrenchDrivingRoundPanel.delayedActionKey,
             ),
-            FrenchDrivingRoundPanel.delayedActionKey,
           ),
         ),
-        Tooltip(
-          message: l10n.safeTripTooltip,
-          child: _buildCheckbox(
-            l10n.safeTrip,
-            _localAttributes.safeTrip,
-            (val) =>
-                _updateAttributes(_localAttributes.copyWith(safeTrip: val)),
-            FrenchDrivingRoundPanel.safeTripKey,
+        Semantics(
+          label: 'Safe Trip Bonus',
+          child: Tooltip(
+            message: l10n.safeTripTooltip,
+            child: _buildCheckbox(
+              l10n.safeTrip,
+              _localAttributes.safeTrip,
+              (val) =>
+                  _updateAttributes(_localAttributes.copyWith(safeTrip: val)),
+              FrenchDrivingRoundPanel.safeTripKey,
+            ),
           ),
         ),
-        Tooltip(
-          message: l10n.shutOutTooltip,
-          child: _buildCheckbox(
-            l10n.shutOut,
-            _localAttributes.shutOut,
-            (val) => _updateAttributes(_localAttributes.copyWith(shutOut: val)),
-            FrenchDrivingRoundPanel.shutOutKey,
+        Semantics(
+          label: 'Shut Out Bonus',
+          child: Tooltip(
+            message: l10n.shutOutTooltip,
+            child: _buildCheckbox(
+              l10n.shutOut,
+              _localAttributes.shutOut,
+              (val) =>
+                  _updateAttributes(_localAttributes.copyWith(shutOut: val)),
+              FrenchDrivingRoundPanel.shutOutKey,
+            ),
           ),
         ),
       ],

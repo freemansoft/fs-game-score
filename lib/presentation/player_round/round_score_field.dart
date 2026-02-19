@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 
+/// A text field for entering a round score.
+///
+/// Callers **must** pass a `key:` argument so the widget is locatable in tests.
+/// Use PlayerRoundModal.scoreFieldKey to construct a repeatable key.
 class RoundScoreField extends StatefulWidget {
   const RoundScoreField({
     super.key,
@@ -132,27 +136,33 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _controller,
-      focusNode: _focusNode,
-      keyboardType: TextInputType.number,
-      autofocus: widget.autofocus,
-      enabled: widget.enabled,
-      decoration: InputDecoration(
-        hintText: AppLocalizations.of(context)!.scoreHint,
-        isDense: true,
-        contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-        border: const OutlineInputBorder(),
+    return Semantics(
+      label: 'Round Score',
+      child: TextFormField(
+        controller: _controller,
+        focusNode: _focusNode,
+        keyboardType: TextInputType.number,
+        autofocus: widget.autofocus,
+        enabled: widget.enabled,
+        decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)!.scoreHint,
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 4,
+            horizontal: 4,
+          ),
+          border: const OutlineInputBorder(),
+        ),
+        onChanged: _onInputChanged,
+        onFieldSubmitted: _onFieldSubmitted,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        onTap: () {
+          _controller.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: _controller.text.length,
+          );
+        },
       ),
-      onChanged: _onInputChanged,
-      onFieldSubmitted: _onFieldSubmitted,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      onTap: () {
-        _controller.selection = TextSelection(
-          baseOffset: 0,
-          extentOffset: _controller.text.length,
-        );
-      },
     );
   }
 }

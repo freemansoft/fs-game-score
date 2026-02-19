@@ -143,6 +143,7 @@ class PlayerGameModal extends StatelessWidget {
     return AlertDialog(
       //title: Text('Player ${playerIdx + 1}'),
       key: modalKey(playerIdx),
+      semanticLabel: 'Player ${playerIdx + 1} Game Modal',
       scrollable: true,
       content: SingleChildScrollView(
         child: orientation == Orientation.landscape && enablePhases

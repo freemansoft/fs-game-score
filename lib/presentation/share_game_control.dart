@@ -8,19 +8,25 @@ import 'package:share_plus/share_plus.dart';
 class ShareGameControl extends ConsumerWidget {
   const ShareGameControl({super.key});
 
+  static const ValueKey<String> shareButtonKey = ValueKey('share_button');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    return IconButton(
-      key: const ValueKey('share_button'),
-      icon: Icon(
-        Theme.of(context).platform == TargetPlatform.iOS ||
-                Theme.of(context).platform == TargetPlatform.macOS
-            ? Icons.ios_share
-            : Icons.share,
+    return Semantics(
+      button: true,
+      label: 'Share Game Scores',
+      child: IconButton(
+        key: ShareGameControl.shareButtonKey,
+        icon: Icon(
+          Theme.of(context).platform == TargetPlatform.iOS ||
+                  Theme.of(context).platform == TargetPlatform.macOS
+              ? Icons.ios_share
+              : Icons.share,
+        ),
+        tooltip: l10n.shareScores,
+        onPressed: () => shareGame(context, ref),
       ),
-      tooltip: l10n.shareScores,
-      onPressed: () => shareGame(context, ref),
     );
   }
 }

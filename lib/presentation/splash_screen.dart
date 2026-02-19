@@ -75,24 +75,28 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           ),
         ),
         const SizedBox(width: 16),
-        DropdownButton<int>(
-          key: SplashScreen.numPlayersDropdownKey,
-          value: thisGame.configuration.numPlayers,
-          items: [
-            for (var i = 2; i <= 8; i++)
-              DropdownMenuItem(value: i, child: Text(i.toString())),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                thisGame = thisGame.copyWith(
-                  configuration: thisGame.configuration.copyWith(
-                    numPlayers: value,
-                  ),
-                );
-              });
-            }
-          },
+        Semantics(
+          button: true,
+          label: 'Number of Players',
+          child: DropdownButton<int>(
+            key: SplashScreen.numPlayersDropdownKey,
+            value: thisGame.configuration.numPlayers,
+            items: [
+              for (var i = 2; i <= 8; i++)
+                DropdownMenuItem(value: i, child: Text(i.toString())),
+            ],
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  thisGame = thisGame.copyWith(
+                    configuration: thisGame.configuration.copyWith(
+                      numPlayers: value,
+                    ),
+                  );
+                });
+              }
+            },
+          ),
         ),
       ],
     );
@@ -111,24 +115,28 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           ),
         ),
         const SizedBox(width: 12),
-        DropdownButton<int>(
-          key: SplashScreen.maxRoundsDropdownKey,
-          value: thisGame.configuration.maxRounds,
-          items: [
-            for (var i = 1; i <= 20; i++)
-              DropdownMenuItem(value: i, child: Text(i.toString())),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                thisGame = thisGame.copyWith(
-                  configuration: thisGame.configuration.copyWith(
-                    maxRounds: value,
-                  ),
-                );
-              });
-            }
-          },
+        Semantics(
+          button: true,
+          label: 'Maximum Rounds',
+          child: DropdownButton<int>(
+            key: SplashScreen.maxRoundsDropdownKey,
+            value: thisGame.configuration.maxRounds,
+            items: [
+              for (var i = 1; i <= 20; i++)
+                DropdownMenuItem(value: i, child: Text(i.toString())),
+            ],
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  thisGame = thisGame.copyWith(
+                    configuration: thisGame.configuration.copyWith(
+                      maxRounds: value,
+                    ),
+                  );
+                });
+              }
+            },
+          ),
         ),
       ],
     );
@@ -147,34 +155,38 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           ),
         ),
         const SizedBox(width: 12),
-        DropdownButton<GameMode>(
-          key: SplashScreen.gameModeDropdownKey,
-          value: thisGame.configuration.gameMode,
-          items: [
-            DropdownMenuItem(
-              value: GameMode.standard,
-              child: Text(l10n.gameModeStandard),
-            ),
-            DropdownMenuItem(
-              value: GameMode.phase10,
-              child: Text(l10n.gameModePhase10),
-            ),
-            DropdownMenuItem(
-              value: GameMode.frenchDriving,
-              child: Text(l10n.gameModeFrenchDriving),
-            ),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                thisGame = thisGame.copyWith(
-                  configuration: thisGame.configuration.copyWith(
-                    gameMode: value,
-                  ),
-                );
-              });
-            }
-          },
+        Semantics(
+          button: true,
+          label: 'Game Mode',
+          child: DropdownButton<GameMode>(
+            key: SplashScreen.gameModeDropdownKey,
+            value: thisGame.configuration.gameMode,
+            items: [
+              DropdownMenuItem(
+                value: GameMode.standard,
+                child: Text(l10n.gameModeStandard),
+              ),
+              DropdownMenuItem(
+                value: GameMode.phase10,
+                child: Text(l10n.gameModePhase10),
+              ),
+              DropdownMenuItem(
+                value: GameMode.frenchDriving,
+                child: Text(l10n.gameModeFrenchDriving),
+              ),
+            ],
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  thisGame = thisGame.copyWith(
+                    configuration: thisGame.configuration.copyWith(
+                      gameMode: value,
+                    ),
+                  );
+                });
+              }
+            },
+          ),
         ),
       ],
     );
@@ -193,27 +205,31 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           ),
         ),
         const SizedBox(width: 12),
-        DropdownButton<String>(
-          key: SplashScreen.scoreFilterDropdownKey,
-          value: thisGame.configuration.scoreFilter,
-          items: [
-            DropdownMenuItem(value: '', child: Text(l10n.anyScore)),
-            DropdownMenuItem(
-              value: r'^[0-9]*[05]$',
-              child: Text(l10n.mustEndIn0Or5),
-            ),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                thisGame = thisGame.copyWith(
-                  configuration: thisGame.configuration.copyWith(
-                    scoreFilter: value,
-                  ),
-                );
-              });
-            }
-          },
+        Semantics(
+          button: true,
+          label: 'Score Filter',
+          child: DropdownButton<String>(
+            key: SplashScreen.scoreFilterDropdownKey,
+            value: thisGame.configuration.scoreFilter,
+            items: [
+              DropdownMenuItem(value: '', child: Text(l10n.anyScore)),
+              DropdownMenuItem(
+                value: r'^[0-9]*[05]$',
+                child: Text(l10n.mustEndIn0Or5),
+              ),
+            ],
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  thisGame = thisGame.copyWith(
+                    configuration: thisGame.configuration.copyWith(
+                      scoreFilter: value,
+                    ),
+                  );
+                });
+              }
+            },
+          ),
         ),
       ],
     );
@@ -236,49 +252,56 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           builder: (context) {
             return Row(
               children: [
-                Checkbox(
-                  key: SplashScreen.endGameScoreCheckboxKey,
-                  value: _endGameScoreEnabled,
-                  onChanged: (value) {
-                    setState(() {
-                      _endGameScoreEnabled = value ?? false;
-                      if (!_endGameScoreEnabled) {
-                        thisGame = thisGame.copyWith(
-                          configuration: thisGame.configuration.copyWith(
-                            endGameScore: 0,
-                          ),
-                        );
-                        _endGameScoreController.clear();
-                      }
-                    });
-                  },
+                Semantics(
+                  label: 'Enable End Game Score',
+                  checked: _endGameScoreEnabled,
+                  child: Checkbox(
+                    key: SplashScreen.endGameScoreCheckboxKey,
+                    value: _endGameScoreEnabled,
+                    onChanged: (value) {
+                      setState(() {
+                        _endGameScoreEnabled = value ?? false;
+                        if (!_endGameScoreEnabled) {
+                          thisGame = thisGame.copyWith(
+                            configuration: thisGame.configuration.copyWith(
+                              endGameScore: 0,
+                            ),
+                          );
+                          _endGameScoreController.clear();
+                        }
+                      });
+                    },
+                  ),
                 ),
                 SizedBox(
                   width: 160,
-                  child: TextField(
-                    key: SplashScreen.endGameScoreFieldKey,
-                    enabled: _endGameScoreEnabled,
-                    keyboardType: TextInputType.number,
-                    controller: _endGameScoreController,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (value) {
-                      final parsed = int.tryParse(value);
-                      setState(() {
-                        thisGame = thisGame.copyWith(
-                          configuration: thisGame.configuration.copyWith(
-                            endGameScore: parsed ?? 0,
-                          ),
-                        );
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: l10n.gameEndingScore,
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 4,
-                        horizontal: 4,
+                  child: Semantics(
+                    label: 'End Game Score',
+                    child: TextField(
+                      key: SplashScreen.endGameScoreFieldKey,
+                      enabled: _endGameScoreEnabled,
+                      keyboardType: TextInputType.number,
+                      controller: _endGameScoreController,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (value) {
+                        final parsed = int.tryParse(value);
+                        setState(() {
+                          thisGame = thisGame.copyWith(
+                            configuration: thisGame.configuration.copyWith(
+                              endGameScore: parsed ?? 0,
+                            ),
+                          );
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: l10n.gameEndingScore,
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 4,
+                        ),
+                        border: const OutlineInputBorder(),
                       ),
-                      border: const OutlineInputBorder(),
                     ),
                   ),
                 ),
@@ -424,29 +447,33 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             const SizedBox(height: 8),
             _buildFieldsLayout(context),
             const SizedBox(height: 6),
-            ElevatedButton(
-              key: SplashScreen.continueButtonKey,
-              onPressed: () async {
-                // new games from the splash screen clear previous game players
-                await PlayersRepository().clearPrefsPlayers();
-                // Create a new game with fresh gameId and selected configuration
-                await ref
-                    .read(gameProvider.notifier)
-                    .newGame(
-                      maxRounds: thisGame.configuration.maxRounds,
-                      numPlayers: thisGame.configuration.numPlayers,
-                      gameMode: thisGame.configuration.gameMode,
-                      scoreFilter: thisGame.configuration.scoreFilter,
-                      endGameScore: thisGame.configuration.endGameScore,
-                      version: appVersion,
-                    );
+            Semantics(
+              button: true,
+              label: 'Continue to Score Table',
+              child: ElevatedButton(
+                key: SplashScreen.continueButtonKey,
+                onPressed: () async {
+                  // new games from the splash screen clear previous game players
+                  await PlayersRepository().clearPrefsPlayers();
+                  // Create a new game with fresh gameId and selected configuration
+                  await ref
+                      .read(gameProvider.notifier)
+                      .newGame(
+                        maxRounds: thisGame.configuration.maxRounds,
+                        numPlayers: thisGame.configuration.numPlayers,
+                        gameMode: thisGame.configuration.gameMode,
+                        scoreFilter: thisGame.configuration.scoreFilter,
+                        endGameScore: thisGame.configuration.endGameScore,
+                        version: appVersion,
+                      );
 
-                // Navigate to score table screen
-                if (context.mounted) {
-                  context.goNamed('scoreTable');
-                }
-              },
-              child: Text(AppLocalizations.of(context)!.continueButton),
+                  // Navigate to score table screen
+                  if (context.mounted) {
+                    context.goNamed('scoreTable');
+                  }
+                },
+                child: Text(AppLocalizations.of(context)!.continueButton),
+              ),
             ),
           ],
         ),

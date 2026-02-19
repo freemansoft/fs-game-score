@@ -149,6 +149,8 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       key: PlayerRoundModal.modalKey(widget.playerIdx, widget.round),
+      semanticLabel:
+          'Player ${widget.playerIdx + 1} Round ${widget.round + 1} Modal',
       title: Text(
         l10n.playerRoundModalTitle(widget.playerIdx + 1, widget.round + 1),
       ),
