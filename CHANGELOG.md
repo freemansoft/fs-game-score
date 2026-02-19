@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Save the game state to disk with a 5 second delay to prevent excessive writes.
 - Split the GameConfiguration from the Game model to segregate a game instance from its configuration.
 - Added French Driving game mode
+- Released 1.9.0 into app store
 
 ## [1.8.0] - 2025-12-28
 
@@ -34,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added I10n Internationalization / Localization English first pass
 - Added I10n Internalionalization / Localization Spanish first pass
 - iPad iOS 26.1 fix broke integration tests because it ignored 0,0 offset taps.
+- Released 1.7.0 into app store
 
 ## [1.6.0] - 2025-12-24
 
