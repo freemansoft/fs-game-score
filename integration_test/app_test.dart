@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
 import 'package:fs_score_card/data/game_repository.dart';
 import 'package:fs_score_card/data/players_repository.dart';
+import 'package:fs_score_card/l10n/app_localizations_en.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_cell.dart';
@@ -501,13 +502,14 @@ void main() {
     // Only press Continue (no dropdown changes)
     final continueButton = find.byKey(splashContinueButtonKey);
     expect(continueButton, findsOneWidget);
+    // this uses the default game type , number of players and number of rounds
     await tester.tap(continueButton);
     await tester.pumpAndSettle();
 
     // Verify score table is displayed
     expect(find.byType(DataTable2), findsOneWidget);
 
-    // Verify 2 player rows (excluding header)
+    // Verify at least 2 player rows (excluding header)
     final playerNameFields = find.byKey(playerNameFieldP0Key);
     expect(playerNameFields, findsOneWidget);
     expect(find.byKey(playerNameFieldP1Key), findsOneWidget);
@@ -829,7 +831,11 @@ void main() {
     await tester.ensureVisible(firstItem);
     await tester.pumpAndSettle();
     expect(firstItem, findsOneWidget);
-    await tester.tap(find.text('5').last);
+    final fifthItem = find.text('5').last;
+    await tester.ensureVisible(fifthItem);
+    await tester.pumpAndSettle();
+    expect(fifthItem, findsOneWidget);
+    await tester.tap(fifthItem);
     await tester.pumpAndSettle();
 
     // Enable "Phase 10"
@@ -1043,5 +1049,177 @@ void main() {
 
     // Validate that the cell is showing correctly calculated score (2100)
     expect((tester.widget(find.byKey(cellKey)) as Text).data, '2100');
+  });
+
+  testWidgets('Phase 10 game with 4 players, 20 rounds, and custom scoring', (
+    WidgetTester tester,
+  ) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Select 4 players
+    final playersDropdown = find.byKey(SplashScreen.numPlayersDropdownKey);
+    await tester.tap(playersDropdown);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('4').last);
+    await tester.pumpAndSettle();
+
+    // Select 20 rounds
+    final roundsDropdown = find.byKey(SplashScreen.maxRoundsDropdownKey);
+    await tester.tap(roundsDropdown);
+    await tester.pumpAndSettle();
+
+    // Scroll dropdown to find '20'
+    final dropdownList = find.byType(Scrollable).last;
+    final targetItemFinder = find.text('20').last;
+
+    await tester.dragUntilVisible(
+      targetItemFinder,
+      dropdownList,
+      const Offset(0, -200), // scroll down
+      // clearer test
+      // ignore: avoid_redundant_argument_values
+      maxIteration: 50,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(targetItemFinder);
+    await tester.pumpAndSettle();
+
+    // Select Phase 10 mode
+    final gameModeDropdown = find.byKey(SplashScreen.gameModeDropdownKey);
+    await tester.tap(gameModeDropdown);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Phase 10').last);
+    await tester.pumpAndSettle();
+
+    // Start game
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await tester.pumpAndSettle();
+
+    // Helper for editing a round
+    Future<void> enterPlayerScoreAndPhase(
+      int playerIdx,
+      int round,
+      int score,
+      int phaseCompleted,
+    ) async {
+      final cellKey = PlayerRoundCell.scoreKey(playerIdx, round);
+
+      // Scroll horizontally in the DataTable2 until the cell is visible.
+      // We drag the table row left by a small amount repeatedly until cell is found.
+      await tester.dragUntilVisible(
+        find.byKey(cellKey),
+        find
+            .byType(Scrollable)
+            .first, // The horizontal scrolling area of DataTable2 is usually the first scrollable or we can just drag
+        const Offset(-300, 0),
+        maxIteration: 100,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(cellKey));
+      await tester.pumpAndSettle();
+
+      // Enter score
+      final scoreField = find.byKey(
+        PlayerRoundModal.scoreFieldKey(playerIdx, round),
+      );
+      await tester.enterText(scoreField, score.toString());
+      await tester.pumpAndSettle();
+
+      // Enter phase
+      final phaseDropdown = find.byKey(
+        PlayerRoundModal.phaseDropdownKey(playerIdx, round),
+      );
+      await tester.tap(phaseDropdown);
+      await tester.pumpAndSettle();
+
+      // Select specific phase
+      final phaseFinder = find.text('Phase $phaseCompleted').last;
+      expect(
+        phaseFinder,
+        findsOneWidget,
+        reason:
+            'Phase $phaseCompleted should be visible in picker for player $playerIdx, round ${round + 1}',
+      );
+      await tester.ensureVisible(phaseFinder);
+      // why do we need this?
+      await tester.tap(phaseFinder, warnIfMissed: false);
+      await tester.pumpAndSettle();
+
+      // Close modal
+      await tester.tapAt(
+        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    final p1Rounds = [1, 3, 9, 12, 15, 16, 20];
+    final p1Phases = [1, 2, 3, 4, 5, 6, 7];
+    for (int i = 0; i < p1Rounds.length; i++) {
+      await enterPlayerScoreAndPhase(
+        0,
+        p1Rounds[i] - 1,
+        200,
+        p1Phases[i],
+      );
+    }
+
+    final p2Rounds = [2, 4, 6, 8, 10, 12, 14, 18, 20];
+    final p2Phases = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    for (int i = 0; i < p2Rounds.length; i++) {
+      await enterPlayerScoreAndPhase(
+        1,
+        p2Rounds[i] - 1,
+        150,
+        p2Phases[i],
+      );
+    }
+
+    // Get l10n to construct localized strings
+    final l10n = AppLocalizationsEn();
+
+    // Return to the left side of the table
+    await tester.dragUntilVisible(
+      find.byKey(PlayerGameCell.cellKey(0)),
+      find.byType(Scrollable).first,
+      const Offset(300, 0),
+      maxIteration: 100,
+    );
+    await tester.pumpAndSettle();
+
+    // Verify phases in PlayerGameModal for player 1
+    await tester.tap(find.byKey(PlayerGameCell.cellKey(0)));
+    await tester.pumpAndSettle();
+    expect(find.byType(PlayerGameModal), findsOneWidget);
+    for (int i = 0; i < p1Rounds.length; i++) {
+      expect(find.text(l10n.roundPhase(p1Rounds[i], i + 1)), findsOneWidget);
+    }
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    // Verify phases in PlayerGameModal for player 2
+    await tester.tap(find.byKey(PlayerGameCell.cellKey(1)));
+    await tester.pumpAndSettle();
+    expect(find.byType(PlayerGameModal), findsOneWidget);
+    for (int i = 0; i < p2Rounds.length; i++) {
+      expect(find.text(l10n.roundPhase(p2Rounds[i], i + 1)), findsOneWidget);
+    }
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    // Verify final scores for two players
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
+      (200 * p1Rounds.length).toString(),
+    );
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(1))) as Text).data,
+      (150 * p2Rounds.length).toString(),
+    );
   });
 }
