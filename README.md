@@ -164,7 +164,7 @@ You can test this locally using the IDE and a web browser like Chrome
    2. create a zip file of `build/web`
    3. Share the zip. They can unzip it and put the contents of the `web` folder in the web server docroot. The `web` folder should not be part of the path.
 
-#### Web build distribution - build when web site is rooted in a subdirectory, not in /
+#### Web build distribution - when web site are rooted on the web server in a non-root subdirectory
 
 Change this to match your deployment. These notes exist so I remember the process!
 
