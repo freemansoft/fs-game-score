@@ -56,7 +56,6 @@ void main() {
       players = Players(
         numPlayers: 3,
         maxRounds: 5,
-        numPhases: 3,
         initialPlayers: [player1, player2, player3],
       );
     });
@@ -115,7 +114,7 @@ void main() {
       });
 
       test('should handle empty players list', () {
-        final emptyPlayers = Players(numPlayers: 0, maxRounds: 5, numPhases: 3);
+        final emptyPlayers = Players(numPlayers: 0, maxRounds: 5);
         final jsonString = emptyPlayers.toJson();
 
         expect(jsonString, '[]');
@@ -163,7 +162,7 @@ void main() {
       });
 
       test('should handle empty players list', () {
-        final emptyPlayers = Players(numPlayers: 0, maxRounds: 5, numPhases: 3);
+        final emptyPlayers = Players(numPlayers: 0, maxRounds: 5);
         final csv = emptyPlayers.toCsv();
 
         expect(csv, '');
@@ -187,7 +186,6 @@ void main() {
         final singlePlayer = Players(
           numPlayers: 1,
           maxRounds: 3,
-          numPhases: 2,
           initialPlayers: [singlePlayerData],
         );
         final csv = singlePlayer.toCsv();
@@ -230,7 +228,7 @@ void main() {
       });
 
       test('should handle empty players list', () {
-        final emptyPlayers = Players(numPlayers: 0, maxRounds: 5, numPhases: 3);
+        final emptyPlayers = Players(numPlayers: 0, maxRounds: 5);
         final mapList = emptyPlayers.toMapList();
 
         expect(mapList, isEmpty);

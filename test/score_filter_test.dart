@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/model/game.dart';
+import 'package:fs_score_card/model/score_filters.dart';
 
 void main() {
   group('Game Score Filter Tests', () {
@@ -10,14 +11,18 @@ void main() {
 
     test('should create game with custom score filter', () {
       final game = Game(
-        configuration: GameConfiguration(scoreFilter: r'^[0-9]*[05]$'),
+        configuration: GameConfiguration(
+          scoreFilter: ScoreFilters.endsWith0or5,
+        ),
       );
-      expect(game.configuration.scoreFilter, equals(r'^[0-9]*[05]$'));
+      expect(game.configuration.scoreFilter, equals(ScoreFilters.endsWith0or5));
     });
 
     test('should serialize and deserialize score filter correctly', () {
       final originalGame = Game(
-        configuration: GameConfiguration(scoreFilter: r'^[0-9]*[05]$'),
+        configuration: GameConfiguration(
+          scoreFilter: ScoreFilters.endsWith0or5,
+        ),
       );
       final jsonString = originalGame.toJson();
       final deserializedGame = Game.fromJson(jsonString);
@@ -36,11 +41,14 @@ void main() {
       );
       final newGame = originalGame.copyWith(
         configuration: originalGame.configuration.copyWith(
-          scoreFilter: r'^[0-9]*[05]$',
+          scoreFilter: ScoreFilters.endsWith0or5,
         ),
       );
 
-      expect(newGame.configuration.scoreFilter, equals(r'^[0-9]*[05]$'));
+      expect(
+        newGame.configuration.scoreFilter,
+        equals(ScoreFilters.endsWith0or5),
+      );
       expect(
         originalGame.configuration.scoreFilter,
         equals(''),
@@ -50,7 +58,7 @@ void main() {
 
   group('Score Filter Regex Validation Tests', () {
     test('should validate scores ending in 5 or 0', () {
-      final regex = RegExp(r'^[0-9]*[05]$');
+      final regex = RegExp(ScoreFilters.endsWith0or5);
 
       // Valid scores
       expect(regex.hasMatch('0'), isTrue);

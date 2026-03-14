@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2026-03-14
+
+### Added 1.11.0
+
+- Support for negative scores in the round score editor when in General Scoring mode
+- Miles field receives focus automatically when the round editor modal opens in French Driving mode
+- Auto set the scoring filter based on the game mode
+- Added validation to the round score editor to prevent invalid scores from being entered and show an error message if the score is invalid
+- Added an integration test to verify that entering negative scores works correctly and deducts from the total
+
 ## [1.10.0] - 2026-02-24
 
 ### Fixed 1.10.0

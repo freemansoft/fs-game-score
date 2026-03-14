@@ -38,7 +38,6 @@ class PlayersNotifier extends Notifier<Players> {
     return Players(
       numPlayers: game.configuration.numPlayers,
       maxRounds: game.configuration.maxRounds,
-      numPhases: game.configuration.numPhases,
     );
   }
 
@@ -99,9 +98,6 @@ class PlayersNotifier extends Notifier<Players> {
     final maxRounds = state.length > 0
         ? state.players[0].scores.roundScores.length
         : 0;
-    final numPhases = state.length > 0
-        ? state.players[0].phases.completedPhases.length
-        : 0;
     final newPlayers = <Player>[];
     for (int i = 0; i < state.length; i++) {
       final oldPlayer = state.players[i];
@@ -109,14 +105,12 @@ class PlayersNotifier extends Notifier<Players> {
       final newPlayer = Player(
         name: newName,
         maxRounds: maxRounds,
-        numPhases: numPhases,
       );
       newPlayers.add(newPlayer);
     }
     state = Players(
       numPlayers: state.length,
       maxRounds: maxRounds,
-      numPhases: numPhases,
       initialPlayers: newPlayers,
     );
     _scheduleSave();

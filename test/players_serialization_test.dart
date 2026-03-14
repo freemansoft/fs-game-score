@@ -48,7 +48,6 @@ void main() {
       players = Players(
         numPlayers: 2,
         maxRounds: 5,
-        numPhases: 3,
         initialPlayers: [player1, player2],
       );
     });
@@ -176,7 +175,6 @@ void main() {
         final emptyPlayers = Players(
           numPlayers: 0,
           maxRounds: 5,
-          numPhases: 3,
         );
 
         final jsonString = emptyPlayers.toJson();

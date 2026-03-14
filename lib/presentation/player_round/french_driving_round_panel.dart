@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/model/french_driving_round_attributes.dart';
+import 'package:fs_score_card/model/score_filters.dart';
 
 class FrenchDrivingRoundPanel extends StatefulWidget {
   const FrenchDrivingRoundPanel({
@@ -39,6 +41,8 @@ class FrenchDrivingRoundPanel extends StatefulWidget {
 class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
   late FrenchDrivingRoundAttributes _localAttributes;
   late TextEditingController _milesController;
+  late FocusNode _milesFocusNode;
+  bool _milesHasValidationError = false;
 
   @override
   void initState() {
@@ -47,12 +51,47 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
     _milesController = TextEditingController(
       text: _localAttributes.miles.toString(),
     );
+    _milesFocusNode = FocusNode();
+    _milesFocusNode.addListener(_onMilesFocusChange);
   }
 
   @override
   void dispose() {
     _milesController.dispose();
+    _milesFocusNode.dispose();
     super.dispose();
+  }
+
+  void _validateMiles(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _milesHasValidationError = false;
+      });
+      return;
+    }
+    final regex = RegExp(ScoreFilters.endsWith0or5);
+    setState(() {
+      _milesHasValidationError = !regex.hasMatch(value);
+    });
+  }
+
+  void _onMilesFocusChange() {
+    // If focus is lost while there's a validation error, re-request focus
+    if (!_milesFocusNode.hasFocus &&
+        _milesHasValidationError &&
+        _milesController.text.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _milesFocusNode.requestFocus();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.invalidScoreForRound),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
+      });
+    }
   }
 
   void _updateAttributes(FrenchDrivingRoundAttributes newAttributes) {
@@ -96,14 +135,23 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           child: TextField(
             key: FrenchDrivingRoundPanel.milesFieldKey,
             controller: _milesController,
+            focusNode: _milesFocusNode,
             keyboardType: TextInputType.number,
+            autofocus: true,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               hintText: l10n.miles,
               isDense: true,
+              errorText: _milesHasValidationError
+                  ? l10n.invalidScoreForRound
+                  : null,
             ),
             onChanged: (val) {
-              final miles = int.tryParse(val) ?? 0;
-              _updateAttributes(_localAttributes.copyWith(miles: miles));
+              _validateMiles(val);
+              if (!_milesHasValidationError) {
+                final miles = int.tryParse(val) ?? 0;
+                _updateAttributes(_localAttributes.copyWith(miles: miles));
+              }
             },
           ),
         ),

@@ -7,7 +7,6 @@ class Players {
   Players({
     required int numPlayers,
     required int maxRounds,
-    required int numPhases,
     List<Player>? initialPlayers,
   }) : players =
            initialPlayers ??
@@ -16,7 +15,6 @@ class Players {
              (i) => Player(
                name: 'Player ${i + 1}',
                maxRounds: maxRounds,
-               numPhases: numPhases,
              ),
            );
 
@@ -42,7 +40,6 @@ class Players {
     return Players(
       numPlayers: newPlayers.length,
       maxRounds: first?.scores.roundScores.length ?? 0,
-      numPhases: first?.phases.completedPhases.length ?? 0,
       initialPlayers: newPlayers,
     );
   }

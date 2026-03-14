@@ -721,6 +721,47 @@ void main() {
       (tester.widget(find.byKey(playerTotalScoreP1Key)) as Text).data,
       '10',
     );
+
+    // Test entering a negative score for player 1 round 0
+    final playerRoundScoreP1R0Key = PlayerRoundCell.scoreKey(1, 0);
+    final roundScoreFieldP1R0Key = PlayerRoundModal.scoreFieldKey(1, 0);
+
+    // capture the current total score for player 1
+    final currentTotalScoreP1Str = (tester.widget(find.byKey(playerTotalScoreP1Key)) as Text).data;
+    final currentTotalScoreP1 = int.tryParse(currentTotalScoreP1Str ?? '0') ?? 0;
+
+    // click on the round 0 cell for player 1 to open the modal
+    await tester.tap(find.byKey(playerRoundScoreP1R0Key));
+    await tester.pumpAndSettle();
+    
+    // verify the PlayerRoundModal is displayed
+    expect(find.byType(PlayerRoundModal), findsOneWidget);
+
+    // enter a negative number
+    final round0ScoreFieldP1 = find.byKey(roundScoreFieldP1R0Key);
+    expect(round0ScoreFieldP1, findsOneWidget);
+    await tester.enterText(round0ScoreFieldP1, '-5');
+    await tester.pumpAndSettle();
+
+    // close the PlayerRoundCellModelPanel
+    // find an object outside the modal - AlertDialog and tap to close
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle(); // Wait for the dialog to dismiss
+
+    // validate that the text in the table matches the input
+    expect(
+      (tester.widget(find.byKey(playerRoundScoreP1R0Key)) as Text).data,
+      '-5',
+    );
+
+    // verify the total score for the row was reduced by that amount
+    final expectedNewTotal = currentTotalScoreP1 - 5;
+    expect(
+      (tester.widget(find.byKey(playerTotalScoreP1Key)) as Text).data,
+      expectedNewTotal.toString(),
+    );
   });
 
   testWidgets(

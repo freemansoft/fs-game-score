@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/model/score_filters.dart';
 
 /// A text field for entering a round score.
 ///
@@ -14,6 +15,7 @@ class RoundScoreField extends StatefulWidget {
     this.scoreFilter = '',
     this.autofocus = false,
     this.enabled = true,
+    this.allowNegative = false,
     this.onSubmitted,
   });
   final int? score;
@@ -21,6 +23,7 @@ class RoundScoreField extends StatefulWidget {
   final String scoreFilter;
   final bool autofocus;
   final bool enabled;
+  final bool allowNegative;
   final VoidCallback? onSubmitted;
 
   @override
@@ -130,7 +133,11 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
     // If the input is valid, update the score immediately for real-time total calculation
     if (!_hasValidationError && value.isNotEmpty) {
       final parsed = int.tryParse(value);
-      widget.onChanged(parsed);
+      // Don't call onChanged for unparseable intermediate input (e.g. just "-")
+      // to avoid the parent resetting the field text via didUpdateWidget.
+      if (parsed != null) {
+        widget.onChanged(parsed);
+      }
     }
   }
 
@@ -141,11 +148,16 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       child: TextFormField(
         controller: _controller,
         focusNode: _focusNode,
-        keyboardType: TextInputType.number,
+        keyboardType: widget.allowNegative
+            ? const TextInputType.numberWithOptions(signed: true)
+            : TextInputType.number,
         autofocus: widget.autofocus,
         enabled: widget.enabled,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.scoreHint,
+          errorText: _hasValidationError
+              ? AppLocalizations.of(context)!.invalidScoreForRound
+              : null,
           isDense: true,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 4,
@@ -155,7 +167,12 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
         ),
         onChanged: _onInputChanged,
         onFieldSubmitted: _onFieldSubmitted,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        inputFormatters: [
+          if (widget.allowNegative)
+            FilteringTextInputFormatter.allow(RegExp(ScoreFilters.signedDigits))
+          else
+            FilteringTextInputFormatter.digitsOnly,
+        ],
         onTap: () {
           _controller.selection = TextSelection(
             baseOffset: 0,

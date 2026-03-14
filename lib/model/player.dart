@@ -5,7 +5,7 @@ import 'package:fs_score_card/model/scores.dart';
 
 /// A Player in a game
 class Player {
-  Player({required this.name, required int maxRounds, required int numPhases})
+  Player({required this.name, required int maxRounds})
     : scores = Scores(maxRounds),
       phases = Phases(maxRounds),
       frenchDrivingAttributes = List.generate(

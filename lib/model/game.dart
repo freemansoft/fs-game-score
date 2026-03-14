@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fs_score_card/model/score_filters.dart';
 import 'package:uuid/uuid.dart';
 
 enum GameMode {
@@ -46,7 +47,7 @@ class GameConfiguration {
   static const int defaultNumPlayers = 8;
   // static const bool defaultEnablePhases = false;
   static const GameMode defaultGameMode = GameMode.standard;
-  static const String defaultScoreFilter = '';
+  static const String defaultScoreFilter = ScoreFilters.none;
   static const int defaultEndGameScore = 0;
 
   final int maxRounds;

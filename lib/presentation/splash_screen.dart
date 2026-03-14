@@ -5,6 +5,7 @@ import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/main.dart';
 import 'package:fs_score_card/model/game.dart';
+import 'package:fs_score_card/model/score_filters.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -50,6 +51,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     _endGameScoreController = TextEditingController();
     thisGame = ref.read(gameProvider);
+    
+    // Auto-set score filter based on initially loaded game mode
+    final autoFilter = (thisGame.configuration.gameMode == GameMode.phase10 ||
+            thisGame.configuration.gameMode == GameMode.frenchDriving)
+        ? r'^[0-9]*[05]$'
+        : '';
+    thisGame = thisGame.copyWith(
+      configuration: thisGame.configuration.copyWith(
+        scoreFilter: autoFilter,
+      ),
+    );
+
     _endGameScoreEnabled = thisGame.configuration.endGameScore > 0;
     _endGameScoreController.text = thisGame.configuration.endGameScore > 0
         ? thisGame.configuration.endGameScore.toString()
@@ -177,10 +190,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ],
             onChanged: (value) {
               if (value != null) {
+                // Auto-set score filter based on game mode:
+                // Phase 10 and French Driving scores always end in 0 or 5
+                final autoFilter =
+                    (value == GameMode.phase10 ||
+                        value == GameMode.frenchDriving)
+                    ? ScoreFilters.endsWith0or5
+                    : ScoreFilters.none;
                 setState(() {
                   thisGame = thisGame.copyWith(
                     configuration: thisGame.configuration.copyWith(
                       gameMode: value,
+                      scoreFilter: autoFilter,
                     ),
                   );
                 });
@@ -212,9 +233,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             key: SplashScreen.scoreFilterDropdownKey,
             value: thisGame.configuration.scoreFilter,
             items: [
-              DropdownMenuItem(value: '', child: Text(l10n.anyScore)),
               DropdownMenuItem(
-                value: r'^[0-9]*[05]$',
+                value: ScoreFilters.none,
+                child: Text(l10n.anyScore),
+              ),
+              DropdownMenuItem(
+                value: ScoreFilters.endsWith0or5,
                 child: Text(l10n.mustEndIn0Or5),
               ),
             ],

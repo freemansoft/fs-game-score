@@ -1,6 +1,8 @@
 # Game modes to support special scoring rules for different games in this application.
 
-The game mode is selected on the splash screen. You can end a game and start a new game with a different game mode using the "New Game" icon in the app bar.
+The game mode is selected on the splash screen. The scoring filter is automatically set based on the game mode.
+
+You can end a game and start a new game with a different game mode using the "New Game" icon in the app bar.
 
 ## Overview
 
@@ -9,6 +11,20 @@ This app supports the special scoring rules as a general purpose score sheet, fo
 Player names can be edited by clicking on the name cell in the scoring table. The name can be changed in the modal editing panel that appears.
 
 Scores or rounds state is edited by clicking on the cell representing the round for the player. This will open a modal editing panel for that round. The modal editing panel will close when the user clicks anywhere outside of the panel border.
+
+### General Scoring: Validating input data
+
+Fields should validate input data and show an error message if the input is invalid. It can be the errorText on the TextFOrmField decorator `errorText` or a SnackBar message.
+
+## Game Mode Selection
+
+The game mode is selected on the splash screen. The game mode can be changed by clicking on the "New Game" icon in the app bar.
+
+Supported Game modes include
+
+- General Scoring
+- Phase 10 Scoring
+- French Driving Scoring
 
 ## General Scoring
 
@@ -20,8 +36,11 @@ An end-game condition can be specified that will cause the game to highlght any 
 
 - Click on a score cell in the scoring table to edit the score.
 - The score can be changed in the modal editing panel that appears. The panel will show the _player name_, _round number_, and _round score_ for the selected round.
-- You can edit the _round score_ in the field.
+- You can edit the _round score_ in the _round score_ field.
+- The _round_score_ field is a numeric field that can be positive or negative.
 - Close the editing panel by clicking anywhere outside of the panel border.
+
+The _round score_ field has focus when the modal is opened.
 
 ### General Scoring internal model
 
@@ -40,8 +59,11 @@ Phase-10 also supports the collection of completed phases and the display of the
 
 - Click on a score cell in the scoring table to edit the score. The score can be changed in the modal editing panel that appears.
 - The panel will show the _player name_, _round number_, and _round score_ and the _phase completed_ for the selected round.
-  You can edit the _round score_ in the field and change the _phase completed_ in the dropdown.
+- The _round_score_ field is a numeric field whose entry always ends in 0 or 5.
+- You can edit the _round score_ in the field and change the _phase completed_ in the dropdown.
 - Close the editing panel by clicking anywhere outside of the panel border.
+
+The _round score_ field has focus when the modal is opened.
 
 ### Phase Scoring internal model
 
@@ -74,13 +96,18 @@ The per round score is calculated by applying the following rules to the attribu
 
 - Click on a score cell in the scoring table to edit the score. The score can be changed in the modal editing panel that appears.
 - The panel will show the following used to score the round
-  - _player name_, _round number_, and _round score as miles traveled_
-  - the 4 safety cards along with checkboxes to indicate if they were played and checkboxes to indicate if they were coup fourré
+  - non editable _player name_, _round number_, and aggregated _round score_ fields.
+  - a _miles traveled_ field
+  - The _miles_traveled_ field is a numeric field whose entry always ends in 0 or 5.
+  - dropdown for the number of Safties played that range from 0-4
+  - dropdown for the number of Coup Fourré played that range from 0-4
   - check box for delayed action
   - check box for safe trip
   - check box for shut out
-- You can edit the _round score_ in the field.
+- You cannot edit the _round score_ in the field.
 - Close the editing panel by clicking anywhere outside of the panel border.
+
+The _miles_ traveled field is a numeric field that can only hold positive integers. The _miles_ traveled field has focus when the modal is opened.
 
 ### French Driving Scoring internal model
 

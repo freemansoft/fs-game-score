@@ -105,4 +105,21 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
     },
   );
+  testWidgets(
+    'FrenchDrivingRoundPanel miles field has autofocus',
+    (WidgetTester tester) async {
+      final attributes = FrenchDrivingRoundAttributes();
+
+      await tester.pumpWidget(buildTestableWidget(attributes));
+      await tester.pumpAndSettle();
+
+      // Find the miles TextField by key
+      final milesField = find.byKey(FrenchDrivingRoundPanel.milesFieldKey);
+      expect(milesField, findsOneWidget);
+
+      // Verify autofocus is set
+      final textField = tester.widget<TextField>(milesField);
+      expect(textField.autofocus, isTrue);
+    },
+  );
 }
