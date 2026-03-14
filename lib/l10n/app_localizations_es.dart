@@ -225,4 +225,8 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get shutOutTooltip =>
       'Completar el viaje de 1000 millas antes de que los oponentes hayan jugado tarjetas de Distancia.';
+
+  @override
+  String get trademarkDisclaimer =>
+      'Todos los nombres de productos y empresas son marcas comerciales™ o marcas registradas® de sus respectivos propietarios. Su uso no implica ninguna afiliación o respaldo por su parte. FreemanS Score Card es una aplicación independiente y no está patrocinada ni aprobada por ningún propietario de marca comercial externo.';
 }

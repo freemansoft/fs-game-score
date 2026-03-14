@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added an integration test to verify that entering negative scores works correctly and deducts from the total
 - Fixed a bug where returning to the splash screen from French car racing mode would reset the game mode to Standard
 - Added skyjo game type and made it support negative numbers. Standard went back to positive only
+- Add trademark disclaimer in an about panel and app bar on the splash screen
 
 ## [1.10.0] - 2026-02-24
 

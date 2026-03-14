@@ -16,6 +16,7 @@ class InGameAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(AppLocalizations.of(context)!.scores),
       actionsPadding: const EdgeInsets.only(right: 12),
+      toolbarHeight: 40,
       actions: const [
         NewScoreCardControl(),
         NewGameControl(),

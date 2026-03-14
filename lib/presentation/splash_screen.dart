@@ -6,9 +6,9 @@ import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/main.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/model/score_filters.dart';
+import 'package:fs_score_card/presentation/about_button.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -397,83 +397,30 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     }
   }
 
-  Widget _buildFooterLinks(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final orientation = MediaQuery.of(context).orientation;
-    final copyrightLink = InkWell(
-      onTap: () async {
-        const url = 'https://www.linkedin.com/in/1freeman/';
-        if (await canLaunchUrl(Uri.parse(url))) {
-          await launchUrl(Uri.parse(url));
-        }
-      },
-      child: Text(
-        l10n.copyright,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          color: Colors.blue,
-          decoration: TextDecoration.underline,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-
-    final versionLink = appVersion != null
-        ? InkWell(
-            onTap: () async {
-              const url = 'https://github.com/freemansoft/fs-game-score';
-              if (await canLaunchUrl(Uri.parse(url))) {
-                await launchUrl(Uri.parse(url));
-              }
-            },
-            child: Text(
-              l10n.version(appVersion!),
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          )
-        : const SizedBox.shrink();
-
-    if (orientation == Orientation.landscape) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          copyrightLink,
-          const SizedBox(width: 16),
-          versionLink,
-        ],
-      );
-    } else {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          copyrightLink,
-          versionLink,
-        ],
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     ref.watch(gameProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)!.appTitle,
+          // style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          //   color: Colors.deepPurple,
+          // ),
+        ),
+        toolbarHeight: 40,
+        centerTitle: true,
+        //backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: const [
+          AboutButton(),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              AppLocalizations.of(context)!.appTitle,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Colors.deepPurple,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            _buildFooterLinks(context),
-            const SizedBox(height: 8),
             _buildFieldsLayout(context),
             const SizedBox(height: 6),
             Semantics(

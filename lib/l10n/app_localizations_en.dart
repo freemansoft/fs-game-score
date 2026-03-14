@@ -222,4 +222,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get shutOutTooltip =>
       'Completing trip of 1000 miles before opponents have played any Distance Cards.';
+
+  @override
+  String get trademarkDisclaimer =>
+      'All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them. FreemanS Score Card is an independent application and is not sponsored or approved by any third-party trademark owner.';
 }

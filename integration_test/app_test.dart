@@ -741,6 +741,8 @@ void main() {
       await tester.enterText(endGameScoreField, '100');
       await tester.pumpAndSettle();
 
+      // could get an overflow here if we don't tap off the field to get rid of the keyboard.
+
       // Press Continue to start the game
       final continueButton = find.byKey(SplashScreen.continueButtonKey);
       expect(continueButton, findsOneWidget);
@@ -1016,6 +1018,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Interact with French Driving fields
+    // this test will fail landscape on a phone
+    // this is a big panel so in landscape on a phone most of it will be obscured by keyboard
     // Enter 500 Miles
     await tester.enterText(
       find.byKey(FrenchDrivingRoundPanel.milesFieldKey),
@@ -1071,7 +1075,7 @@ void main() {
 
     // Scroll dropdown to find '20'
     final dropdownList = find.byType(Scrollable).last;
-    final targetItemFinder = find.text('20').last;
+    final targetItemFinder = find.text('20', skipOffstage: false).last;
 
     await tester.dragUntilVisible(
       targetItemFinder,

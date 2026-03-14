@@ -487,6 +487,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completing trip of 1000 miles before opponents have played any Distance Cards.'**
   String get shutOutTooltip;
+
+  /// Trademark disclaimer shown in the about dialog
+  ///
+  /// In en, this message translates to:
+  /// **'All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them. FreemanS Score Card is an independent application and is not sponsored or approved by any third-party trademark owner.'**
+  String get trademarkDisclaimer;
 }
 
 class _AppLocalizationsDelegate
