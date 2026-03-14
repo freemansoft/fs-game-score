@@ -15,7 +15,6 @@ class GameNotifier extends Notifier<Game> {
 
   Future<void> newGame({
     int? maxRounds,
-    int? numPhases,
     int? numPlayers,
     GameMode? gameMode,
     String? scoreFilter,
@@ -25,7 +24,6 @@ class GameNotifier extends Notifier<Game> {
     state = Game(
       configuration: GameConfiguration(
         maxRounds: maxRounds ?? state.configuration.maxRounds,
-        numPhases: numPhases ?? state.configuration.numPhases,
         numPlayers: numPlayers ?? state.configuration.numPlayers,
         gameMode: gameMode ?? state.configuration.gameMode,
         scoreFilter: scoreFilter ?? state.configuration.scoreFilter,

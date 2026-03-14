@@ -48,6 +48,10 @@
   "@gameModeFrenchDriving": {
     "description": "French Driving game mode option"
   },
+  "gameModeSkyjo": "Skyjo",
+  "@gameModeSkyjo": {
+    "description": "Skyjo game mode option"
+  },
   "basicSheet": "Basic Sheet",
   "@basicSheet": {
     "description": "Option for basic sheet style"

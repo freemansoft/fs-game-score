@@ -29,7 +29,6 @@ class GameRepository {
             gameMode: gameFromPrefs.configuration.gameMode,
             endGameScore: gameFromPrefs.configuration.endGameScore,
             maxRounds: gameFromPrefs.configuration.maxRounds,
-            numPhases: gameFromPrefs.configuration.numPhases,
             numPlayers: gameFromPrefs.configuration.numPlayers,
             scoreFilter: gameFromPrefs.configuration.scoreFilter,
             version: gameFromPrefs.configuration.version,

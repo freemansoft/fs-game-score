@@ -6,7 +6,6 @@ Game defaultGame() => Game();
 Game gameWithValues() => Game(
   configuration: GameConfiguration(
     maxRounds: 20,
-    numPhases: 12,
     numPlayers: 4,
     // Being specific about the values here so the test work if defaults change
     // ignore: avoid_redundant_argument_values
@@ -123,5 +122,17 @@ void main() {
       r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
     );
     expect(gameId, matches(uuidPattern));
+  });
+
+  test('GameConfiguration.copyWith preserves frenchDriving mode', () {
+    final config = GameConfiguration(gameMode: GameMode.frenchDriving);
+    expect(config.gameMode, equals(GameMode.frenchDriving));
+
+    // Update another field
+    final updated = config.copyWith(maxRounds: 99);
+
+    expect(updated.maxRounds, equals(99));
+    // This used to fail and return GameMode.standard
+    expect(updated.gameMode, equals(GameMode.frenchDriving));
   });
 }

@@ -48,6 +48,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gameModeFrenchDriving => 'French Driving';
 
   @override
+  String get gameModeSkyjo => 'Skyjo';
+
+  @override
   String get basicSheet => 'Basic Sheet';
 
   @override

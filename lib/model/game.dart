@@ -2,16 +2,11 @@ import 'dart:convert';
 import 'package:fs_score_card/model/score_filters.dart';
 import 'package:uuid/uuid.dart';
 
-enum GameMode {
-  standard,
-  phase10,
-  frenchDriving,
-}
+enum GameMode { standard, phase10, frenchDriving, skyjo }
 
 class GameConfiguration {
   GameConfiguration({
     this.maxRounds = defaultMaxRounds,
-    this.numPhases = defaultNumPhases,
     this.numPlayers = defaultNumPlayers,
     this.gameMode = defaultGameMode,
     this.scoreFilter = defaultScoreFilter,
@@ -26,14 +21,10 @@ class GameConfiguration {
         (e) => e.toString() == json['gameMode'],
         orElse: () => defaultGameMode,
       );
-    } else if (json['enablePhases'] == true) {
-      // backward compatibility
-      mode = GameMode.phase10;
     }
 
     return GameConfiguration(
       maxRounds: (json['maxRounds'] as int?) ?? defaultMaxRounds,
-      numPhases: (json['numPhases'] as int?) ?? defaultNumPhases,
       numPlayers: (json['numPlayers'] as int?) ?? defaultNumPlayers,
       gameMode: mode,
       scoreFilter: (json['scoreFilter'] as String?) ?? defaultScoreFilter,
@@ -43,6 +34,7 @@ class GameConfiguration {
   }
 
   static const int defaultMaxRounds = 14;
+  // Default number of phases for phase 10 - really the only legal value
   static const int defaultNumPhases = 10;
   static const int defaultNumPlayers = 8;
   // static const bool defaultEnablePhases = false;
@@ -51,7 +43,16 @@ class GameConfiguration {
   static const int defaultEndGameScore = 0;
 
   final int maxRounds;
-  final int numPhases;
+  int get numPhases {
+    return gameMode == GameMode.phase10 ? defaultNumPhases : 0;
+  }
+
+  bool get allowNegativeScores {
+    // we'll have more here someday
+    // ignore: avoid_bool_literals_in_conditional_expressions
+    return gameMode == GameMode.skyjo ? true : false;
+  }
+
   final int numPlayers;
   // final bool enablePhases;
   final GameMode gameMode;
@@ -64,7 +65,6 @@ class GameConfiguration {
   Map<String, dynamic> toJson() {
     return {
       'maxRounds': maxRounds,
-      'numPhases': numPhases,
       'numPlayers': numPlayers,
       'gameMode': gameMode.toString(),
       'enablePhases': enablePhases, // for backward compatibility
@@ -76,9 +76,7 @@ class GameConfiguration {
 
   GameConfiguration copyWith({
     int? maxRounds,
-    int? numPhases,
     int? numPlayers,
-    bool? enablePhases, // deprecated in favor of gameMode
     GameMode? gameMode,
     String? scoreFilter,
     int? endGameScore,
@@ -86,13 +84,8 @@ class GameConfiguration {
   }) {
     return GameConfiguration(
       maxRounds: maxRounds ?? this.maxRounds,
-      numPhases: numPhases ?? this.numPhases,
       numPlayers: numPlayers ?? this.numPlayers,
-      gameMode:
-          gameMode ??
-          (enablePhases ?? (this.gameMode == GameMode.phase10)
-              ? GameMode.phase10
-              : GameMode.standard),
+      gameMode: gameMode ?? this.gameMode,
       scoreFilter: scoreFilter ?? this.scoreFilter,
       endGameScore: endGameScore ?? this.endGameScore,
       version: version ?? this.version,

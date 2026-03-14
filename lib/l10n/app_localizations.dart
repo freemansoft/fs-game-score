@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// **'French Driving'**
   String get gameModeFrenchDriving;
 
+  /// Skyjo game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Skyjo'**
+  String get gameModeSkyjo;
+
   /// Option for basic sheet style
   ///
   /// In en, this message translates to:

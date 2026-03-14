@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto set the scoring filter based on the game mode
 - Added validation to the round score editor to prevent invalid scores from being entered and show an error message if the score is invalid
 - Added an integration test to verify that entering negative scores works correctly and deducts from the total
+- Fixed a bug where returning to the splash screen from French car racing mode would reset the game mode to Standard
+- Added skyjo game type and made it support negative numbers. Standard went back to positive only
 
 ## [1.10.0] - 2026-02-24
 

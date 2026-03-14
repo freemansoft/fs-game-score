@@ -25,29 +25,34 @@ Supported Game modes include
 - General Scoring
 - Phase 10 Scoring
 - French Driving Scoring
+- Skyjo
 
-## General Scoring
+## Standard Mode Scoring
 
 This mode supports round base scoring an player total calculation on per round basis. The round score is displayed in the cell representing the round for the player. Total scores and player names are displayed in the "Total" column. The total column is the calculated sum of the per rounds scores.
 
 An end-game condition can be specified that will cause the game to highlght any players that reach the "end game" score. The end game condition is specified as a number of points.
 
-### General Scoring: Editing Per Round Scores
+### Standard Mode Scoring: Editing Per Round Scores
 
 - Click on a score cell in the scoring table to edit the score.
 - The score can be changed in the modal editing panel that appears. The panel will show the _player name_, _round number_, and _round score_ for the selected round.
 - You can edit the _round score_ in the _round score_ field.
-- The _round_score_ field is a numeric field that can be positive or negative.
+- The _round_score_ field is a numeric field that can be positive numbers.
 - Close the editing panel by clicking anywhere outside of the panel border.
 
 The _round score_ field has focus when the modal is opened.
 
-### General Scoring internal model
+### Standard Mode Scoring internal model
 
 The internal model is a list of Players. Each Player has
 
 - A Scores object that contains a list containing the _round score_ for each round
-- A RoundScores object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
+- A RoundStates object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
+
+## Skyjo Scoring
+
+This is identical to Standard Mode plus the ability to handle negative round scores
 
 ## Phase 10 Scoring
 
@@ -71,7 +76,7 @@ The internal model is a list of Players. Each Player has
 
 - A Scores object that contains a list containing the _round score_ for each round
 - A Phases object that contains alist of _phases_ that represents the completed phases for that player in specific rounds.
-- A RoundScores object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
+- A RoundStates object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
 
 ## French Driving
 
@@ -115,7 +120,7 @@ The internal model is a list of Players. Each Player has
 
 - A Scores object that contains a list containing the _round score_ for each round
 - A FrenchDrivingRoundAttributes object that contains a list of French Driving round attribute objects that hold the 8 attributes of the round used to calculate the score
-- A RoundScores object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
+- A RoundStates object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
 
 ## Developer Notes
 

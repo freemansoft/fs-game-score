@@ -52,7 +52,7 @@ Your machine may require that you replace any `flutter` commands with `fvm flutt
 
 ## Internationalization
 
-Make sure to regenerate the dart localization files after making any changes to the internationalization `arb` files using the command `flutter gen-l10n`. The command `flutter gen-l10n` has already been run the current version of the code.
+Make sure to regenerate the dart localization files after making any changes to the internationalization `arb` files using the command `flutter gen-l10n`. The command `flutter gen-l10n` has already been run the current version of the code. Run it again if you add internationalized strings
 
 ~~Other options include running `flutter pub get` or doing a build.~~
 

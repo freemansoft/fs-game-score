@@ -51,9 +51,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     _endGameScoreController = TextEditingController();
     thisGame = ref.read(gameProvider);
-    
+
     // Auto-set score filter based on initially loaded game mode
-    final autoFilter = (thisGame.configuration.gameMode == GameMode.phase10 ||
+    final autoFilter =
+        (thisGame.configuration.gameMode == GameMode.phase10 ||
             thisGame.configuration.gameMode == GameMode.frenchDriving)
         ? r'^[0-9]*[05]$'
         : '';
@@ -186,6 +187,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               DropdownMenuItem(
                 value: GameMode.frenchDriving,
                 child: Text(l10n.gameModeFrenchDriving),
+              ),
+              DropdownMenuItem(
+                value: GameMode.skyjo,
+                child: Text(l10n.gameModeSkyjo),
               ),
             ],
             onChanged: (value) {

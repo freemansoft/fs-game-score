@@ -98,7 +98,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
           scoreFilter: widget.scoreFilter,
           autofocus: widget.gameMode != GameMode.frenchDriving,
           enabled: widget.gameMode != GameMode.frenchDriving,
-          allowNegative: widget.gameMode == GameMode.standard,
+          allowNegative: widget.gameMode == GameMode.skyjo,
           onSubmitted: _shouldCloseOnReturnKey() ? _closeModal : null,
         ),
       ],
