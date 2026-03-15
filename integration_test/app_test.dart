@@ -1018,8 +1018,10 @@ void main() {
     await tester.pumpAndSettle();
 
     // Interact with French Driving fields
-    // this test will fail landscape on a phone
-    // this is a big panel so in landscape on a phone most of it will be obscured by keyboard
+    // this test will fail landscape on small phones
+    // because the keyboard obscures part of the panel
+    // Tests pass on iphone 13
+    // because it hides the keyboard when tapping outside the text field
     // Enter 500 Miles
     await tester.enterText(
       find.byKey(FrenchDrivingRoundPanel.milesFieldKey),

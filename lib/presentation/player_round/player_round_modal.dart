@@ -154,6 +154,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
           'Player ${widget.playerIdx + 1} Round ${widget.round + 1} Modal',
       title: Text(
         l10n.playerRoundModalTitle(widget.playerIdx + 1, widget.round + 1),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       scrollable: true,
       content: orientation == Orientation.landscape

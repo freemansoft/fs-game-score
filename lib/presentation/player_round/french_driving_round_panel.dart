@@ -104,6 +104,26 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    if (isLandscape) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildMilesSection(l10n, compact: true),
+              const SizedBox(width: 16),
+              Expanded(child: _buildSafetiesSection(l10n)),
+            ],
+          ),
+          _buildBonusesSection(l10n),
+        ],
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +138,53 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
     );
   }
 
-  Widget _buildMilesSection(AppLocalizations l10n) {
+  Widget _buildMilesSection(AppLocalizations l10n, {bool compact = false}) {
+    final textField = Semantics(
+      label: 'Miles Driven',
+      child: TextField(
+        key: FrenchDrivingRoundPanel.milesFieldKey,
+        controller: _milesController,
+        focusNode: _milesFocusNode,
+        keyboardType: TextInputType.number,
+        autofocus: true,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(6),
+        ],
+        decoration: InputDecoration(
+          hintText: l10n.miles,
+          isDense: true,
+          errorText: _milesHasValidationError
+              ? l10n.invalidScoreForRound
+              : null,
+        ),
+        onChanged: (val) {
+          _validateMiles(val);
+          if (!_milesHasValidationError) {
+            final miles = int.tryParse(val) ?? 0;
+            _updateAttributes(_localAttributes.copyWith(miles: miles));
+          }
+        },
+      ),
+    );
+
+    if (compact) {
+      // Landscape: constrained width, no label above
+      return Row(
+        children: [
+          Tooltip(
+            message: l10n.milesTooltip,
+            child: Text(
+              '${l10n.miles}: ',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+          SizedBox(width: 100, child: textField),
+        ],
+      );
+    }
+
+    // Portrait: label above, full width
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -130,31 +196,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           ),
         ),
         const SizedBox(height: 4),
-        Semantics(
-          label: 'Miles Driven',
-          child: TextField(
-            key: FrenchDrivingRoundPanel.milesFieldKey,
-            controller: _milesController,
-            focusNode: _milesFocusNode,
-            keyboardType: TextInputType.number,
-            autofocus: true,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            decoration: InputDecoration(
-              hintText: l10n.miles,
-              isDense: true,
-              errorText: _milesHasValidationError
-                  ? l10n.invalidScoreForRound
-                  : null,
-            ),
-            onChanged: (val) {
-              _validateMiles(val);
-              if (!_milesHasValidationError) {
-                final miles = int.tryParse(val) ?? 0;
-                _updateAttributes(_localAttributes.copyWith(miles: miles));
-              }
-            },
-          ),
-        ),
+        textField,
       ],
     );
   }
