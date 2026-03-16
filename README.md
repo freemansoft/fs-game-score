@@ -60,7 +60,7 @@ Make sure to regenerate the dart localization files after making any changes to 
 
 You can test this locally using the run view in VSCode or using the command line.
 
-Release builds can be created from the command line individually for each platform or via the `build_distributable.sh` and `build_distributable.ps1` scripts.
+Release builds can be created from the command line individually for each platform or via the `build-distributable.sh` and `build-distributable.ps1` scripts.
 
 ### Run View in VSCode
 

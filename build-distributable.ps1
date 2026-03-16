@@ -1,6 +1,6 @@
 #
 # This Powershell script is for Windows only
-# It was copied from build_distributable.sh
+# It was copied from build-distributable.sh
 #
 Write-Host "Building all release targets avaialble on a Windows Build system..."
 
