@@ -52,7 +52,10 @@ The internal model is a list of Players. Each Player has
 
 ## Skyjo Scoring
 
-This is identical to Standard Mode plus the ability to handle negative round scores
+This is identical to Standard Mode plus
+
+- Skyjo mode adds the ability to handle negative round scores
+- Selecting Skyjo mode on the splash screen auto-selects the end score checkbox and sets the end score to 100
 
 ## Phase 10 Scoring
 
@@ -81,6 +84,8 @@ The internal model is a list of Players. Each Player has
 ## French Driving
 
 This program supports the special scoring rules for French Driving when configured in French Driving mode on the splash screen.
+
+- Selecting French Driving mode on the splash screen auto-selects the end score checkbox and sets the end score to 5000
 
 ### French Driving Scoring
 

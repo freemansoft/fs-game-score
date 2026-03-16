@@ -202,11 +202,23 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         value == GameMode.frenchDriving)
                     ? ScoreFilters.endsWith0or5
                     : ScoreFilters.none;
+                // Auto-enable end game score: Skyjo=100, French Driving=5000
+                final autoEndGameScore =
+                    value == GameMode.skyjo ? 100
+                    : value == GameMode.frenchDriving ? 5000
+                    : 0;
+                final autoEndGameEnabled = autoEndGameScore > 0;
                 setState(() {
+                  _endGameScoreEnabled = autoEndGameEnabled;
+                  _endGameScoreController.text =
+                      autoEndGameScore > 0
+                          ? autoEndGameScore.toString()
+                          : '';
                   thisGame = thisGame.copyWith(
                     configuration: thisGame.configuration.copyWith(
                       gameMode: value,
                       scoreFilter: autoFilter,
+                      endGameScore: autoEndGameScore,
                     ),
                   );
                 });
