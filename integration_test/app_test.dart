@@ -795,6 +795,64 @@ void main() {
     },
   );
 
+  testWidgets(
+    'Entering Splash Screen from New Game clears player state',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Press Continue to start a game
+      final continueButton = find.byKey(SplashScreen.continueButtonKey);
+      await tester.tap(continueButton);
+      await tester.pumpAndSettle();
+
+      // Verify we are on the Score Table
+      expect(find.byType(DataTable2), findsOneWidget);
+
+      // Enter a score to ensure state has something to save
+      final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
+      await tester.tap(find.byKey(playerRoundScoreP0R0Key));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(PlayerRoundModal.scoreFieldKey(0, 0)),
+        '50',
+      );
+      await tester.pumpAndSettle();
+
+      // Close modal
+      await tester.tapAt(
+        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+      );
+      await tester.pumpAndSettle();
+
+      // Wait a moment for async save
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+
+      // Click "New Score Card" button
+      final iconButton = find.byKey(NewScoreCardControl.iconButtonKey);
+      await tester.tap(iconButton);
+      await tester.pumpAndSettle();
+
+      // Confirm "Change Scorecard"
+      final changeScorecardButton = find.byKey(
+        NewScoreCardControl.changeScorecardButtonKey,
+      );
+      await tester.tap(changeScorecardButton);
+      await tester.pumpAndSettle();
+
+      // Verify we are back on the Splash Screen
+      expect(find.byType(SplashScreen), findsOneWidget);
+
+      // Verify that the players state was cleared from persistence
+      final loadedPlayers = PlayersRepository().loadedPrefsPlayers;
+      expect(
+        loadedPlayers,
+        isNull,
+        reason: 'Player state should be cleared on Splash Screen entry',
+      );
+    },
+  );
+
   // ========== Splash Screen Tests ==========
 
   /// Navigates to the scoring table and verifies the table functionality

@@ -49,6 +49,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   _installZeroOffsetPointerGuard();
   await _loadVersion();
+
+  // Create the container before loading prefs so repositories can push state
+  // into providers as soon as loading completes, resolving the race condition
+  // between async repository loads and provider initialization.
+  final container = ProviderContainer();
+  GameRepository().initialize(container);
+  PlayersRepository().initialize(container);
+
   await GameRepository().loadGameFromPrefs();
   await PlayersRepository().loadPlayersFromPrefs();
 
@@ -57,6 +65,6 @@ void main() async {
   }
 
   runApp(
-    const ProviderScope(child: Phase10App()),
+    UncontrolledProviderScope(container: container, child: const Phase10App()),
   );
 }

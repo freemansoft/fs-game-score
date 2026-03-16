@@ -17,6 +17,7 @@ analyzer:
     # I like local variable types for clarity
     omit_local_variable_types: ignore
     public_member_api_docs: ignore
+    prefer_asserts_with_message: ignore
 include: package:very_good_analysis/analysis_options.yaml
 
 linter:

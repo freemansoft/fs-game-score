@@ -11,6 +11,7 @@ final playersProvider = NotifierProvider<PlayersNotifier, Players>(
   PlayersNotifier.new,
 );
 
+/// can set the state directly if you are replacing the state with loaded players
 class PlayersNotifier extends Notifier<Players> {
   Timer? _saveTimer;
 
@@ -125,5 +126,14 @@ class PlayersNotifier extends Notifier<Players> {
     }
     state = newState;
     _scheduleSave();
+  }
+
+  /// Use this when you want to set the players and notify but don't want save
+  /// Usually called by the repository when loading from prefs
+  // ignore: use_setters_to_change_properties
+  void repositoryDidLoadPrefs(Players players) {
+    state = players;
+
+    /// do not save because this was probably loaded from prefs
   }
 }

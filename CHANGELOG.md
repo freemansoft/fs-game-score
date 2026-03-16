@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added skyjo game type and made it support negative numbers. Standard went back to positive only
 - Add trademark disclaimer in an about panel and app bar on the splash screen
 
+### Refactored 1.11.0
+
+- Resolved race condition between async repository prefs loading and Riverpod provider initialization. Repositories (`GameRepository`, `PlayersRepository`) now accept a `ProviderContainer` via `initialize()` and push loaded state directly into their respective notifiers (`repositoryDidLoadPrefs`) instead of relying on notifier `build()` to poll a cached field. `main()` creates the container before loading prefs and exposes it to the widget tree via `UncontrolledProviderScope`.
+
 ## [1.10.0] - 2026-02-24
 
 ### Fixed 1.10.0

@@ -8,9 +8,13 @@ The applicaton also saves the current game state as the game is played. This is 
 
 The new game function on the splash screen clears out any previous game state whenever it starts a new game
 
+## Known issues and Defects
+
+1. Game / Player state is not saved until the first score sheet piece of data is netered, either score or player name. This means a reload or app start at this point results in the app starting on the splash screen.
+
 ## Data Model
 
-A game is represented by the `Game` class that contains a game `id` and a game `configuration` implemented by the `GameConfiguration` class. The `GameConfiguration` contains the number of players, the number of rounds, the number of phases, the enable phases flag, the score filter, and the version. The `Game` also contains a unique game id for each game played
+A game is represented by the `Game` class that contains a game `id` and a game `configuration` implemented by the `GameConfiguration` class. The `GameConfiguration` contains the number of players, the maximum number of rounds, the game mode (Standard, Phase 10, French Driving, Skyjo), the score filter, the end game score, and the version. The `Game` also contains a unique game id for each game played.
 
 The players and their scores in a game are represented by the `Players` class that contains a list of `Player` objects.
 
@@ -42,7 +46,7 @@ The application implements a robust persistence strategy to handle app restarts 
 1.  **Game Configuration**: Saved immediately when a game is started.
 2.  **Player Progress**: Auto-saved with a **5-second debounce** during gameplay to prevent excessive writes.
 3.  **Resume Game**: On startup, if both a valid game configuration and player state exist, the app automatically navigates to the Score Table, bypassing the Splash Screen.
-4.  **New Game**: Starting a new game from the Splash Screen explicitly clears previous player state to ensure a fresh start.
+4.  **New Game**: Entering the Splash Screen explicitly clears previous player state to ensure a fresh start.
 
 ## Provider Architecture
 
@@ -75,8 +79,10 @@ class GameNotifier extends Notifier<Game> {
 
 - `numPlayers`: Number of players in the game (2-8)
 - `maxRounds`: Maximum number of rounds (1-20)
-- `numPhases`: Number of phases (default: 10)
-- `enablePhases`: Whether to show phase tracking
+- `gameMode`: The selected game mode (Standard, Phase 10, French Driving, Skyjo)
+- `endGameScore`: The target score to end the game (e.g., auto-set to 5000 for French Driving or 100 for Skyjo)
+- `numPhases`: Derived from game mode (10 for Phase 10, 0 otherwise)
+- `allowNegativeScores`: Derived from game mode (true for Skyjo)
 - `scoreFilter`: Regex pattern for valid scores
 - `version`: Application version string
 
@@ -178,9 +184,9 @@ The app startup logic handles state restoration and determines the initial scree
 
 **New Game Flow (`lib/splash_screen.dart`)**:
 
-1.  User configures game.
-2.  User clicks "Continue".
-3.  `PlayersRepository().clearPrefsPlayers()`: Clears old data.
+1.  Entering the Splash Screen immediately clears old player data (`PlayersRepository().clearPrefsPlayers()`).
+2.  User configures game.
+3.  User clicks "Continue".
 4.  `GameNotifier.newGame()`: Updates and saves new game config.
 5.  `PlayersNotifier` rebuilds with fresh state.
 6.  Navigate to Score Table.

@@ -7,10 +7,10 @@ import 'package:fs_score_card/model/game.dart';
 class GameNotifier extends Notifier<Game> {
   @override
   Game build() {
-    state = GameRepository().loadedPrefsGame ?? Game();
-    return state;
+    return GameRepository().loadedPrefsGame ?? Game();
   }
 
+  // is this the pattern or anti pattern and they should use ref.read?
   Game stateValue() => state;
 
   Future<void> newGame({
@@ -33,6 +33,15 @@ class GameNotifier extends Notifier<Game> {
       // gameId will be automatically generated as a new UUID
     );
     await GameRepository().saveGameToPrefs(state);
+  }
+
+  /// Use this when you want to set the game state loaded from the repository.
+  /// Usually called by the repository when loading from prefs.
+  // ignore: use_setters_to_change_properties
+  void repositoryDidLoadPrefs(Game game) {
+    state = game;
+
+    /// do not save because this was probably loaded from prefs
   }
 }
 

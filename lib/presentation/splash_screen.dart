@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,6 +53,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     _endGameScoreController = TextEditingController();
     thisGame = ref.read(gameProvider);
+
+    // Any entry to the splash screen from navigation, resets the players prefs
+    unawaited(PlayersRepository().clearPrefsPlayers());
 
     // Auto-set score filter based on initially loaded game mode
     final autoFilter =
@@ -203,17 +208,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     ? ScoreFilters.endsWith0or5
                     : ScoreFilters.none;
                 // Auto-enable end game score: Skyjo=100, French Driving=5000
-                final autoEndGameScore =
-                    value == GameMode.skyjo ? 100
-                    : value == GameMode.frenchDriving ? 5000
+                final autoEndGameScore = value == GameMode.skyjo
+                    ? 100
+                    : value == GameMode.frenchDriving
+                    ? 5000
                     : 0;
                 final autoEndGameEnabled = autoEndGameScore > 0;
                 setState(() {
                   _endGameScoreEnabled = autoEndGameEnabled;
-                  _endGameScoreController.text =
-                      autoEndGameScore > 0
-                          ? autoEndGameScore.toString()
-                          : '';
+                  _endGameScoreController.text = autoEndGameScore > 0
+                      ? autoEndGameScore.toString()
+                      : '';
                   thisGame = thisGame.copyWith(
                     configuration: thisGame.configuration.copyWith(
                       gameMode: value,
@@ -441,8 +446,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               child: ElevatedButton(
                 key: SplashScreen.continueButtonKey,
                 onPressed: () async {
-                  // new games from the splash screen clear previous game players
-                  await PlayersRepository().clearPrefsPlayers();
                   // Create a new game with fresh gameId and selected configuration
                   await ref
                       .read(gameProvider.notifier)
