@@ -1,5 +1,7 @@
 # fs_score_card
 
+These notes were from mid 2025. They are preserved here for historical context. The approach taken for building an app with AI has changed significantly since then.
+
 I wanted a scoring app for game night. At around the same time, I was looking for a reason to push to actually use an LLM to do the heavy lifting for app development. This project is the result.
 
 The end result is a multi-platform Flutter app, fs_score_card that can be found on GitHub. This is a generic game scoring app created almost completely using VSCode's copilot agent mode with virtually zero hand coding. There were many AI agent prompts with **a lot** of undo/redo. The application has been tested on Android, IOS, Chrome, macOS, and Windows 11.

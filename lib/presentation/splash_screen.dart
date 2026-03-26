@@ -55,7 +55,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     thisGame = ref.read(gameProvider);
 
     // Any entry to the splash screen from navigation, resets the players prefs
-    unawaited(PlayersRepository().clearPrefsPlayers());
+    unawaited(PlayersRepository().clearPlayersFromPrefs());
 
     // Auto-set score filter based on initially loaded game mode
     final autoFilter =

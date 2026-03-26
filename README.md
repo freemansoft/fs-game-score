@@ -126,7 +126,7 @@ Alternatively - use the xcode archive route like we do for macOS
 4. `Validate App` --> `Validate`
 5. `Distribute App` --> `App Store Connect`
 
-Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`. The version number is set in `pubspec.yaml`.
+Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`. The version number for all platforms is set in `pubspec.yaml`.
 
 ### MacOS builds
 
@@ -143,7 +143,7 @@ MacOS builds are separate from iOS builds and must be uploaded to the store sepa
    3. XCode `Validate App` --> `Validate`
    4. XCode `Distribute App` --> `App Store Connect`
 
-Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`. The version number is set in `pubspec.yaml`.
+Validate the version number and build ID on the splash screen. It should match the value in `pubpspec.yaml`. The version number for all platforms is set in `pubspec.yaml`.
 
 To release macOS after TestFlight. This works for iOS also
 

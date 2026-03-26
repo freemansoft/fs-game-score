@@ -2,15 +2,20 @@
 
 ## Retaining and managing state
 
-The application saves the game configuration when the game is started. It loads that configuration and makes it the current configuration when the game program is rerun and shows that on the spalsh screen. The program always starts on the splash_screen that uses that configuration as the defaults for the game configuration.
+The application saves the game configuration when the game is started and the current game state while the game is being played. There is currently a 5 second delay for saving the game state to disk to prevent excessive writes.
 
-The applicaton also saves the current game state as the game is played. This is used to restore the game state after a crash or reload on the web. If an in-flight or really any game is found on startup then that game is loaded and the application jumps directly to the score_table_screen. There is currently a 5 second delay for saving the game state to disk to prevent excessive writes.
+Upon startup
+
+- It loads that configuration and makes it the current configuration when the game program is rerun and shows that loaded configuration on the spalsh screen if there is no game state to restore.
+- If there is game state to restore then that game is loaded and the application jumps directly to the score_table_screen. This function makes it possible to resume a game after a crash or reload on the web or a dehydration or pause on mobile.
 
 The new game function on the splash screen clears out any previous game state whenever it starts a new game
 
+Currently there is no way to clear the game configuration or game state other than to start a new game.
+
 ## Known issues and Defects
 
-1. Game / Player state is not saved until the first score sheet piece of data is netered, either score or player name. This means a reload or app start at this point results in the app starting on the splash screen.
+1. Game / Player state is not saved until the first score sheet piece of data is entere, either score or player name. This means a reload or app start prior to this point results in the app starting on the splash screen.
 
 ## Data Model
 
@@ -163,7 +168,7 @@ The application uses a repository pattern backed by `SharedPreferences` to abstr
 **Location**: `lib/data/players_repository.dart`
 
 - **Responsibility**: Persist `Players` list and their progress.
-- **Key Methods**: `loadPlayersFromPrefs()`, `savePlayersToPrefs()`, `clearPrefsPlayers()`.
+- **Key Methods**: `loadPlayersFromPrefs()`, `savePlayersToPrefs()`, `clearPlayersFromPrefs()`.
 
 ## App Startup & Navigation Flow
 
@@ -184,7 +189,7 @@ The app startup logic handles state restoration and determines the initial scree
 
 **New Game Flow (`lib/splash_screen.dart`)**:
 
-1.  Entering the Splash Screen immediately clears old player data (`PlayersRepository().clearPrefsPlayers()`).
+1.  Entering the Splash Screen immediately clears old player data (`PlayersRepository().clearPlayersFromPrefs()`).
 2.  User configures game.
 3.  User clicks "Continue".
 4.  `GameNotifier.newGame()`: Updates and saves new game config.
@@ -201,7 +206,7 @@ The app startup logic handles state restoration and determines the initial scree
 ElevatedButton(
   onPressed: () async {
     // 1. Clear previous player state
-    await PlayersRepository().clearPrefsPlayers();
+    await PlayersRepository().clearPlayersFromPrefs();
 
     // 2. Create and save new game configuration
     await ref.read(gameProvider.notifier).newGame( ... );

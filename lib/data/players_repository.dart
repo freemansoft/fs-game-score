@@ -31,19 +31,6 @@ class PlayersRepository {
   /// Loaded from shared preferences
   Players? loadedPrefsPlayers;
 
-  Future<void> clearPrefsPlayers() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_playersPrefsKey);
-    loadedPrefsPlayers = null;
-    assert(() {
-      developer.log(
-        'Players cleared from prefs',
-        name: runtimeType.toString(),
-      );
-      return true;
-    }());
-  }
-
   /// Load players state from shared preferences.
   ///
   /// This hack should probably be replaced with AsyncNotifier
