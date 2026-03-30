@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Refactored 1.12.0
 
+- Updated cursor rules
+- Added antigravity rules
+- Removed continue.dev rules
+
 ### Fixed 1.12.0
 
 ## [1.11.0] - 2026-03-14

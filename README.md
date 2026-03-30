@@ -300,3 +300,9 @@ _. mardownlint
 _. Markdown All in One
 _. Makdown Preview Mermaid Support
 _. Prettier
+
+## LLM Rules
+
+All of the code assist tools support an `/AGENTS.md` file in the root of the project. Antigravity is limited to 12,000 characters per file. Because of this the rules file in the `.agents/rules/` folder is smaller than for the other two. We could have put a single shortened copy in `/AGENTS.md` to simplify management but we wanted as much rule support as possible for each IDE.
+
+The rules in `.agents/rules/` are used by the Antigravity IDE. The rules in `.cursor/rules/` are used by the Cursor IDE.

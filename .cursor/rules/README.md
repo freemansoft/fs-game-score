@@ -1,4 +1,4 @@
-# Where did these rules come from?
+# Where did `flutter-recommended.md` rules come from?
 
 - [Flutter AI rules docs](https://docs.flutter.dev/ai/ai-rules)
 - [rules.md on github](https://raw.githubusercontent.com/flutter/flutter/refs/heads/main/docs/rules/rules.md)
