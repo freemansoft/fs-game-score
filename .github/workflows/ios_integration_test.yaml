@@ -8,12 +8,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # Use the latest checkout action
+        uses: actions/checkout@v5 # Use the latest checkout action
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable' # Or 'beta' or 'master' depending on your needs
+          channel: "stable" # Or 'beta' or 'master' depending on your needs
           flutter-version: 3.38.5 # should sync with fvm version
           cache: true
       - run: flutter --version
@@ -30,7 +30,7 @@ jobs:
       - name: Start iOS simulator
         uses: futureware-tech/simulator-action@v3
         with:
-          model: 'iPhone 17' # Specify the desired iPhone model
+          model: "iPhone 17" # Specify the desired iPhone model
 
       - name: Run integration tests
         run: flutter test -d 'iphone 17' ./integration_test/app_test.dart
