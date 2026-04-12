@@ -33,3 +33,11 @@ The end result is a multi-platform Flutter app, fs_score_card that can be found 
 
 1. Refactoring the in-cell editing over to be modal popup editing left behind a bunch of unused code. I found that code later and had to do a manual cleanup pass.
 1. The LLMs hard coded the point sizes for text fonts when they should have used various theme configurations. I later added LLM instructions that may or may not have fixed this behavior. The app uses Theme configurations because I used the LLM for a refactorign pass at the previously generatd code.
+
+## Agent Architecture: Rules vs Skills
+
+In mid-2026, the project moved to a tiered "Rules + Skills" structure for AI agents to improve responsiveness and reduce token overhead.
+
+1.  **.agents/rules/**: Contains concise, "always-on" declarative rules (constraints, coding style, naming). These are kept small to preserve the agent's context window.
+2.  **.agents/skills/**: Contains procedural, context-specific guides and code implementation patterns. The agent loads these on-demand (e.g., when implementing a new feature or writing tests).
+3.  **docs/**: Holds background knowledge and architecture overviews that explain the "why" and "what" of the system.

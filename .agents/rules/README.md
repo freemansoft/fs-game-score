@@ -1,7 +1,3 @@
----
-trigger: manual
----
-
 # Where did `flutter-recommended.md` rules come from?
 
 - [Flutter AI rules docs](https://docs.flutter.dev/ai/ai-rules)
@@ -10,7 +6,7 @@ trigger: manual
 
 ## Changes
 
-- Linting rules changed from default to use VGV linter
+- Linting rules changed from default to use Very Good Ventures (VGV) linter
 - Use `riverpod` instead of `provider`
 - Added **Semantic Label Keys** rule
 - Added internationalizaiton and localization rules
