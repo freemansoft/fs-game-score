@@ -7,21 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.12.0] - 2026-03-26
 
-### Added 1.12.0
-
-### Refactored 1.12.0
-
 - Updated cursor rules
 - Added antigravity rules
 - Removed continue.dev rules
 - add Google [Flutter Skills](https://github.com/flutter/skills) and [dart-lang skills](https://github.com/dart-lang/skills)
 - Updated dependencies to support Flutter 3.41.2 and dart 3.11.0
 
-### Fixed 1.12.0
-
 ## [1.11.0] - 2026-03-14
-
-### Added 1.11.0
 
 - Support for negative scores in the round score editor when in General Scoring mode
 - Miles field receives focus automatically when the round editor modal opens in French Driving mode
@@ -31,20 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug where returning to the splash screen from French car racing mode would reset the game mode to Standard
 - Added skyjo game type and made it support negative numbers. Standard went back to positive only
 - Add trademark disclaimer in an about panel and app bar on the splash screen
-
-### Refactored 1.11.0
-
 - Resolved race condition between async repository prefs loading and Riverpod provider initialization. Repositories (`GameRepository`, `PlayersRepository`) now accept a `ProviderContainer` via `initialize()` and push loaded state directly into their respective notifiers (`repositoryDidLoadPrefs`) instead of relying on notifier `build()` to poll a cached field. `main()` creates the container before loading prefs and exposes it to the widget tree via `UncontrolledProviderScope`.
 
 ## [1.10.0] - 2026-02-24
 
-### Fixed 1.10.0
-
 - Phases couldn't be selected after round 10 - max phase and max number of rounds were used interchangeably
 
 ## [1.9.0] - 2026-02-05
-
-### Added 1.9.0
 
 - Load previous game on startup if it is in Stored Preferences and jump immediately to the game. This supports accidental web reloads and mobile apps that are suspended and resumed suspended/rehydrated
 - Save the game state to disk with a 5 second delay to prevent excessive writes.
@@ -53,8 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Released 1.9.0 into app store
 
 ## [1.8.0] - 2025-12-28
-
-### Added 1.8.0
 
 - Close modal panels on return key in model panel entry fields on non Android and non iOS.
 - Move from Navigator to goRouter.
@@ -66,8 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.0] - 2025-12-25
 
-### Added 1.7.0 +11
-
 - Landscape SplashScreen layout changed to better support wide screens. Two columns are now the center two of 4 columns.
 - Added I10n Internationalization / Localization English first pass
 - Added I10n Internalionalization / Localization Spanish first pass
@@ -77,8 +58,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.6.0] - 2025-12-24
 
 1.6.0 only exists for iOS to fix iOS 26.1 related Flutter app bar (top of window) click issue mentioned below
-
-### Added 1.6.0 +10
 
 - Updated Flutter to dart 3.9 or later to support built in dart mcp server <https://docs.flutter.dev/install/archivecirsp>
 - Building with Flutter 3.38.5 which is current at time of update
@@ -93,8 +72,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tap error on new game buttons in app bar on iPad only introduced with iOS 26.1 <https://github.com/flutter/flutter/issues/175606#issuecomment-3453392532>
 
 ## [1.5.0] - 2025-10-21
-
-### Added 1.5.0
 
 - gameId for new games - not for restarts
 - moved from in-cell editing to editing in a modal panel without a close button
@@ -115,22 +92,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.0] -- 2025-09-21
 
-### Added 1.4.0
-
 - upgrade gradle plugin from 8.5.0 to 8.6.2 and kotlin from 1.8.22 to 2.2.0
 - migrated from Riverpod 2 to Riverpod 3
 - icons set using `flutter_launcher_icons` for android,ios,macos,linux,web
 
 ## [1.3.0] - 2025-08-10
 
-### Added 1.3.0
-
 - Score filter configuration option to restrict entry to numbers ending in 0 and 5
 - Real-time validation for score entry fields
 
 ## [1.2.0] - 2025-08-09
-
-### Added 1.2.0
 
 - Ability to share CSV via device share functionality
 - Share button in app bar with platform-specific icons (iOS share icon on macOS/iOS)
@@ -139,15 +110,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2024-08-04
 
-### Added 1.1.0
-
 - Save/load last game configuration
 - Persistent game state using SharedPreferences
 - Automatic game state restoration on app restart
 
 ## [1.0.0] - 2024-12-19
-
-### Added 1.0.0
 
 - Initial release
 - Basic score tracking functionality
