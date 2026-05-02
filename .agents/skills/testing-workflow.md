@@ -8,14 +8,19 @@ Follow these guidelines to ensure the application remains testable and accessibl
 Follow the Arrange-Act-Assert (or Given-When-Then) pattern for all tests.
 
 ### Package Choice
-- **Unit Tests:** `package:test`
-- **Widget Tests:** `package:flutter_test`
-- **Integration Tests:** `package:integration_test`
-- **Assertions:** Prefer `package:checks` for more expressive assertions.
+See the appropriate skill for full setup:
+
+| Test Type   | Skill                        |
+|-------------|------------------------------|
+| Unit        | `dart-add-unit-test`         |
+| Widget      | `flutter-add-widget-test`    |
+| Integration | `flutter-add-integration-test` |
+| Mocks       | `dart-generate-test-mocks`   |
+
+**Project preference:** Use `package:checks` assertions (not `expect()`) for more expressive output.
 
 ### Mocks and Fakes
-- Prefer **Fakes** or **Stubs** over Mocks.
-- If mocks are necessary, use `mockito` or `mocktail`.
+Prefer **Fakes** or **Stubs** over Mocks. See the **`dart-generate-test-mocks`** skill for mockito setup.
 
 ---
 

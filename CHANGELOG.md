@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated cursor rules
 - Added antigravity rules
 - Removed continue.dev rules
+- add Google [Flutter Skills](https://github.com/flutter/skills) and [dart-lang skills](https://github.com/dart-lang/skills)
 
 ### Fixed 1.12.0
 

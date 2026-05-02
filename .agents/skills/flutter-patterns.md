@@ -27,32 +27,8 @@ For state that is more complex or shared across multiple widgets, use `ChangeNot
 
 ## Routing & Navigation
 
-### GoRouter Configuration
-Use `go_router` for all navigation needs.
-
-```dart
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomeScreen(),
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'details/:id', // Route with a path parameter
-          builder: (context, state) {
-            final String id = state.pathParameters['id']!;
-            return DetailScreen(id: id);
-          },
-        ),
-      ],
-    ),
-  ],
-);
-
-MaterialApp.router(
-  routerConfig: _router,
-);
-```
+Use `go_router` for all navigation. See the **`flutter-setup-declarative-routing`** skill for full
+setup, nested routes, deep linking, and shell navigation patterns.
 
 ---
 
