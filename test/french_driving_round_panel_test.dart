@@ -32,7 +32,7 @@ void main() {
 
   testWidgets(
     'FrenchDrivingRoundPanel displays safeties horizontally in landscape',
-    (WidgetTester tester) async {
+    (tester) async {
       final attributes = FrenchDrivingRoundAttributes();
 
       // Set landscape size
@@ -72,7 +72,7 @@ void main() {
 
   testWidgets(
     'FrenchDrivingRoundPanel displays safeties vertically in portrait',
-    (WidgetTester tester) async {
+    (tester) async {
       final attributes = FrenchDrivingRoundAttributes();
 
       // Set portrait size
@@ -107,7 +107,7 @@ void main() {
   );
   testWidgets(
     'FrenchDrivingRoundPanel miles field has autofocus',
-    (WidgetTester tester) async {
+    (tester) async {
       final attributes = FrenchDrivingRoundAttributes();
 
       await tester.pumpWidget(buildTestableWidget(attributes));

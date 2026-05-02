@@ -34,7 +34,7 @@ void main() {
 
   /// Tests that new game creation generates unique gameIds
   testWidgets('Start new game of the same type retains the gameIds', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -94,7 +94,7 @@ void main() {
 
   /// Tests that share functionality includes gameId in subject
   testWidgets('Share functionality includes gameId in subject', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -201,7 +201,7 @@ void main() {
 
   /// Tests that multiple game resets produce different gameIds
   testWidgets('Multiple game resets produce different gameIds', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -256,7 +256,7 @@ void main() {
 
   /// Tests that splash screen Continue button creates a new gameId
   testWidgets('Splash screen Continue button creates new gameId', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -308,7 +308,7 @@ void main() {
   testWidgets(
     'NewScoreCardControl returns to splash screen and preserves settings',
     (
-      WidgetTester tester,
+      tester,
     ) async {
       app.main();
       await tester.pumpAndSettle();
@@ -404,7 +404,7 @@ void main() {
 
   /// Tests that clicking the cancel button in the dialog does not navigate away
   testWidgets('NewScoreCardControl cancel button stays on score card', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -469,7 +469,7 @@ void main() {
   /// Round 3 (R3) and beyond may not be fully visible without scrolling.
   /// If testing beyond Round 2 is needed, horizontal scrolling would be required.
   testWidgets('Score table displays correct rows and widgets for 2 players', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -725,7 +725,7 @@ void main() {
 
   testWidgets(
     'Player game cell shows bold text when endGameScore is set and total score >= endGameScore',
-    (WidgetTester tester) async {
+    (tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -797,7 +797,7 @@ void main() {
 
   testWidgets(
     'Entering Splash Screen from New Game clears player state',
-    (WidgetTester tester) async {
+    (tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -858,7 +858,7 @@ void main() {
   /// Navigates to the scoring table and verifies the table functionality
   /// matches what was specified in th esplash screen
   testWidgets('Score table displays correct rows, columns, and widgets', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -958,7 +958,7 @@ void main() {
 
   /// Tests that pressing Continue on splash screen creates a new gameId
   testWidgets('Continue button creates new gameId', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -1005,7 +1005,7 @@ void main() {
   });
 
   testWidgets('End game score checkbox enables and disables field', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -1054,7 +1054,7 @@ void main() {
   });
 
   testWidgets('French Driving mode scoring works correctly', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -1116,7 +1116,7 @@ void main() {
   });
 
   testWidgets('Phase 10 game with 4 players, 20 rounds, and custom scoring', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();
@@ -1288,7 +1288,7 @@ void main() {
   });
 
   testWidgets('Negative numbers via skyjo', (
-    WidgetTester tester,
+    tester,
   ) async {
     app.main();
     await tester.pumpAndSettle();

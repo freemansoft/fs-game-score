@@ -32,7 +32,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.12.0+236
 
 environment:
-  sdk: ^3.10.0
+  sdk: ^3.11.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -54,8 +54,8 @@ dependencies:
   go_router: ^17.0.1
   hooks_riverpod: ^3.1.0
   intl: any
-  package_info_plus: ^9.0.0
-  share_plus: ^12.0.0
+  package_info_plus: ^10.1.0
+  share_plus: ^13.1.0
   shared_preferences: ^2.5.3
   url_launcher: ^6.3.0
   uuid: ^4.5.1

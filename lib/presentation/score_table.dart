@@ -120,7 +120,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
 
           return DataRow2(
             color: WidgetStateProperty.resolveWith<Color?>(
-              (Set<WidgetState> states) => getRowColor(context, playerIdx),
+              (states) => getRowColor(context, playerIdx),
             ),
             cells: [
               DataCell(

@@ -40,7 +40,7 @@ void main() {
 
     group('Score Filter: Any Score (Empty String)', () {
       testWidgets('should accept any valid number', (
-        WidgetTester tester,
+        tester,
       ) async {
         // be explicit about the test parameters
         // ignore: avoid_redundant_argument_values
@@ -56,7 +56,7 @@ void main() {
       });
 
       testWidgets('should accept numbers ending in 0 or 5', (
-        WidgetTester tester,
+        tester,
       ) async {
         // be explicit about the test parameters
         // ignore: avoid_redundant_argument_values
@@ -75,7 +75,7 @@ void main() {
 
     group('Score Filter: Numbers Ending in 0 or 5', () {
       testWidgets('should accept valid scores ending in 0 or 5', (
-        WidgetTester tester,
+        tester,
       ) async {
         await tester.pumpWidget(
           createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
@@ -118,7 +118,7 @@ void main() {
       });
 
       testWidgets('should reject invalid scores not ending in 0 or 5', (
-        WidgetTester tester,
+        tester,
       ) async {
         await tester.pumpWidget(
           createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
@@ -192,7 +192,7 @@ void main() {
       });
 
       testWidgets('should allow valid score after invalid', (
-        WidgetTester tester,
+        tester,
       ) async {
         await tester.pumpWidget(
           createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
@@ -209,7 +209,7 @@ void main() {
         expect(find.text('10'), findsOneWidget);
       });
 
-      testWidgets('should allow clearing field', (WidgetTester tester) async {
+      testWidgets('should allow clearing field', (tester) async {
         await tester.pumpWidget(
           createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
         );
@@ -228,7 +228,7 @@ void main() {
 
     group('Field Behavior Tests', () {
       testWidgets('should prevent focus from leaving with invalid score', (
-        WidgetTester tester,
+        tester,
       ) async {
         await tester.pumpWidget(
           createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
@@ -249,7 +249,7 @@ void main() {
 
       testWidgets(
         'should prevent focus from leaving field with invalid score',
-        (WidgetTester tester) async {
+        (tester) async {
           await tester.pumpWidget(
             createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
           );
@@ -269,7 +269,7 @@ void main() {
       );
 
       testWidgets('should allow submission when score is valid', (
-        WidgetTester tester,
+        tester,
       ) async {
         await tester.pumpWidget(
           createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
@@ -314,7 +314,7 @@ void main() {
       }
 
       testWidgets('should accept negative scores when allowNegative is true', (
-        WidgetTester tester,
+        tester,
       ) async {
         await tester.pumpWidget(
           createNegativeTestWidget(allowNegative: true),
@@ -330,7 +330,7 @@ void main() {
       testWidgets(
         'should accept just a minus sign when allowNegative is true',
         (
-          WidgetTester tester,
+          tester,
         ) async {
           await tester.pumpWidget(
             createNegativeTestWidget(allowNegative: true),
@@ -345,7 +345,7 @@ void main() {
       );
 
       testWidgets('should filter out minus sign when allowNegative is false', (
-        WidgetTester tester,
+        tester,
       ) async {
         await tester.pumpWidget(
           // be explicit about the test parameters
@@ -362,7 +362,7 @@ void main() {
 
       testWidgets(
         'should filter out minus sign with default allowNegative',
-        (WidgetTester tester) async {
+        (tester) async {
           await tester.pumpWidget(createNegativeTestWidget());
 
           await tester.enterText(find.byType(TextFormField), '-25');
