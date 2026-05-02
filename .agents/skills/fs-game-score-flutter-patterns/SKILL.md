@@ -5,6 +5,7 @@ These patterns should be followed when implementing UI, state management, and da
 ## State Management
 
 ### Simple Local State (ValueNotifier)
+
 Use `ValueNotifier` with `ValueListenableBuilder` for simple, local state that involves a single value.
 
 ```dart
@@ -21,6 +22,7 @@ ValueListenableBuilder<int>(
 ```
 
 ### Complex State (ChangeNotifier)
+
 For state that is more complex or shared across multiple widgets, use `ChangeNotifier` with `ListenableBuilder`.
 
 ---
@@ -35,6 +37,7 @@ setup, nested routes, deep linking, and shell navigation patterns.
 ## Data Handling & Serialization
 
 ### JSON Serialization
+
 Use `json_serializable` and `json_annotation`. Use `fieldRename: FieldRename.snake` for consistency with JSON keys.
 
 ```dart
@@ -59,6 +62,7 @@ class User {
 ## Visual Design & Theming
 
 ### Material 3 Theme Generation
+
 Generate harmonious color palettes from a single seed color.
 
 ```dart
@@ -72,6 +76,7 @@ final ThemeData lightTheme = ThemeData(
 ```
 
 ### Custom Design Tokens (ThemeExtension)
+
 Use `ThemeExtension` to define custom styles (e.g., semantic colors) that aren't part of standard `ThemeData`.
 
 ```dart
@@ -103,6 +108,7 @@ class MyColors extends ThemeExtension<MyColors> {
 ## Advanced UI
 
 ### OverlayPortal for Popups/Dropdowns
+
 Use `OverlayPortal` to show UI elements on top of everything else.
 
 ```dart
@@ -130,6 +136,7 @@ class _MyDropdownState extends State<MyDropdown> {
 ```
 
 ### Network Images with Error Handling
+
 Always provide `loadingBuilder` and `errorBuilder`.
 
 ```dart
