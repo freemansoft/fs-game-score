@@ -55,12 +55,13 @@ Future<void> bootstrapApp() async {
   _installZeroOffsetPointerGuard();
   await _loadVersion();
 
-  // Pre-initialize SharedPreferences before mounting the provider tree.
-  // This ensures synchronous access throughout the entire app lifecycle.
+  // Pre-initialize SharedPreferences so repository providers can load synchronously
+  // in Notifier.build() without awaiting platform channels during first frame.
   final sharedPrefs = await SharedPreferences.getInstance();
 
-  // Create the container with the SharedPreferences override so that
-  // all providers in the graph can synchronously access it.
+  // Container is created here (not by ProviderScope) so prefs are ready before
+  // runApp. UncontrolledProviderScope attaches this container to the element tree
+  // without replacing it — see docs/State-Management.md.
   final container = ProviderContainer(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(sharedPrefs),

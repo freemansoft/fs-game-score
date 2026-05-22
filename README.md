@@ -58,6 +58,8 @@ Make sure to regenerate the dart localization files after making any changes to 
 
 ## Build and Test
 
+Riverpod architecture, provider layers, and testing conventions are documented in [docs/State-Management.md](docs/State-Management.md).
+
 You can test this locally using the run view in VSCode or using the command line.
 
 Release builds can be created from the command line individually for each platform or via the `build-distributable.sh` and `build-distributable.ps1` scripts.

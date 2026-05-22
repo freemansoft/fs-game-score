@@ -6,10 +6,12 @@ import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Determine initial route based on restorable persisted state.
+/// Initial route from restorable prefs (`/` or `/score-table`).
 ///
-/// Loads game and players from [prefs] and resumes only when both deserialize
-/// successfully and player dimensions match the saved game configuration.
+/// Uses [GameRepository] and [PlayersRepository] directly — not Riverpod notifiers —
+/// because this runs when [createAppRouter] is built, before route widgets mount.
+/// Must stay aligned with [PlayersNotifier.build] restore rules
+/// ([playersMatchConfiguration]).
 String initialLocation(SharedPreferences prefs) {
   final game = GameRepository(prefs).loadGame();
   final players = PlayersRepository(prefs).loadPlayers();

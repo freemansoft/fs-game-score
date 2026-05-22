@@ -6,11 +6,13 @@ Purpose: Short, actionable guidance to help an AI coding agent be productive in 
 
 - Flutter app (multi-platform) for a player/round score card. Key folders:
   - `lib/presentation/` — UI widgets (score table, modals, screens)
-  - `lib/provider/` — Riverpod `Notifier` providers (`game_provider`, `players_provider`)
+  - `lib/provider/` — Riverpod providers (`prefs_provider`, `game_provider`, `players_provider`)
+  - `lib/data/` — `GameRepository` / `PlayersRepository` (SharedPreferences persistence)
   - `lib/model/` — plain Dart model classes (Game, Players, Player, Scores)
   - `integration_test/` and `test/` — tests and integration tests
-- Data flow: `game_provider` holds global config; `players_provider.build()` watches `game_provider` and creates player state to match game dimensions (numPlayers, maxRounds).
-- Persistence: Game configuration saved to `SharedPreferences` in `lib/splash_screen.dart` (use `Game.toJson()` / `Game.fromJson()` patterns).
+- **Riverpod data flow**: `sharedPreferencesProvider` → repository providers → `gameNotifierProvider` / `playersNotifierProvider` → UI (`ConsumerWidget`). Full rules: [docs/State-Management.md](../docs/State-Management.md).
+- **Persistence**: Repositories read/write `game_state` and `players_state` keys. Splash **Continue** calls `gameNotifierProvider.notifier.newGame()` and saves the roster via `playersRepositoryProvider`; gameplay mutations debounce saves in `PlayersNotifier`.
+- **Startup**: `bootstrapApp()` in `lib/main.dart` overrides prefs and uses `UncontrolledProviderScope`; notifiers load in `build()` when first read.
 
 ## Quick commands (use `fvm` when present)
 
@@ -30,12 +32,13 @@ Purpose: Short, actionable guidance to help an AI coding agent be productive in 
 - Modal & semantics rules: `.cursor/rules/*` enforce semantics and key naming. Examples:
   - Widgets that show player data must expose semantic labels or be wrapped in Semantics
   - Modal/alert dialogs should be scrollable and layout by orientation when 2–3 fields exist
-- State management: use Riverpod `Notifier` patterns. `PlayersNotifier.build()` should watch `gameNotifierProvider` and rebuild players when configuration changes.
+- State management: use Riverpod 3 `Notifier` patterns. UI watches `gameNotifierProvider` / `playersNotifierProvider`; `PlayersNotifier.build()` watches `gameNotifierProvider` and restores from `playersRepositoryProvider` when dimensions match. Do not call repositories from widgets except splash `clearPlayers` and router resume.
 - Game ID behavior: `Game.fromJson()` intentionally generates a new `gameId` on load — do not rely on persisted `gameId` being preserved.
 
 ## Tests & integration tests
 
-- Integration tests check widget keys and flows. Re-run specific integration tests as shown in README (e.g. `flutter test integration_test/splash_screen_test.dart`).
+- Integration tests: `await launchAppOnSplash(tester)` from `integration_test/app_test_helpers.dart` (wraps `await bootstrapApp()`). Clear prefs in `setUp`/`tearDown` via `clearPersistedGameState()`.
+- Widget/unit tests: mock prefs in `test/flutter_test_config.dart`; override `sharedPreferencesProvider` in `ProviderScope` when testing code that uses repositories.
 - Tests use Arrange-Act-Assert. Prefer `find.byKey(...)` with the key helper functions and `tester.tap(...)` / `tester.enterText(...)` patterns used in existing tests.
 
 ## Linting & style
@@ -53,8 +56,9 @@ Purpose: Short, actionable guidance to help an AI coding agent be productive in 
 ## Quick file references (examples to inspect)
 
 - Key helpers: `lib/presentation/player_round_modal.dart`, `lib/presentation/player_game_modal.dart`, `lib/presentation/player_round_cell.dart`
-- Provider patterns: `lib/provider/game_provider.dart`, `lib/provider/players_provider.dart`
-- Persistence: `lib/splash_screen.dart`
+- Provider patterns: `lib/provider/prefs_provider.dart`, `lib/provider/game_provider.dart`, `lib/provider/players_provider.dart`
+- Persistence: `lib/data/game_repository.dart`, `lib/data/players_repository.dart`; splash/orchestration in `lib/presentation/splash_screen.dart`
+- State management doc: `docs/State-Management.md`
 - Integration tests: `integration_test/*_test.dart`
 - Cursor rules: `.cursor/rules/*.md` (key naming, semantics, modal layouts)
 

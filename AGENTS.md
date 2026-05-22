@@ -35,13 +35,16 @@ This project uses **FVM** (Flutter Version Management) to manage the Flutter SDK
 ### 1. State Management (Riverpod 3)
 
 * The application utilizes **Riverpod 3** (via `flutter_riverpod` and `hooks_riverpod` version `^3.1.0`) for compile-time safe, reactive state management.
-* Core providers:
-  * `gameNotifierProvider` ([game_provider.dart](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/lib/provider/game_provider.dart)): Manages global game settings (`Game` and `GameConfiguration`).
-  * `playersNotifierProvider` ([players_provider.dart](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/lib/provider/players_provider.dart)): Manages player score sheets, round states, phases, and attributes.
-* Auto-saving and persistence:
-  * Game configurations and player progress are saved to local preferences using `SharedPreferences`.
-  * Player state is auto-saved with a **5-second debounce** (`_scheduleSave()`) in the `PlayersNotifier` to prevent excessive write operations.
-  * For deep architecture discussions and known issues, refer to [State-Management.md](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/docs/State-Management.md).
+* **Provider layers** (see [docs/State-Management.md](docs/State-Management.md) for full patterns):
+  * `sharedPreferencesProvider` ([prefs_provider.dart](lib/provider/prefs_provider.dart)): DI for `SharedPreferences`; overridden in `bootstrapApp()` before `runApp`.
+  * `gameRepositoryProvider` / `playersRepositoryProvider`: Persistence only (`load*`, `save*`, `clear*`).
+  * `gameNotifierProvider` ([game_provider.dart](lib/provider/game_provider.dart)): Live `Game` configuration and `gameId`.
+  * `playersNotifierProvider` ([players_provider.dart](lib/provider/players_provider.dart)): Live roster, scores, phases, round locks.
+  * `appRouterProvider` ([app.dart](lib/app.dart)): `GoRouter` with resume logic from prefs.
+* **Rules**: Widgets `ref.watch` / `ref.read` **notifier** providers; use **repository** providers only from notifiers, router startup, or documented splash flows. Do not restore state via repository callbacks into notifiers.
+* **Startup**: `bootstrapApp()` in [main.dart](lib/main.dart) pre-inits prefs and mounts `UncontrolledProviderScope` with a pre-built `ProviderContainer`.
+* **Persistence**: Game config saved on `newGame()`; player progress debounced (5s) during play; baseline roster saved on splash **Continue**.
+* **Integration tests**: Use `integration_test/app_test_helpers.dart` — **`await bootstrapApp()`** via `launchApp` / `launchAppOnSplash`; never call `main()` without awaiting (Android race). Clear prefs in `setUp`/`tearDown`.
 
 ### 2. Localization
 

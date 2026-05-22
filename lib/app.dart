@@ -7,10 +7,10 @@ import 'package:fs_score_card/provider/prefs_provider.dart';
 import 'package:fs_score_card/router/app_router.dart';
 import 'package:go_router/go_router.dart';
 
-/// Provider for the [GoRouter] instance.
+/// [GoRouter] for the app, created from prefs at startup.
 ///
-/// Creates the router using [createAppRouter] with the pre-initialized
-/// `SharedPreferences` instance from [sharedPreferencesProvider].
+/// Watches [sharedPreferencesProvider] so [initialLocation] runs once when the
+/// router is first built. [Phase10App] should `ref.watch` this provider.
 final appRouterProvider = Provider<GoRouter>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
   return createAppRouter(prefs);

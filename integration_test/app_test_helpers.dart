@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Clears persisted game and player state before each test.
 ///
 /// Integration tests on devices use real [SharedPreferences], not mocks.
+/// Required so `initialLocation` routes to splash (`/`) instead of resuming
+/// a previous test's in-flight game.
 Future<void> clearPersistedGameState() async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('game_state');
@@ -32,8 +34,10 @@ Future<void> pumpUntilFound(
 
 /// Launches the app and waits for async startup to finish.
 ///
-/// `bootstrapApp` awaits SharedPreferences and package info before `runApp`.
-/// Calling it without `await` races on slower devices (e.g. Android CI).
+/// Awaits `bootstrapApp`, which pre-inits SharedPreferences and mounts
+/// `UncontrolledProviderScope` before `runApp`. Calling `main()` without
+/// awaiting races the first `pumpAndSettle` on slower Android devices.
+/// See `docs/State-Management.md` (Integration and widget testing).
 Future<void> launchApp(WidgetTester tester) async {
   await app.bootstrapApp();
   await tester.pump();
@@ -41,7 +45,7 @@ Future<void> launchApp(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-/// Launches the app and waits until the splash screen is ready.
+/// `launchApp` then waits until the splash Continue button is visible.
 Future<void> launchAppOnSplash(WidgetTester tester) async {
   await launchApp(tester);
   await pumpUntilFound(tester, find.byKey(SplashScreen.continueButtonKey));

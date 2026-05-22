@@ -52,6 +52,82 @@ This application uses **Riverpod 3** (via `flutter_riverpod` and `hooks_riverpod
 
 ---
 
+## Riverpod Usage Guidelines
+
+Follow these rules when adding features or fixing bugs. See [Provider Architecture](#provider-architecture) for repository vs notifier comparisons.
+
+### Provider layers (top to bottom)
+
+| Provider | Responsibility |
+| -------- | -------------- |
+| `sharedPreferencesProvider` | Injects the single `SharedPreferences` instance (must be overridden in `bootstrapApp`) |
+| `gameRepositoryProvider` / `playersRepositoryProvider` | Stateless persistence services (`load*`, `save*`, `clear*`) |
+| `gameNotifierProvider` / `playersNotifierProvider` | In-memory app state (`Game`, `Players`) and gameplay mutations |
+| `appRouterProvider` | `GoRouter` wired to prefs for initial route |
+| UI (`ConsumerWidget`) | `ref.watch` notifier providers; never own persistence logic |
+
+### `ref.watch` vs `ref.read`
+
+- **`ref.watch`**: Use in widget `build()` methods and in other providers' `build()` when the consumer must rebuild when dependencies change.
+- **`ref.read`**: Use in callbacks (`onPressed`, `initState` one-shot setup), notifier mutation methods, and when calling `.notifier` to run an action without subscribing.
+- **Do not** call `ref.watch` inside event handlers; it does not subscribe the widget and is misleading.
+
+### UI and notifier rules
+
+- Widgets should use **`gameNotifierProvider`** and **`playersNotifierProvider`** for display and actions (`ref.read(...notifier).updateScore(...)`).
+- Do **not** call `GameRepository` / `PlayersRepository` from widgets except documented exceptions:
+  - Splash: `playersRepositoryProvider.clearPlayers()` on entry
+  - Router: `initialLocation()` reads repos before the widget tree exists (see below)
+- Do **not** push loaded state from repositories into notifiers via side channels; restore in `Notifier.build()` only.
+
+### `Notifier.build()` rules
+
+- Load synchronously from the matching repository provider (`ref.watch(gameRepositoryProvider)` then `loadGame()`).
+- Return persisted data when validation passes (`playersMatchConfiguration` for players).
+- **No** saves, timers, or `unawaited` disk writes in `build()` — those belong in mutation methods or explicit UI flows (e.g. splash **Continue** saving the baseline roster).
+
+### Mutations and persistence
+
+1. Update `state` on the notifier.
+2. Persist with `ref.read(gameRepositoryProvider).saveGame(state)` or `playersRepositoryProvider` (often debounced for players).
+
+### Startup and `UncontrolledProviderScope`
+
+`bootstrapApp()` in `lib/main.dart`:
+
+1. Awaits `SharedPreferences.getInstance()` before `runApp`.
+2. Creates a `ProviderContainer` with `sharedPreferencesProvider.overrideWithValue(sharedPrefs)`.
+3. Mounts the tree with **`UncontrolledProviderScope`** so the container created in `main` is the app's provider scope (the framework does not create a separate container).
+
+Notifiers load persisted data the first time something `watch`es or `read`s them — there is no imperative `repositoryDidLoadPrefs()`.
+
+### Anti-patterns (do not reintroduce)
+
+| Anti-pattern | Why it fails |
+| ------------ | ------------ |
+| Singleton `GameRepository()` / `PlayersRepository()` | Untestable, hides DI, duplicate prefs instances |
+| `repositoryDidLoadPrefs()` on notifiers | Bypasses `build()` validation; caused restore bugs |
+| Resume routing via `prefs.containsKey` only | Routes to score table when JSON is invalid or mismatched |
+| `phases.completedPhases.length == numPhases` | Wrong dimension; phases lists are sized by `maxRounds` |
+| Fire-and-forget `main()` in integration tests | Races `runApp` on slow Android devices |
+
+### Integration and widget testing
+
+**Unit / widget tests** (`test/`):
+
+- `test/flutter_test_config.dart` sets `SharedPreferences.setMockInitialValues({})` before each run.
+- Widget tests that need repositories should wrap the widget in `ProviderScope` and override `sharedPreferencesProvider` with the same mock instance.
+
+**Integration tests** (`integration_test/`):
+
+- Use helpers in `integration_test/app_test_helpers.dart`:
+  - `clearPersistedGameState()` in `setUp` / `tearDown` (real prefs on devices)
+  - `await launchApp(tester)` or `launchAppOnSplash(tester)` — **must** `await bootstrapApp()`, not `main()` without await
+  - `pumpUntilFound` when waiting for splash widgets on slow emulators
+- Read notifier state via `ProviderScope.containerOf(element).read(gameNotifierProvider)` — works with `UncontrolledProviderScope`.
+
+---
+
 ## Persistence Strategy
 
 The application implements a persistence strategy using `SharedPreferences` to handle app restarts and crashes:
@@ -66,6 +142,8 @@ The application implements a persistence strategy using `SharedPreferences` to h
 ## Provider Architecture
 
 The application separates **persistence** (repository providers) from **in-memory application state** (notifier providers). UI and business logic should almost always use the notifier providers (`gameNotifierProvider`, `playersNotifierProvider`). Repository providers exist to supply wired `GameRepository` / `PlayersRepository` instances for disk access.
+
+For day-to-day coding rules (`ref.watch` vs `ref.read`, testing, anti-patterns), see [Riverpod Usage Guidelines](#riverpod-usage-guidelines).
 
 ```mermaid
 flowchart TB
@@ -286,6 +364,6 @@ Repositories are no longer singletons and no longer call `repositoryDidLoadPrefs
 - `lib/provider/players_provider.dart` - Player data state, validations, and auto-save debouncing
 - `lib/data/game_repository.dart` - Game configuration persistence using SharedPreferences
 - `lib/data/players_repository.dart` - Player state persistence using SharedPreferences
-- `lib/main.dart` - App startup and imperative ProviderContainer setup
+- `lib/main.dart` - `bootstrapApp()`, prefs pre-init, `UncontrolledProviderScope`
 - `lib/router/app_router.dart` - App router with initial route resume logic
 - `lib/presentation/splash_screen.dart` - Game configuration setting UI & new game initialization

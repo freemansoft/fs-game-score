@@ -2,14 +2,28 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Not convinced this is executed if you execute a single test directly
-/// in the ide
+/// Runs before each test file in `test/`.
+///
+/// Sets empty mock [SharedPreferences] so repository code sees no persisted
+/// game when tests construct repos directly or via providers.
+///
+/// Widget tests that mount `ProviderScope` with repository-dependent widgets
+/// should also override `sharedPreferencesProvider` with the same mock instance:
+///
+/// ```dart
+/// SharedPreferences.setMockInitialValues({});
+/// final prefs = await SharedPreferences.getInstance();
+/// await tester.pumpWidget(
+///   ProviderScope(
+///     overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+///     child: const MyApp(),
+///   ),
+/// );
+/// ```
+///
+/// See `docs/State-Management.md` for Riverpod testing guidelines.
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   SharedPreferences.setMockInitialValues({});
-
-  // Repositories are now created via Riverpod providers that receive
-  // SharedPreferences through DI, so there is no singleton state to clear.
-  // The mock initial values above ensure a clean slate for each test.
 
   await testMain();
 }

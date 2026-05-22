@@ -8,9 +8,11 @@ import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/provider/prefs_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// Returns true when persisted [players] dimensions match [config].
+///
+/// Used by `PlayersNotifier.build` and `initialLocation` for resume routing.
+/// Compares round list lengths to `maxRounds`, not `numPhases`.
 bool playersMatchConfiguration(Players players, GameConfiguration config) {
   if (players.players.isEmpty) {
     return false;
@@ -23,24 +25,25 @@ bool playersMatchConfiguration(Players players, GameConfiguration config) {
       firstPlayer.phases.completedPhases.length == config.maxRounds;
 }
 
-/// Provider for the [PlayersRepository].
+/// Supplies a [PlayersRepository] wired to [sharedPreferencesProvider].
 ///
-/// Watches [sharedPreferencesProvider] to obtain the [SharedPreferences]
-/// instance and creates a [PlayersRepository] with it.
+/// Stateless persistence only — use [playersNotifierProvider] for the live roster.
 final playersRepositoryProvider = Provider<PlayersRepository>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
   return PlayersRepository(prefs);
 });
 
+/// Live [Players] roster (scores, names, phases, round locks).
+///
+/// Widgets should `ref.watch` this provider or `ref.read` its notifier for
+/// mutations. Debounced saves run from mutation methods only, not from `build`.
 final playersNotifierProvider = NotifierProvider<PlayersNotifier, Players>(
   PlayersNotifier.new,
 );
 
-/// Manages all player data, scores, phases, and round lock states.
+/// Manages player data; watches [gameNotifierProvider] and restores from disk in [build].
 ///
-/// Watches [gameNotifierProvider] to automatically rebuild when game configuration
-/// changes. Loads persisted player state from [PlayersRepository] if it
-/// matches the current game configuration.
+/// Do not schedule saves or timers in [build] — use [_scheduleSave] from mutators.
 class PlayersNotifier extends Notifier<Players> {
   Timer? _saveTimer;
 
