@@ -38,6 +38,23 @@ class Player {
           [],
       roundStates = RoundStates.fromJson(json['roundStates'] as List<dynamic>);
 
+  Player copyWith({
+    String? name,
+    Scores? scores,
+    Phases? phases,
+    List<FrenchDrivingRoundAttributes>? frenchDrivingAttributes,
+    RoundStates? roundStates,
+  }) {
+    return Player.withData(
+      name: name ?? this.name,
+      scores: scores ?? Scores.fromJson(List<int?>.from(this.scores.roundScores)),
+      phases: phases ?? Phases.fromJson(List<int?>.from(this.phases.completedPhases)),
+      frenchDrivingAttributes: frenchDrivingAttributes ??
+          this.frenchDrivingAttributes.map((e) => e.copyWith()).toList(),
+      roundStates: roundStates ?? RoundStates.fromJson(List<bool>.from(this.roundStates.enabledRounds)),
+    );
+  }
+
   final String name;
   final Scores scores;
   final Phases phases;

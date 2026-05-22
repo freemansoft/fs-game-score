@@ -10,9 +10,6 @@ class GameNotifier extends Notifier<Game> {
     return GameRepository().loadedPrefsGame ?? Game();
   }
 
-  // is this the pattern or anti pattern and they should use ref.read?
-  Game stateValue() => state;
-
   Future<void> newGame({
     int? maxRounds,
     int? numPlayers,

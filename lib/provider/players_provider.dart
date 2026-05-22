@@ -19,6 +19,14 @@ class PlayersNotifier extends Notifier<Players> {
   Players build() {
     final game = ref.watch(gameProvider);
 
+    // Register a dispose callback once to immediately flush state if timer is active
+    ref.onDispose(() {
+      if (_saveTimer?.isActive ?? false) {
+        _saveTimer?.cancel();
+        unawaited(PlayersRepository().savePlayersToPrefs(state));
+      }
+    });
+
     // Check if we have loaded players from repository
     final loadedPlayers = PlayersRepository().loadedPrefsPlayers;
 
@@ -48,15 +56,10 @@ class PlayersNotifier extends Notifier<Players> {
     _saveTimer = Timer(const Duration(seconds: 5), () {
       unawaited(PlayersRepository().savePlayersToPrefs(state));
     });
-
-    /// Cancel any pending save timer on dispose
-    ref.onDispose(() {
-      _saveTimer?.cancel();
-    });
   }
 
   void updateScore(int playerIdx, int round, int? score) {
-    final player = state.players[playerIdx];
+    final player = state.players[playerIdx].copyWith();
     player.scores.setScore(round, score);
     state = state.withPlayer(player, playerIdx);
     _scheduleSave();
@@ -67,7 +70,7 @@ class PlayersNotifier extends Notifier<Players> {
     int round,
     FrenchDrivingRoundAttributes attributes,
   ) {
-    final player = state.players[playerIdx];
+    final player = state.players[playerIdx].copyWith();
     player.frenchDrivingAttributes[round] = attributes;
     player.scores.setScore(round, attributes.calculateScore());
     state = state.withPlayer(player, playerIdx);
@@ -75,22 +78,15 @@ class PlayersNotifier extends Notifier<Players> {
   }
 
   void updatePhase(int playerIdx, int round, int? phase) {
-    final player = state.players[playerIdx];
+    final player = state.players[playerIdx].copyWith();
     player.phases.setPhase(round, phase);
     state = state.withPlayer(player, playerIdx);
     _scheduleSave();
   }
 
   void updatePlayerName(int playerIdx, String name) {
-    final player = state.players[playerIdx];
-    final updatedPlayer = Player.withData(
-      name: name,
-      scores: player.scores,
-      phases: player.phases,
-      frenchDrivingAttributes: player.frenchDrivingAttributes,
-      roundStates: player.roundStates,
-    );
-    state = state.withPlayer(updatedPlayer, playerIdx);
+    final player = state.players[playerIdx].copyWith(name: name);
+    state = state.withPlayer(player, playerIdx);
     _scheduleSave();
   }
 
@@ -120,7 +116,7 @@ class PlayersNotifier extends Notifier<Players> {
   void toggleRoundEnabled({required int round, required bool enabled}) {
     var newState = state;
     for (int i = 0; i < state.length; i++) {
-      final player = state.players[i];
+      final player = state.players[i].copyWith();
       player.roundStates.setEnabled(round: round, enabled: enabled);
       newState = newState.withPlayer(player, i);
     }
