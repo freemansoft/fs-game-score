@@ -45,7 +45,12 @@ Future<void> _loadVersion() async {
   }
 }
 
-void main() async {
+/// Initializes bindings, loads version and prefs, then mounts the app.
+///
+/// Await this from integration tests so startup completes before pumping frames.
+/// On slower devices, calling `main` without awaiting races `runApp` against
+/// the first `pumpAndSettle`.
+Future<void> bootstrapApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   _installZeroOffsetPointerGuard();
   await _loadVersion();
@@ -70,3 +75,5 @@ void main() async {
     UncontrolledProviderScope(container: container, child: const Phase10App()),
   );
 }
+
+Future<void> main() => bootstrapApp();

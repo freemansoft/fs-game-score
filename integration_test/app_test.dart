@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
 import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/l10n/app_localizations_en.dart';
-import 'package:fs_score_card/main.dart' as app;
 import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_modal.dart';
@@ -19,13 +18,17 @@ import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app_test_helpers.dart';
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    // Clear shared preferences so that the router correctly starts at '/'
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    await clearPersistedGameState();
+  });
+
+  tearDown(() async {
+    await clearPersistedGameState();
   });
 
   // ========== Game ID Tests ==========
@@ -34,8 +37,7 @@ void main() {
   testWidgets('Start new game of the same type retains the gameIds', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Define ValueKeys used in the test
     const splashContinueButtonKey = SplashScreen.continueButtonKey;
@@ -94,8 +96,7 @@ void main() {
   testWidgets('Share functionality includes gameId in subject', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Define ValueKeys used in the test
     const splashContinueButtonKey = SplashScreen.continueButtonKey;
@@ -201,8 +202,7 @@ void main() {
   testWidgets('Multiple game resets produce different gameIds', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Define ValueKeys used in the test
     const splashContinueButtonKey = SplashScreen.continueButtonKey;
@@ -256,8 +256,7 @@ void main() {
   testWidgets('Splash screen Continue button creates new gameId', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Get the initial gameId from the splash screen
     const splashContinueButtonKey = SplashScreen.continueButtonKey;
@@ -308,8 +307,7 @@ void main() {
     (
       tester,
     ) async {
-      app.main();
-      await tester.pumpAndSettle();
+      await launchAppOnSplash(tester);
 
       // Verify we're on the splash screen
       expect(find.byType(SplashScreen), findsOneWidget);
@@ -404,8 +402,7 @@ void main() {
   testWidgets('NewScoreCardControl cancel button stays on score card', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Set players to 2 and rounds to 2, then continue
     final playersDropdown = find.byKey(
@@ -469,8 +466,7 @@ void main() {
   testWidgets('Score table displays correct rows and widgets for 2 players', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Define all ValueKeys used in the test
     const splashContinueButtonKey = SplashScreen.continueButtonKey;
@@ -724,8 +720,7 @@ void main() {
   testWidgets(
     'Player game cell shows bold text when endGameScore is set and total score >= endGameScore',
     (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+      await launchAppOnSplash(tester);
 
       // Enable end game score checkbox
       final checkbox = find.byKey(SplashScreen.endGameScoreCheckboxKey);
@@ -796,8 +791,7 @@ void main() {
   testWidgets(
     'Entering Splash Screen from New Game clears player state',
     (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+      await launchAppOnSplash(tester);
 
       // Press Continue to start a game
       final continueButton = find.byKey(SplashScreen.continueButtonKey);
@@ -860,8 +854,7 @@ void main() {
   testWidgets('Score table displays correct rows, columns, and widgets', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Select 4 players
     final playersDropdown = find.byKey(
@@ -960,8 +953,7 @@ void main() {
   testWidgets('Continue button creates new gameId', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Get the initial gameId before any user interaction
     const splashContinueButtonKey = SplashScreen.continueButtonKey;
@@ -1007,8 +999,7 @@ void main() {
   testWidgets('End game score checkbox enables and disables field', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Find the checkbox
     final checkbox = find.byKey(SplashScreen.endGameScoreCheckboxKey);
@@ -1056,8 +1047,7 @@ void main() {
   testWidgets('French Driving mode scoring works correctly', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Select "French Driving" mode
     final gameModeDropdown = find.byKey(SplashScreen.gameModeDropdownKey);
@@ -1118,8 +1108,7 @@ void main() {
   testWidgets('Phase 10 game with 4 players, 20 rounds, and custom scoring', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Select 4 players
     final playersDropdown = find.byKey(SplashScreen.numPlayersDropdownKey);
@@ -1290,8 +1279,7 @@ void main() {
   testWidgets('Negative numbers via skyjo', (
     tester,
   ) async {
-    app.main();
-    await tester.pumpAndSettle();
+    await launchAppOnSplash(tester);
 
     // Define all ValueKeys used in the test
     const splashContinueButtonKey = SplashScreen.continueButtonKey;

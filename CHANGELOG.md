@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add Google [Flutter Skills](https://github.com/flutter/skills) and [dart-lang skills](https://github.com/dart-lang/skills)
 - Use Player as an immutable data object
 - Updated dependencies to support Flutter 3.41.2 and dart 3.11.0
+- Rework Riverpod to follow recommended practices
 
 ## [1.11.0] - 2026-03-14
 
