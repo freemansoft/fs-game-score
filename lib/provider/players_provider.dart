@@ -3,44 +3,68 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/model/french_driving_round_attributes.dart';
+import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/model/player.dart';
 import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/provider/prefs_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// Returns true when persisted [players] dimensions match [config].
+bool playersMatchConfiguration(Players players, GameConfiguration config) {
+  if (players.players.isEmpty) {
+    return false;
+  }
+  if (players.players.length != config.numPlayers) {
+    return false;
+  }
+  final firstPlayer = players.players[0];
+  return firstPlayer.scores.roundScores.length == config.maxRounds &&
+      firstPlayer.phases.completedPhases.length == config.maxRounds;
+}
+
+/// Provider for the [PlayersRepository].
+///
+/// Watches [sharedPreferencesProvider] to obtain the [SharedPreferences]
+/// instance and creates a [PlayersRepository] with it.
+final playersRepositoryProvider = Provider<PlayersRepository>((ref) {
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return PlayersRepository(prefs);
+});
 
 final playersProvider = NotifierProvider<PlayersNotifier, Players>(
   PlayersNotifier.new,
 );
 
-/// can set the state directly if you are replacing the state with loaded players
+/// Manages all player data, scores, phases, and round lock states.
+///
+/// Watches [gameProvider] to automatically rebuild when game configuration
+/// changes. Loads persisted player state from [PlayersRepository] if it
+/// matches the current game configuration.
 class PlayersNotifier extends Notifier<Players> {
   Timer? _saveTimer;
 
   @override
   Players build() {
     final game = ref.watch(gameProvider);
+    final repository = ref.watch(playersRepositoryProvider);
 
-    // Register a dispose callback once to immediately flush state if timer is active
+    // Register a dispose callback once to immediately flush state
+    // if timer is active
     ref.onDispose(() {
       if (_saveTimer?.isActive ?? false) {
         _saveTimer?.cancel();
-        unawaited(PlayersRepository().savePlayersToPrefs(state));
+        unawaited(repository.savePlayers(state));
       }
     });
 
     // Check if we have loaded players from repository
-    final loadedPlayers = PlayersRepository().loadedPrefsPlayers;
+    final loadedPlayers = repository.loadPlayers();
 
     // If loaded players exist and match game configuration, use them
     if (loadedPlayers != null &&
-        loadedPlayers.players.isNotEmpty &&
-        loadedPlayers.players.length == game.configuration.numPlayers) {
-      final firstPlayer = loadedPlayers.players[0];
-      if (firstPlayer.scores.roundScores.length ==
-              game.configuration.maxRounds &&
-          firstPlayer.phases.completedPhases.length ==
-              game.configuration.numPhases) {
-        return loadedPlayers;
-      }
+        playersMatchConfiguration(loadedPlayers, game.configuration)) {
+      return loadedPlayers;
     }
 
     // Otherwise create new players based on game configuration
@@ -54,7 +78,7 @@ class PlayersNotifier extends Notifier<Players> {
   void _scheduleSave() {
     _saveTimer?.cancel();
     _saveTimer = Timer(const Duration(seconds: 5), () {
-      unawaited(PlayersRepository().savePlayersToPrefs(state));
+      unawaited(ref.read(playersRepositoryProvider).savePlayers(state));
     });
   }
 
@@ -122,14 +146,5 @@ class PlayersNotifier extends Notifier<Players> {
     }
     state = newState;
     _scheduleSave();
-  }
-
-  /// Use this when you want to set the players and notify but don't want save
-  /// Usually called by the repository when loading from prefs
-  // ignore: use_setters_to_change_properties
-  void repositoryDidLoadPrefs(Players players) {
-    state = players;
-
-    /// do not save because this was probably loaded from prefs
   }
 }

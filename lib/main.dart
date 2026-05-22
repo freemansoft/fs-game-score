@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/app.dart';
-import 'package:fs_score_card/data/game_repository.dart';
-import 'package:fs_score_card/data/players_repository.dart';
+import 'package:fs_score_card/provider/prefs_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // https://github.com/flutter/flutter/issues/175606#issuecomment-3453392532
 // Error introduced with iPad IOS 26.1 due to iPad window handling
@@ -50,15 +50,17 @@ void main() async {
   _installZeroOffsetPointerGuard();
   await _loadVersion();
 
-  // Create the container before loading prefs so repositories can push state
-  // into providers as soon as loading completes, resolving the race condition
-  // between async repository loads and provider initialization.
-  final container = ProviderContainer();
-  GameRepository().initialize(container);
-  PlayersRepository().initialize(container);
+  // Pre-initialize SharedPreferences before mounting the provider tree.
+  // This ensures synchronous access throughout the entire app lifecycle.
+  final sharedPrefs = await SharedPreferences.getInstance();
 
-  await GameRepository().loadGameFromPrefs();
-  await PlayersRepository().loadPlayersFromPrefs();
+  // Create the container with the SharedPreferences override so that
+  // all providers in the graph can synchronously access it.
+  final container = ProviderContainer(
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(sharedPrefs),
+    ],
+  );
 
   if (kIsWeb) {
     SemanticsBinding.instance.ensureSemantics();

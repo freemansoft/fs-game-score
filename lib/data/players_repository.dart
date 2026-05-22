@@ -1,92 +1,68 @@
 import 'dart:developer' as developer;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/model/players.dart';
-import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Repository for persisting [Players] state using [SharedPreferences].
+///
+/// Instances are created via `playersRepositoryProvider` and receive their
+/// [SharedPreferences] dependency through the constructor, enabling clean
+/// testability and eliminating the need for singleton global state.
 class PlayersRepository {
-  factory PlayersRepository() {
-    return _instance;
-  }
+  PlayersRepository(this._prefs);
 
-  PlayersRepository._internal();
-
-  static final PlayersRepository _instance = PlayersRepository._internal();
+  final SharedPreferences _prefs;
 
   static const String _playersPrefsKey = 'players_state';
 
-  /// Optional ref used to notify providers after loading from prefs.
-  ProviderContainer? _container;
-
-  /// Call this once after [ProviderScope]/[ProviderContainer] is ready.
-  /// The repository will use [container] to push loaded state into
-  /// [playersProvider] instead of relying on the notifier to poll
-  /// [loadedPrefsPlayers] during its build phase.
-  // ignore: use_setters_to_change_properties
-  void initialize(ProviderContainer container) {
-    _container = container;
-  }
-
-  /// Loaded from shared preferences
-  Players? loadedPrefsPlayers;
-
-  /// Load players state from shared preferences.
-  ///
-  /// This hack should probably be replaced with AsyncNotifier
-  Future<void> loadPlayersFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    final playersJson = prefs.getString(_playersPrefsKey);
+  /// Synchronously load the players from shared preferences.
+  /// Returns `null` if no players were found or deserialization fails.
+  Players? loadPlayers() {
+    final playersJson = _prefs.getString(_playersPrefsKey);
     if (playersJson != null && playersJson.isNotEmpty) {
       try {
-        loadedPrefsPlayers = Players.fromJson(playersJson);
+        final loaded = Players.fromJson(playersJson);
         assert(() {
           developer.log(
-            'Players loaded from prefs: ' /*${loadedPrefsPlayers!.toJson()}*/,
+            'Players loaded from prefs.',
             name: runtimeType.toString(),
           );
           return true;
         }());
-        _container
-            ?.read(playersProvider.notifier)
-            .repositoryDidLoadPrefs(loadedPrefsPlayers!);
+        return loaded;
         // We don't know what all the errors could be across platforms
         // ignore: avoid_catches_without_on_clauses
       } catch (_) {
         // If deserialization fails, clear the loaded state
-        loadedPrefsPlayers = null;
+        return null;
       }
     } else {
-      loadedPrefsPlayers = null;
       assert(() {
         developer.log(
-          'Players not found in prefs. Created new players.',
+          'Players not found in prefs.',
           name: runtimeType.toString(),
         );
         return true;
       }());
+      return null;
     }
   }
 
   /// Save players state to shared preferences.
-  Future<void> savePlayersToPrefs(Players players) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_playersPrefsKey, players.toJson());
-    // save ourselves an extra load cycle
-    loadedPrefsPlayers = players;
+  Future<void> savePlayers(Players players) async {
+    await _prefs.setString(_playersPrefsKey, players.toJson());
     assert(() {
       developer.log(
-        'Players saved to prefs: ' /*${players.toJson()}*/,
+        'Players saved to prefs.',
         name: runtimeType.toString(),
       );
       return true;
     }());
   }
 
-  Future<void> clearPlayersFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_playersPrefsKey);
-    loadedPrefsPlayers = null;
+  /// Clear players state from shared preferences.
+  Future<void> clearPlayers() async {
+    await _prefs.remove(_playersPrefsKey);
     assert(() {
       developer.log(
         'Players cleared from prefs',

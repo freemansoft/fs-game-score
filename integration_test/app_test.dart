@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
-import 'package:fs_score_card/data/game_repository.dart';
 import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/l10n/app_localizations_en.dart';
 import 'package:fs_score_card/main.dart' as app;
@@ -17,17 +16,16 @@ import 'package:fs_score_card/presentation/score_table.dart';
 import 'package:fs_score_card/presentation/share_game_control.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
-import 'package:fs_score_card/router/app_router.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    // Reset the app router to initial state before each test
-    appRouter.goNamed('splash');
-    await GameRepository().clearGameFromPrefs();
-    await PlayersRepository().clearPlayersFromPrefs();
+    // Clear shared preferences so that the router correctly starts at '/'
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   });
 
   // ========== Game ID Tests ==========
@@ -844,7 +842,8 @@ void main() {
       expect(find.byType(SplashScreen), findsOneWidget);
 
       // Verify that the players state was cleared from persistence
-      final loadedPlayers = PlayersRepository().loadedPrefsPlayers;
+      final prefs = await SharedPreferences.getInstance();
+      final loadedPlayers = PlayersRepository(prefs).loadPlayers();
       expect(
         loadedPlayers,
         isNull,

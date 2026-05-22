@@ -3,11 +3,23 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/data/game_repository.dart';
 import 'package:fs_score_card/model/game.dart';
+import 'package:fs_score_card/provider/prefs_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// Provider for the [GameRepository].
+///
+/// Watches [sharedPreferencesProvider] to obtain the [SharedPreferences]
+/// instance and creates a [GameRepository] with it.
+final gameRepositoryProvider = Provider<GameRepository>((ref) {
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return GameRepository(prefs);
+});
 
 class GameNotifier extends Notifier<Game> {
   @override
   Game build() {
-    return GameRepository().loadedPrefsGame ?? Game();
+    final repository = ref.watch(gameRepositoryProvider);
+    return repository.loadGame() ?? Game();
   }
 
   Future<void> newGame({
@@ -29,16 +41,7 @@ class GameNotifier extends Notifier<Game> {
       ),
       // gameId will be automatically generated as a new UUID
     );
-    await GameRepository().saveGameToPrefs(state);
-  }
-
-  /// Use this when you want to set the game state loaded from the repository.
-  /// Usually called by the repository when loading from prefs.
-  // ignore: use_setters_to_change_properties
-  void repositoryDidLoadPrefs(Game game) {
-    state = game;
-
-    /// do not save because this was probably loaded from prefs
+    await ref.read(gameRepositoryProvider).saveGame(state);
   }
 }
 

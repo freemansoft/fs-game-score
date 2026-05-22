@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/main.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/model/score_filters.dart';
 import 'package:fs_score_card/presentation/about_button.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -55,7 +55,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     thisGame = ref.read(gameProvider);
 
     // Any entry to the splash screen from navigation, resets the players prefs
-    unawaited(PlayersRepository().clearPlayersFromPrefs());
+    unawaited(ref.read(playersRepositoryProvider).clearPlayers());
 
     // Auto-set score filter based on initially loaded game mode
     final autoFilter =
@@ -457,6 +457,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         endGameScore: thisGame.configuration.endGameScore,
                         version: appVersion,
                       );
+
+                  final players = ref.read(playersProvider);
+                  await ref
+                      .read(playersRepositoryProvider)
+                      .savePlayers(players);
 
                   // Navigate to score table screen
                   if (context.mounted) {
