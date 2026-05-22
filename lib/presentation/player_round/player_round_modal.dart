@@ -138,7 +138,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
   @override
   Widget build(BuildContext context) {
     // Watch the players provider to get the current phase and score values
-    final players = ref.watch(playersProvider);
+    final players = ref.watch(playersNotifierProvider);
     final player = players[widget.playerIdx];
     final selectedPhase = player.phases.getPhase(widget.round);
     final completedPhases = player.phases.completedPhasesList();

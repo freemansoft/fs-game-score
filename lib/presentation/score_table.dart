@@ -36,8 +36,8 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
 
   @override
   Widget build(BuildContext context) {
-    final players = ref.watch(playersProvider);
-    final game = ref.watch(gameProvider);
+    final players = ref.watch(playersNotifierProvider);
+    final game = ref.watch(gameNotifierProvider);
     final minWidth = 100 + game.configuration.maxRounds * 100;
 
     return Semantics(
@@ -99,7 +99,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                         onPressed: () {
                           // Toggle enabled state for all players for this round
                           ref
-                              .read(playersProvider.notifier)
+                              .read(playersNotifierProvider.notifier)
                               .toggleRoundEnabled(
                                 round: round,
                                 enabled: !allEnabled,
@@ -144,17 +144,17 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     completedPhases: player.phases.completedPhasesList(),
                     onPhaseChanged: (val) {
                       ref
-                          .read(playersProvider.notifier)
+                          .read(playersNotifierProvider.notifier)
                           .updatePhase(playerIdx, round, val);
                     },
                     onScoreChanged: (parsed) {
                       ref
-                          .read(playersProvider.notifier)
+                          .read(playersNotifierProvider.notifier)
                           .updateScore(playerIdx, round, parsed);
                     },
                     onFrenchDrivingAttributesChanged: (attrs) {
                       ref
-                          .read(playersProvider.notifier)
+                          .read(playersNotifierProvider.notifier)
                           .updateFrenchDrivingAttributes(
                             playerIdx,
                             round,
@@ -178,7 +178,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
       playerIdx: playerIdx,
       name: player.name,
       onNameChanged: (val) {
-        ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+        ref
+            .read(playersNotifierProvider.notifier)
+            .updatePlayerName(playerIdx, val);
       },
       totalScore: player.totalScore,
       phases: player.phases,

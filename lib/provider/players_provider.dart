@@ -32,13 +32,13 @@ final playersRepositoryProvider = Provider<PlayersRepository>((ref) {
   return PlayersRepository(prefs);
 });
 
-final playersProvider = NotifierProvider<PlayersNotifier, Players>(
+final playersNotifierProvider = NotifierProvider<PlayersNotifier, Players>(
   PlayersNotifier.new,
 );
 
 /// Manages all player data, scores, phases, and round lock states.
 ///
-/// Watches [gameProvider] to automatically rebuild when game configuration
+/// Watches [gameNotifierProvider] to automatically rebuild when game configuration
 /// changes. Loads persisted player state from [PlayersRepository] if it
 /// matches the current game configuration.
 class PlayersNotifier extends Notifier<Players> {
@@ -46,7 +46,7 @@ class PlayersNotifier extends Notifier<Players> {
 
   @override
   Players build() {
-    final game = ref.watch(gameProvider);
+    final game = ref.watch(gameNotifierProvider);
     final repository = ref.watch(playersRepositoryProvider);
 
     // Register a dispose callback once to immediately flush state

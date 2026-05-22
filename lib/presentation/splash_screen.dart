@@ -52,7 +52,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     _endGameScoreController = TextEditingController();
-    thisGame = ref.read(gameProvider);
+    thisGame = ref.read(gameNotifierProvider);
 
     // Any entry to the splash screen from navigation, resets the players prefs
     unawaited(ref.read(playersRepositoryProvider).clearPlayers());
@@ -416,7 +416,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(gameProvider);
+    ref.watch(gameNotifierProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -448,7 +448,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 onPressed: () async {
                   // Create a new game with fresh gameId and selected configuration
                   await ref
-                      .read(gameProvider.notifier)
+                      .read(gameNotifierProvider.notifier)
                       .newGame(
                         maxRounds: thisGame.configuration.maxRounds,
                         numPlayers: thisGame.configuration.numPlayers,
@@ -458,7 +458,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         version: appVersion,
                       );
 
-                  final players = ref.read(playersProvider);
+                  final players = ref.read(playersNotifierProvider);
                   await ref
                       .read(playersRepositoryProvider)
                       .savePlayers(players);

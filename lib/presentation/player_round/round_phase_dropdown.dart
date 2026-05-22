@@ -58,7 +58,7 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final game = ref.watch(gameProvider);
+    final game = ref.watch(gameNotifierProvider);
     final theme = Theme.of(context);
     final hasFocus = _focusNode.hasFocus;
 

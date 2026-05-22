@@ -15,6 +15,10 @@ final gameRepositoryProvider = Provider<GameRepository>((ref) {
   return GameRepository(prefs);
 });
 
+final gameNotifierProvider = NotifierProvider<GameNotifier, Game>(
+  GameNotifier.new,
+);
+
 class GameNotifier extends Notifier<Game> {
   @override
   Game build() {
@@ -44,5 +48,3 @@ class GameNotifier extends Notifier<Game> {
     await ref.read(gameRepositoryProvider).saveGame(state);
   }
 }
-
-final gameProvider = NotifierProvider<GameNotifier, Game>(GameNotifier.new);

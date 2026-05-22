@@ -70,7 +70,9 @@ class NewGameControl extends ConsumerWidget {
       },
     );
     if (result ?? false) {
-      ref.read(playersProvider.notifier).resetGame(clearNames: clearNames);
+      ref
+          .read(playersNotifierProvider.notifier)
+          .resetGame(clearNames: clearNames);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

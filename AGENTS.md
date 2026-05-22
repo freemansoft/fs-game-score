@@ -12,7 +12,7 @@ This project uses **FVM** (Flutter Version Management) to manage the Flutter SDK
 > **Every Flutter and Dart command MUST be prefixed with `fvm`.**
 > Never run raw `flutter` or `dart` commands. Always use `fvm flutter` and `fvm dart`.
 
-### Correct Command Usage Examples:
+### Correct Command Usage Examples
 
 | Task | Incorrect Command | Correct Command |
 | :--- | :--- | :--- |
@@ -33,20 +33,23 @@ This project uses **FVM** (Flutter Version Management) to manage the Flutter SDK
 ## 🛠️ Codebase Context & Architecture
 
 ### 1. State Management (Riverpod 3)
+
 * The application utilizes **Riverpod 3** (via `flutter_riverpod` and `hooks_riverpod` version `^3.1.0`) for compile-time safe, reactive state management.
 * Core providers:
-  - `gameProvider` ([game_provider.dart](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/lib/provider/game_provider.dart)): Manages global game settings (`Game` and `GameConfiguration`).
-  - `playersProvider` ([players_provider.dart](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/lib/provider/players_provider.dart)): Manages player score sheets, round states, phases, and attributes.
+  * `gameNotifierProvider` ([game_provider.dart](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/lib/provider/game_provider.dart)): Manages global game settings (`Game` and `GameConfiguration`).
+  * `playersNotifierProvider` ([players_provider.dart](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/lib/provider/players_provider.dart)): Manages player score sheets, round states, phases, and attributes.
 * Auto-saving and persistence:
-  - Game configurations and player progress are saved to local preferences using `SharedPreferences`.
-  - Player state is auto-saved with a **5-second debounce** (`_scheduleSave()`) in the `PlayersNotifier` to prevent excessive write operations.
-  - For deep architecture discussions and known issues, refer to [State-Management.md](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/docs/State-Management.md).
+  * Game configurations and player progress are saved to local preferences using `SharedPreferences`.
+  * Player state is auto-saved with a **5-second debounce** (`_scheduleSave()`) in the `PlayersNotifier` to prevent excessive write operations.
+  * For deep architecture discussions and known issues, refer to [State-Management.md](file:///Users/joefreeman/Documents/GitHub/freemansoft/fs-game-score/docs/State-Management.md).
 
 ### 2. Localization
+
 * Localization is configured in `l10n.yaml` and generated code is used.
 * When adding or modifying user-facing text, ensure it utilizes the generated localization bindings.
 
 ### 3. Code Quality and Styling
+
 * This codebase enforces high code quality standard guidelines defined in `analysis_options.yaml` and is configured with `very_good_analysis`.
 * Before submitting code modifications:
   1. Format your changes: `fvm dart format .`
@@ -64,6 +67,7 @@ fvm flutter test
 ```
 
 For integration tests, run:
+
 ```bash
 fvm flutter test integration_test/
 ```

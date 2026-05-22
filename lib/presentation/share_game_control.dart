@@ -33,13 +33,13 @@ class ShareGameControl extends ConsumerWidget {
 
 // Extracted share logic to a top-level function for reuse and clarity.
 Future<void> shareGame(BuildContext context, WidgetRef ref) async {
-  final players = ref.read(playersProvider);
+  final players = ref.read(playersNotifierProvider);
   if (players.players.isNotEmpty) {
     final csvData = players.toCsv();
     final now = DateTime.now();
     final dateTime =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
-    final game = ref.read(gameProvider);
+    final game = ref.read(gameNotifierProvider);
     final gameId = game.gameId;
     final title = 'fs score card $gameId $dateTime';
     final subject = 'fs score card $gameId $dateTime';

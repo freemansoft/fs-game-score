@@ -57,7 +57,7 @@ void main() {
       tester.element(firstDataTable),
     );
 
-    final firstGameProvider = firstContainer.read(gameProvider);
+    final firstGameProvider = firstContainer.read(gameNotifierProvider);
     final firstGameId = firstGameProvider.gameId;
     expect(firstGameId, isNotEmpty);
 
@@ -80,7 +80,7 @@ void main() {
       tester.element(firstDataTable),
     );
     // Get the second game instance
-    final secondGame = secondContainer.read(gameProvider);
+    final secondGame = secondContainer.read(gameNotifierProvider);
     final secondGameId = secondGame.gameId;
 
     // Verify the gameIds are different
@@ -170,7 +170,7 @@ void main() {
     await tester.pumpAndSettle(); // Wait for the dialog to dismiss
     expect(find.byType(PlayerGameModal), findsNothing);
 
-    final game = container.read(gameProvider);
+    final game = container.read(gameNotifierProvider);
     final gameId = game.gameId;
     expect(gameId, isNotEmpty);
 
@@ -220,10 +220,10 @@ void main() {
     // Verify score table is displayed
     expect(find.byType(DataTable2), findsOneWidget);
 
-    final gameNotifier = container.read(gameProvider.notifier);
+    final gameNotifier = container.read(gameNotifierProvider.notifier);
 
     // Get the first gameId
-    final firstGame = container.read(gameProvider);
+    final firstGame = container.read(gameNotifierProvider);
     final firstGameId = firstGame.gameId;
     expect(firstGameId, isNotEmpty);
 
@@ -233,7 +233,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Get the second gameId
-    final secondGame = container.read(gameProvider);
+    final secondGame = container.read(gameNotifierProvider);
     final secondGameId = secondGame.gameId;
     expect(secondGameId, isNotEmpty);
     expect(secondGameId, isNot(equals(firstGameId)));
@@ -243,7 +243,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Get the third gameId
-    final thirdGame = container.read(gameProvider);
+    final thirdGame = container.read(gameNotifierProvider);
     final thirdGameId = thirdGame.gameId;
     expect(thirdGameId, isNotEmpty);
     expect(thirdGameId, isNot(equals(firstGameId)));
@@ -265,7 +265,7 @@ void main() {
     final container = ProviderScope.containerOf(
       tester.element(find.byKey(splashContinueButtonKey)),
     );
-    final initialGame = container.read(gameProvider);
+    final initialGame = container.read(gameNotifierProvider);
     final initialGameId = initialGame.gameId;
     expect(initialGameId, isNotEmpty);
 
@@ -279,7 +279,7 @@ void main() {
     expect(find.byType(DataTable2), findsOneWidget);
 
     // Get the new gameId after Continue
-    final newGame = container.read(gameProvider);
+    final newGame = container.read(gameNotifierProvider);
     final newGameId = newGame.gameId;
 
     // Verify the gameId has changed (new game was created)
@@ -847,7 +847,8 @@ void main() {
       expect(
         loadedPlayers,
         isNull,
-        reason: 'Player state should be cleared on Splash Screen entry',
+        reason:
+            'Player state should be cleared on Splash Screen entry ${loadedPlayers?.toJson()}',
       );
     },
   );
@@ -969,7 +970,7 @@ void main() {
       tester.element(find.byKey(splashContinueButtonKey)),
     );
 
-    final initialGame = container.read(gameProvider);
+    final initialGame = container.read(gameNotifierProvider);
     final initialGameId = initialGame.gameId;
     expect(initialGameId, isNotEmpty);
 
@@ -983,7 +984,7 @@ void main() {
     expect(find.byType(DataTable2), findsOneWidget);
 
     // Get the new gameId after Continue
-    final newGame = container.read(gameProvider);
+    final newGame = container.read(gameNotifierProvider);
     final newGameId = newGame.gameId;
 
     // Verify the gameId has changed (new game was created)
