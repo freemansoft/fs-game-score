@@ -1,3 +1,10 @@
+---
+name: fs-game-score-testing-workflow
+description: >
+  Unit, widget, and integration testing patterns, widget keys in tests, and a11y for this app.
+  Use when writing or updating tests or accessibility behavior.
+---
+
 # Testing & Accessibility Workflow
 
 Follow these guidelines to ensure the application remains testable and accessible.

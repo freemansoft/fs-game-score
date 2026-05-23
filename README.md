@@ -409,6 +409,11 @@ _. Prettier (legacy) - Code formatter
 
 ### LLM Rules
 
-All of the code assist tools support an `/AGENTS.md` file in the root of the project. Antigravity is limited to 12,000 characters per file. Because of this the rules file in the `.agents/rules/` folder is smaller than for the other two. We could have put a single shortened copy in `/AGENTS.md` to simplify management but we wanted as much rule support as possible for each IDE.
+AI coding tools share a single rules layout:
 
-The rules in `.agents/rules/` are used by the Antigravity IDE. The rules in `.cursor/rules/` are used by the Cursor IDE.
+- **[AGENTS.md](AGENTS.md)** — project rules for Cursor, GitHub Copilot, and Antigravity (keep under 12,000 characters for Antigravity)
+- **[`.agents/skills/`](.agents/skills/)** — upstream [Dart](https://github.com/dart-lang/skills) and [Flutter](https://github.com/flutter/skills) skills, plus project skills (`fs-game-score-*`, `release-flutter-upgrade-sdk`)
+
+Cursor and Antigravity auto-discover skills from `.agents/skills/` when each skill has a valid `SKILL.md` with YAML frontmatter. Copilot reads `AGENTS.md`; project skills are referenced there for deeper workflows (live sync, testing, widget keys).
+
+Removed redundant copies: `.cursor/rules/`, `.agents/rules/`, `.github/copilot-instructions.md`, and `.github/instructions/copilot.instructions.md`.

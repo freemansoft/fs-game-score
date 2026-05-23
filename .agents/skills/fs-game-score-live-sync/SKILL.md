@@ -1,3 +1,10 @@
+---
+name: fs-game-score-live-sync
+description: >
+  LAN host/spectator live sync, WebSocket protocol, and join/host UI for this app.
+  Use when changing gameSyncHostProvider, gameSyncSpectatorProvider, or sync flows.
+---
+
 # FS Score Card — Live game sync
 
 Use this skill when changing LAN live sharing, `gameSyncHostProvider`, `gameSyncSpectatorProvider`, sync protocol, or join/host UI.

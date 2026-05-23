@@ -1,3 +1,10 @@
+---
+name: fs-game-score-flutter-patterns
+description: >
+  Riverpod UI patterns, routing, serialization, and Flutter conventions for this app.
+  Use for general UI and state-management implementation work.
+---
+
 # Flutter Implementation Patterns
 
 These patterns should be followed when implementing UI, state management, and data handling.
