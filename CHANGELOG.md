@@ -13,12 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Join a live game from the splash screen: browse hosts on the same Wi-Fi, scan the host QR code, or enter a `ws://` URL manually in debug builds
 - Spectator **read-only** score table with connection status banner; scores update as the host plays (no editing, no persistence on the spectator device)
 - Admission requires matching 6-digit PIN and the same app build version on host and spectator (`PackageInfo` version, e.g. `1.12.0+236`)
-- English and Spanish localization for live share, join, and connection error messages
 - Privacy policy updated for LAN discovery and local network use on mobile
 
 ### Architecture and quality
 
-- Reduce player-state save debounce from 5 seconds to 3 seconds (`kPlayersSaveDebounceDuration`)
+- Replace player-state save debounce with coalesced single-flight persist in `PlayersNotifier` (better crash recovery, serialized writes)
 - Rework Riverpod to follow recommended practices: `sharedPreferencesProvider`, repository providers, and separate `gameSyncHostProvider` / `gameSyncSpectatorProvider` for live sync (see [docs/Game-Sync.md](docs/Game-Sync.md))
 - Use `Player` as an immutable data object
 - Updated dependencies to support Flutter 3.41.2 and Dart 3.11.0 (including bonsoir, shelf WebSocket, QR, and mobile scanner for live sync)

@@ -57,7 +57,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     thisGame = ref.read(gameNotifierProvider);
 
     // Any entry to the splash screen clears persisted players and resets the
-    // live roster (including cancelling debounced saves from the score table).
+    // live roster (including coalesced persists from the score table).
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref.read(playersNotifierProvider.notifier).prepareForSplashEntry();
     });

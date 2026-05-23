@@ -57,7 +57,7 @@ Future<void> launchAppOnSplash(WidgetTester tester) async {
 /// Waits until splash entry has cleared persisted player state.
 ///
 /// Awaits [PlayersNotifier.prepareForSplashEntry] and polls prefs because
-/// clearing is async and debounced saves from the score table can race.
+/// clearing is async and coalesced saves from the score table can race.
 Future<void> waitForSplashPlayersCleared(WidgetTester tester) async {
   final splashFinder = find.byType(SplashScreen);
   expect(splashFinder, findsOneWidget);

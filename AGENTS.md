@@ -44,7 +44,7 @@ This project uses **FVM** (Flutter Version Management) to manage the Flutter SDK
   * `appRouterProvider` ([app.dart](lib/app.dart)): `GoRouter` with resume logic from prefs.
 * **Rules**: Widgets `ref.watch` / `ref.read` **notifier** providers; use **repository** providers only from notifiers, router startup, or documented splash flows. Do not restore state via repository callbacks into notifiers.
 * **Startup**: `bootstrapApp()` in [main.dart](lib/main.dart) pre-inits prefs and mounts `UncontrolledProviderScope` with a pre-built `ProviderContainer`.
-* **Persistence**: Game config saved on `newGame()`; player progress debounced (3s, `kPlayersSaveDebounceDuration`) during play; baseline roster saved on splash **Start new game**. Splash entry uses `prepareForSplashEntry()` to avoid debounced-save races — see [docs/State-Management.md](docs/State-Management.md#splash-entry-and-debounced-save-race).
+* **Persistence**: Game config saved on `newGame()`; player progress uses coalesced single-flight persist during play; baseline roster saved on splash **Start new game**. Splash entry uses `prepareForSplashEntry()` to avoid persist races — see [docs/State-Management.md](docs/State-Management.md#splash-entry-and-coalesced-persist-race).
 * **Live sync**: When editing host/join/spectator flows, read [docs/Game-Sync.md](docs/Game-Sync.md) and use the **`fs-game-score-live-sync`** skill.
 * **Integration tests**: Use `integration_test/app_test_helpers.dart` — **`await bootstrapApp()`** via `launchApp` / `launchAppOnSplash`; never call `main()` without awaiting (Android race). Clear prefs in `setUp`/`tearDown`.
 

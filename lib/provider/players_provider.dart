@@ -9,9 +9,6 @@ import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/provider/prefs_provider.dart';
 
-/// Idle time before persisting player edits during gameplay.
-const Duration kPlayersSaveDebounceDuration = Duration(seconds: 3);
-
 /// Returns true when persisted [players] dimensions match [config].
 ///
 /// Used by `PlayersNotifier.build` and `initialLocation` for resume routing.
@@ -39,16 +36,18 @@ final playersRepositoryProvider = Provider<PlayersRepository>((ref) {
 /// Live [Players] roster (scores, names, phases, round locks).
 ///
 /// Widgets should `ref.watch` this provider or `ref.read` its notifier for
-/// mutations. Debounced saves run from mutation methods only, not from `build`.
+/// mutations. Coalesced persistence runs from mutation methods only, not from
+/// `build`.
 final playersNotifierProvider = NotifierProvider<PlayersNotifier, Players>(
   PlayersNotifier.new,
 );
 
 /// Manages player data; watches [gameNotifierProvider] and restores from disk in [build].
 ///
-/// Do not schedule saves or timers in [build] — use [_scheduleSave] from mutators.
+/// Do not schedule saves in [build] — use [_requestPersist] from mutators.
 class PlayersNotifier extends Notifier<Players> {
-  Timer? _saveTimer;
+  Future<void>? _persistInFlight;
+  bool _persistDirty = false;
   int _persistGeneration = 0;
   Future<void>? _splashEntryInProgress;
 
@@ -57,18 +56,14 @@ class PlayersNotifier extends Notifier<Players> {
     final game = ref.watch(gameNotifierProvider);
     final repository = ref.watch(playersRepositoryProvider);
 
-    // Register a dispose callback once to immediately flush state
-    // if timer is active
     ref.onDispose(() {
-      if (_saveTimer?.isActive ?? false) {
-        _saveTimer?.cancel();
-        final generation = _persistGeneration;
-        unawaited(() async {
-          if (generation == _persistGeneration) {
-            await repository.savePlayers(state);
-          }
-        }());
-      }
+      unawaited(() async {
+        if (!_persistDirty && _persistInFlight == null) {
+          return;
+        }
+        _persistDirty = true;
+        await _runPersistLoop();
+      }());
     });
 
     // Check if we have loaded players from repository
@@ -88,8 +83,8 @@ class PlayersNotifier extends Notifier<Players> {
   }
 
   /// Clears persisted players and resets in-memory roster when the splash screen
-  /// is shown. Cancels any pending debounced save so gameplay scores are not
-  /// written back to disk after [PlayersRepository.clearPlayers].
+  /// is shown. Awaits any in-flight persist so gameplay scores are not written
+  /// back to disk after [PlayersRepository.clearPlayers].
   ///
   /// Safe to call multiple times; concurrent callers share one in-flight future.
   Future<void> prepareForSplashEntry() async {
@@ -108,9 +103,9 @@ class PlayersNotifier extends Notifier<Players> {
   }
 
   Future<void> _prepareForSplashEntryImpl() async {
+    await _persistInFlight;
     _persistGeneration++;
-    _saveTimer?.cancel();
-    _saveTimer = null;
+    _persistDirty = false;
     await ref.read(playersRepositoryProvider).clearPlayers();
     final game = ref.read(gameNotifierProvider);
     state = Players(
@@ -119,23 +114,48 @@ class PlayersNotifier extends Notifier<Players> {
     );
   }
 
-  /// Schedule a save to repository after [kPlayersSaveDebounceDuration] of idle time
-  void _scheduleSave() {
-    _saveTimer?.cancel();
-    final generation = _persistGeneration;
-    _saveTimer = Timer(kPlayersSaveDebounceDuration, () {
+  /// Marks roster dirty and runs a single-flight coalesced persist loop.
+  void _requestPersist() {
+    _persistDirty = true;
+    if (_persistInFlight != null) {
+      return;
+    }
+    unawaited(_runPersistLoop());
+  }
+
+  Future<void> _runPersistLoop() async {
+    final future = _persistLoopImpl();
+    _persistInFlight = future;
+    try {
+      await future;
+    } finally {
+      if (identical(_persistInFlight, future)) {
+        _persistInFlight = null;
+      }
+    }
+  }
+
+  Future<void> _persistLoopImpl() async {
+    final repository = ref.read(playersRepositoryProvider);
+    while (_persistDirty) {
+      _persistDirty = false;
+      final generation = _persistGeneration;
+      final snapshot = state;
       if (generation != _persistGeneration) {
         return;
       }
-      unawaited(ref.read(playersRepositoryProvider).savePlayers(state));
-    });
+      await repository.savePlayers(snapshot);
+      if (generation != _persistGeneration) {
+        return;
+      }
+    }
   }
 
   void updateScore(int playerIdx, int round, int? score) {
     final player = state.players[playerIdx].copyWith();
     player.scores.setScore(round, score);
     state = state.withPlayer(player, playerIdx);
-    _scheduleSave();
+    _requestPersist();
   }
 
   void updateFrenchDrivingAttributes(
@@ -147,20 +167,20 @@ class PlayersNotifier extends Notifier<Players> {
     player.frenchDrivingAttributes[round] = attributes;
     player.scores.setScore(round, attributes.calculateScore());
     state = state.withPlayer(player, playerIdx);
-    _scheduleSave();
+    _requestPersist();
   }
 
   void updatePhase(int playerIdx, int round, int? phase) {
     final player = state.players[playerIdx].copyWith();
     player.phases.setPhase(round, phase);
     state = state.withPlayer(player, playerIdx);
-    _scheduleSave();
+    _requestPersist();
   }
 
   void updatePlayerName(int playerIdx, String name) {
     final player = state.players[playerIdx].copyWith(name: name);
     state = state.withPlayer(player, playerIdx);
-    _scheduleSave();
+    _requestPersist();
   }
 
   // used when a new game is started usually via a modal dialog
@@ -183,7 +203,7 @@ class PlayersNotifier extends Notifier<Players> {
       maxRounds: maxRounds,
       initialPlayers: newPlayers,
     );
-    _scheduleSave();
+    _requestPersist();
   }
 
   void toggleRoundEnabled({required int round, required bool enabled}) {
@@ -194,6 +214,6 @@ class PlayersNotifier extends Notifier<Players> {
       newState = newState.withPlayer(player, i);
     }
     state = newState;
-    _scheduleSave();
+    _requestPersist();
   }
 }

@@ -32,7 +32,7 @@ Override `gameSyncTransportFactoryProvider` with `(ref) => () => FakeGameSyncTra
 
 ### Splash player clear (integration tests)
 
-After navigating back to splash, assert cleared prefs with `waitForSplashPlayersCleared(tester)` from `integration_test/app_test_helpers.dart` — not a raw `SharedPreferences` read right after `pumpAndSettle`. Debounced score-table saves (3s, `kPlayersSaveDebounceDuration`) can race with splash clear; see [State-Management.md — Splash entry and debounced-save race](../../../docs/State-Management.md#splash-entry-and-debounced-save-race).
+After navigating back to splash, assert cleared prefs with `waitForSplashPlayersCleared(tester)` from `integration_test/app_test_helpers.dart` — not a raw `SharedPreferences` read right after `pumpAndSettle`. Coalesced score-table persists can race with splash clear; see [State-Management.md — Splash entry and coalesced persist race](../../../docs/State-Management.md#splash-entry-and-coalesced-persist-race).
 
 ---
 

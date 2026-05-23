@@ -2,7 +2,7 @@
 
 ## Retaining and Managing State
 
-The application saves the game configuration when the game is started and the current game state while the game is being played. There is currently a 3-second delay (debounce) for saving the game state to disk to prevent excessive writes (`kPlayersSaveDebounceDuration` in `players_provider.dart`).
+The application saves the game configuration when the game is started and the current game state while the game is being played. During gameplay, player edits use a **single-flight coalesced persist loop** in `PlayersNotifier` — at most one write in flight, with follow-up writes for the latest state after bursts of edits.
 
 ### Upon Startup
 
@@ -76,7 +76,7 @@ Follow these rules when adding features or fixing bugs. See [Provider Architectu
 
 - Widgets should use **`gameNotifierProvider`** and **`playersNotifierProvider`** for display and actions (`ref.read(...notifier).updateScore(...)`).
 - Do **not** call `GameRepository` / `PlayersRepository` from widgets except documented exceptions:
-  - Splash: `playersNotifierProvider.notifier.prepareForSplashEntry()` on entry (via `SplashScreen`; see [Splash entry and debounced-save race](#splash-entry-and-debounced-save-race))
+  - Splash: `playersNotifierProvider.notifier.prepareForSplashEntry()` on entry (via `SplashScreen`; see [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race))
   - Router: `initialLocation()` reads repos before the widget tree exists (see below)
 - Do **not** push loaded state from repositories into notifiers via side channels; restore in `Notifier.build()` only.
 
@@ -89,7 +89,7 @@ Follow these rules when adding features or fixing bugs. See [Provider Architectu
 ### Mutations and persistence
 
 1. Update `state` on the notifier.
-2. Persist with `ref.read(gameRepositoryProvider).saveGame(state)` or `playersRepositoryProvider` (often debounced for players).
+2. Persist with `ref.read(gameRepositoryProvider).saveGame(state)` or `playersRepositoryProvider` (coalesced single-flight for players).
 
 ### Startup and `UncontrolledProviderScope`
 
@@ -124,7 +124,7 @@ Notifiers load persisted data the first time something `watch`es or `read`s them
   - `clearPersistedGameState()` in `setUp` / `tearDown` (real prefs on devices)
   - `await launchApp(tester)` or `launchAppOnSplash(tester)` — **must** `await bootstrapApp()`, not `main()` without await
   - `pumpUntilFound` when waiting for splash widgets on slow emulators
-  - `waitForSplashPlayersCleared(tester)` after navigating back to splash when asserting `players_state` was removed (see [Splash entry and debounced-save race](#splash-entry-and-debounced-save-race))
+  - `waitForSplashPlayersCleared(tester)` after navigating back to splash when asserting `players_state` was removed (see [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race))
 - Read notifier state via `ProviderScope.containerOf(element).read(gameNotifierProvider)` — works with `UncontrolledProviderScope`.
 
 ---
@@ -134,7 +134,7 @@ Notifiers load persisted data the first time something `watch`es or `read`s them
 The application implements a persistence strategy using `SharedPreferences` to handle app restarts and crashes:
 
 1. **Game Configuration**: Saved immediately when a game is created/started.
-2. **Player Progress**: Auto-saved with a **3-second debounce** during gameplay to prevent excessive disk writes.
+2. **Player Progress**: Auto-saved via **coalesced single-flight persist** during gameplay — one write in flight at a time, re-run when edits arrive during a save.
 3. **Resume Game**: On startup, if both a valid game configuration and player state exist, the app automatically navigates to the Score Table, bypassing the Splash Screen.
 4. **New Game**: Entering the Splash Screen explicitly clears previous player state to ensure a fresh start.
 
@@ -233,13 +233,13 @@ final gameNotifierProvider = NotifierProvider<GameNotifier, Game>(GameNotifier.n
 | **Stateful?** | No — load/save/clear methods only | Yes — mutates roster during play |
 | **Reactive?** | Only rebuilds if `sharedPreferencesProvider` changes | Rebuilds when `gameNotifierProvider` changes or roster is updated |
 | **Typical use** | Immediate save after Continue; disk access from `PlayersNotifier` internals | `ref.watch(playersNotifierProvider)` in score table; `ref.read(playersNotifierProvider.notifier).updateScore(...)` etc. |
-| **Persistence** | `loadPlayers()`, `savePlayers()`, `clearPlayers()` on key `players_state` | Loads in `build()` if data matches game config; debounced save (3s) on edits; `prepareForSplashEntry()` clears prefs + memory; flush on dispose if timer active and generation matches |
+| **Persistence** | `loadPlayers()`, `savePlayers()`, `clearPlayers()` on key `players_state` | Loads in `build()` if data matches game config; coalesced persist on edits; `prepareForSplashEntry()` clears prefs + memory; flush on dispose if dirty or in-flight |
 
 **`playersRepositoryProvider`** supplies a `PlayersRepository` backed by the same `SharedPreferences` instance. It has no concept of “current scores”; it only reads and writes JSON for the player roster.
 
-**`playersNotifierProvider`** owns the in-memory score sheet. `PlayersNotifier` watches `gameNotifierProvider` so a configuration change rebuilds the roster. On `build()`, it calls `repository.loadPlayers()` and returns persisted data only when `playersMatchConfiguration()` confirms player count and round dimensions match the active game. Mutations (`updateScore`, `updatePlayerName`, `resetGame`, etc.) update `state` and schedule a debounced save through `playersRepositoryProvider`.
+**`playersNotifierProvider`** owns the in-memory score sheet. `PlayersNotifier` watches `gameNotifierProvider` so a configuration change rebuilds the roster. On `build()`, it calls `repository.loadPlayers()` and returns persisted data only when `playersMatchConfiguration()` confirms player count and round dimensions match the active game. Mutations (`updateScore`, `updatePlayerName`, `resetGame`, etc.) update `state` and call `_requestPersist()` — a single-flight loop that coalesces bursts into serialized writes of the latest roster.
 
-**Splash clear:** Call `prepareForSplashEntry()` — not `playersRepositoryProvider.clearPlayers()` alone. That method cancels the debounce timer, bumps `_persistGeneration` (see below), clears prefs, and resets in-memory `Players`.
+**Splash clear:** Call `prepareForSplashEntry()` — not `playersRepositoryProvider.clearPlayers()` alone. That method awaits any in-flight persist, bumps `_persistGeneration`, clears prefs, and resets in-memory `Players`.
 
 **Rule of thumb:** Score table UI and gameplay actions use **`playersNotifierProvider`**. Use **`playersRepositoryProvider`** for direct disk access in tests, router resume, or from inside `PlayersNotifier` — not from splash UI for clearing.
 
@@ -266,7 +266,7 @@ class PlayersNotifier extends Notifier<Players> {
       maxRounds: game.configuration.maxRounds,
     );
   }
-  // updateScore, updatePlayerName, _scheduleSave → repository.savePlayers(state)
+  // updateScore, updatePlayerName, _requestPersist → coalesced savePlayers(state)
 }
 final playersNotifierProvider = NotifierProvider<PlayersNotifier, Players>(PlayersNotifier.new);
 ```
@@ -332,31 +332,32 @@ String initialLocation(SharedPreferences prefs) {
 
 ### New Game Flow (`lib/presentation/splash_screen.dart`)
 
-1. Entering the Splash Screen clears previous player data to guarantee a fresh roster on the next start (see [Splash entry and debounced-save race](#splash-entry-and-debounced-save-race)).
+1. Entering the Splash Screen clears previous player data to guarantee a fresh roster on the next start (see [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race)).
 2. User configures game options on the UI (local state seeded from `gameNotifierProvider`, which loads any saved configuration).
 3. User clicks **Start new game** (`continueButton`):
     - Creates and saves a new game configuration via `ref.read(gameNotifierProvider.notifier).newGame(...)`.
     - Materializes the new roster with `ref.read(playersNotifierProvider)` and persists it immediately via `playersRepositoryProvider.savePlayers(...)`.
     - Navigates to `/score-table`.
 
-During gameplay, further player mutations are debounced (3 seconds) before writing to disk.
+During gameplay, player mutations trigger coalesced persistence — at most one disk write in flight, with a follow-up write if edits arrive during a save.
 
-### Splash entry and debounced-save race
+### Splash entry and coalesced persist race
 
-**Problem:** Score edits schedule a **3-second debounced** write to `players_state`. When the user returns to the splash screen (e.g. **New Score Card** → change scorecard type), clearing prefs alone is not enough:
+**Problem:** Score edits schedule async writes to `players_state`. When the user returns to the splash screen (e.g. **New Score Card** → change scorecard type), clearing prefs alone is not enough:
 
 | Failure mode | What happens |
 | --- | --- |
 | **Async clear** | `clearPlayers()` is async; tests or UI can read prefs before removal finishes. |
-| **Stale debounced save** | A timer started on the score table can fire **after** prefs were cleared and write old scores back. |
+| **Stale in-flight save** | A `savePlayers` started on the score table can complete **after** prefs were cleared and write old scores back. |
 | **Memory vs disk** | Clearing prefs without resetting `playersNotifierProvider` leaves stale in-memory roster until the next **Start new game**. |
 
 **Solution:** `PlayersNotifier.prepareForSplashEntry()` in `lib/provider/players_provider.dart`:
 
-1. **`_persistGeneration++`** — invalidates any in-flight or scheduled debounced saves (see below).
-2. **Cancel** the debounce timer.
-3. **`await clearPlayers()`** on the repository.
-4. **Reset** in-memory `state` to a fresh `Players` from current game configuration.
+1. **`await _persistInFlight`** — drain any active write before clearing.
+2. **`_persistGeneration++`** — invalidate the coalesce loop.
+3. **`_persistDirty = false`** — drop pending follow-up writes.
+4. **`await clearPlayers()`** on the repository.
+5. **Reset** in-memory `state` to a fresh `Players` from current game configuration.
 
 **Call sites:**
 
@@ -367,19 +368,22 @@ During gameplay, further player mutations are debounced (3 seconds) before writi
 
 `prepareForSplashEntry()` is **idempotent** — concurrent callers share one in-flight `Future`.
 
-#### `_persistGeneration` (persist token)
+#### Coalesced persist loop
 
-`_persistGeneration` is an integer **epoch** on `PlayersNotifier`. Each debounced save captures the current value when scheduled:
+`_requestPersist()` sets `_persistDirty` and starts `_runPersistLoop()` if none is in flight. The loop:
 
 ```dart
-final generation = _persistGeneration;
-_saveTimer = Timer(kPlayersSaveDebounceDuration, () {
-  if (generation != _persistGeneration) return; // splash clear bumped epoch
-  unawaited(repository.savePlayers(state));
-});
+while (_persistDirty) {
+  _persistDirty = false;
+  final generation = _persistGeneration;
+  final snapshot = state;
+  if (generation != _persistGeneration) return;
+  await repository.savePlayers(snapshot);
+  if (generation != _persistGeneration) return;
+}
 ```
 
-When `prepareForSplashEntry()` runs, it increments `_persistGeneration`. Old timers still fire but **no-op**, so cleared prefs are not overwritten. The same check guards the optional flush in `ref.onDispose`.
+Edits during an in-flight save set `_persistDirty` again; the loop writes the latest `state` on the next iteration. `_persistGeneration` guards against stale writes after splash clear.
 
 **Integration test:** After returning to splash, use `waitForSplashPlayersCleared(tester)` from `integration_test/app_test_helpers.dart` — it awaits `prepareForSplashEntry()` and polls until `PlayersRepository.loadPlayers()` is null. Do not assert prefs immediately after `pumpAndSettle` alone.
 
@@ -395,9 +399,9 @@ Previously, an app reload before the first score/name edit routed back to the Sp
 
 Repositories are no longer singletons and no longer call `repositoryDidLoadPrefs()`. `SharedPreferences` is injected via `sharedPreferencesProvider`, and `GameNotifier` / `PlayersNotifier` load synchronously from `GameRepository` / `PlayersRepository` in `build()`.
 
-### 3. Splash clear vs debounced player save — **Resolved**
+### 3. Splash clear vs coalesced player persist — **Resolved**
 
-Returning to splash while a debounced save was pending could leave `players_state` in prefs after `clearPlayers()`, causing flaky integration tests and incorrect resume behavior. Fixed with `prepareForSplashEntry()`, `_persistGeneration`, clear-before-navigate in `NewScoreCardControl`, and `waitForSplashPlayersCleared()` in tests. See [Splash entry and debounced-save race](#splash-entry-and-debounced-save-race).
+Returning to splash while a persist was in flight could leave `players_state` in prefs after `clearPlayers()`, causing flaky integration tests and incorrect resume behavior. Fixed with `prepareForSplashEntry()` (await in-flight persist before clear), `_persistGeneration`, clear-before-navigate in `NewScoreCardControl`, and `waitForSplashPlayersCleared()` in tests. See [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race).
 
 ---
 
@@ -440,7 +444,8 @@ The spectator also checks the host’s `appVersion` in the `welcome` message. Se
 
 - `lib/provider/prefs_provider.dart` - SharedPreferences dependency injection
 - `lib/provider/game_provider.dart` - Game configuration state and UUID logic
-- `lib/provider/players_provider.dart` - Player data state, validations, debounced auto-save (`kPlayersSaveDebounceDuration`), `prepareForSplashEntry()`, `_persistGeneration`
+- `lib/provider/players_provider.dart` - Player data state, validations, coalesced single-flight persist, `prepareForSplashEntry()`, `_persistGeneration`
+- `test/players_notifier_persist_test.dart` - Coalesce burst, splash clear, in-flight + splash race
 - `lib/data/game_repository.dart` - Game configuration persistence using SharedPreferences
 - `lib/data/players_repository.dart` - Player state persistence using SharedPreferences
 - `lib/main.dart` - `bootstrapApp()`, prefs pre-init, `UncontrolledProviderScope`

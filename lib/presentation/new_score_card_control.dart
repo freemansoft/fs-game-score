@@ -45,7 +45,7 @@ class NewScoreCardControl extends ConsumerWidget {
       ),
     );
     if ((result ?? false) && context.mounted) {
-      // Clear before navigation so debounced score-table saves cannot race splash.
+      // Clear before navigation so coalesced score-table saves cannot race splash.
       await ref.read(playersNotifierProvider.notifier).prepareForSplashEntry();
       if (context.mounted) {
         context.goNamed('splash');
