@@ -92,6 +92,11 @@ Tags the current location and force pushes that tag
 
 ```bash
 bash ./tag-push.sh --version 2.0.0 --force --push
+```
+
+Example output:
+
+```bash
 Updated pubspec.yaml to version 2.0.0+258
 CHANGELOG.md already contains section for version 2.0.0.
 [main 1faf124] chore: bump version to 2.0.0+258
