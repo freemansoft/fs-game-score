@@ -142,16 +142,28 @@ String generateGameSyncPin() {
 /// Reject reason when the spectator PIN does not match the host session.
 const String gameSyncRejectWrongPin = 'wrong_pin';
 
-/// Reject reason when spectator app version does not match the host.
+/// Reject reason when spectator app major version does not match the host.
 const String gameSyncRejectVersionMismatch = 'version_mismatch';
 
-/// True when both sides report the same non-empty app build version string.
+/// Major semver segment from an app version (e.g. `1.12.0+236` → `1`).
+String? gameSyncAppVersionMajor(String? version) {
+  if (version == null || version.isEmpty) {
+    return null;
+  }
+  final core = version.trim().split('+').first.split('-').first;
+  final major = core.split('.').firstOrNull;
+  if (major == null || major.isEmpty) {
+    return null;
+  }
+  return major;
+}
+
+/// True when both sides report the same non-empty app major version.
 bool gameSyncAppVersionsMatch(String? hostVersion, String? spectatorVersion) {
-  if (hostVersion == null ||
-      spectatorVersion == null ||
-      hostVersion.isEmpty ||
-      spectatorVersion.isEmpty) {
+  final hostMajor = gameSyncAppVersionMajor(hostVersion);
+  final spectatorMajor = gameSyncAppVersionMajor(spectatorVersion);
+  if (hostMajor == null || spectatorMajor == null) {
     return false;
   }
-  return hostVersion.trim() == spectatorVersion.trim();
+  return hostMajor == spectatorMajor;
 }

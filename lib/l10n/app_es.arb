@@ -313,7 +313,7 @@
   "liveConnectionConnectedOnly": "Conectado",
   "liveConnectionReconnecting": "Reconectando…",
   "liveConnectionWrongPin": "PIN incorrecto. Verifique el código del anfitrión.",
-  "liveConnectionVersionMismatch": "La versión de la app no coincide con el anfitrión. Actualice ambos dispositivos a la misma versión de FS Score Card.",
+  "liveConnectionVersionMismatch": "La versión principal de la app no coincide con el anfitrión. Actualice ambos dispositivos a la misma versión principal de FS Score Card.",
   "liveSyncAppVersionUnknown": "No se puede iniciar la vista en vivo hasta conocer la versión de la app. Reinicie la app e intente de nuevo.",
   "liveConnectionCannotReachHost": "No se puede contactar al anfitrión. Use la misma Wi-Fi e intente de nuevo.",
   "liveConnectionHostClosed": "El anfitrión dejó de compartir.",

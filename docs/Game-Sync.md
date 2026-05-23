@@ -106,7 +106,7 @@ Admission runs on the **host** WebSocket handler (`_handleHostClient` in `game_s
 
 1. **PIN** — Spectator `hello` must include a 6-digit PIN matching the host session (`isValidGameSyncPin` + equality with `_hostPin`). On failure: `reject` with `gameSyncRejectWrongPin` (`wrong_pin`), socket closed → spectator `GameSyncConnectionState.wrongPin`.
 
-2. **App version** — Spectator `hello` includes `appVersion`. Host compares to `requiredAppVersion` set at `startGameSyncHost` using `gameSyncAppVersionsMatch(host, spectator)`. Both strings must be non-empty and equal after trim (e.g. `1.12.0+236`). On failure: `reject` with `gameSyncRejectVersionMismatch` (`version_mismatch`) → spectator `versionMismatch`.
+2. **App version** — Spectator `hello` includes `appVersion`. Host compares to `requiredAppVersion` set at `startGameSyncHost` using `gameSyncAppVersionsMatch(host, spectator)`. Both strings must be non-empty and share the same **major** semver segment (e.g. `1.12.0+236` matches `1.13.0+200`; `1.12.0` does not match `2.12.0`). On failure: `reject` with `gameSyncRejectVersionMismatch` (`version_mismatch`) → spectator `versionMismatch`.
 
 3. **Welcome** — Host sends `welcome` with `appVersion: _hostRequiredAppVersion`, admits client, sends latest `snapshot` if available.
 
@@ -138,7 +138,7 @@ User-facing copy: `liveConnectionWrongPin`, `liveConnectionVersionMismatch`, `li
 
 **Spectator:** Sends same resolved string in `hello`; validates host version in `welcome`.
 
-This is the **app build version**, not `GameConfiguration` schema version alone. Both sides should run the same FS Score Card build for compatible snapshot JSON.
+This is the **app build version**, not `GameConfiguration` schema version alone. Both sides must run the same **major** FS Score Card release for compatible snapshot JSON (minor/patch/build may differ).
 
 ---
 

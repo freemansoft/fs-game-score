@@ -307,7 +307,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get liveConnectionVersionMismatch =>
-      'App version does not match the host. Update both devices to the same FS Score Card version.';
+      'App major version does not match the host. Update both devices to the same major FS Score Card release.';
 
   @override
   String get liveSyncAppVersionUnknown =>

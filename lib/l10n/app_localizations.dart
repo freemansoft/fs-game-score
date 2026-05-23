@@ -632,10 +632,10 @@ abstract class AppLocalizations {
   /// **'Wrong PIN. Check the code from the host.'**
   String get liveConnectionWrongPin;
 
-  /// Spectator banner when app version differs from host
+  /// Spectator banner when app major version differs from host
   ///
   /// In en, this message translates to:
-  /// **'App version does not match the host. Update both devices to the same FS Score Card version.'**
+  /// **'App major version does not match the host. Update both devices to the same major FS Score Card release.'**
   String get liveConnectionVersionMismatch;
 
   /// Error when host cannot determine app version for live sync

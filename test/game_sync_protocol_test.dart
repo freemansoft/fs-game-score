@@ -20,9 +20,24 @@ void main() {
       );
     });
 
-    test('rejects different versions', () {
+    test('accepts same major with different minor or patch', () {
       expect(
-        gameSyncAppVersionsMatch('1.12.0+236', '1.11.0+200'),
+        gameSyncAppVersionsMatch('1.12.0+236', '1.13.0+200'),
+        isTrue,
+      );
+      expect(
+        gameSyncAppVersionsMatch('1.12.0', '1.13.0'),
+        isTrue,
+      );
+    });
+
+    test('rejects different major versions', () {
+      expect(
+        gameSyncAppVersionsMatch('1.12.0+236', '2.12.0+200'),
+        isFalse,
+      );
+      expect(
+        gameSyncAppVersionsMatch('1.12.0', '2.12.0'),
         isFalse,
       );
     });

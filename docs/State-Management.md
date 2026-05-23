@@ -424,7 +424,7 @@ Host and spectator **do not** share a single notifier. The host owns authoritati
 On WebSocket connect, the spectator sends `hello` with **PIN** and **app build version** (`resolveLiveSyncAppVersion`). The host rejects before admission if:
 
 1. PIN ≠ session PIN → `wrongPin`
-2. `appVersion` ≠ host `requiredAppVersion` (same non-empty string as `PackageInfo` / `main.dart` `appVersion`) → `versionMismatch`
+2. `appVersion` major semver ≠ host `requiredAppVersion` major (non-empty strings from `PackageInfo` / `main.dart` `appVersion`, e.g. `1.12.0+236` matches `1.13.0+200`) → `versionMismatch`
 
 The spectator also checks the host’s `appVersion` in the `welcome` message. See [Game-Sync.md — Handshake and validation](Game-Sync.md#handshake-and-validation).
 

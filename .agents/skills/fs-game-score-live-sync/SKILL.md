@@ -58,7 +58,7 @@ Mapper: `game_sync_mapper.dart` ↔ `Game` + `Players`.
 
 1. Spectator sends **`hello`**: `{ pin, appVersion, spectatorName }`.
 2. Host validates **6-digit PIN** → else `reject` / `wrongPin` (`gameSyncRejectWrongPin`).
-3. Host validates **`appVersion`** via `gameSyncAppVersionsMatch` (non-empty, trim-equal, e.g. `1.12.0+236`) → else `versionMismatch` (`gameSyncRejectVersionMismatch`).
+3. Host validates **`appVersion`** via `gameSyncAppVersionsMatch` (non-empty, same **major** semver, e.g. `1.12.0+236` matches `1.13.0+200`) → else `versionMismatch` (`gameSyncRejectVersionMismatch`).
 4. Host sends **`welcome`** + initial **`snapshot`**; later snapshots on each broadcast.
 5. Spectator re-checks host version on **`welcome`** (defense in depth).
 6. **`JoinLiveGameScreen`** awaits **`GameSyncConnectResult.connected`** before `goNamed('live-spectator')`.

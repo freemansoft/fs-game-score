@@ -392,9 +392,9 @@
   "@liveConnectionWrongPin": {
     "description": "Spectator banner for wrong PIN"
   },
-  "liveConnectionVersionMismatch": "App version does not match the host. Update both devices to the same FS Score Card version.",
+  "liveConnectionVersionMismatch": "App major version does not match the host. Update both devices to the same major FS Score Card release.",
   "@liveConnectionVersionMismatch": {
-    "description": "Spectator banner when app version differs from host"
+    "description": "Spectator banner when app major version differs from host"
   },
   "liveSyncAppVersionUnknown": "Cannot start live sharing until the app version is known. Restart the app and try again.",
   "@liveSyncAppVersionUnknown": {
