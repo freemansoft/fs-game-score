@@ -48,11 +48,10 @@ void main() {
     //final container = ProviderScope.containerOf(tester.element(continueButton));
 
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
+    await waitForScoreTable(tester);
 
     // Verify score table is displayed
     final firstDataTable = find.byType(DataTable2);
-    expect(firstDataTable, findsOneWidget);
     final firstContainer = ProviderScope.containerOf(
       tester.element(firstDataTable),
     );
@@ -71,11 +70,8 @@ void main() {
     final confirmNewGameButton = find.text('New Game');
     expect(confirmNewGameButton, findsOneWidget);
     await tester.tap(confirmNewGameButton);
-    await tester.pumpAndSettle();
+    await waitForScoreTable(tester);
 
-    // Verify score table is displayed
-    final secondDataTable = find.byType(DataTable2);
-    expect(secondDataTable, findsOneWidget);
     final secondContainer = ProviderScope.containerOf(
       tester.element(firstDataTable),
     );
@@ -120,10 +116,7 @@ void main() {
     final container = ProviderScope.containerOf(tester.element(continueButton));
 
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
+    await waitForScoreTable(tester);
     // verify the player game cell is displayed
     expect(find.byKey(playerGameCell0Key), findsOneWidget);
     expect(find.byKey(playerName0Key), findsOneWidget);
@@ -213,10 +206,7 @@ void main() {
     final container = ProviderScope.containerOf(tester.element(continueButton));
 
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
+    await waitForScoreTable(tester);
 
     final gameNotifier = container.read(gameNotifierProvider.notifier);
 
@@ -270,10 +260,7 @@ void main() {
     final continueButton = find.byKey(splashContinueButtonKey);
     expect(continueButton, findsOneWidget);
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
+    await waitForScoreTable(tester);
 
     // Get the new gameId after Continue
     final newGame = container.read(gameNotifierProvider);
@@ -343,7 +330,7 @@ void main() {
       final continueButton = find.byKey(SplashScreen.continueButtonKey);
       expect(continueButton, findsOneWidget);
       await tester.tap(continueButton);
-      await tester.pumpAndSettle();
+      await waitForScoreTable(tester);
 
       // Verify we're on the score card (look for the app bar and new scorecard control)
       expect(find.byType(NewScoreCardControl), findsOneWidget);
@@ -435,7 +422,7 @@ void main() {
 
     final continueButton = find.byKey(SplashScreen.continueButtonKey);
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
+    await waitForScoreTable(tester);
 
     // Click the icon button to show the confirmation dialog
     final iconButton = find.byKey(NewScoreCardControl.iconButtonKey);
@@ -496,10 +483,7 @@ void main() {
     expect(continueButton, findsOneWidget);
     // this uses the default game type , number of players and number of rounds
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
+    await waitForScoreTable(tester);
 
     // Verify at least 2 player rows (excluding header)
     final playerNameFields = find.byKey(playerNameFieldP0Key);
@@ -738,10 +722,7 @@ void main() {
       final continueButton = find.byKey(SplashScreen.continueButtonKey);
       expect(continueButton, findsOneWidget);
       await tester.tap(continueButton);
-      await tester.pumpAndSettle();
-
-      // Verify score table is displayed
-      expect(find.byType(DataTable2), findsOneWidget);
+      await waitForScoreTable(tester);
 
       // Get player 0's round 0 score field
       final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
@@ -794,10 +775,7 @@ void main() {
       // Press Continue to start a game
       final continueButton = find.byKey(SplashScreen.continueButtonKey);
       await tester.tap(continueButton);
-      await tester.pumpAndSettle();
-
-      // Verify we are on the Score Table
-      expect(find.byType(DataTable2), findsOneWidget);
+      await waitForScoreTable(tester);
 
       // Enter a score to ensure state has something to save
       final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
@@ -890,10 +868,7 @@ void main() {
     final continueButton = find.byKey(SplashScreen.continueButtonKey);
     expect(continueButton, findsOneWidget);
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
+    await waitForScoreTable(tester);
 
     // Verify 4 player rows (excluding header)
     for (int playerIdx = 0; playerIdx < 4; playerIdx++) {
@@ -955,10 +930,7 @@ void main() {
     final continueButton = find.byKey(SplashScreen.continueButtonKey);
     expect(continueButton, findsOneWidget);
     await tester.tap(continueButton);
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
+    await waitForScoreTable(tester);
 
     // Get the new gameId after Continue
     final newGame = container.read(gameNotifierProvider);
@@ -1043,7 +1015,7 @@ void main() {
 
     // Press Continue
     await tester.tap(find.byKey(SplashScreen.continueButtonKey));
-    await tester.pumpAndSettle();
+    await waitForScoreTable(tester);
 
     // Tap a cell in the score sheet (Player 1, Round 1)
     final cellKey = PlayerRoundCell.scoreKey(0, 0);
@@ -1132,7 +1104,7 @@ void main() {
 
     // Start game
     await tester.tap(find.byKey(SplashScreen.continueButtonKey));
-    await tester.pumpAndSettle();
+    await waitForScoreTable(tester);
 
     // Helper for editing a round
     Future<void> enterPlayerScoreAndPhase(
@@ -1288,10 +1260,7 @@ void main() {
 
     // Press Continue
     await tester.tap(find.byKey(splashContinueButtonKey));
-    await tester.pumpAndSettle();
-
-    // Verify score table is displayed
-    expect(find.byType(DataTable2), findsOneWidget);
+    await waitForScoreTable(tester);
 
     // tap on the roundScoreP0R0 to open the PlayerRoundCellModelPanel
     await tester.tap(find.byKey(playerRoundScoreP0R0Key));

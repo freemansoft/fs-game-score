@@ -123,6 +123,8 @@ Notifiers load persisted data the first time something `watch`es or `read`s them
 - Use helpers in `integration_test/app_test_helpers.dart`:
   - `clearPersistedGameState()` in `setUp` / `tearDown` (real prefs on devices)
   - `await launchApp(tester)` or `launchAppOnSplash(tester)` — **must** `await bootstrapApp()`, not `main()` without await
+  - `waitForSplashReady(tester)` — before tapping Continue on initial splash (Android CI prefs race)
+  - `waitForScoreTable(tester)` — after Continue / navigation to score table
   - `pumpUntilFound` when waiting for splash widgets on slow emulators
   - `waitForSplashPlayersCleared(tester)` after navigating back to splash when asserting `players_state` was removed (see [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race))
 - Read notifier state via `ProviderScope.containerOf(element).read(gameNotifierProvider)` — works with `UncontrolledProviderScope`.

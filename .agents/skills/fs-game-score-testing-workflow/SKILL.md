@@ -63,7 +63,9 @@ Helpers: **`integration_test/app_test_helpers.dart`**
 | --- | --- |
 | `clearPersistedGameState()` | `setUp` / `tearDown` — real prefs on devices |
 | `await launchApp(tester)` | **`await bootstrapApp()`** — never unawaited `main()` |
-| `await launchAppOnSplash(tester)` | Launch + wait for splash Continue button |
+| `await launchAppOnSplash(tester)` | Launch + splash Continue + `waitForSplashReady` |
+| `waitForSplashReady(tester)` | Await splash `prepareForSplashEntry` before Continue |
+| `waitForScoreTable(tester)` | Poll until `DataTable2` after score-table navigation |
 | `pumpUntilFound(tester, finder)` | Slow emulators |
 | `waitForSplashPlayersCleared(tester)` | After navigating to splash — coalesced persist race |
 
