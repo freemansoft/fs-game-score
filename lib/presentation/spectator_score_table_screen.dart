@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/presentation/live_connection_banner.dart';
 import 'package:fs_score_card/presentation/score_table.dart';
+import 'package:fs_score_card/presentation/spectator_view_app_bar.dart';
 import 'package:fs_score_card/provider/game_sync_spectator_provider.dart';
 import 'package:fs_score_card/sync/game_sync_transport.dart';
-import 'package:go_router/go_router.dart';
 
 /// Read-only score table fed by [gameSyncSpectatorProvider].
 class SpectatorScoreTableScreen extends ConsumerWidget {
@@ -21,26 +21,7 @@ class SpectatorScoreTableScreen extends ConsumerWidget {
     final spectator = ref.watch(gameSyncSpectatorProvider);
     return Scaffold(
       key: SpectatorScoreTableScreen.screenKey,
-      appBar: AppBar(
-        title: Text(l10n.liveSpectatorTitle),
-        toolbarHeight: 40,
-        actions: [
-          Semantics(
-            button: true,
-            label: l10n.leaveLiveView,
-            child: TextButton(
-              key: const ValueKey('leave_live_view_button'),
-              onPressed: () async {
-                await ref.read(gameSyncSpectatorProvider.notifier).disconnect();
-                if (context.mounted) {
-                  context.goNamed('splash');
-                }
-              },
-              child: Text(l10n.leaveLiveView),
-            ),
-          ),
-        ],
-      ),
+      appBar: const SpectatorViewAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
