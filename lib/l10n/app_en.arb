@@ -290,13 +290,17 @@
   "@trademarkDisclaimer": {
     "description": "Trademark disclaimer shown in the about dialog"
   },
-  "shareLive": "Share live",
+  "shareLive": "Share live view",
   "@shareLive": {
-    "description": "Tooltip for host live score sharing"
+    "description": "Tooltip and semantic label for host live score sharing"
   },
   "joinLiveGame": "Join live game",
   "@joinLiveGame": {
     "description": "Button to join a live game as spectator"
+  },
+  "joinLiveGameTooltip": "Both devices must be on the same Wi-Fi network.",
+  "@joinLiveGameTooltip": {
+    "description": "Tooltip on splash Join live game button"
   },
   "liveSharingTitle": "Live sharing",
   "@liveSharingTitle": {

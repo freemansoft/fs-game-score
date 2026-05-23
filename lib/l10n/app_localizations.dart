@@ -494,10 +494,10 @@ abstract class AppLocalizations {
   /// **'All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them. FreemanS Score Card is an independent application and is not sponsored or approved by any third-party trademark owner.'**
   String get trademarkDisclaimer;
 
-  /// Tooltip for host live score sharing
+  /// Tooltip and semantic label for host live score sharing
   ///
   /// In en, this message translates to:
-  /// **'Share live'**
+  /// **'Share live view'**
   String get shareLive;
 
   /// Button to join a live game as spectator
@@ -505,6 +505,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Join live game'**
   String get joinLiveGame;
+
+  /// Tooltip on splash Join live game button
+  ///
+  /// In en, this message translates to:
+  /// **'Both devices must be on the same Wi-Fi network.'**
+  String get joinLiveGameTooltip;
 
   /// Title for live host dialog
   ///

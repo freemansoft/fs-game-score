@@ -231,10 +231,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todos los nombres de productos y empresas son marcas comerciales™ o marcas registradas® de sus respectivos propietarios. Su uso no implica ninguna afiliación o respaldo por su parte. FreemanS Score Card es una aplicación independiente y no está patrocinada ni aprobada por ningún propietario de marca comercial externo.';
 
   @override
-  String get shareLive => 'Compartir en vivo';
+  String get shareLive => 'Compartir vista en vivo';
 
   @override
   String get joinLiveGame => 'Unirse a juego en vivo';
+
+  @override
+  String get joinLiveGameTooltip =>
+      'Ambos dispositivos deben estar en la misma red Wi-Fi.';
 
   @override
   String get liveSharingTitle => 'Compartir en vivo';

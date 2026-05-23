@@ -290,8 +290,9 @@
   "@trademarkDisclaimer": {
     "description": "Trademark disclaimer shown in the about dialog"
   },
-  "shareLive": "Compartir en vivo",
+  "shareLive": "Compartir vista en vivo",
   "joinLiveGame": "Unirse a juego en vivo",
+  "joinLiveGameTooltip": "Ambos dispositivos deben estar en la misma red Wi-Fi.",
   "liveSharingTitle": "Compartir en vivo",
   "liveSharingInstructions": "Otros jugadores en la misma Wi-Fi pueden escanear este código o elegir este juego en Unirse a juego en vivo.",
   "connectionPin": "PIN: {pin}",

@@ -447,13 +447,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             const SizedBox(height: 6),
             if (canJoinLiveSync) ...[
               const SizedBox(height: 8),
-              Semantics(
-                button: true,
-                label: 'Join live game',
-                child: OutlinedButton(
-                  key: SplashScreen.joinLiveButtonKey,
-                  onPressed: () => context.pushNamed('joinLive'),
-                  child: Text(AppLocalizations.of(context)!.joinLiveGame),
+              Tooltip(
+                message: AppLocalizations.of(context)!.joinLiveGameTooltip,
+                child: Semantics(
+                  button: true,
+                  label: 'Join live game',
+                  child: OutlinedButton(
+                    key: SplashScreen.joinLiveButtonKey,
+                    onPressed: () => context.pushNamed('joinLive'),
+                    child: Text(AppLocalizations.of(context)!.joinLiveGame),
+                  ),
                 ),
               ),
             ],

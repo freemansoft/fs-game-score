@@ -228,10 +228,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them. FreemanS Score Card is an independent application and is not sponsored or approved by any third-party trademark owner.';
 
   @override
-  String get shareLive => 'Share live';
+  String get shareLive => 'Share live view';
 
   @override
   String get joinLiveGame => 'Join live game';
+
+  @override
+  String get joinLiveGameTooltip =>
+      'Both devices must be on the same Wi-Fi network.';
 
   @override
   String get liveSharingTitle => 'Live sharing';
