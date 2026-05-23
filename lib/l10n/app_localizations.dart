@@ -104,10 +104,10 @@ abstract class AppLocalizations {
   /// **'FreemanS Score Card'**
   String get appTitle;
 
-  /// Button to continue from splash screen to score table
+  /// Button to start new game and transition from splash screen to score table
   ///
   /// In en, this message translates to:
-  /// **'Continue'**
+  /// **'Start new game'**
   String get continueButton;
 
   /// Label for number of players dropdown
@@ -493,6 +493,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them. FreemanS Score Card is an independent application and is not sponsored or approved by any third-party trademark owner.'**
   String get trademarkDisclaimer;
+
+  /// Tooltip for host live score sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Share live'**
+  String get shareLive;
+
+  /// Button to join a live game as spectator
+  ///
+  /// In en, this message translates to:
+  /// **'Join live game'**
+  String get joinLiveGame;
+
+  /// Title for live host dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Live sharing'**
+  String get liveSharingTitle;
+
+  /// Instructions on host live dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Players on the same Wi-Fi can scan this code or pick this game from [Join live game].'**
+  String get liveSharingInstructions;
+
+  /// PIN shown for live session
+  ///
+  /// In en, this message translates to:
+  /// **'PIN: {pin}'**
+  String connectionPin(String pin);
+
+  /// Copy ws connection URL to clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Copy connection link'**
+  String get copyConnectionUrl;
+
+  /// Snackbar after copying connection URL
+  ///
+  /// In en, this message translates to:
+  /// **'Connection link copied'**
+  String get connectionUrlCopied;
+
+  /// Stop hosting live session
+  ///
+  /// In en, this message translates to:
+  /// **'Stop sharing'**
+  String get stopLiveSharing;
+
+  /// Hint when live sync is not supported on this platform
+  ///
+  /// In en, this message translates to:
+  /// **'Live sharing is available on Android and iOS when everyone is on the same Wi-Fi.'**
+  String get liveSharingUnavailable;
+
+  /// Title for join live game screen
+  ///
+  /// In en, this message translates to:
+  /// **'Join live game'**
+  String get joinLiveGameTitle;
+
+  /// Section header for mDNS discovered hosts
+  ///
+  /// In en, this message translates to:
+  /// **'Games on this network'**
+  String get discoveredHosts;
+
+  /// Empty state for mDNS browse
+  ///
+  /// In en, this message translates to:
+  /// **'No games found. Ask the host to share their QR code.'**
+  String get noHostsFound;
+
+  /// Button to scan host QR
+  ///
+  /// In en, this message translates to:
+  /// **'Scan connection QR'**
+  String get scanConnectionQr;
+
+  /// Expand manual ws URL entry
+  ///
+  /// In en, this message translates to:
+  /// **'Connect manually'**
+  String get manualConnection;
+
+  /// Hint for manual connection URL field
+  ///
+  /// In en, this message translates to:
+  /// **'ws://192.168.1.5:8765?game=...&pin=...'**
+  String get connectionUrlHint;
+
+  /// Connect to live host button
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get connect;
+
+  /// App bar title for spectator view
+  ///
+  /// In en, this message translates to:
+  /// **'Live scores'**
+  String get liveSpectatorTitle;
+
+  /// Spectator banner while connecting
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting…'**
+  String get liveConnectionConnecting;
+
+  /// Spectator banner when connected to a host target
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {host}'**
+  String liveConnectionConnected(String host);
+
+  /// Spectator banner when connected but no game id or IP is available
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get liveConnectionConnectedOnly;
+
+  /// Spectator banner while reconnecting
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting…'**
+  String get liveConnectionReconnecting;
+
+  /// Spectator banner for wrong PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN. Check the code from the host.'**
+  String get liveConnectionWrongPin;
+
+  /// Spectator banner when app version differs from host
+  ///
+  /// In en, this message translates to:
+  /// **'App version does not match the host. Update both devices to the same FS Score Card version.'**
+  String get liveConnectionVersionMismatch;
+
+  /// Error when host cannot determine app version for live sync
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot start live sharing until the app version is known. Restart the app and try again.'**
+  String get liveSyncAppVersionUnknown;
+
+  /// Spectator banner when connection fails
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot reach host. Use the same Wi-Fi and try again.'**
+  String get liveConnectionCannotReachHost;
+
+  /// Spectator banner when host closes session
+  ///
+  /// In en, this message translates to:
+  /// **'Host stopped sharing.'**
+  String get liveConnectionHostClosed;
+
+  /// Spectator banner generic failure
+  ///
+  /// In en, this message translates to:
+  /// **'Connection failed.'**
+  String get liveConnectionFailed;
+
+  /// Leave spectator live view
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get leaveLiveView;
 }
 
 class _AppLocalizationsDelegate

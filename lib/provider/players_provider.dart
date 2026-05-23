@@ -9,6 +9,9 @@ import 'package:fs_score_card/model/players.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/provider/prefs_provider.dart';
 
+/// Idle time before persisting player edits during gameplay.
+const Duration kPlayersSaveDebounceDuration = Duration(seconds: 3);
+
 /// Returns true when persisted [players] dimensions match [config].
 ///
 /// Used by `PlayersNotifier.build` and `initialLocation` for resume routing.
@@ -46,6 +49,8 @@ final playersNotifierProvider = NotifierProvider<PlayersNotifier, Players>(
 /// Do not schedule saves or timers in [build] — use [_scheduleSave] from mutators.
 class PlayersNotifier extends Notifier<Players> {
   Timer? _saveTimer;
+  int _persistGeneration = 0;
+  Future<void>? _splashEntryInProgress;
 
   @override
   Players build() {
@@ -57,7 +62,12 @@ class PlayersNotifier extends Notifier<Players> {
     ref.onDispose(() {
       if (_saveTimer?.isActive ?? false) {
         _saveTimer?.cancel();
-        unawaited(repository.savePlayers(state));
+        final generation = _persistGeneration;
+        unawaited(() async {
+          if (generation == _persistGeneration) {
+            await repository.savePlayers(state);
+          }
+        }());
       }
     });
 
@@ -77,10 +87,46 @@ class PlayersNotifier extends Notifier<Players> {
     );
   }
 
-  /// Schedule a save to repository after 5 seconds of idle time
+  /// Clears persisted players and resets in-memory roster when the splash screen
+  /// is shown. Cancels any pending debounced save so gameplay scores are not
+  /// written back to disk after [PlayersRepository.clearPlayers].
+  ///
+  /// Safe to call multiple times; concurrent callers share one in-flight future.
+  Future<void> prepareForSplashEntry() async {
+    if (_splashEntryInProgress != null) {
+      return _splashEntryInProgress;
+    }
+    final future = _prepareForSplashEntryImpl();
+    _splashEntryInProgress = future;
+    try {
+      await future;
+    } finally {
+      if (identical(_splashEntryInProgress, future)) {
+        _splashEntryInProgress = null;
+      }
+    }
+  }
+
+  Future<void> _prepareForSplashEntryImpl() async {
+    _persistGeneration++;
+    _saveTimer?.cancel();
+    _saveTimer = null;
+    await ref.read(playersRepositoryProvider).clearPlayers();
+    final game = ref.read(gameNotifierProvider);
+    state = Players(
+      numPlayers: game.configuration.numPlayers,
+      maxRounds: game.configuration.maxRounds,
+    );
+  }
+
+  /// Schedule a save to repository after [kPlayersSaveDebounceDuration] of idle time
   void _scheduleSave() {
     _saveTimer?.cancel();
-    _saveTimer = Timer(const Duration(seconds: 5), () {
+    final generation = _persistGeneration;
+    _saveTimer = Timer(kPlayersSaveDebounceDuration, () {
+      if (generation != _persistGeneration) {
+        return;
+      }
       unawaited(ref.read(playersRepositoryProvider).savePlayers(state));
     });
   }

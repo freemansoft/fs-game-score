@@ -9,8 +9,9 @@ class PlayerGameCell extends StatelessWidget {
     required this.playerIdx,
     required this.name,
     required this.totalScore,
-    required this.onTap,
+    this.onTap,
     this.endGameScore = 0,
+    this.readOnly = false,
   });
 
   /// The repeatable key for the clickable inkwell in this widget that lanches the player's game editor
@@ -36,8 +37,11 @@ class PlayerGameCell extends StatelessWidget {
   /// player.totalScore
   final int totalScore;
 
-  /// Callback function to be invoked when the cell is tapped - usually to open the player's game editor
-  final VoidCallback onTap;
+  /// Callback when tapped; null in read-only spectator mode.
+  final VoidCallback? onTap;
+
+  /// Added to support sharing in read-only spectator mode.
+  final bool readOnly;
 
   /// The score at which the game ends for this player
   final int endGameScore;
@@ -52,37 +56,44 @@ class PlayerGameCell extends StatelessWidget {
           )
         : Theme.of(context).textTheme.bodyMedium;
 
+    final content = SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            name,
+            key: nameKey(playerIdx),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            textAlign: TextAlign.center,
+            style: textStyle,
+            semanticsLabel: 'Player name ${playerIdx + 1}',
+          ),
+          Text(
+            '$totalScore',
+            key: totalScoreKey(playerIdx),
+            textAlign: TextAlign.center,
+            style: textStyle,
+            semanticsLabel: 'Player total score ${playerIdx + 1}',
+          ),
+        ],
+      ),
+    );
+    if (readOnly || onTap == null) {
+      return Semantics(
+        label: 'Player ${playerIdx + 1} name and total score',
+        child: content,
+      );
+    }
     return Semantics(
       label: 'Player ${playerIdx + 1} name and total score',
       button: true,
       child: InkWell(
         key: cellKey(playerIdx),
         onTap: onTap,
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                name,
-                key: nameKey(playerIdx),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-                textAlign: TextAlign.center,
-                style: textStyle,
-                semanticsLabel: 'Player name ${playerIdx + 1}',
-              ),
-              Text(
-                '$totalScore',
-                key: totalScoreKey(playerIdx),
-                textAlign: TextAlign.center,
-                style: textStyle,
-                semanticsLabel: 'Player total score ${playerIdx + 1}',
-              ),
-            ],
-          ),
-        ),
+        child: content,
       ),
     );
   }

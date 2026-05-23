@@ -1,8 +1,15 @@
 # Privacy Policy
 
+## Live score sharing (local network)
+
+- When you use **Share live** or **Join live game**, player names and scores are sent **directly between devices on the same Wi-Fi or local network** using local discovery (Bonjour/mDNS) and a direct connection between devices.
+- **No FreemanS game server** stores or relays this data.
+- Anyone on the same network who has the connection link or PIN can view the live game session.
+- This feature is optional; you can continue using CSV share without enabling live sharing.
+
 ## No Personal Data Collection
 
-- This application does not collect, store, or process any personal data.
+- This application does not collect, store, or process any personal data in the cloud.
 - We do not ask for or require you to provide any personal information, such as your name, email address, or location.
 - No data is shared with third parties.
 
@@ -27,4 +34,4 @@
 
 ## Contact Us
 
-If you have any questions about this privacy policy, please contact us at: joe+scorecard@freemansoft.com
+If you have any questions about this privacy policy, please contact us at: <joe+scorecard@freemansoft.com>

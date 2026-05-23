@@ -4,9 +4,9 @@
   "@appTitle": {
     "description": "The application title"
   },
-  "continueButton": "Continuar",
+  "continueButton": "Iniciar juego nuevo",
   "@continueButton": {
-    "description": "Button to continue from splash screen to score table"
+    "description": "Button to start new game and transition from splash screen to score table"
   },
   "numberOfPlayers": "Número de jugadores:",
   "@numberOfPlayers": {
@@ -289,5 +289,33 @@
   "trademarkDisclaimer": "Todos los nombres de productos y empresas son marcas comerciales™ o marcas registradas® de sus respectivos propietarios. Su uso no implica ninguna afiliación o respaldo por su parte. FreemanS Score Card es una aplicación independiente y no está patrocinada ni aprobada por ningún propietario de marca comercial externo.",
   "@trademarkDisclaimer": {
     "description": "Trademark disclaimer shown in the about dialog"
-  }
+  },
+  "shareLive": "Compartir en vivo",
+  "joinLiveGame": "Unirse a juego en vivo",
+  "liveSharingTitle": "Compartir en vivo",
+  "liveSharingInstructions": "Otros jugadores en la misma Wi-Fi pueden escanear este código o elegir este juego en Unirse a juego en vivo.",
+  "connectionPin": "PIN: {pin}",
+  "copyConnectionUrl": "Copiar enlace de conexión",
+  "connectionUrlCopied": "Enlace copiado",
+  "stopLiveSharing": "Dejar de compartir",
+  "liveSharingUnavailable": "La vista en vivo está disponible en Android e iOS cuando todos están en la misma Wi-Fi.",
+  "joinLiveGameTitle": "Unirse a juego en vivo",
+  "discoveredHosts": "Juegos en esta red",
+  "noHostsFound": "No se encontraron juegos. Pida al anfitrión el código QR.",
+  "scanConnectionQr": "Escanear QR de conexión",
+  "manualConnection": "Conectar manualmente",
+  "connectionUrlHint": "ws://192.168.1.5:8765?game=...&pin=...",
+  "connect": "Conectar",
+  "liveSpectatorTitle": "Puntuaciones en vivo",
+  "liveConnectionConnecting": "Conectando…",
+  "liveConnectionConnected": "Conectado a {host}",
+  "liveConnectionConnectedOnly": "Conectado",
+  "liveConnectionReconnecting": "Reconectando…",
+  "liveConnectionWrongPin": "PIN incorrecto. Verifique el código del anfitrión.",
+  "liveConnectionVersionMismatch": "La versión de la app no coincide con el anfitrión. Actualice ambos dispositivos a la misma versión de FS Score Card.",
+  "liveSyncAppVersionUnknown": "No se puede iniciar la vista en vivo hasta conocer la versión de la app. Reinicie la app e intente de nuevo.",
+  "liveConnectionCannotReachHost": "No se puede contactar al anfitrión. Use la misma Wi-Fi e intente de nuevo.",
+  "liveConnectionHostClosed": "El anfitrión dejó de compartir.",
+  "liveConnectionFailed": "Conexión fallida.",
+  "leaveLiveView": "Salir"
 }

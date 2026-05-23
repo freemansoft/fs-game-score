@@ -26,6 +26,14 @@ See the appropriate skill for full setup:
 
 Prefer **Fakes** or **Stubs** over Mocks. See the **`dart-generate-test-mocks`** skill for mockito setup.
 
+### Live sync
+
+Override `gameSyncTransportFactoryProvider` with `(ref) => () => FakeGameSyncTransport()` (`lib/sync/fake_game_sync_transport.dart`). Toggle `pinAccepted`, `appVersionAccepted`, and `expectedHostAppVersion` to simulate admission failures. Label helpers: `test/game_sync_connection_label_test.dart`. Protocol and version matching: `test/game_sync_protocol_test.dart`. See **`fs-game-score-live-sync`** and [docs/Game-Sync.md](../../../docs/Game-Sync.md).
+
+### Splash player clear (integration tests)
+
+After navigating back to splash, assert cleared prefs with `waitForSplashPlayersCleared(tester)` from `integration_test/app_test_helpers.dart` — not a raw `SharedPreferences` read right after `pumpAndSettle`. Debounced score-table saves (3s, `kPlayersSaveDebounceDuration`) can race with splash clear; see [State-Management.md — Splash entry and debounced-save race](../../../docs/State-Management.md#splash-entry-and-debounced-save-race).
+
 ---
 
 ## Widget Keys for Testing

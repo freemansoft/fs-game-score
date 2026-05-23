@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/app.dart';
-import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/l10n/app_localizations_en.dart';
 import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_cell.dart';
@@ -16,7 +15,6 @@ import 'package:fs_score_card/presentation/share_game_control.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_test_helpers.dart';
 
@@ -789,7 +787,7 @@ void main() {
   );
 
   testWidgets(
-    'Entering Splash Screen from New Game clears player state',
+    'Entering Splash Screen Scoring table clears player state',
     (tester) async {
       await launchAppOnSplash(tester);
 
@@ -817,9 +815,6 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Wait a moment for async save
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-
       // Click "New Score Card" button
       final iconButton = find.byKey(NewScoreCardControl.iconButtonKey);
       await tester.tap(iconButton);
@@ -832,18 +827,8 @@ void main() {
       await tester.tap(changeScorecardButton);
       await tester.pumpAndSettle();
 
-      // Verify we are back on the Splash Screen
-      expect(find.byType(SplashScreen), findsOneWidget);
-
-      // Verify that the players state was cleared from persistence
-      final prefs = await SharedPreferences.getInstance();
-      final loadedPlayers = PlayersRepository(prefs).loadPlayers();
-      expect(
-        loadedPlayers,
-        isNull,
-        reason:
-            'Player state should be cleared on Splash Screen entry ${loadedPlayers?.toJson()}',
-      );
+      // Verify we are back on the Splash Screen and player prefs are cleared
+      await waitForSplashPlayersCleared(tester);
     },
   );
 

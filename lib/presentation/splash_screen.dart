@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +8,7 @@ import 'package:fs_score_card/model/score_filters.dart';
 import 'package:fs_score_card/presentation/about_button.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
+import 'package:fs_score_card/sync/game_sync_platform.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -35,6 +34,9 @@ class SplashScreen extends ConsumerStatefulWidget {
   static const ValueKey<String> continueButtonKey = ValueKey(
     'splash_continue_button',
   );
+  static const ValueKey<String> joinLiveButtonKey = ValueKey(
+    'splash_join_live_button',
+  );
 
   @override
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
@@ -54,8 +56,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     _endGameScoreController = TextEditingController();
     thisGame = ref.read(gameNotifierProvider);
 
-    // Any entry to the splash screen from navigation, resets the players prefs
-    unawaited(ref.read(playersRepositoryProvider).clearPlayers());
+    // Any entry to the splash screen clears persisted players and resets the
+    // live roster (including cancelling debounced saves from the score table).
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(playersNotifierProvider.notifier).prepareForSplashEntry();
+    });
 
     // Auto-set score filter based on initially loaded game mode
     final autoFilter =
@@ -440,13 +445,27 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           children: [
             _buildFieldsLayout(context),
             const SizedBox(height: 6),
+            if (canJoinLiveSync) ...[
+              const SizedBox(height: 8),
+              Semantics(
+                button: true,
+                label: 'Join live game',
+                child: OutlinedButton(
+                  key: SplashScreen.joinLiveButtonKey,
+                  onPressed: () => context.pushNamed('joinLive'),
+                  child: Text(AppLocalizations.of(context)!.joinLiveGame),
+                ),
+              ),
+            ],
+            const SizedBox(height: 8),
             Semantics(
               button: true,
-              label: 'Continue to Score Table',
+              label: AppLocalizations.of(context)!.continueButton,
               child: ElevatedButton(
                 key: SplashScreen.continueButtonKey,
                 onPressed: () async {
                   // Create a new game with fresh gameId and selected configuration
+                  // Sets the version from the current app version
                   await ref
                       .read(gameNotifierProvider.notifier)
                       .newGame(

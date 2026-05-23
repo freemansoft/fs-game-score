@@ -18,6 +18,7 @@ class PlayerRoundCell extends StatelessWidget {
     required this.onScoreChanged,
     required this.onFrenchDrivingAttributesChanged,
     required this.scoreFilter,
+    this.readOnly = false,
   }) : super(key: key ?? cellKey(playerIdx, round));
 
   /// The repeatable key for this widget
@@ -53,6 +54,9 @@ class PlayerRoundCell extends StatelessWidget {
   onFrenchDrivingAttributesChanged;
   final String scoreFilter;
 
+  /// Added to support sharing in read-only spectator mode.
+  final bool readOnly;
+
   /// Show the round editing modal
   Future<void> _openModal(BuildContext context) async {
     await PlayerRoundModal.show(
@@ -69,46 +73,56 @@ class PlayerRoundCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      key: roundCellKey(playerIdx, round),
-      onTap: enabled ? () => _openModal(context) : null,
-      child: SizedBox(
-        width: 90,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // ignored for developer clarity
-          // ignore: avoid_redundant_argument_values
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+    final cell = SizedBox(
+      width: 90,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        // ignored for developer clarity
+        // ignore: avoid_redundant_argument_values
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            score?.toString() ?? '---',
+            key: scoreKey(playerIdx, round),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: enabled ? null : Theme.of(context).disabledColor,
+            ),
+            textAlign: TextAlign.center,
+            semanticsLabel: 'Player ${playerIdx + 1} round ${round + 1} score',
+          ),
+          if (gameMode == GameMode.phase10) ...[
+            const SizedBox(height: 2),
             Text(
-              score?.toString() ?? '---',
-              key: scoreKey(playerIdx, round),
+              selectedPhase != null && selectedPhase! > 0
+                  ? AppLocalizations.of(context)!.phaseNumber(selectedPhase!)
+                  : '---',
+              key: phaseKey(playerIdx, round),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: enabled ? null : Theme.of(context).disabledColor,
+                color: enabled
+                    ? Theme.of(context).colorScheme.secondary
+                    : Theme.of(context).disabledColor,
               ),
               textAlign: TextAlign.center,
               semanticsLabel:
-                  'Player ${playerIdx + 1} round ${round + 1} score',
+                  'Player ${playerIdx + 1} round ${round + 1} phase',
             ),
-            if (gameMode == GameMode.phase10) ...[
-              const SizedBox(height: 2),
-              Text(
-                selectedPhase != null && selectedPhase! > 0
-                    ? AppLocalizations.of(context)!.phaseNumber(selectedPhase!)
-                    : '---',
-                key: phaseKey(playerIdx, round),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: enabled
-                      ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).disabledColor,
-                ),
-                textAlign: TextAlign.center,
-                semanticsLabel:
-                    'Player ${playerIdx + 1} round ${round + 1} phase',
-              ),
-            ],
           ],
-        ),
+        ],
+      ),
+    );
+    if (readOnly || !enabled) {
+      return Semantics(
+        label: 'Player ${playerIdx + 1} round ${round + 1} score',
+        child: cell,
+      );
+    }
+    return Semantics(
+      button: true,
+      label: 'Player ${playerIdx + 1} round ${round + 1} score',
+      child: InkWell(
+        key: roundCellKey(playerIdx, round),
+        onTap: () => _openModal(context),
+        child: cell,
       ),
     );
   }

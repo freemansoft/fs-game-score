@@ -11,7 +11,8 @@ Purpose: Short, actionable guidance to help an AI coding agent be productive in 
   - `lib/model/` — plain Dart model classes (Game, Players, Player, Scores)
   - `integration_test/` and `test/` — tests and integration tests
 - **Riverpod data flow**: `sharedPreferencesProvider` → repository providers → `gameNotifierProvider` / `playersNotifierProvider` → UI (`ConsumerWidget`). Full rules: [docs/State-Management.md](../docs/State-Management.md).
-- **Persistence**: Repositories read/write `game_state` and `players_state` keys. Splash **Continue** calls `gameNotifierProvider.notifier.newGame()` and saves the roster via `playersRepositoryProvider`; gameplay mutations debounce saves in `PlayersNotifier`.
+- **Live sync (LAN)**: `gameSyncHostProvider` broadcasts snapshots; `gameSyncSpectatorProvider` mirrors wire state (no prefs). `connect()` returns `GameSyncConnectResult` and waits for the first snapshot. Transport via `gameSyncTransportFactoryProvider` (fresh instance per connect). Banner labels use game ID or LAN IP (`game_sync_connection_label.dart`). See [docs/Game-Sync.md](../docs/Game-Sync.md).
+- **Persistence**: Repositories read/write `game_state` and `players_state` keys. Splash **Start new game** calls `gameNotifierProvider.notifier.newGame()` and saves the roster via `playersRepositoryProvider`; gameplay mutations debounce saves in `PlayersNotifier` (3s, `kPlayersSaveDebounceDuration`).
 - **Startup**: `bootstrapApp()` in `lib/main.dart` overrides prefs and uses `UncontrolledProviderScope`; notifiers load in `build()` when first read.
 
 ## Quick commands (use `fvm` when present)
@@ -32,7 +33,7 @@ Purpose: Short, actionable guidance to help an AI coding agent be productive in 
 - Modal & semantics rules: `.cursor/rules/*` enforce semantics and key naming. Examples:
   - Widgets that show player data must expose semantic labels or be wrapped in Semantics
   - Modal/alert dialogs should be scrollable and layout by orientation when 2–3 fields exist
-- State management: use Riverpod 3 `Notifier` patterns. UI watches `gameNotifierProvider` / `playersNotifierProvider`; `PlayersNotifier.build()` watches `gameNotifierProvider` and restores from `playersRepositoryProvider` when dimensions match. Do not call repositories from widgets except splash `clearPlayers` and router resume.
+- State management: use Riverpod 3 `Notifier` patterns. UI watches `gameNotifierProvider` / `playersNotifierProvider`; `PlayersNotifier.build()` watches `gameNotifierProvider` and restores from `playersRepositoryProvider` when dimensions match. Splash entry clears players via `prepareForSplashEntry()` (not `clearPlayers()` alone) to avoid debounced-save races — see [State-Management.md — Splash entry and debounced-save race](../docs/State-Management.md#splash-entry-and-debounced-save-race).
 - Game ID behavior: `Game.fromJson()` intentionally generates a new `gameId` on load — do not rely on persisted `gameId` being preserved.
 
 ## Tests & integration tests
@@ -59,6 +60,7 @@ Purpose: Short, actionable guidance to help an AI coding agent be productive in 
 - Provider patterns: `lib/provider/prefs_provider.dart`, `lib/provider/game_provider.dart`, `lib/provider/players_provider.dart`
 - Persistence: `lib/data/game_repository.dart`, `lib/data/players_repository.dart`; splash/orchestration in `lib/presentation/splash_screen.dart`
 - State management doc: `docs/State-Management.md`
+- Live sync doc: `docs/Game-Sync.md`
 - Integration tests: `integration_test/*_test.dart`
 - Cursor rules: `.cursor/rules/*.md` (key naming, semantics, modal layouts)
 

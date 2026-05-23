@@ -1,6 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:fs_score_card/presentation/splash_screen.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Clears persisted game and player state before each test.
@@ -49,4 +52,31 @@ Future<void> launchApp(WidgetTester tester) async {
 Future<void> launchAppOnSplash(WidgetTester tester) async {
   await launchApp(tester);
   await pumpUntilFound(tester, find.byKey(SplashScreen.continueButtonKey));
+}
+
+/// Waits until splash entry has cleared persisted player state.
+///
+/// Awaits [PlayersNotifier.prepareForSplashEntry] and polls prefs because
+/// clearing is async and debounced saves from the score table can race.
+Future<void> waitForSplashPlayersCleared(WidgetTester tester) async {
+  final splashFinder = find.byType(SplashScreen);
+  expect(splashFinder, findsOneWidget);
+  final container = ProviderScope.containerOf(tester.element(splashFinder));
+  await container
+      .read(playersNotifierProvider.notifier)
+      .prepareForSplashEntry();
+  await tester.pumpAndSettle();
+
+  final end = DateTime.now().add(const Duration(seconds: 5));
+  while (DateTime.now().isBefore(end)) {
+    final prefs = await SharedPreferences.getInstance();
+    if (PlayersRepository(prefs).loadPlayers() == null) {
+      return;
+    }
+    await tester.pump(const Duration(milliseconds: 50));
+    await container
+        .read(playersNotifierProvider.notifier)
+        .prepareForSplashEntry();
+  }
+  fail('players_state was not cleared after returning to splash');
 }

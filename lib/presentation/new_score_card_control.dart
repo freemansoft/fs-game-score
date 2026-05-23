@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:go_router/go_router.dart';
 
 /// A widget that displays a home icon button and
@@ -7,7 +9,7 @@ import 'package:go_router/go_router.dart';
 /// Takes user back to the SplashScreen if confirmed to pick a new game type
 ///
 /// Usually shown in the app bar
-class NewScoreCardControl extends StatelessWidget {
+class NewScoreCardControl extends ConsumerWidget {
   const NewScoreCardControl({super.key});
 
   static const ValueKey<String> iconButtonKey = ValueKey(
@@ -20,7 +22,7 @@ class NewScoreCardControl extends StatelessWidget {
     'new_scorecard_change_button',
   );
 
-  Future<void> _showDialog(BuildContext context) async {
+  Future<void> _showDialog(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
     final result = await showDialog<bool>(
       context: context,
@@ -43,13 +45,16 @@ class NewScoreCardControl extends StatelessWidget {
       ),
     );
     if ((result ?? false) && context.mounted) {
-      // Navigate to splash screen and clear navigation stack
-      context.goNamed('splash');
+      // Clear before navigation so debounced score-table saves cannot race splash.
+      await ref.read(playersNotifierProvider.notifier).prepareForSplashEntry();
+      if (context.mounted) {
+        context.goNamed('splash');
+      }
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
@@ -58,7 +63,7 @@ class NewScoreCardControl extends StatelessWidget {
         key: iconButtonKey,
         icon: const Icon(Icons.home),
         tooltip: l10n.newGameChangeScorecardType,
-        onPressed: () => _showDialog(context),
+        onPressed: () => _showDialog(context, ref),
       ),
     );
   }

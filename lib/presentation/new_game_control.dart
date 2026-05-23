@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/provider/game_sync_host_provider.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
-/// A button that, when pressed, will reset the game to its initial state.
+/// A button that, when pressed, will retain the current game configuration and
+/// reset the game to its initial state.
 /// Does not change the scorecard type.
 ///
 /// Usually shown in the app bar
@@ -70,6 +72,7 @@ class NewGameControl extends ConsumerWidget {
       },
     );
     if (result ?? false) {
+      await ref.read(gameSyncHostProvider.notifier).stopHosting();
       ref
           .read(playersNotifierProvider.notifier)
           .resetGame(clearNames: clearNames);

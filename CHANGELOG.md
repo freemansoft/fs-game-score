@@ -7,13 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.12.0] - not yet released
 
-- Updated cursor rules
-- Added antigravity rules
-- Removed continue.dev rules
-- add Google [Flutter Skills](https://github.com/flutter/skills) and [dart-lang skills](https://github.com/dart-lang/skills)
-- Use Player as an immutable data object
-- Updated dependencies to support Flutter 3.41.2 and dart 3.11.0
-- Rework Riverpod to follow recommended practices
+### Live score sharing (LAN, view-only)
+
+- Host live games on Android and iOS from the in-game app bar (**Live share**): local WebSocket server, mDNS advertisement, QR code, and copyable connection URL with session PIN
+- Join a live game from the splash screen: browse hosts on the same Wi-Fi, scan the host QR code, or enter a `ws://` URL manually in debug builds
+- Spectator **read-only** score table with connection status banner; scores update as the host plays (no editing, no persistence on the spectator device)
+- Admission requires matching 6-digit PIN and the same app build version on host and spectator (`PackageInfo` version, e.g. `1.12.0+236`)
+- English and Spanish localization for live share, join, and connection error messages
+- Privacy policy updated for LAN discovery and local network use on mobile
+
+### Architecture and quality
+
+- Reduce player-state save debounce from 5 seconds to 3 seconds (`kPlayersSaveDebounceDuration`)
+- Rework Riverpod to follow recommended practices: `sharedPreferencesProvider`, repository providers, and separate `gameSyncHostProvider` / `gameSyncSpectatorProvider` for live sync (see [docs/Game-Sync.md](docs/Game-Sync.md))
+- Use `Player` as an immutable data object
+- Updated dependencies to support Flutter 3.41.2 and Dart 3.11.0 (including bonsoir, shelf WebSocket, QR, and mobile scanner for live sync)
+- Unit tests for live sync protocol, snapshot mapper, QR URL parsing, and platform capability flags
+- Fixed Android Gradle Kotlin plugin application so the bonsoir Android library builds correctly
+- Fixed live share host dialog crash when the QR code was placed in a scrollable `AlertDialog` (intrinsic dimension error)
+- Fixed Android CI integration test race where `pumpAndSettle` could run before the splash screen mounted
+
+### Developer documentation and tooling
+
+- Added [AGENTS.md](AGENTS.md) for AI agent guidance; expanded [docs/State-Management.md](docs/State-Management.md) and added [docs/Game-Sync.md](docs/Game-Sync.md)
+- Added Google [Flutter Skills](https://github.com/flutter/skills) and [dart-lang skills](https://github.com/dart-lang/skills); project skills for live sync and testing workflow
+- Updated Cursor rules; added Antigravity rules; removed continue.dev rules
 
 ## [1.11.0] - 2026-03-14
 

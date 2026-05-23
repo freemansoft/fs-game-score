@@ -47,11 +47,17 @@ class Player {
   }) {
     return Player.withData(
       name: name ?? this.name,
-      scores: scores ?? Scores.fromJson(List<int?>.from(this.scores.roundScores)),
-      phases: phases ?? Phases.fromJson(List<int?>.from(this.phases.completedPhases)),
-      frenchDrivingAttributes: frenchDrivingAttributes ??
+      scores:
+          scores ?? Scores.fromJson(List<int?>.from(this.scores.roundScores)),
+      phases:
+          phases ??
+          Phases.fromJson(List<int?>.from(this.phases.completedPhases)),
+      frenchDrivingAttributes:
+          frenchDrivingAttributes ??
           this.frenchDrivingAttributes.map((e) => e.copyWith()).toList(),
-      roundStates: roundStates ?? RoundStates.fromJson(List<bool>.from(this.roundStates.enabledRounds)),
+      roundStates:
+          roundStates ??
+          RoundStates.fromJson(List<bool>.from(this.roundStates.enabledRounds)),
     );
   }
 

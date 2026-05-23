@@ -2,6 +2,8 @@
 
 These patterns should be followed when implementing UI, state management, and data handling.
 
+This app uses **Riverpod 3** (`Notifier` / `NotifierProvider`) for app state — see [docs/State-Management.md](../../../docs/State-Management.md). Player edits debounce to disk for 3 seconds (`kPlayersSaveDebounceDuration`). Splash entry must use `prepareForSplashEntry()` (debounced-save race). For **LAN live score sharing** (`gameSyncHostProvider`, `gameSyncSpectatorProvider`, WebSocket handshake, PIN/app version validation), use the **`fs-game-score-live-sync`** skill and [docs/Game-Sync.md](../../../docs/Game-Sync.md).
+
 ## State Management
 
 ### Simple Local State (ValueNotifier)

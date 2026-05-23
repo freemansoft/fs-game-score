@@ -60,6 +60,10 @@ class GameConfiguration {
   bool get enablePhases => gameMode == GameMode.phase10;
   final String scoreFilter;
   final int endGameScore;
+
+  /// Should be the same as the app version
+  /// set when `newGame` is called probably on the splash screen
+  /// used to identify the game version for backwards compatibility
   final String? version;
 
   Map<String, dynamic> toJson() {

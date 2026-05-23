@@ -58,7 +58,7 @@ Make sure to regenerate the dart localization files after making any changes to 
 
 ## Build and Test
 
-Riverpod architecture, provider layers, and testing conventions are documented in [docs/State-Management.md](docs/State-Management.md).
+Riverpod architecture, provider layers, and testing conventions are documented in [docs/State-Management.md](docs/State-Management.md). LAN live score sharing (`gameSyncHostProvider`, `gameSyncSpectatorProvider`, handshake, PIN/app version validation) is documented in [docs/Game-Sync.md](docs/Game-Sync.md).
 
 You can test this locally using the run view in VSCode or using the command line.
 

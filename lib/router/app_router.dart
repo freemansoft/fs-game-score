@@ -1,6 +1,8 @@
 import 'package:fs_score_card/data/game_repository.dart';
 import 'package:fs_score_card/data/players_repository.dart';
+import 'package:fs_score_card/presentation/join_live_game_screen.dart';
 import 'package:fs_score_card/presentation/score_table_screen.dart';
+import 'package:fs_score_card/presentation/spectator_score_table_screen.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:go_router/go_router.dart';
@@ -42,6 +44,16 @@ GoRouter createAppRouter(SharedPreferences prefs) {
         path: '/score-table',
         name: 'scoreTable',
         builder: (context, state) => const ScoreTableScreen(),
+      ),
+      GoRoute(
+        path: '/join-live',
+        name: 'joinLive',
+        builder: (context, state) => const JoinLiveGameScreen(),
+      ),
+      GoRoute(
+        path: '/live-spectator',
+        name: 'liveSpectator',
+        builder: (context, state) => const SpectatorScoreTableScreen(),
       ),
     ],
   );

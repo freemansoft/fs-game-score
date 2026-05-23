@@ -40,10 +40,12 @@ This project uses **FVM** (Flutter Version Management) to manage the Flutter SDK
   * `gameRepositoryProvider` / `playersRepositoryProvider`: Persistence only (`load*`, `save*`, `clear*`).
   * `gameNotifierProvider` ([game_provider.dart](lib/provider/game_provider.dart)): Live `Game` configuration and `gameId`.
   * `playersNotifierProvider` ([players_provider.dart](lib/provider/players_provider.dart)): Live roster, scores, phases, round locks.
+* `gameSyncHostProvider` / `gameSyncSpectatorProvider`: LAN live view-only sync; see [docs/Game-Sync.md](docs/Game-Sync.md). Host reads game/players notifiers and broadcasts snapshots; spectator mirrors wire state only (no prefs). PIN + **app build version** validated on WebSocket `hello` / `welcome`. Spectator `connect()` returns `GameSyncConnectResult` and waits for the first snapshot.
   * `appRouterProvider` ([app.dart](lib/app.dart)): `GoRouter` with resume logic from prefs.
 * **Rules**: Widgets `ref.watch` / `ref.read` **notifier** providers; use **repository** providers only from notifiers, router startup, or documented splash flows. Do not restore state via repository callbacks into notifiers.
 * **Startup**: `bootstrapApp()` in [main.dart](lib/main.dart) pre-inits prefs and mounts `UncontrolledProviderScope` with a pre-built `ProviderContainer`.
-* **Persistence**: Game config saved on `newGame()`; player progress debounced (5s) during play; baseline roster saved on splash **Continue**.
+* **Persistence**: Game config saved on `newGame()`; player progress debounced (3s, `kPlayersSaveDebounceDuration`) during play; baseline roster saved on splash **Start new game**. Splash entry uses `prepareForSplashEntry()` to avoid debounced-save races — see [docs/State-Management.md](docs/State-Management.md#splash-entry-and-debounced-save-race).
+* **Live sync**: When editing host/join/spectator flows, read [docs/Game-Sync.md](docs/Game-Sync.md) and use the **`fs-game-score-live-sync`** skill.
 * **Integration tests**: Use `integration_test/app_test_helpers.dart` — **`await bootstrapApp()`** via `launchApp` / `launchAppOnSplash`; never call `main()` without awaiting (Android race). Clear prefs in `setUp`/`tearDown`.
 
 ### 2. Localization
