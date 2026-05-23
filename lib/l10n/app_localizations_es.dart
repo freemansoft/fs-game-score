@@ -12,7 +12,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'Tarjeta de Puntaje FreemanS';
 
   @override
-  String get continueButton => 'Continuar';
+  String get continueButton => 'Iniciar juego nuevo';
 
   @override
   String get numberOfPlayers => 'Número de jugadores:';
@@ -229,4 +229,103 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get trademarkDisclaimer =>
       'Todos los nombres de productos y empresas son marcas comerciales™ o marcas registradas® de sus respectivos propietarios. Su uso no implica ninguna afiliación o respaldo por su parte. FreemanS Score Card es una aplicación independiente y no está patrocinada ni aprobada por ningún propietario de marca comercial externo.';
+
+  @override
+  String get shareLive => 'Compartir vista en vivo';
+
+  @override
+  String get joinLiveGame => 'Unirse a juego en vivo';
+
+  @override
+  String get joinLiveGameTooltip =>
+      'Ambos dispositivos deben estar en la misma red Wi-Fi.';
+
+  @override
+  String get liveSharingTitle => 'Compartir en vivo';
+
+  @override
+  String get liveSharingInstructions =>
+      'Otros jugadores en la misma Wi-Fi pueden escanear este código o elegir este juego en Unirse a juego en vivo.';
+
+  @override
+  String connectionPin(String pin) {
+    return 'PIN: $pin';
+  }
+
+  @override
+  String get copyConnectionUrl => 'Copiar enlace de conexión';
+
+  @override
+  String get connectionUrlCopied => 'Enlace copiado';
+
+  @override
+  String get stopLiveSharing => 'Dejar de compartir';
+
+  @override
+  String get liveSharingUnavailable =>
+      'La vista en vivo está disponible en Android e iOS cuando todos están en la misma Wi-Fi.';
+
+  @override
+  String get joinLiveGameTitle => 'Unirse a juego en vivo';
+
+  @override
+  String get discoveredHosts => 'Juegos en esta red';
+
+  @override
+  String get noHostsFound =>
+      'No se encontraron juegos. Pida al anfitrión el código QR.';
+
+  @override
+  String get scanConnectionQr => 'Escanear QR de conexión';
+
+  @override
+  String get manualConnection => 'Conectar manualmente';
+
+  @override
+  String get connectionUrlHint => 'ws://192.168.1.5:8765?game=...&pin=...';
+
+  @override
+  String get connect => 'Conectar';
+
+  @override
+  String get liveSpectatorTitle => 'Puntuaciones en vivo';
+
+  @override
+  String get liveConnectionConnecting => 'Conectando…';
+
+  @override
+  String liveConnectionConnected(String host) {
+    return 'Conectado a $host';
+  }
+
+  @override
+  String get liveConnectionConnectedOnly => 'Conectado';
+
+  @override
+  String get liveConnectionReconnecting => 'Reconectando…';
+
+  @override
+  String get liveConnectionWrongPin =>
+      'PIN incorrecto. Verifique el código del anfitrión.';
+
+  @override
+  String get liveConnectionVersionMismatch =>
+      'La versión principal de la app no coincide con el anfitrión. Actualice ambos dispositivos a la misma versión principal de FS Score Card.';
+
+  @override
+  String get liveSyncAppVersionUnknown =>
+      'No se puede iniciar la vista en vivo hasta conocer la versión de la app. Reinicie la app e intente de nuevo.';
+
+  @override
+  String get liveConnectionCannotReachHost =>
+      'No se puede contactar al anfitrión. Use la misma Wi-Fi e intente de nuevo.';
+
+  @override
+  String get liveConnectionHostClosed => 'El anfitrión dejó de compartir.';
+
+  @override
+  String get liveConnectionFailed => 'Conexión fallida.';
+
+  @override
+  String get leaveLiveView => 'Salir';
 }

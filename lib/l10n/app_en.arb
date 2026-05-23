@@ -4,9 +4,9 @@
   "@appTitle": {
     "description": "The application title"
   },
-  "continueButton": "Continue",
+  "continueButton": "Start new game",
   "@continueButton": {
-    "description": "Button to continue from splash screen to score table"
+    "description": "Button to start new game and transition from splash screen to score table"
   },
   "numberOfPlayers": "Number of Players:",
   "@numberOfPlayers": {
@@ -289,5 +289,131 @@
   "trademarkDisclaimer": "All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them. FreemanS Score Card is an independent application and is not sponsored or approved by any third-party trademark owner.",
   "@trademarkDisclaimer": {
     "description": "Trademark disclaimer shown in the about dialog"
+  },
+  "shareLive": "Share live view",
+  "@shareLive": {
+    "description": "Tooltip and semantic label for host live score sharing"
+  },
+  "joinLiveGame": "Join live game",
+  "@joinLiveGame": {
+    "description": "Button to join a live game as spectator"
+  },
+  "joinLiveGameTooltip": "Both devices must be on the same Wi-Fi network.",
+  "@joinLiveGameTooltip": {
+    "description": "Tooltip on splash Join live game button"
+  },
+  "liveSharingTitle": "Live sharing",
+  "@liveSharingTitle": {
+    "description": "Title for live host dialog"
+  },
+  "liveSharingInstructions": "Players on the same Wi-Fi can scan this code or pick this game from [Join live game].",
+  "@liveSharingInstructions": {
+    "description": "Instructions on host live dialog"
+  },
+  "connectionPin": "PIN: {pin}",
+  "@connectionPin": {
+    "description": "PIN shown for live session",
+    "placeholders": {
+      "pin": {
+        "type": "String"
+      }
+    }
+  },
+  "copyConnectionUrl": "Copy connection link",
+  "@copyConnectionUrl": {
+    "description": "Copy ws connection URL to clipboard"
+  },
+  "connectionUrlCopied": "Connection link copied",
+  "@connectionUrlCopied": {
+    "description": "Snackbar after copying connection URL"
+  },
+  "stopLiveSharing": "Stop sharing",
+  "@stopLiveSharing": {
+    "description": "Stop hosting live session"
+  },
+  "liveSharingUnavailable": "Live sharing is available on Android and iOS when everyone is on the same Wi-Fi.",
+  "@liveSharingUnavailable": {
+    "description": "Hint when live sync is not supported on this platform"
+  },
+  "joinLiveGameTitle": "Join live game",
+  "@joinLiveGameTitle": {
+    "description": "Title for join live game screen"
+  },
+  "discoveredHosts": "Games on this network",
+  "@discoveredHosts": {
+    "description": "Section header for mDNS discovered hosts"
+  },
+  "noHostsFound": "No games found. Ask the host to share their QR code.",
+  "@noHostsFound": {
+    "description": "Empty state for mDNS browse"
+  },
+  "scanConnectionQr": "Scan connection QR",
+  "@scanConnectionQr": {
+    "description": "Button to scan host QR"
+  },
+  "manualConnection": "Connect manually",
+  "@manualConnection": {
+    "description": "Expand manual ws URL entry"
+  },
+  "connectionUrlHint": "ws://192.168.1.5:8765?game=...&pin=...",
+  "@connectionUrlHint": {
+    "description": "Hint for manual connection URL field"
+  },
+  "connect": "Connect",
+  "@connect": {
+    "description": "Connect to live host button"
+  },
+  "liveSpectatorTitle": "Live scores",
+  "@liveSpectatorTitle": {
+    "description": "App bar title for spectator view"
+  },
+  "liveConnectionConnecting": "Connecting…",
+  "@liveConnectionConnecting": {
+    "description": "Spectator banner while connecting"
+  },
+  "liveConnectionConnected": "Connected to {host}",
+  "@liveConnectionConnected": {
+    "description": "Spectator banner when connected to a host target",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "liveConnectionConnectedOnly": "Connected",
+  "@liveConnectionConnectedOnly": {
+    "description": "Spectator banner when connected but no game id or IP is available"
+  },
+  "liveConnectionReconnecting": "Reconnecting…",
+  "@liveConnectionReconnecting": {
+    "description": "Spectator banner while reconnecting"
+  },
+  "liveConnectionWrongPin": "Wrong PIN. Check the code from the host.",
+  "@liveConnectionWrongPin": {
+    "description": "Spectator banner for wrong PIN"
+  },
+  "liveConnectionVersionMismatch": "App major version does not match the host. Update both devices to the same major FS Score Card release.",
+  "@liveConnectionVersionMismatch": {
+    "description": "Spectator banner when app major version differs from host"
+  },
+  "liveSyncAppVersionUnknown": "Cannot start live sharing until the app version is known. Restart the app and try again.",
+  "@liveSyncAppVersionUnknown": {
+    "description": "Error when host cannot determine app version for live sync"
+  },
+  "liveConnectionCannotReachHost": "Cannot reach host. Use the same Wi-Fi and try again.",
+  "@liveConnectionCannotReachHost": {
+    "description": "Spectator banner when connection fails"
+  },
+  "liveConnectionHostClosed": "Host stopped sharing.",
+  "@liveConnectionHostClosed": {
+    "description": "Spectator banner when host closes session"
+  },
+  "liveConnectionFailed": "Connection failed.",
+  "@liveConnectionFailed": {
+    "description": "Spectator banner generic failure"
+  },
+  "leaveLiveView": "Leave",
+  "@leaveLiveView": {
+    "description": "Leave spectator live view"
   }
 }

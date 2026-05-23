@@ -13,6 +13,15 @@ subprojects {
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
 subprojects {
+    // bonsoir_android (and some plugins) use the Kotlin 2.x `kotlin { }` DSL
+    // without applying org.jetbrains.kotlin.android themselves.
+    pluginManager.withPlugin("com.android.library") {
+        if (!pluginManager.hasPlugin("org.jetbrains.kotlin.android")) {
+            apply(plugin = "org.jetbrains.kotlin.android")
+        }
+    }
+}
+subprojects {
     project.evaluationDependsOn(":app")
 }
 

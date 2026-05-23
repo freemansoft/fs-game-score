@@ -1,6 +1,10 @@
+import 'package:data_table_2/data_table_2.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fs_score_card/data/players_repository.dart';
 import 'package:fs_score_card/main.dart' as app;
 import 'package:fs_score_card/presentation/splash_screen.dart';
+import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Clears persisted game and player state before each test.
@@ -45,8 +49,56 @@ Future<void> launchApp(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-/// `launchApp` then waits until the splash Continue button is visible.
+/// Waits until splash entry prep finishes ([PlayersNotifier.prepareForSplashEntry]).
+///
+/// Splash schedules this in a post-frame callback; on slow Android CI emulators
+/// it can still be in flight when the Continue button is visible. Call before
+/// tapping Continue so clear/save/navigation do not race.
+Future<void> waitForSplashReady(WidgetTester tester) async {
+  final splashFinder = find.byType(SplashScreen);
+  expect(splashFinder, findsOneWidget);
+  final container = ProviderScope.containerOf(tester.element(splashFinder));
+  await container
+      .read(playersNotifierProvider.notifier)
+      .prepareForSplashEntry();
+  await tester.pumpAndSettle();
+}
+
+/// Waits until the score table is mounted after navigation from splash.
+Future<void> waitForScoreTable(WidgetTester tester) async {
+  await pumpUntilFound(tester, find.byType(DataTable2));
+}
+
+/// `launchApp`, splash Continue visibility, and [waitForSplashReady].
 Future<void> launchAppOnSplash(WidgetTester tester) async {
   await launchApp(tester);
   await pumpUntilFound(tester, find.byKey(SplashScreen.continueButtonKey));
+  await waitForSplashReady(tester);
+}
+
+/// Waits until splash entry has cleared persisted player state.
+///
+/// Awaits [PlayersNotifier.prepareForSplashEntry] and polls prefs because
+/// clearing is async and coalesced saves from the score table can race.
+Future<void> waitForSplashPlayersCleared(WidgetTester tester) async {
+  final splashFinder = find.byType(SplashScreen);
+  expect(splashFinder, findsOneWidget);
+  final container = ProviderScope.containerOf(tester.element(splashFinder));
+  await container
+      .read(playersNotifierProvider.notifier)
+      .prepareForSplashEntry();
+  await tester.pumpAndSettle();
+
+  final end = DateTime.now().add(const Duration(seconds: 5));
+  while (DateTime.now().isBefore(end)) {
+    final prefs = await SharedPreferences.getInstance();
+    if (PlayersRepository(prefs).loadPlayers() == null) {
+      return;
+    }
+    await tester.pump(const Duration(milliseconds: 50));
+    await container
+        .read(playersNotifierProvider.notifier)
+        .prepareForSplashEntry();
+  }
+  fail('players_state was not cleared after returning to splash');
 }

@@ -8,10 +8,15 @@ import 'package:fs_score_card/presentation/player_game/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_modal.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_cell.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
+import 'package:fs_score_card/provider/game_sync_spectator_provider.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
-  const ScoreTable({super.key});
+  const ScoreTable({super.key, this.readOnly = false});
+
+  /// Added to support sharing in read-only spectator mode.
+  final bool readOnly;
+
   static ValueKey<String> lockRoundKey(int round) {
     return ValueKey('lock_r$round');
   }
@@ -36,9 +41,18 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
 
   @override
   Widget build(BuildContext context) {
-    final players = ref.watch(playersNotifierProvider);
-    final game = ref.watch(gameNotifierProvider);
+    final spectator = ref.watch(gameSyncSpectatorProvider);
+    final players = widget.readOnly
+        ? spectator.players
+        : ref.watch(playersNotifierProvider);
+    final game = widget.readOnly
+        ? spectator.game
+        : ref.watch(gameNotifierProvider);
+    if (players == null || game == null) {
+      return const SizedBox.shrink();
+    }
     final minWidth = 100 + game.configuration.maxRounds * 100;
+    final readOnly = widget.readOnly;
 
     return Semantics(
       label: 'Score Table',
@@ -81,32 +95,32 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   children: [
                     Text('  ${round + 1}'),
                     const SizedBox(width: 4),
-                    Semantics(
-                      label: 'Round ${round + 1} lock button',
-                      child: IconButton(
-                        key: ScoreTable.lockRoundKey(round),
-                        visualDensity: VisualDensity.comfortable,
-                        icon: Icon(
-                          allEnabled ? Icons.lock_open : Icons.lock,
-                          color: allEnabled ? Colors.green : Colors.red,
-                          size: 20,
+                    if (!readOnly)
+                      Semantics(
+                        label: 'Round ${round + 1} lock button',
+                        child: IconButton(
+                          key: ScoreTable.lockRoundKey(round),
+                          visualDensity: VisualDensity.comfortable,
+                          icon: Icon(
+                            allEnabled ? Icons.lock_open : Icons.lock,
+                            color: allEnabled ? Colors.green : Colors.red,
+                            size: 20,
+                          ),
+                          tooltip: allEnabled
+                              ? AppLocalizations.of(context)!.lockColumn
+                              : AppLocalizations.of(context)!.unlockColumn,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () {
+                            ref
+                                .read(playersNotifierProvider.notifier)
+                                .toggleRoundEnabled(
+                                  round: round,
+                                  enabled: !allEnabled,
+                                );
+                          },
                         ),
-                        tooltip: allEnabled
-                            ? AppLocalizations.of(context)!.lockColumn
-                            : AppLocalizations.of(context)!.unlockColumn,
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        onPressed: () {
-                          // Toggle enabled state for all players for this round
-                          ref
-                              .read(playersNotifierProvider.notifier)
-                              .toggleRoundEnabled(
-                                round: round,
-                                enabled: !allEnabled,
-                              );
-                        },
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -129,7 +143,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   name: player.name,
                   totalScore: player.totalScore,
                   endGameScore: game.configuration.endGameScore,
-                  onTap: () => _openModal(playerIdx, player, game),
+                  readOnly: readOnly,
+                  onTap: readOnly
+                      ? null
+                      : () => _openModal(playerIdx, player, game),
                 ),
               ),
               ...List<DataCell>.generate(game.configuration.maxRounds, (round) {
@@ -142,25 +159,32 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     gameMode: game.configuration.gameMode,
                     selectedPhase: player.phases.getPhase(round),
                     completedPhases: player.phases.completedPhasesList(),
-                    onPhaseChanged: (val) {
-                      ref
-                          .read(playersNotifierProvider.notifier)
-                          .updatePhase(playerIdx, round, val);
-                    },
-                    onScoreChanged: (parsed) {
-                      ref
-                          .read(playersNotifierProvider.notifier)
-                          .updateScore(playerIdx, round, parsed);
-                    },
-                    onFrenchDrivingAttributesChanged: (attrs) {
-                      ref
-                          .read(playersNotifierProvider.notifier)
-                          .updateFrenchDrivingAttributes(
-                            playerIdx,
-                            round,
-                            attrs,
-                          );
-                    },
+                    readOnly: readOnly,
+                    onPhaseChanged: readOnly
+                        ? (_) {}
+                        : (val) {
+                            ref
+                                .read(playersNotifierProvider.notifier)
+                                .updatePhase(playerIdx, round, val);
+                          },
+                    onScoreChanged: readOnly
+                        ? (_) {}
+                        : (parsed) {
+                            ref
+                                .read(playersNotifierProvider.notifier)
+                                .updateScore(playerIdx, round, parsed);
+                          },
+                    onFrenchDrivingAttributesChanged: readOnly
+                        ? (_) {}
+                        : (attrs) {
+                            ref
+                                .read(playersNotifierProvider.notifier)
+                                .updateFrenchDrivingAttributes(
+                                  playerIdx,
+                                  round,
+                                  attrs,
+                                );
+                          },
                     scoreFilter: game.configuration.scoreFilter,
                   ),
                 );
