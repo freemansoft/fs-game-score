@@ -2,30 +2,99 @@
 name: fs-game-score-widgets-holding-player-game-data
 description: >
   Widget keys, semantics, and modal layout rules for player/round UI in this app.
-  Use when editing score table cells, modals, or configuration screens.
+  Use when editing score table cells, modals, splash configuration, or form fields.
 ---
 
-# Widget and layout behavior
+# FS Score Card — Widget keys, semantics, and modals
 
-## modal alert behavior
+Rules for widgets that display player or game data. Tests must use the **static key functions** below — never duplicate key strings.
 
-- The content area of modal alerts AlertDialog should change the layout based on orientation if there are only 2 to 3 fields or dropdowns or pickers in the alert panel
-- The close button is not required for alert panels
-- AlertDialog should be set with scrollable: true
-- AlertDialog should have a key set where the ValueKey includes '_model' and the player or round number if appropriate
+---
 
-## Widget key behaviors
+## Widget key conventions
 
-- Flutter widgets containing player or game data must have well formatted "key" properties using the ValueKey and some string
-- Widget "key" properties for widgets showing a specific player's info should include specify the player number with 'p' followed by the index of the player in the player collection. The 'p' section should be at the start of the key string.
-- Widget "key" properties for widgets showing a specific round's info should include the round number with 'r' followed by the index of the round. The 'r' section should follow the 'p0' section if if it exists else the 'r' section should be at the start of the key string.
-- Files containing widgets with custom keys should define the ValueKey in static functions.  The function should accept player number or round number if appropriate.
-- Tests involving those keys should use the key functions and not define the ValueKey objects using static strings
+- Use **`ValueKey<String>`** via static functions on the widget class (or modal).
+- **Player index** prefix: `p` + index at the **start** (e.g. `p0_name`).
+- **Round index** suffix: `r` + index after player prefix (e.g. `p0_r2_score_field`).
+- Modal/global panel fields need repeatable keys including player and/or round when applicable.
 
-- Fields in global modal panels should have specific keys set
-- Fields in modal panels tied to players or rounds should have repeatable keys that include the player number and/or round number
+### Player game column (`lib/presentation/player_game/`)
 
-## Widget semantics
+| Function | Key pattern | File |
+| --- | --- | --- |
+| `PlayerGameCell.cellKey(i)` | `p{i}_game_cell` | `player_game_cell.dart` |
+| `PlayerGameCell.nameKey(i)` | `p{i}_name` | `player_game_cell.dart` |
+| `PlayerGameCell.totalScoreKey(i)` | `p{i}_total_score` | `player_game_cell.dart` |
+| `PlayerGameModal.modalKey(i)` | `p{i}_game_modal` | `player_game_modal.dart` |
+| `PlayerGameModal.nameFieldKey(i)` | `p{i}_name_field` | `player_game_modal.dart` |
 
-- Widgets holding player game data should be directly wrapped with semantics or use the semanticlabels on the widgets if available.
-- Widgets on the configuraiton screens should be direclty wrapped with semantics if the widget does not have a semanticlabel property
+### Player round cells and modals (`lib/presentation/player_round/`)
+
+| Function | Key pattern | File |
+| --- | --- | --- |
+| `PlayerRoundCell.cellKey(i, r)` | `p{i}_r{r}_cell` | `player_round_cell.dart` |
+| `PlayerRoundCell.roundCellKey(i, r)` | `p{i}_r{r}_round_cell` | `player_round_cell.dart` |
+| `PlayerRoundCell.scoreKey(i, r)` | `p{i}_r{r}_score` | `player_round_cell.dart` |
+| `PlayerRoundCell.phaseKey(i, r)` | `p{i}_r{r}_phase` | `player_round_cell.dart` |
+| `PlayerRoundModal.modalKey(i, r)` | `p{i}_r{r}_round_modal` | `player_round_modal.dart` |
+| `PlayerRoundModal.scoreFieldKey(i, r)` | `p{i}_r{r}_score_field` | `player_round_modal.dart` |
+| `PlayerRoundModal.phaseDropdownKey(i, r)` | `p{i}_r{r}_phase_dropdown` | `player_round_modal.dart` |
+| `RoundPhaseDropdown.popupButtonKey(i, r)` | (round phase UI) | `round_phase_dropdown.dart` |
+
+### Score table and splash
+
+| Function | File |
+| --- | --- |
+| `ScoreTable.lockRoundKey(round)` | `score_table.dart` |
+| `SplashScreen.continueButtonKey`, `numPlayersDropdownKey`, etc. | `splash_screen.dart` — `const ValueKey` on class |
+| `NewGameControl.cancelButtonKey`, `okButtonKey`, `newGameButtonKey` | `new_game_control.dart` |
+
+### Tests
+
+```dart
+// Correct
+find.byKey(PlayerRoundModal.scoreFieldKey(0, 2));
+
+// Wrong — do not hardcode strings in tests
+find.byKey(const ValueKey('p0_r2_score_field'));
+```
+
+---
+
+## Modal `AlertDialog` behavior
+
+Applies to player/round editors and similar panels with **2–3 fields, dropdowns, or pickers**:
+
+- Set **`scrollable: true`** on `AlertDialog`.
+- **Layout by orientation:** use `MediaQuery.of(context).orientation` — e.g. `Row` in landscape, `Column` in portrait (`PlayerRoundModal`, `PlayerGameModal`, `FrenchDrivingRoundPanel`).
+- Set dialog **`key`** via the modal static function (e.g. `PlayerRoundModal.modalKey(playerIdx, round)`).
+- **Close button is optional** — not required on every alert.
+- Avoid nesting widgets that break **intrinsic dimensions** inside scrollable dialogs (see comment in `live_share_control.dart` for QR in dialog).
+
+Reference implementations: `player_round_modal.dart`, `player_game_modal.dart`.
+
+---
+
+## Semantics
+
+- Widgets holding **player/game data** must expose **`semanticLabel`** or be wrapped in **`Semantics`**.
+- **Configuration screens** (splash): wrap controls in `Semantics` when the widget has no `semanticLabel` property.
+- **`semanticLabel` / `Semantics.label` stay in English** — do not pass through l10n (not shown to users).
+- User-visible titles, tooltips, and field labels **must** use `AppLocalizations`.
+
+Example (`PlayerRoundModal`):
+
+```dart
+AlertDialog(
+  key: PlayerRoundModal.modalKey(widget.playerIdx, widget.round),
+  semanticLabel: 'Player ${widget.playerIdx + 1} Round ${widget.round + 1} Modal',
+  scrollable: true,
+  // ...
+)
+```
+
+---
+
+## Read-only / spectator mode
+
+`PlayerGameCell` and `PlayerRoundCell` accept **`readOnly: true`** — disable taps when spectating live scores. Do not wire spectator edits to host notifiers.
