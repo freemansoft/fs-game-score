@@ -86,6 +86,35 @@ To https://github.com/freemansoft/fs-game-score.git
 Committed and pushed changes and tag to remote.
 ```
 
+## Moving a tag after making changes
+
+Tags the current location and force pushes that tag
+
+```bash
+bash ./tag-push.sh --version 2.0.0 --force --push
+Updated pubspec.yaml to version 2.0.0+258
+CHANGELOG.md already contains section for version 2.0.0.
+[main 1faf124] chore: bump version to 2.0.0+258
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Force-tagged repository with 2.0.0+258
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 306 bytes | 306.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/freemansoft/fs-game-score.git
+   4ff8275..1faf124  main -> main
+Enumerating objects: 1, done.
+Counting objects: 100% (1/1), done.
+Writing objects: 100% (1/1), 169 bytes | 169.00 KiB/s, done.
+Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/freemansoft/fs-game-score.git
+ * [new tag]         2.0.0+258 -> 2.0.0+258
+Committed and pushed changes and tag to remote.
+```
+
 ---
 
 ## Before tagging
