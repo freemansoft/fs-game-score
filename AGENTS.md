@@ -31,14 +31,6 @@ This project uses **FVM** (Flutter Version Management) to manage the Flutter SDK
 > [!WARNING]
 > Running commands without the `fvm` prefix can cause compilation issues, version mismatch errors, or corrupt the local build cache due to using a different system-installed Flutter version than the one specified in `.fvmrc`.
 
-### Release tagging
-
-```bash
-./tag-push.sh --version <major.minor.patch> [--push] [--force]
-```
-
-The `+<build_id>` suffix in `pubspec.yaml` is **auto-calculated** from `git rev-list --count HEAD` (no `--build-id` flag). Optional flags: `--push` (commit/tag push to remote), `--force` (overwrite existing tag / pubspec version). Updates `pubspec.yaml` and prepends a `CHANGELOG.md` section.
-
 ---
 
 ## Repository layout
@@ -133,6 +125,7 @@ Cursor and Antigravity auto-discover skills in [`.agents/skills/`](.agents/skill
 | `fs-game-score-flutter-patterns` | General Flutter/Riverpod UI work |
 | `fs-game-score-testing-workflow` | Tests, widget keys in tests, accessibility |
 | `fs-game-score-live-sync` | LAN live sharing (host/spectator, protocol, join UI) |
+| `release-engineer` | Version tagging, `tag-push.sh`, CHANGELOG/pubspec release bumps |
 | `release-flutter-upgrade-sdk` | Flutter/Dart SDK upgrades (FVM, CI, changelogs) |
 
 Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests, widget tests, l10n, routing, etc.).
@@ -142,7 +135,7 @@ Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests,
 ## When to ask for clarification
 
 * If a requested change affects persistence, tests, or widget keys — ask before changing keys or test selectors.
-* For changes to project configuration (Flutter version, build system, or CI), ask for confirmation and explain migration steps and compatibility risks.
+* For release tagging or version bumps, use the **`release-engineer`** skill. For Flutter version, build system, or CI changes, use **`release-flutter-upgrade-sdk`** and ask for confirmation before migrating.
 
 ---
 
@@ -155,6 +148,7 @@ Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests,
 | Persistence & splash | [game_repository.dart](lib/data/game_repository.dart), [players_repository.dart](lib/data/players_repository.dart), [splash_screen.dart](lib/presentation/splash_screen.dart) |
 | Docs | [State-Management.md](docs/State-Management.md), [Game-Sync.md](docs/Game-Sync.md) |
 | Tests | `integration_test/*_test.dart`, [app_test_helpers.dart](integration_test/app_test_helpers.dart) |
-| Project skills | `.agents/skills/fs-game-score-*/SKILL.md`, [release-flutter-upgrade-sdk](.agents/skills/release-flutter-upgrade-sdk/SKILL.md) |
+| Project skills | `.agents/skills/fs-game-score-*/SKILL.md`, [release-engineer](.agents/skills/release-engineer/SKILL.md), [release-flutter-upgrade-sdk](.agents/skills/release-flutter-upgrade-sdk/SKILL.md) |
+| Release | [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md) |
 
 Thank you for building responsibly!
