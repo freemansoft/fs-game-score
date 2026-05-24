@@ -1,8 +1,11 @@
 import 'package:data_table_2/data_table_2.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fs_score_card/data/players_repository.dart';
+import 'package:fs_score_card/l10n/app_localizations_en.dart';
 import 'package:fs_score_card/main.dart' as app;
+import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/splash_screen.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,6 +70,55 @@ Future<void> waitForSplashReady(WidgetTester tester) async {
 /// Waits until the score table is mounted after navigation from splash.
 Future<void> waitForScoreTable(WidgetTester tester) async {
   await pumpUntilFound(tester, find.byType(DataTable2));
+  await pumpUntilFound(tester, find.byKey(NewScoreCardControl.iconButtonKey));
+}
+
+/// Taps [NewScoreCardControl.iconButtonKey], opening the AppBar overflow menu when
+/// the icon is clipped on narrow devices (e.g. Android CI `medium_phone`).
+Future<void> tapNewScoreCardControlIconButton(WidgetTester tester) async {
+  final iconButton = find.byKey(NewScoreCardControl.iconButtonKey);
+  await pumpUntilFound(tester, iconButton);
+
+  if (_isDirectlyTappable(tester, iconButton)) {
+    await tester.tap(iconButton);
+    await tester.pumpAndSettle();
+    return;
+  }
+
+  final overflowMenu = find.byIcon(Icons.more_vert);
+  if (!tester.any(overflowMenu)) {
+    await tester.ensureVisible(iconButton);
+    await tester.pumpAndSettle();
+    await tester.tap(iconButton);
+    await tester.pumpAndSettle();
+    return;
+  }
+
+  await tester.tap(overflowMenu);
+  await tester.pumpAndSettle();
+
+  final tooltip = AppLocalizationsEn().newGameChangeScorecardType;
+  final overflowItem = find.byTooltip(tooltip);
+  if (tester.any(overflowItem)) {
+    await tester.tap(overflowItem);
+  } else {
+    await tester.tap(find.text(tooltip));
+  }
+  await tester.pumpAndSettle();
+}
+
+bool _isDirectlyTappable(WidgetTester tester, Finder finder) {
+  if (!tester.any(finder)) {
+    return false;
+  }
+  final size = tester.getSize(finder);
+  if (size.width < 8 || size.height < 8) {
+    return false;
+  }
+  final center = tester.getCenter(finder);
+  final viewWidth =
+      tester.view.physicalSize.width / tester.view.devicePixelRatio;
+  return center.dx >= 0 && center.dx <= viewWidth;
 }
 
 /// `launchApp`, splash Continue visibility, and [waitForSplashReady].

@@ -65,7 +65,8 @@ Helpers: **`integration_test/app_test_helpers.dart`**
 | `await launchApp(tester)` | **`await bootstrapApp()`** — never unawaited `main()` |
 | `await launchAppOnSplash(tester)` | Launch + splash Continue + `waitForSplashReady` |
 | `waitForSplashReady(tester)` | Await splash `prepareForSplashEntry` before Continue |
-| `waitForScoreTable(tester)` | Poll until `DataTable2` after score-table navigation |
+| `waitForScoreTable(tester)` | Poll until `DataTable2` and app bar new-scorecard control |
+| `tapNewScoreCardControlIconButton(tester)` | Tap home icon; uses AppBar overflow on narrow screens |
 | `pumpUntilFound(tester, finder)` | Slow emulators |
 | `waitForSplashPlayersCleared(tester)` | After navigating to splash — coalesced persist race |
 

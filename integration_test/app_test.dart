@@ -336,10 +336,7 @@ void main() {
       expect(find.byType(NewScoreCardControl), findsOneWidget);
 
       // Click the icon button to show the confirmation dialog
-      final iconButton = find.byKey(NewScoreCardControl.iconButtonKey);
-      expect(iconButton, findsOneWidget);
-      await tester.tap(iconButton);
-      await tester.pumpAndSettle();
+      await tapNewScoreCardControlIconButton(tester);
 
       // Verify the dialog is displayed
       expect(find.byType(AlertDialog), findsOneWidget);
@@ -425,9 +422,7 @@ void main() {
     await waitForScoreTable(tester);
 
     // Click the icon button to show the confirmation dialog
-    final iconButton = find.byKey(NewScoreCardControl.iconButtonKey);
-    await tester.tap(iconButton);
-    await tester.pumpAndSettle();
+    await tapNewScoreCardControlIconButton(tester);
 
     // Click the cancel button
     final cancelButton = find.byKey(NewScoreCardControl.cancelButtonKey);
@@ -794,9 +789,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Click "New Score Card" button
-      final iconButton = find.byKey(NewScoreCardControl.iconButtonKey);
-      await tester.tap(iconButton);
-      await tester.pumpAndSettle();
+      await tapNewScoreCardControlIconButton(tester);
 
       // Confirm "Change Scorecard"
       final changeScorecardButton = find.byKey(

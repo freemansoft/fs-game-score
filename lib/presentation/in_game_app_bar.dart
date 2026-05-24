@@ -9,15 +9,17 @@ import 'package:fs_score_card/presentation/share_game_control.dart';
 class InGameAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const InGameAppBar({super.key});
 
+  static const double _toolbarHeight = 40;
+
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(_toolbarHeight);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
       title: Text(AppLocalizations.of(context)!.scores),
       actionsPadding: const EdgeInsets.only(right: 12),
-      toolbarHeight: 40,
+      toolbarHeight: _toolbarHeight,
       actions: const [
         NewScoreCardControl(),
         NewGameControl(),
