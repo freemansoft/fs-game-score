@@ -180,7 +180,8 @@ Release builds can be created from the command line individually for each platfo
       1. `flutter build apk --target-platform android-arm64`
       2. The parameter `android-arm64` makes it a single target binary and drops the size from 23MB to 8MB. There aren't any interesting x86 android devices anyway.
    2. Share `build/app/outputs/apk/release/fs_score_card-v<release>-release.apk` to devices. This can be done by emailing or by pushing the apk to a shared storage
-      1. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
+      1. This is the version copied to new [releases on GitHub](https://github.com/freemansoft/fs-game-score/releases)
+      2. You can share the generic named apk from `build/outputs/flutter-apk/app-release.apk` There should be an associated `sha` file there.
 
 Android build notes:
 Android APKs end up built in two places. [Stack Overflow](https://stackoverflow.com/questions/62910148/flutter-what-is-the-difference-between-the-apk-release-directory-and-flutter-ap)
@@ -350,11 +351,11 @@ Files are located in [GitHub workflows](./.github/workflows).
 2. <https://developer.android.com/build/releases/gradle-plugin>
 3. <https://developer.android.com/build/releases/past-releases>
 
-### Icons
+### Application Icons
 
-Android and iOS icons generated using the [appicon.co App Icon Generator](https://www.appicon.co/). The resulting icon is in `/assets/logos`. All icons are derived from this 1024×1024 image.
+The application icon was creatd using [appicon.co App Icon Generator](https://www.appicon.co/). The resulting icon is in [flutter-phone-score.png](/assets/logos/flutter-phone-score.png). All Android and iOS icons are derived from this 1024×1024 image.
 
-Use [flutter_launcher_icons](https://github.com/fluttercommunity/flutter_launcher_icons) to change the icons for all targets. `flutter_launcher_icons` configuration is in [pubspec.yaml](/pubspec.yaml).
+This single icon was resized and mapped to all applicaton icons using [flutter_launcher_icons](https://github.com/fluttercommunity/flutter_launcher_icons) for all target platforms. `flutter_launcher_icons` configuration is in [pubspec.yaml](/pubspec.yaml).
 
 ```bash
 dart run flutter_launcher_icons

@@ -6,10 +6,14 @@
 OS="$(uname)"
 echo "Detected OS: $OS"
 
+# Enable alias expansion
+shopt -s expand_aliases
+alias flutter="fvm flutter"
+alias dart="fvm dart"
 if [[ "$OS" == "Darwin" ]]; then
   echo "Running macOS build steps..."
 
-  echo "Cleaning..."
+  echo "Cleaning previous build artifacts..."
   flutter clean
 
   echo "Building Android APK..."
@@ -36,7 +40,7 @@ elif [[ "$OSTYPE" == "linux-gnu" || "$OS" =~ MINGW.* || "$OS" =~ CYGWIN.* || "$O
   echo "Building Android APK..."
   flutter build apk --target-platform android-arm64
 
-  echo "Building Web..."
+  echo "Building Web for distribution on freemansoft.com..."
   flutter build web --base-href=/freemans-score-card/
 
   echo "Building Windows..."

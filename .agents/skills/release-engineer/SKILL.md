@@ -36,7 +36,7 @@ The script updates `pubspec.yaml`, prepends a `CHANGELOG.md` section when missin
 commits `chore: bump version to <version>+<build_id>`, and creates tag
 `<version>+<build_id>`.
 
-### Local only
+### Local only tagging
 
 Set the version locally and edit local files:
 
@@ -49,7 +49,7 @@ bash ./tag-push.sh --version 2.0.0
 - Tags local repository to the version in pubspec.yaml
 - Does not push to remote
 
-### Local and push to remote
+### Local tagging and push code and tag to remote
 
 ```bash
 bash ./tag-push.sh --version 2.0.0 --push
@@ -61,7 +61,7 @@ bash ./tag-push.sh --version 2.0.0 --push
 - Pushes changes to remote
 - Pushes tag to the remote
 
-## Moving a tag after making changes
+## Moving an exisiting tag after making changes
 
 Tags the current location and force pushes that tag
 
@@ -86,13 +86,28 @@ bash ./tag-push.sh --version 2.0.0 --force --push
 
 ## Creating Distributable Artifacts
 
-| Platform | Shell              | Script                                               | Artifacts                |
-| -------- | ------------------ | ---------------------------------------------------- | ------------------------ |
-| Windows  | Powershell         | [/build-distributable.ps1](/build-distributable.ps1) | Android, Web and Windows |
-| Windows  | Cygwin or Git Bash | [/build-distributable.sh](/build-distributable.sh)   | Android, Web and Windows |
-| Mac      | bash or zsh        | [/build-distributable.sh](/build-distributable.sh)   | Android, iOS, MacOS, Web |
-| Linux    | bash or zsh        | [/build-distributable.sh](/build-distributable.sh)   | Android, Web             |
+Release packages can be built on different platforms.
 
-### Publishing artifacts
+| Build Platform | Shell              | Script                                               | Release Artifacts                         |
+| -------------- | ------------------ | ---------------------------------------------------- | ----------------------------------------- |
+| Windows        | Powershell         | [/build-distributable.ps1](/build-distributable.ps1) | Android, Web and Windows                  |
+| Windows        | Cygwin or Git Bash | [/build-distributable.sh](/build-distributable.sh)   | Android, Web and Windows                  |
+| Mac            | bash or zsh        | [/build-distributable.sh](/build-distributable.sh)   | Android, iOS iPhone, iOS iPad, MacOS, Web |
+| Linux          | bash or zsh        | [/build-distributable.sh](/build-distributable.sh)   | Android, Web                              |
+
+### Deployment Targets and Distribution Paths
+
+| Platform   | Target                                                                                                   | Notes                       |
+| ---------- | -------------------------------------------------------------------------------------------------------- | --------------------------- |
+| Android    | [Github releases](https://github.com/freemansoft/fs-game-score/releases)                                 | Play Store not supported    |
+| iOS iPhone | [Apple iOS iPhone App Store](https://apps.apple.com/us/app/freemans-score-card/id6755344139)             | .                           |
+| iOS iPad   | [Apple iOS iPad App Store](https://apps.apple.com/us/app/freemans-score-card/id6755344139?platform=ipad) | .                           |
+| macOS      | [Apple Mac App Store](https://apps.apple.com/us/app/freemans-score-card/id6755344139?platform=mac)       | .                           |
+| Web        | [freemansoft.com](https://freemansoft.com/freemans-score-card/)                                          | .                           |
+| Windows    | [Github releases](https://github.com/freemansoft/fs-game-score/releases)                                 | Windows store not supported |
+
+GitHub releases is the release area for the source repo. A new Release is created on GitHub for every release tag.
+
+## Publishing Artifacts
 
 There are no tools or scripts currently for publishing artifacts
