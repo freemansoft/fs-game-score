@@ -219,13 +219,13 @@ Standalone testing is driven through [Apple store connect](https://appstoreconne
 
 Alternatively - use the xcode archive route like we do for macOS
 
-1. `flutter build ipa --release` to build the ios app and copy info from `pubspec.yaml` into the xcode iOS files
+1. `flutter build ipa --release` to build the ios app and copy info from [pubspec.yaml](/pubspec.yaml) into the xcode iOS files
 2. Open the `ios` project in XCode. This opens the iOS target of the Flutter project
 3. `Product > Archive`
 4. `Validate App` --> `Validate`
 5. `Distribute App` --> `App Store Connect`
 
-Validate the version number and build ID on the splash screen. It should match the value in `pubspec.yaml`. The version number for all platforms is set in `pubspec.yaml`.
+Validate the version number and build ID on the splash screen. It should match the value in [pubspec.yaml](/pubspec.yaml). The version number for all platforms is set in [pubspec.yaml](/pubspec.yaml).
 
 #### MacOS builds
 
@@ -235,14 +235,14 @@ You can test this locally using the IDE on a Mac
 
 MacOS builds are separate from iOS builds and must be uploaded to the store separately. Follow <https://docs.flutter.dev/deployment/macos>
 
-1. `flutter build macos --release` to build the project and copy the `pubspec.yaml` into the xcode macOS files
+1. `flutter build macos --release` to build the project and copy the [pubspec.yaml](/pubspec.yaml)
 2. Open the `macOS` directory in XCode. This opens the MacOS target of the Flutter project.
    1. XCode `Product > Archive` it will build an archive
    2. A new XCode window will pop up
    3. XCode `Validate App` --> `Validate`
    4. XCode `Distribute App` --> `App Store Connect`
 
-Validate the version number and build ID on the splash screen. It should match the value in `pubspec.yaml`. The version number for all platforms is set in `pubspec.yaml`.
+Validate the version number and build ID on the splash screen. It should match the value in [pubspec.yaml](/pubspec.yaml). The version number for all platforms is set in [pubspec.yaml](/pubspec.yaml).
 
 To release macOS after TestFlight. This works for iOS also
 
@@ -354,7 +354,7 @@ Files are located in [GitHub workflows](./.github/workflows).
 
 Android and iOS icons generated using the [appicon.co App Icon Generator](https://www.appicon.co/). The resulting icon is in `/assets/logos`. All icons are derived from this 1024×1024 image.
 
-Use [flutter_launcher_icons](https://github.com/fluttercommunity/flutter_launcher_icons) to change the icons for all targets. `flutter_launcher_icons` configuration is in `pubspec.yaml`.
+Use [flutter_launcher_icons](https://github.com/fluttercommunity/flutter_launcher_icons) to change the icons for all targets. `flutter_launcher_icons` configuration is in [pubspec.yaml](/pubspec.yaml).
 
 ```bash
 dart run flutter_launcher_icons
@@ -362,12 +362,14 @@ dart run flutter_launcher_icons
 
 ### Creating a release tag
 
-`tag-push.sh` auto generates the <build_id> portion of the version number from the GitHub MAIN branch commit count
+[tag-push.sh](/tag-push.sh) auto generates the <build_id> portion of the version number from the GitHub MAIN branch commit count
 
-- Create a tag, update the pubspec.yaml update the CHANGELOG to add the new release
+- Create a local tag, update the [pubspec.yaml](/pubspec.yaml) update the [CHANGELOG.md](/CHANGELOG.md) to add the new release
+  - `bash tag-push.sh --version <major.minor.patch>`
+- Force move a local tag, update the [pubspec.yaml](/pubspec.yaml) update the [CHANGELOG.md](/CHANGELOG.md) to add the new release
   - `bash tag-push.sh --version <major.minor.patch> --force`
-- Edit the CHANGELOG.md updating the new section to include the changes you want
-- Commit the changelog and the pubspec.yaml and push the tags, changelog and pubspec.yaml to the remote server
+- Edit the [CHANGELOG.md](/CHANGELOG.md) updating the new section to include the changes you want
+- Commit the [CHANGELOG.md](/CHANGELOG.md) and the [pubspec.yaml](/pubspec.yaml) and push the tags, [CHANGELOG.md](/CHANGELOG.md) and [pubspec.yaml](/pubspec.yaml) to the remote server
   - `bash tag-push.sh --version <major.minor.patch> --force --push`
 
 ### Tag management hints
