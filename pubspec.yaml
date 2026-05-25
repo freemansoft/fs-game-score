@@ -29,10 +29,10 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # This is something to be picked up with future automation - CI/CD
 # Both the version and the build number can be overridden in Flutter's build by specifying --build-name and --build-number, respectively.
 #
-version: 2.0.0+258
+version: 2.0.0+265
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.12.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -82,6 +82,9 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   generate: true
+  config:
+    enable-swift-package-manager: true
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

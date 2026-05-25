@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replace player-state save debounce with coalesced single-flight persist in `PlayersNotifier` (better crash recovery, serialized writes)
 - Rework Riverpod to follow recommended practices: `sharedPreferencesProvider`, repository providers, and separate `gameSyncHostProvider` / `gameSyncSpectatorProvider` for live sync (see [docs/Game-Sync.md](docs/Game-Sync.md))
 - Use `Player` as an immutable data object
+- Require Dart SDK ^3.12.0 and Flutter 3.44.0 (FVM pin; CI workflows aligned)
+- Migrated to Swift Dependency Package Manager and removed Cocoapods dependencies
 - Updated dependencies to support Flutter 3.41.2 and Dart 3.11.0 (including bonsoir, shelf WebSocket, QR, and mobile scanner for live sync)
 - Unit tests for live sync protocol, snapshot mapper, QR URL parsing, and platform capability flags
 - Fixed Android Gradle Kotlin plugin application so the bonsoir Android library builds correctly
