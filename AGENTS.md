@@ -146,7 +146,7 @@ Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests,
 | Widget key helpers | [player_round_modal.dart](lib/presentation/player_round/player_round_modal.dart), [player_game_cell.dart](lib/presentation/player_game/player_game_cell.dart), [player_round_cell.dart](lib/presentation/player_round/player_round_cell.dart) |
 | Providers | [prefs_provider.dart](lib/provider/prefs_provider.dart), [game_provider.dart](lib/provider/game_provider.dart), [players_provider.dart](lib/provider/players_provider.dart) |
 | Persistence & splash | [game_repository.dart](lib/data/game_repository.dart), [players_repository.dart](lib/data/players_repository.dart), [splash_screen.dart](lib/presentation/splash_screen.dart) |
-| Docs | [State-Management.md](docs/State-Management.md), [Game-Sync.md](docs/Game-Sync.md) |
+| Docs | [State-Management.md](docs/State-Management.md), [Game-Sync.md](docs/Game-Sync.md), [Live-Score-Sharing-Design.md](docs/Live-Score-Sharing-Design.md) |
 | Tests | `integration_test/*_test.dart`, [app_test_helpers.dart](integration_test/app_test_helpers.dart) |
 | Project skills | `.agents/skills/fs-game-score-*/SKILL.md`, [release-flutter-upgrade-sdk](.agents/skills/release-flutter-upgrade-sdk/SKILL.md) |
 | Release | [fs-game-score-release-engineer](.agents/skills/fs-game-score-release-engineer/SKILL.md), [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md) |
