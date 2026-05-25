@@ -39,7 +39,7 @@ while [[ $# -gt 0 ]]; do
     --force)
       FORCE=true
       ;;
-    --help)ls
+    --help)
       usage
       ;;
     *)

@@ -141,10 +141,10 @@
       "sourceType": "project",
       "skillPath": ".agents/skills/fs-game-score-widgets-holding-player-game-data/SKILL.md"
     },
-    "release-engineer": {
+    "fs-game-score-release-engineer": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/release-engineer/SKILL.md"
+      "skillPath": ".agents/skills/fs-game-score-release-engineer/SKILL.md"
     },
     "release-flutter-upgrade-sdk": {
       "source": "local",

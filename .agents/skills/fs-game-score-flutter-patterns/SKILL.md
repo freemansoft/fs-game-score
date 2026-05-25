@@ -7,11 +7,11 @@ description: >
 
 # FS Score Card — Flutter patterns
 
-Project-specific implementation patterns. Full architecture: [docs/State-Management.md](../../../docs/State-Management.md).
+Project-specific implementation patterns. Full architecture: [docs/State-Management.md](/docs/State-Management.md).
 
 **Related skills:** `fs-game-score-widgets-holding-player-game-data` (keys/semantics/modals), `fs-game-score-live-sync` (LAN sharing), `fs-game-score-testing-workflow` (tests).
 
-Always prefix Flutter/Dart commands with **`fvm`** per [AGENTS.md](../../../AGENTS.md).
+Always prefix Flutter/Dart commands with **`fvm`** per [AGENTS.md](/AGENTS.md).
 
 ---
 

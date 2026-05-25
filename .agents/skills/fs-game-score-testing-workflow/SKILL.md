@@ -7,9 +7,9 @@ description: >
 
 # FS Score Card — Testing and accessibility
 
-See [docs/State-Management.md — Integration and widget testing](../../../docs/State-Management.md#integration-and-widget-testing).
+See [docs/State-Management.md — Integration and widget testing](/docs/State-Management.md#integration-and-widget-testing).
 
-Always run tests with **`fvm flutter test`** per [AGENTS.md](../../../AGENTS.md).
+Always run tests with **`fvm flutter test`** per [AGENTS.md](/AGENTS.md).
 
 ---
 
@@ -72,7 +72,7 @@ Helpers: **`integration_test/app_test_helpers.dart`**
 
 ### Splash player clear
 
-After **New Score Card** or back to splash, assert cleared roster with **`waitForSplashPlayersCleared(tester)`** — not a raw prefs read immediately after `pumpAndSettle`. See [State-Management.md — Splash entry and coalesced persist race](../../../docs/State-Management.md#splash-entry-and-coalesced-persist-race).
+After **New Score Card** or back to splash, assert cleared roster with **`waitForSplashPlayersCleared(tester)`** — not a raw prefs read immediately after `pumpAndSettle`. See [State-Management.md — Splash entry and coalesced persist race](/docs/State-Management.md#splash-entry-and-coalesced-persist-race).
 
 ---
 
@@ -101,7 +101,7 @@ gameSyncTransportFactoryProvider.overrideWith(
 
 `FakeGameSyncTransport` — `lib/sync/fake_game_sync_transport.dart`. Toggle `pinAccepted`, `appVersionAccepted`, `expectedHostAppVersion`.
 
-Details: **`fs-game-score-live-sync`**, [docs/Game-Sync.md](../../../docs/Game-Sync.md).
+Details: **`fs-game-score-live-sync`**, [docs/Game-Sync.md](/docs/Game-Sync.md).
 
 ---
 

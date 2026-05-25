@@ -125,7 +125,7 @@ Cursor and Antigravity auto-discover skills in [`.agents/skills/`](.agents/skill
 | `fs-game-score-flutter-patterns` | General Flutter/Riverpod UI work |
 | `fs-game-score-testing-workflow` | Tests, widget keys in tests, accessibility |
 | `fs-game-score-live-sync` | LAN live sharing (host/spectator, protocol, join UI) |
-| `release-engineer` | Version tagging, `tag-push.sh`, CHANGELOG/pubspec release bumps |
+| `fs-game-score-release-engineer` | Version tagging, builds, CHANGELOG, store release notes |
 | `release-flutter-upgrade-sdk` | Flutter/Dart SDK upgrades (FVM, CI, changelogs) |
 
 Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests, widget tests, l10n, routing, etc.).
@@ -135,7 +135,7 @@ Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests,
 ## When to ask for clarification
 
 - If a requested change affects persistence, tests, or widget keys — ask before changing keys or test selectors.
-- For release tagging or version bumps, use the **`release-engineer`** skill. For Flutter version, build system, or CI changes, use **`release-flutter-upgrade-sdk`** and ask for confirmation before migrating.
+- For release tagging or version bumps, use the **`fs-game-score-release-engineer`** skill. For Flutter version, build system, or CI changes, use **`release-flutter-upgrade-sdk`** and ask for confirmation before migrating.
 
 ---
 
@@ -148,7 +148,7 @@ Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests,
 | Persistence & splash | [game_repository.dart](lib/data/game_repository.dart), [players_repository.dart](lib/data/players_repository.dart), [splash_screen.dart](lib/presentation/splash_screen.dart) |
 | Docs | [State-Management.md](docs/State-Management.md), [Game-Sync.md](docs/Game-Sync.md) |
 | Tests | `integration_test/*_test.dart`, [app_test_helpers.dart](integration_test/app_test_helpers.dart) |
-| Project skills | `.agents/skills/fs-game-score-*/SKILL.md`, [release-engineer](.agents/skills/release-engineer/SKILL.md), [release-flutter-upgrade-sdk](.agents/skills/release-flutter-upgrade-sdk/SKILL.md) |
-| Release | [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md) |
+| Project skills | `.agents/skills/fs-game-score-*/SKILL.md`, [release-flutter-upgrade-sdk](.agents/skills/release-flutter-upgrade-sdk/SKILL.md) |
+| Release | [fs-game-score-release-engineer](.agents/skills/fs-game-score-release-engineer/SKILL.md), [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md) |
 
 Thank you for building responsibly!

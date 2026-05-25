@@ -9,9 +9,9 @@ description: >
 
 View-only LAN score sharing. **Host** owns real state in `gameNotifierProvider` / `playersNotifierProvider`. **Spectator** mirrors wire snapshots in `gameSyncSpectatorProvider` — **never** writes prefs or host notifiers.
 
-Full reference: [docs/Game-Sync.md](../../../docs/Game-Sync.md). State overview: [State-Management.md — Live score sync](../../../docs/State-Management.md#live-score-sync-lan-v1).
+Full reference: [docs/Game-Sync.md](/docs/Game-Sync.md). State overview: [State-Management.md — Live score sync](/docs/State-Management.md#live-score-sync-lan-v1).
 
-Always use **`fvm flutter`** per [AGENTS.md](../../../AGENTS.md).
+Always use **`fvm flutter`** per [AGENTS.md](/AGENTS.md).
 
 ---
 
