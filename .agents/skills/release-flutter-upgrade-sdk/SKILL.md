@@ -13,17 +13,16 @@ Follow this procedure when upgrading the Flutter and Dart SDK versions used in t
 
 FVM is the source of truth for the local development environment.
 
-- Run `fvm install <new-flutter-version>` (e.g., `fvm install 3.41.2`) in the root of the repository if the new target version of flutter is not already installed.
-- Run `fvm use <new-flutter-version>` (e.g., `fvm use 3.41.2`) in the root of the repository.
+- Run `fvm install <new-flutter-version>` (e.g., `fvm install 3.44.0`) in the root of the repository if the new target version of flutter is not already installed.
+- Run `fvm use <new-flutter-version>` (e.g., `fvm use 3.44.0`) in the root of the repository.
 - Verify that `.fvm/fvm_config.json` has been updated with the new version.
 
 ## 2. Update CI/CD Workflows
 
 The GitHub Actions workflows must use the exact same Flutter version as FVM to prevent CI drifts.
 
-- Open `.github/workflows/test.yml`.
-- Locate the `subosito/flutter-action` step.
-- Update the `flutter-version:` parameter to match the new FVM version exactly.
+- Search `.github/workflows/` for `subosito/flutter-action` (this repo uses platform integration workflows, e.g. `android_integration_test.yaml`, `ios_integration_test.yaml`, `macos_integration_test.yaml`, `windows_integration_test.yaml`).
+- Update every `flutter-version:` parameter to match the new FVM version exactly.
 
 ## 3. Update Package `pubspec.yaml` Files
 

@@ -36,14 +36,17 @@ void main() {
       prefs = await SharedPreferences.getInstance();
       await prefs.clear();
       recordingRepository = _RecordingPlayersRepository(prefs);
-      container = ProviderContainer(
-        overrides: [
-          sharedPreferencesProvider.overrideWithValue(prefs),
-          playersRepositoryProvider.overrideWithValue(recordingRepository),
-        ],
-      )
-        ..read(gameNotifierProvider)
-        ..read(playersNotifierProvider);
+      container =
+          ProviderContainer(
+              overrides: [
+                sharedPreferencesProvider.overrideWithValue(prefs),
+                playersRepositoryProvider.overrideWithValue(
+                  recordingRepository,
+                ),
+              ],
+            )
+            ..read(gameNotifierProvider)
+            ..read(playersNotifierProvider);
     });
 
     tearDown(() {
