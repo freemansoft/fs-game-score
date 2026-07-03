@@ -210,7 +210,7 @@ class _JoinLiveGameScreenState extends ConsumerState<JoinLiveGameScreen> {
                 ...spectatorState.discoveredHosts.map((host) {
                   return Semantics(
                     button: true,
-                    label: 'Join ${host.name}',
+                    label: l10n.joinHostLabel(host.name),
                     child: ListTile(
                       key: ValueKey('discovered_host_${host.name}'),
                       title: Text(host.name),

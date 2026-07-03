@@ -38,6 +38,7 @@ class Phase10App extends ConsumerWidget {
       supportedLocales: const [
         Locale('en'), // English
         Locale('es'), // Spanish
+        Locale('fr'), // French
       ],
       routerConfig: router,
       //debugShowCheckedModeBanner: false,

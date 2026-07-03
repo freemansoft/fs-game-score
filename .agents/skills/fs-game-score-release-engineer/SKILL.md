@@ -8,17 +8,17 @@ description: >
 
 # FS Score Card — Release engineer
 
-Always use **`fvm`** for Flutter/Dart commands per [AGENTS.md](/AGENTS.md).
+Always use **`fvm`** for Flutter/Dart commands per [AGENTS.md](../../../AGENTS.md).
 
 For **Flutter/Dart SDK upgrades** (FVM, CI workflows, pubspec constraints), use
 **`release-flutter-upgrade-sdk`**
 ([SKILL.md](../release-flutter-upgrade-sdk/SKILL.md)).
 
-Scripts at repository root: [tag-push.sh](/tag-push.sh),
-[build-distributable.sh](/build-distributable.sh),
-[build-distributable.ps1](/build-distributable.ps1).
+Scripts at repository root: [tag-push.sh](../../../tag-push.sh),
+[build-distributable.sh](../../../build-distributable.sh),
+[build-distributable.ps1](../../../build-distributable.ps1).
 
-Store assets: [app_store/](/app_store/) (per-platform READMEs).
+Store assets: [app_store/](../../../app_store/) (per-platform READMEs).
 
 ---
 
@@ -94,19 +94,19 @@ If the version section already exists, the script leaves it unchanged.
 ## Creating distributable artifacts
 
 Release packages are built on the **host OS** that owns each target toolchain.
-See also [README.md — Build and Test](/README.md).
+See also [README.md — Build and Test](../../../README.md).
 
 | Host OS | Shell      | Script                                                      | Targets built                                                  |
 | ------- | ---------- | ----------------------------------------------------------- | -------------------------------------------------------------- |
-| macOS   | bash / zsh | [build-distributable.sh](/build-distributable.sh)   | Android APK, Web, iOS IPA, macOS                               |
-| Windows | PowerShell | [build-distributable.ps1](/build-distributable.ps1) | Android APK, Web, Windows, MSIX                                |
-| Windows | Git Bash   | [build-distributable.sh](/build-distributable.sh)   | **Unreliable** — script header notes Git Bash is not supported |
+| macOS   | bash / zsh | [build-distributable.sh](../../../build-distributable.sh)   | Android APK, Web, iOS IPA, macOS                               |
+| Windows | PowerShell | [build-distributable.ps1](../../../build-distributable.ps1) | Android APK, Web, Windows, MSIX                                |
+| Windows | Git Bash   | [build-distributable.sh](../../../build-distributable.sh)   | **Unreliable** — script header notes Git Bash is not supported |
 
 `build-distributable.sh` uses `fvm` aliases on macOS. `build-distributable.ps1`
 calls `flutter` / `dart` directly — prefer running from an FVM-enabled shell or
 prefix commands with `fvm` manually.
 
-Linux is **not** a supported release host in [README.md](/README.md)
+Linux is **not** a supported release host in [README.md](../../../README.md)
 (Linux row: not tested). Do not rely on `build-distributable.sh` on Linux for
 production releases.
 
@@ -134,7 +134,7 @@ and Windows MSIX/exe is manual (no publish script).
 App Store Connect requires screenshots per form factor, light and dark where
 applicable. See [App Store Screen Shot Recommendations](https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/) Reference sizes and simulators down below. Screen shots can be taken on the Mac with `File -> Save Screen` in the simulator menu
 
-Simulators can't run in release mode so disable the debug mode banner when running in development mode `debugShowCheckedModeBanner: false` in [main.dart](/lib/main.dart)
+Simulators can't run in release mode so disable the debug mode banner when running in development mode `debugShowCheckedModeBanner: false` in [main.dart](../../../lib/main.dart)
 
 ### Image sizes
 

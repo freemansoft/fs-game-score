@@ -79,15 +79,16 @@ Reference implementations: `player_round_modal.dart`, `player_game_modal.dart`.
 
 - Widgets holding **player/game data** must expose **`semanticLabel`** or be wrapped in **`Semantics`**.
 - **Configuration screens** (splash): wrap controls in `Semantics` when the widget has no `semanticLabel` property.
-- **`semanticLabel` / `Semantics.label` stay in English** — do not pass through l10n (not shown to users).
-- User-visible titles, tooltips, and field labels **must** use `AppLocalizations`.
+- **`semanticLabel` / `Semantics.label` / `Text(semanticsLabel:)` are read aloud by screen readers, so they ARE user-facing and MUST be localized** — never hardcode them. Use a `*Label`-suffixed key (e.g. `playerGameModalLabel`) and pass runtime values as placeholders. See the Localization section in **`fs-game-score-flutter-patterns`**.
+- All user-visible strings — titles, tooltips, field labels, and semantics labels — **must** use `AppLocalizations`.
 
 Example (`PlayerRoundModal`):
 
 ```dart
 AlertDialog(
   key: PlayerRoundModal.modalKey(widget.playerIdx, widget.round),
-  semanticLabel: 'Player ${widget.playerIdx + 1} Round ${widget.round + 1} Modal',
+  semanticLabel: AppLocalizations.of(context)!
+      .playerGameModalLabel(widget.playerIdx + 1),
   scrollable: true,
   // ...
 )

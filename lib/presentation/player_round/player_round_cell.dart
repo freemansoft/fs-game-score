@@ -88,7 +88,9 @@ class PlayerRoundCell extends StatelessWidget {
               color: enabled ? null : Theme.of(context).disabledColor,
             ),
             textAlign: TextAlign.center,
-            semanticsLabel: 'Player ${playerIdx + 1} round ${round + 1} score',
+            semanticsLabel: AppLocalizations.of(
+              context,
+            )!.playerRoundScoreLabel(playerIdx + 1, round + 1),
           ),
           if (gameMode == GameMode.phase10) ...[
             const SizedBox(height: 2),
@@ -103,8 +105,9 @@ class PlayerRoundCell extends StatelessWidget {
                     : Theme.of(context).disabledColor,
               ),
               textAlign: TextAlign.center,
-              semanticsLabel:
-                  'Player ${playerIdx + 1} round ${round + 1} phase',
+              semanticsLabel: AppLocalizations.of(
+                context,
+              )!.playerRoundPhaseLabel(playerIdx + 1, round + 1),
             ),
           ],
         ],
@@ -112,13 +115,17 @@ class PlayerRoundCell extends StatelessWidget {
     );
     if (readOnly || !enabled) {
       return Semantics(
-        label: 'Player ${playerIdx + 1} round ${round + 1} score',
+        label: AppLocalizations.of(
+          context,
+        )!.playerRoundScoreLabel(playerIdx + 1, round + 1),
         child: cell,
       );
     }
     return Semantics(
       button: true,
-      label: 'Player ${playerIdx + 1} round ${round + 1} score',
+      label: AppLocalizations.of(
+        context,
+      )!.playerRoundScoreLabel(playerIdx + 1, round + 1),
       child: InkWell(
         key: roundCellKey(playerIdx, round),
         onTap: () => _openModal(context),

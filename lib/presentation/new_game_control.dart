@@ -92,7 +92,7 @@ class NewGameControl extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
-      label: 'Request New Game Same Type',
+      label: l10n.requestNewGameSameType,
       child: IconButton(
         key: NewGameControl.newGameButtonKey,
         icon: const Icon(Icons.replay),

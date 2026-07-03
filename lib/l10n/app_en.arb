@@ -44,7 +44,7 @@
   "@gameModePhase10": {
     "description": "Phase 10 game mode option"
   },
-  "gameModeFrenchDriving": "French Driving",
+  "gameModeFrenchDriving": "Mille Bornes",
   "@gameModeFrenchDriving": {
     "description": "French Driving game mode option"
   },
@@ -258,7 +258,7 @@
   "@safeTrip": {
     "description": "Safe trip played"
   },
-  "shutOut": "Shut Out",
+  "shutOut": "Shut-Out",
   "@shutOut": {
     "description": "Bonus for completing the trip before opponents play any distance cards"
   },
@@ -415,5 +415,176 @@
   "leaveLiveView": "Leave",
   "@leaveLiveView": {
     "description": "Leave spectator live view"
+  },
+  "leaveLiveViewLabel": "Leave live view",
+  "@leaveLiveViewLabel": {
+    "description": "Semantic label for leave live view button"
+  },
+  "requestNewGameSameType": "Request new game, same type",
+  "@requestNewGameSameType": {
+    "description": "Semantic label for new game (same type) button"
+  },
+  "scoreTableLabel": "Score table",
+  "@scoreTableLabel": {
+    "description": "Semantic label for the score table"
+  },
+  "roundLabel": "Round {roundNumber}",
+  "@roundLabel": {
+    "description": "Semantic label for a round column header",
+    "placeholders": {
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "roundLockButtonLabel": "Round {roundNumber} lock button",
+  "@roundLockButtonLabel": {
+    "description": "Semantic label for a round lock button",
+    "placeholders": {
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "joinHostLabel": "Join {hostName}",
+  "@joinHostLabel": {
+    "description": "Semantic label for joining a discovered host",
+    "placeholders": {
+      "hostName": {
+        "type": "String"
+      }
+    }
+  },
+  "shareGameScores": "Share game scores",
+  "@shareGameScores": {
+    "description": "Semantic label for the share scores button"
+  },
+  "requestChangeScorecardType": "Request change scorecard type",
+  "@requestChangeScorecardType": {
+    "description": "Semantic label for the change scorecard type button"
+  },
+  "roundScoreLabel": "Round score",
+  "@roundScoreLabel": {
+    "description": "Semantic label for a round score field"
+  },
+  "milesDrivenLabel": "Miles driven",
+  "@milesDrivenLabel": {
+    "description": "Semantic label for the Mille Bornes miles/distance field"
+  },
+  "numberOfSafetiesLabel": "Number of safeties",
+  "@numberOfSafetiesLabel": {
+    "description": "Semantic label for the safeties count dropdown"
+  },
+  "numberOfCoupFourreLabel": "Number of Coup Fourré",
+  "@numberOfCoupFourreLabel": {
+    "description": "Semantic label for the coup fourré count dropdown"
+  },
+  "delayedActionBonusLabel": "Delayed Action bonus",
+  "@delayedActionBonusLabel": {
+    "description": "Semantic label for the delayed action bonus checkbox"
+  },
+  "safeTripBonusLabel": "Safe Trip bonus",
+  "@safeTripBonusLabel": {
+    "description": "Semantic label for the safe trip bonus checkbox"
+  },
+  "shutOutBonusLabel": "Shut-Out bonus",
+  "@shutOutBonusLabel": {
+    "description": "Semantic label for the shut-out bonus checkbox"
+  },
+  "playerTotalLabel": "Player and total",
+  "@playerTotalLabel": {
+    "description": "Semantic label for the player/total column header"
+  },
+  "playerNameAndTotalLabel": "Player {playerNumber} name and total score",
+  "@playerNameAndTotalLabel": {
+    "description": "Semantic label for a player name and total score cell",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNameLabel": "Player name",
+  "@playerNameLabel": {
+    "description": "Semantic label for the player name field"
+  },
+  "numberOfPlayersLabel": "Number of players",
+  "@numberOfPlayersLabel": {
+    "description": "Semantic label for the number of players selector"
+  },
+  "maximumRoundsLabel": "Maximum rounds",
+  "@maximumRoundsLabel": {
+    "description": "Semantic label for the maximum rounds selector"
+  },
+  "gameModeLabel": "Game mode",
+  "@gameModeLabel": {
+    "description": "Semantic label for the game mode selector"
+  },
+  "scoreFilterLabel": "Score filter",
+  "@scoreFilterLabel": {
+    "description": "Semantic label for the score filter selector"
+  },
+  "enableEndGameScoreLabel": "Enable end game score",
+  "@enableEndGameScoreLabel": {
+    "description": "Semantic label for the enable end game score toggle"
+  },
+  "endGameScoreLabel": "End game score",
+  "@endGameScoreLabel": {
+    "description": "Semantic label for the end game score field"
+  },
+  "playerRoundScoreLabel": "Player {playerNumber} round {roundNumber} score",
+  "@playerRoundScoreLabel": {
+    "description": "Semantic label for a player round score cell",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      },
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerGameModalLabel": "Player {playerNumber} game modal",
+  "@playerGameModalLabel": {
+    "description": "Semantic label for the player game modal",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerTotalScoreLabel": "Player {playerNumber} total score",
+  "@playerTotalScoreLabel": {
+    "description": "Semantic label for a player total score value",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerRoundPhaseLabel": "Player {playerNumber} round {roundNumber} phase",
+  "@playerRoundPhaseLabel": {
+    "description": "Semantic label for a player round phase value",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      },
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNameValueLabel": "Player name {playerNumber}",
+  "@playerNameValueLabel": {
+    "description": "Semantic label for a player name value",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "liveConnectionQrLabel": "Live connection QR code",
+  "@liveConnectionQrLabel": {
+    "description": "Semantic label for the live connection QR code image"
   }
 }

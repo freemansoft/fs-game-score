@@ -140,7 +140,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
 
   Widget _buildMilesSection(AppLocalizations l10n, {bool compact = false}) {
     final textField = Semantics(
-      label: 'Miles Driven',
+      label: l10n.milesDrivenLabel,
       child: TextField(
         key: FrenchDrivingRoundPanel.milesFieldKey,
         controller: _milesController,
@@ -216,7 +216,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
         ),
         Semantics(
           button: true,
-          label: 'Number of Safeties',
+          label: l10n.numberOfSafetiesLabel,
           child: Tooltip(
             message: l10n.safetiesTooltip,
             child: DropdownButton<int>(
@@ -255,7 +255,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
         ),
         Semantics(
           button: true,
-          label: 'Number of Coup Fourre',
+          label: l10n.numberOfCoupFourreLabel,
           child: Tooltip(
             message: l10n.coupFourreTooltip,
             child: DropdownButton<int>(
@@ -309,7 +309,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
       spacing: 8,
       children: [
         Semantics(
-          label: 'Delayed Action Bonus',
+          label: l10n.delayedActionBonusLabel,
           child: Tooltip(
             message: l10n.delayedActionTooltip,
             child: _buildCheckbox(
@@ -323,7 +323,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           ),
         ),
         Semantics(
-          label: 'Safe Trip Bonus',
+          label: l10n.safeTripBonusLabel,
           child: Tooltip(
             message: l10n.safeTripTooltip,
             child: _buildCheckbox(
@@ -336,7 +336,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
           ),
         ),
         Semantics(
-          label: 'Shut Out Bonus',
+          label: l10n.shutOutBonusLabel,
           child: Tooltip(
             message: l10n.shutOutTooltip,
             child: _buildCheckbox(

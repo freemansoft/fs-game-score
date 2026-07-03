@@ -45,7 +45,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gameModePhase10 => 'Phase 10';
 
   @override
-  String get gameModeFrenchDriving => 'French Driving';
+  String get gameModeFrenchDriving => 'Mille Bornes';
 
   @override
   String get gameModeSkyjo => 'Skyjo';
@@ -198,7 +198,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get safeTrip => 'Safe Trip';
 
   @override
-  String get shutOut => 'Shut Out';
+  String get shutOut => 'Shut-Out';
 
   @override
   String get milesTooltip =>
@@ -325,4 +325,112 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leaveLiveView => 'Leave';
+
+  @override
+  String get leaveLiveViewLabel => 'Leave live view';
+
+  @override
+  String get requestNewGameSameType => 'Request new game, same type';
+
+  @override
+  String get scoreTableLabel => 'Score table';
+
+  @override
+  String roundLabel(int roundNumber) {
+    return 'Round $roundNumber';
+  }
+
+  @override
+  String roundLockButtonLabel(int roundNumber) {
+    return 'Round $roundNumber lock button';
+  }
+
+  @override
+  String joinHostLabel(String hostName) {
+    return 'Join $hostName';
+  }
+
+  @override
+  String get shareGameScores => 'Share game scores';
+
+  @override
+  String get requestChangeScorecardType => 'Request change scorecard type';
+
+  @override
+  String get roundScoreLabel => 'Round score';
+
+  @override
+  String get milesDrivenLabel => 'Miles driven';
+
+  @override
+  String get numberOfSafetiesLabel => 'Number of safeties';
+
+  @override
+  String get numberOfCoupFourreLabel => 'Number of Coup Fourré';
+
+  @override
+  String get delayedActionBonusLabel => 'Delayed Action bonus';
+
+  @override
+  String get safeTripBonusLabel => 'Safe Trip bonus';
+
+  @override
+  String get shutOutBonusLabel => 'Shut-Out bonus';
+
+  @override
+  String get playerTotalLabel => 'Player and total';
+
+  @override
+  String playerNameAndTotalLabel(int playerNumber) {
+    return 'Player $playerNumber name and total score';
+  }
+
+  @override
+  String get playerNameLabel => 'Player name';
+
+  @override
+  String get numberOfPlayersLabel => 'Number of players';
+
+  @override
+  String get maximumRoundsLabel => 'Maximum rounds';
+
+  @override
+  String get gameModeLabel => 'Game mode';
+
+  @override
+  String get scoreFilterLabel => 'Score filter';
+
+  @override
+  String get enableEndGameScoreLabel => 'Enable end game score';
+
+  @override
+  String get endGameScoreLabel => 'End game score';
+
+  @override
+  String playerRoundScoreLabel(int playerNumber, int roundNumber) {
+    return 'Player $playerNumber round $roundNumber score';
+  }
+
+  @override
+  String playerGameModalLabel(int playerNumber) {
+    return 'Player $playerNumber game modal';
+  }
+
+  @override
+  String playerTotalScoreLabel(int playerNumber) {
+    return 'Player $playerNumber total score';
+  }
+
+  @override
+  String playerRoundPhaseLabel(int playerNumber, int roundNumber) {
+    return 'Player $playerNumber round $roundNumber phase';
+  }
+
+  @override
+  String playerNameValueLabel(int playerNumber) {
+    return 'Player name $playerNumber';
+  }
+
+  @override
+  String get liveConnectionQrLabel => 'Live connection QR code';
 }

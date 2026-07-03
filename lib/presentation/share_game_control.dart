@@ -15,7 +15,7 @@ class ShareGameControl extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
-      label: 'Share Game Scores',
+      label: l10n.shareGameScores,
       child: IconButton(
         key: ShareGameControl.shareButtonKey,
         icon: Icon(
