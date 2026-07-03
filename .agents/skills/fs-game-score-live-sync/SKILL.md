@@ -79,13 +79,13 @@ Mapper: `game_sync_mapper.dart` ↔ `Game` + `Players`.
 
 ## UI touchpoints
 
-| Component | Route / role |
-| --- | --- |
-| `LiveShareControl` | Host dialog; **`CloseButton`** dismisses dialog only — sharing continues until **Stop live sharing** |
-| `JoinLiveGameScreen` | `/join-live` — discovery, connect overlay, error snackbars |
-| `_JoinLiveScanDialog` | One-shot QR scan (`DetectionSpeed.noDuplicates`) — multiple `Navigator.pop` breaks GoRouter |
-| `SpectatorScoreTableScreen` | `/live-spectator` — read-only `ScoreTable` |
-| `LiveConnectionBanner` | Spectator connection label |
+| Component                   | Route / role                                                                                         |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `LiveShareControl`          | Host dialog; **`CloseButton`** dismisses dialog only — sharing continues until **Stop live sharing** |
+| `JoinLiveGameScreen`        | `/join-live` — discovery, connect overlay, error snackbars                                           |
+| `_JoinLiveScanDialog`       | One-shot QR scan (`DetectionSpeed.noDuplicates`) — multiple `Navigator.pop` breaks GoRouter          |
+| `SpectatorScoreTableScreen` | `/live-spectator` — read-only `ScoreTable`                                                           |
+| `LiveConnectionBanner`      | Spectator connection label                                                                           |
 
 L10n: `liveConnectionConnected`, `liveConnectionConnectedOnly`, `liveConnectionWrongPin`, `liveConnectionVersionMismatch`, `liveSyncAppVersionUnknown`.
 
@@ -99,11 +99,11 @@ L10n: `liveConnectionConnected`, `liveConnectionConnectedOnly`, `liveConnectionW
 
 ## Testing
 
-| Area | Files / approach |
-| --- | --- |
-| Protocol, version, QR, mapper, labels, platform | `test/game_sync_*.dart` |
-| Provider/widget | Override **`gameSyncTransportFactoryProvider`** → `() => FakeGameSyncTransport` |
-| Persist | Spectator snapshots **must not** touch `SharedPreferences` |
+| Area                                            | Files / approach                                                                |
+| ----------------------------------------------- | ------------------------------------------------------------------------------- |
+| Protocol, version, QR, mapper, labels, platform | `test/game_sync_*.dart`                                                         |
+| Provider/widget                                 | Override **`gameSyncTransportFactoryProvider`** → `() => FakeGameSyncTransport` |
+| Persist                                         | Spectator snapshots **must not** touch `SharedPreferences`                      |
 
 See **`fs-game-score-testing-workflow`** for integration and fake transport patterns.
 

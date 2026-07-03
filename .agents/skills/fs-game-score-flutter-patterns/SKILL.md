@@ -19,12 +19,12 @@ Always prefix Flutter/Dart commands with **`fvm`** per [AGENTS.md](../../../AGEN
 
 App state uses **`Notifier` / `NotifierProvider`** (`hooks_riverpod` ^3.1.0), not Bloc/GetX/Provider.
 
-| Layer | Providers |
-| --- | --- |
-| DI | `sharedPreferencesProvider` — overridden in `bootstrapApp()` |
+| Layer       | Providers                                                                                 |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| DI          | `sharedPreferencesProvider` — overridden in `bootstrapApp()`                              |
 | Persistence | `gameRepositoryProvider`, `playersRepositoryProvider` — `load*` / `save*` / `clear*` only |
-| Live state | `gameNotifierProvider`, `playersNotifierProvider` |
-| Routing | `appRouterProvider` — resume via `initialLocation(prefs)` |
+| Live state  | `gameNotifierProvider`, `playersNotifierProvider`                                         |
+| Routing     | `appRouterProvider` — resume via `initialLocation(prefs)`                                 |
 
 **UI rules:**
 
@@ -77,10 +77,10 @@ See **`flutter-setup-declarative-routing`** for generic go_router patterns.
 
 ## Persistence keys
 
-| Key | Repository | Content |
-| --- | --- | --- |
-| `game_state` | `GameRepository` | `Game.configuration` JSON |
-| `players_state` | `PlayersRepository` | Full roster JSON |
+| Key             | Repository          | Content                   |
+| --------------- | ------------------- | ------------------------- |
+| `game_state`    | `GameRepository`    | `Game.configuration` JSON |
+| `players_state` | `PlayersRepository` | Full roster JSON          |
 
 Splash **Start new game** saves config via `newGame()` and baseline roster via `playersRepositoryProvider.savePlayers(...)`.
 
@@ -116,14 +116,14 @@ Adding a new locale = new `app_<locale>.arb` (all keys) **plus** a `Locale('<cod
 
 The "French Driving" mode is the real card game **Mille Bornes** (name it `Mille Bornes` in every locale, untranslated). **Never machine-translate game terms literally** — each edition has its own canonical vocabulary. Use these:
 
-| Concept (key) | en (official Am. edition) | fr (authentic) | es (authentic) |
-| --- | --- | --- | --- |
-| `miles` | Miles | Bornes | Kilómetros |
-| `safeties` | Safeties | Bottes | Bottes |
-| `coupFourre` | Coup Fourré | Coup fourré | Coup Fourré |
-| `delayedAction` | Delayed Action | Couronnement | Acción retardada |
-| `safeTrip` | Safe Trip | Voyage sans les 200 | Viaje seguro |
-| `shutOut` | Shut-Out | Capot | Capote |
+| Concept (key)   | en (official Am. edition) | fr (authentic)      | es (authentic)   |
+| --------------- | ------------------------- | ------------------- | ---------------- |
+| `miles`         | Miles                     | Bornes              | Kilómetros       |
+| `safeties`      | Safeties                  | Bottes              | Bottes           |
+| `coupFourre`    | Coup Fourré               | Coup fourré         | Coup Fourré      |
+| `delayedAction` | Delayed Action            | Couronnement        | Acción retardada |
+| `safeTrip`      | Safe Trip                 | Voyage sans les 200 | Viaje seguro     |
+| `shutOut`       | Shut-Out                  | Capot               | Capote           |
 
 Principle: **en** = official Hasbro/Winning-Moves American terms; **fr** = authentic French (1000 Bornes) terms; **es** = authentic Spanish-edition terms. When adding a new locale or term, look up that edition's real wording rather than translating the English — verify against [fr.wikipedia 1000 Bornes](https://fr.wikipedia.org/wiki/1000_Bornes) / [es.wikipedia Mil hitos](https://es.wikipedia.org/wiki/Mil_hitos). Keep tooltip point values and unit words (miles/bornes/km) consistent within each locale.
 
@@ -142,13 +142,13 @@ See **`flutter-setup-localization`** for generic l10n setup.
 
 ## Anti-patterns (do not reintroduce)
 
-| Anti-pattern | Why |
-| --- | --- |
-| Singleton repositories | Breaks DI and tests |
-| `repositoryDidLoadPrefs()` | Bypasses `build()` validation |
-| Fire-and-forget `main()` in integration tests | Android startup race |
-| `ref.watch` in event handlers | Does not subscribe the widget |
-| Saves/timers in `Notifier.build()` | Belongs in mutators or explicit UI flows |
+| Anti-pattern                                  | Why                                      |
+| --------------------------------------------- | ---------------------------------------- |
+| Singleton repositories                        | Breaks DI and tests                      |
+| `repositoryDidLoadPrefs()`                    | Bypasses `build()` validation            |
+| Fire-and-forget `main()` in integration tests | Android startup race                     |
+| `ref.watch` in event handlers                 | Does not subscribe the widget            |
+| Saves/timers in `Notifier.build()`            | Belongs in mutators or explicit UI flows |
 
 ---
 

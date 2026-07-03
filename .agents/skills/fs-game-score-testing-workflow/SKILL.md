@@ -15,12 +15,12 @@ Always run tests with **`fvm flutter test`** per [AGENTS.md](../../../AGENTS.md)
 
 ## Test types and skills
 
-| Type | Location | Skill |
-| --- | --- | --- |
-| Unit | `test/` | `dart-add-unit-test` |
-| Widget | `test/` | `flutter-add-widget-test` |
+| Type        | Location            | Skill                          |
+| ----------- | ------------------- | ------------------------------ |
+| Unit        | `test/`             | `dart-add-unit-test`           |
+| Widget      | `test/`             | `flutter-add-widget-test`      |
 | Integration | `integration_test/` | `flutter-add-integration-test` |
-| Mocks | `test/` | `dart-generate-test-mocks` |
+| Mocks       | `test/`             | `dart-generate-test-mocks`     |
 
 Use **Arrange-Act-Assert**. Prefer **fakes/stubs** over mocks where possible (`FakeGameSyncTransport`).
 
@@ -44,14 +44,14 @@ Works with **`UncontrolledProviderScope`** from `bootstrapApp()`.
 
 ### Project unit tests (examples)
 
-| File | Covers |
-| --- | --- |
-| `test/players_notifier_persist_test.dart` | Coalesced persist burst, splash clear, in-flight + splash race |
-| `test/game_sync_protocol_test.dart` | Wire messages, version matching |
-| `test/game_sync_connection_label_test.dart` | Banner / host labels |
-| `test/game_sync_mapper_test.dart` | Snapshot ↔ domain mapping |
-| `test/game_sync_qr_test.dart`, `test/game_sync_platform_test.dart` | QR URLs, platform gates |
-| `test/game_serialization_test.dart` | `Game.fromJson` / new `gameId` behavior |
+| File                                                               | Covers                                                         |
+| ------------------------------------------------------------------ | -------------------------------------------------------------- |
+| `test/players_notifier_persist_test.dart`                          | Coalesced persist burst, splash clear, in-flight + splash race |
+| `test/game_sync_protocol_test.dart`                                | Wire messages, version matching                                |
+| `test/game_sync_connection_label_test.dart`                        | Banner / host labels                                           |
+| `test/game_sync_mapper_test.dart`                                  | Snapshot ↔ domain mapping                                      |
+| `test/game_sync_qr_test.dart`, `test/game_sync_platform_test.dart` | QR URLs, platform gates                                        |
+| `test/game_serialization_test.dart`                                | `Game.fromJson` / new `gameId` behavior                        |
 
 ---
 
@@ -59,16 +59,16 @@ Works with **`UncontrolledProviderScope`** from `bootstrapApp()`.
 
 Helpers: **`integration_test/app_test_helpers.dart`**
 
-| Helper | Purpose |
-| --- | --- |
-| `clearPersistedGameState()` | `setUp` / `tearDown` — real prefs on devices |
-| `await launchApp(tester)` | **`await bootstrapApp()`** — never unawaited `main()` |
-| `await launchAppOnSplash(tester)` | Launch + splash Continue + `waitForSplashReady` |
-| `waitForSplashReady(tester)` | Await splash `prepareForSplashEntry` before Continue |
-| `waitForScoreTable(tester)` | Poll until `DataTable2` and app bar new-scorecard control |
-| `tapNewScoreCardControlIconButton(tester)` | Tap home icon; uses AppBar overflow on narrow screens |
-| `pumpUntilFound(tester, finder)` | Slow emulators |
-| `waitForSplashPlayersCleared(tester)` | After navigating to splash — coalesced persist race |
+| Helper                                     | Purpose                                                   |
+| ------------------------------------------ | --------------------------------------------------------- |
+| `clearPersistedGameState()`                | `setUp` / `tearDown` — real prefs on devices              |
+| `await launchApp(tester)`                  | **`await bootstrapApp()`** — never unawaited `main()`     |
+| `await launchAppOnSplash(tester)`          | Launch + splash Continue + `waitForSplashReady`           |
+| `waitForSplashReady(tester)`               | Await splash `prepareForSplashEntry` before Continue      |
+| `waitForScoreTable(tester)`                | Poll until `DataTable2` and app bar new-scorecard control |
+| `tapNewScoreCardControlIconButton(tester)` | Tap home icon; uses AppBar overflow on narrow screens     |
+| `pumpUntilFound(tester, finder)`           | Slow emulators                                            |
+| `waitForSplashPlayersCleared(tester)`      | After navigating to splash — coalesced persist race       |
 
 ### Splash player clear
 

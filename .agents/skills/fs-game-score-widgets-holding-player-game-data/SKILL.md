@@ -20,34 +20,34 @@ Rules for widgets that display player or game data. Tests must use the **static 
 
 ### Player game column (`lib/presentation/player_game/`)
 
-| Function | Key pattern | File |
-| --- | --- | --- |
-| `PlayerGameCell.cellKey(i)` | `p{i}_game_cell` | `player_game_cell.dart` |
-| `PlayerGameCell.nameKey(i)` | `p{i}_name` | `player_game_cell.dart` |
-| `PlayerGameCell.totalScoreKey(i)` | `p{i}_total_score` | `player_game_cell.dart` |
-| `PlayerGameModal.modalKey(i)` | `p{i}_game_modal` | `player_game_modal.dart` |
-| `PlayerGameModal.nameFieldKey(i)` | `p{i}_name_field` | `player_game_modal.dart` |
+| Function                          | Key pattern        | File                     |
+| --------------------------------- | ------------------ | ------------------------ |
+| `PlayerGameCell.cellKey(i)`       | `p{i}_game_cell`   | `player_game_cell.dart`  |
+| `PlayerGameCell.nameKey(i)`       | `p{i}_name`        | `player_game_cell.dart`  |
+| `PlayerGameCell.totalScoreKey(i)` | `p{i}_total_score` | `player_game_cell.dart`  |
+| `PlayerGameModal.modalKey(i)`     | `p{i}_game_modal`  | `player_game_modal.dart` |
+| `PlayerGameModal.nameFieldKey(i)` | `p{i}_name_field`  | `player_game_modal.dart` |
 
 ### Player round cells and modals (`lib/presentation/player_round/`)
 
-| Function | Key pattern | File |
-| --- | --- | --- |
-| `PlayerRoundCell.cellKey(i, r)` | `p{i}_r{r}_cell` | `player_round_cell.dart` |
-| `PlayerRoundCell.roundCellKey(i, r)` | `p{i}_r{r}_round_cell` | `player_round_cell.dart` |
-| `PlayerRoundCell.scoreKey(i, r)` | `p{i}_r{r}_score` | `player_round_cell.dart` |
-| `PlayerRoundCell.phaseKey(i, r)` | `p{i}_r{r}_phase` | `player_round_cell.dart` |
-| `PlayerRoundModal.modalKey(i, r)` | `p{i}_r{r}_round_modal` | `player_round_modal.dart` |
-| `PlayerRoundModal.scoreFieldKey(i, r)` | `p{i}_r{r}_score_field` | `player_round_modal.dart` |
-| `PlayerRoundModal.phaseDropdownKey(i, r)` | `p{i}_r{r}_phase_dropdown` | `player_round_modal.dart` |
-| `RoundPhaseDropdown.popupButtonKey(i, r)` | (round phase UI) | `round_phase_dropdown.dart` |
+| Function                                  | Key pattern                | File                        |
+| ----------------------------------------- | -------------------------- | --------------------------- |
+| `PlayerRoundCell.cellKey(i, r)`           | `p{i}_r{r}_cell`           | `player_round_cell.dart`    |
+| `PlayerRoundCell.roundCellKey(i, r)`      | `p{i}_r{r}_round_cell`     | `player_round_cell.dart`    |
+| `PlayerRoundCell.scoreKey(i, r)`          | `p{i}_r{r}_score`          | `player_round_cell.dart`    |
+| `PlayerRoundCell.phaseKey(i, r)`          | `p{i}_r{r}_phase`          | `player_round_cell.dart`    |
+| `PlayerRoundModal.modalKey(i, r)`         | `p{i}_r{r}_round_modal`    | `player_round_modal.dart`   |
+| `PlayerRoundModal.scoreFieldKey(i, r)`    | `p{i}_r{r}_score_field`    | `player_round_modal.dart`   |
+| `PlayerRoundModal.phaseDropdownKey(i, r)` | `p{i}_r{r}_phase_dropdown` | `player_round_modal.dart`   |
+| `RoundPhaseDropdown.popupButtonKey(i, r)` | (round phase UI)           | `round_phase_dropdown.dart` |
 
 ### Score table and splash
 
-| Function | File |
-| --- | --- |
-| `ScoreTable.lockRoundKey(round)` | `score_table.dart` |
-| `SplashScreen.continueButtonKey`, `numPlayersDropdownKey`, etc. | `splash_screen.dart` — `const ValueKey` on class |
-| `NewGameControl.cancelButtonKey`, `okButtonKey`, `newGameButtonKey` | `new_game_control.dart` |
+| Function                                                            | File                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------ |
+| `ScoreTable.lockRoundKey(round)`                                    | `score_table.dart`                               |
+| `SplashScreen.continueButtonKey`, `numPlayersDropdownKey`, etc.     | `splash_screen.dart` — `const ValueKey` on class |
+| `NewGameControl.cancelButtonKey`, `okButtonKey`, `newGameButtonKey` | `new_game_control.dart`                          |
 
 ### Tests
 
