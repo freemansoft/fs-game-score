@@ -999,11 +999,11 @@ void main() {
   ) async {
     await launchAppOnSplash(tester);
 
-    // Select "French Driving" mode
+    // Select "Mille Bornes" mode (formerly labelled "French Driving")
     final gameModeDropdown = find.byKey(SplashScreen.gameModeDropdownKey);
     await tester.tap(gameModeDropdown);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('French Driving').last);
+    await tester.tap(find.text('Mille Bornes').last);
     await tester.pumpAndSettle();
 
     // Press Continue
