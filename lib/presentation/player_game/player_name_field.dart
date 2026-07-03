@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 
 /// A text field for editing a player's name usually in a modal dialog.
 ///
@@ -60,7 +61,7 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Player Name',
+      label: AppLocalizations.of(context)!.playerNameLabel,
       child: TextFormField(
         focusNode: _focusNode,
         autofocus: true,

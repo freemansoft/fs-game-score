@@ -124,7 +124,9 @@ class LiveShareControl extends ConsumerWidget {
                             child: QrImageView(
                               data: session.wsUrl,
                               size: 200,
-                              semanticsLabel: 'Live connection QR code',
+                              semanticsLabel: AppLocalizations.of(
+                                context,
+                              )!.liveConnectionQrLabel,
                             ),
                           ),
                         ),

@@ -94,9 +94,38 @@ Models use **hand-written** `fromJson` / `toJson` in `lib/model/` — **not** `j
 
 ## Localization
 
-- Strings in `lib/l10n/*.arb`; generated `AppLocalizations`.
-- After editing `.arb`: `fvm flutter gen-l10n`.
-- **Do not localize** `semanticLabel` / `Semantics.label` (screen readers only).
+Supported locales: **en** (template), **es**, **fr** — declared in `supportedLocales` in `lib/app.dart`. Strings live in `lib/l10n/app_<locale>.arb`; `fvm flutter gen-l10n` regenerates `AppLocalizations`.
+
+### Adding / changing a string
+
+1. Add the key to **`app_en.arb`** (the template) with an `@<key>` block: `description`, plus `placeholders` (with `type`) for any `{arg}`.
+2. Mirror the **value** into **`app_es.arb`** and **`app_fr.arb`** — `@`-metadata lives only in the template. **Every key must exist in every `.arb`** (missing keys silently fall back to English). Verify parity before regenerating, e.g.:
+   ```bash
+   python3 -c "import json;k=lambda f:{x for x in json.load(open(f)) if x[0]!='@'};\
+   b=k('lib/l10n/app_en.arb');[print(l,sorted(b-k(f'lib/l10n/app_{l}.arb'))) for l in('es','fr')]"
+   ```
+3. Run `fvm flutter gen-l10n`, then `fvm flutter analyze` and `fvm flutter test`.
+
+Adding a new locale = new `app_<locale>.arb` (all keys) **plus** a `Locale('<code>')` in `lib/app.dart`.
+
+### Localize every user-facing string — including accessibility labels
+
+**`Semantics.label`, `semanticLabel`, and `Text(semanticsLabel:)` ARE user-facing** (screen readers) and **must be localized** — do not hardcode them. Use a `*Label` key suffix to mark semantics-only strings (e.g. `scoreTableLabel`, `playerRoundScoreLabel`, `numberOfSafetiesLabel`). Pass runtime values as placeholders: `l10n.playerRoundScoreLabel(playerIdx + 1, round + 1)`. When a file has no l10n yet, add `import 'package:fs_score_card/l10n/app_localizations.dart';` and read `AppLocalizations.of(context)!`.
+
+### Game terminology — use authentic Mille Bornes lingo per locale
+
+The "French Driving" mode is the real card game **Mille Bornes** (name it `Mille Bornes` in every locale, untranslated). **Never machine-translate game terms literally** — each edition has its own canonical vocabulary. Use these:
+
+| Concept (key) | en (official Am. edition) | fr (authentic) | es (authentic) |
+| --- | --- | --- | --- |
+| `miles` | Miles | Bornes | Kilómetros |
+| `safeties` | Safeties | Bottes | Bottes |
+| `coupFourre` | Coup Fourré | Coup fourré | Coup Fourré |
+| `delayedAction` | Delayed Action | Couronnement | Acción retardada |
+| `safeTrip` | Safe Trip | Voyage sans les 200 | Viaje seguro |
+| `shutOut` | Shut-Out | Capot | Capote |
+
+Principle: **en** = official Hasbro/Winning-Moves American terms; **fr** = authentic French (1000 Bornes) terms; **es** = authentic Spanish-edition terms. When adding a new locale or term, look up that edition's real wording rather than translating the English — verify against [fr.wikipedia 1000 Bornes](https://fr.wikipedia.org/wiki/1000_Bornes) / [es.wikipedia Mil hitos](https://es.wikipedia.org/wiki/Mil_hitos). Keep tooltip point values and unit words (miles/bornes/km) consistent within each locale.
 
 See **`flutter-setup-localization`** for generic l10n setup.
 

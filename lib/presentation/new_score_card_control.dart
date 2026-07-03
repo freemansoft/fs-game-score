@@ -41,7 +41,7 @@ class NewScoreCardControl extends ConsumerWidget {
             child: Text(l10n.changeScorecard),
           ),
         ],
-        semanticLabel: 'New Game - Change Scorecard Type',
+        semanticLabel: l10n.newGameChangeScorecardType,
       ),
     );
     if ((result ?? false) && context.mounted) {
@@ -58,7 +58,7 @@ class NewScoreCardControl extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
-      label: 'Request Change Scorecard Type',
+      label: l10n.requestChangeScorecardType,
       child: IconButton(
         key: iconButtonKey,
         icon: const Icon(Icons.home),

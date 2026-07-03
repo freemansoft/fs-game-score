@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fs_score_card/l10n/app_localizations.dart';
 
 /// A widget that displays a player's name and total score
 ///
@@ -69,26 +70,34 @@ class PlayerGameCell extends StatelessWidget {
             softWrap: true,
             textAlign: TextAlign.center,
             style: textStyle,
-            semanticsLabel: 'Player name ${playerIdx + 1}',
+            semanticsLabel: AppLocalizations.of(
+              context,
+            )!.playerNameValueLabel(playerIdx + 1),
           ),
           Text(
             '$totalScore',
             key: totalScoreKey(playerIdx),
             textAlign: TextAlign.center,
             style: textStyle,
-            semanticsLabel: 'Player total score ${playerIdx + 1}',
+            semanticsLabel: AppLocalizations.of(
+              context,
+            )!.playerTotalScoreLabel(playerIdx + 1),
           ),
         ],
       ),
     );
     if (readOnly || onTap == null) {
       return Semantics(
-        label: 'Player ${playerIdx + 1} name and total score',
+        label: AppLocalizations.of(
+          context,
+        )!.playerNameAndTotalLabel(playerIdx + 1),
         child: content,
       );
     }
     return Semantics(
-      label: 'Player ${playerIdx + 1} name and total score',
+      label: AppLocalizations.of(
+        context,
+      )!.playerNameAndTotalLabel(playerIdx + 1),
       button: true,
       child: InkWell(
         key: cellKey(playerIdx),

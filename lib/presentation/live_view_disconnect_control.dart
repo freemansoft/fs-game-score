@@ -26,7 +26,7 @@ class LiveViewDisconnectControl extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
-      label: 'Leave live view',
+      label: l10n.leaveLiveViewLabel,
       child: IconButton(
         key: iconButtonKey,
         icon: const Icon(Icons.exit_to_app),

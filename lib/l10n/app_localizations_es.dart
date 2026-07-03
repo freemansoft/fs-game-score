@@ -45,7 +45,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get gameModePhase10 => 'Fase 10';
 
   @override
-  String get gameModeFrenchDriving => 'French Driving';
+  String get gameModeFrenchDriving => 'Mille Bornes';
 
   @override
   String get gameModeSkyjo => 'Skyjo';
@@ -185,46 +185,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noScoresToShare => 'No hay puntuaciones para compartir';
 
   @override
-  String get miles => 'Millas';
+  String get miles => 'Kilómetros';
 
   @override
-  String get safeties => 'Seguridades';
+  String get safeties => 'Bottes';
 
   @override
   String get coupFourre => 'Coup Fourré';
 
   @override
-  String get delayedAction => 'Acción Retrasada';
+  String get delayedAction => 'Acción retardada';
 
   @override
-  String get safeTrip => 'Viaje Seguro';
+  String get safeTrip => 'Viaje seguro';
 
   @override
-  String get shutOut => 'Shut Out';
+  String get shutOut => 'Capote';
 
   @override
   String get milesTooltip =>
-      'Cada equipo suma tantos puntos como el número total de millas que ha recorrido.';
+      'Cada equipo suma tantos puntos como el número total de kilómetros que ha recorrido.';
 
   @override
   String get safetiesTooltip =>
-      '100 puntos por cada tarjeta de Seguridad jugada.';
+      '100 puntos por cada botte (carta de seguridad) jugada.';
 
   @override
   String get coupFourreTooltip =>
-      '300 puntos además de los 100 puntos por la tarjeta de Seguridad.';
+      '300 puntos además de los 100 puntos por la botte.';
 
   @override
   String get delayedActionTooltip =>
-      'Si el viaje se completa después de que se hayan jugado todas las tarjetas de la pila de robo.';
+      'Si el viaje se completa después de que se hayan jugado todas las cartas del mazo de robo.';
 
   @override
   String get safeTripTooltip =>
-      'Si el viaje se completa sin jugar tarjetas de 200 Millas.';
+      'Si el viaje se completa sin jugar ninguna carta de 200 kilómetros.';
 
   @override
   String get shutOutTooltip =>
-      'Completar el viaje de 1000 millas antes de que los oponentes hayan jugado tarjetas de Distancia.';
+      'Completar el viaje de 1000 kilómetros antes de que los oponentes hayan jugado ninguna carta de distancia.';
 
   @override
   String get trademarkDisclaimer =>
@@ -245,7 +245,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get liveSharingInstructions =>
-      'Otros jugadores en la misma Wi-Fi pueden escanear este código o elegir este juego en Unirse a juego en vivo.';
+      'Otros jugadores en la misma Wi-Fi pueden escanear este código o elegir este juego en [Unirse a juego en vivo].';
 
   @override
   String connectionPin(String pin) {
@@ -256,14 +256,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get copyConnectionUrl => 'Copiar enlace de conexión';
 
   @override
-  String get connectionUrlCopied => 'Enlace copiado';
+  String get connectionUrlCopied => 'Enlace de conexión copiado';
 
   @override
   String get stopLiveSharing => 'Dejar de compartir';
 
   @override
   String get liveSharingUnavailable =>
-      'La vista en vivo está disponible en Android e iOS cuando todos están en la misma Wi-Fi.';
+      'El uso compartido en vivo está disponible en Android e iOS cuando todos están en la misma Wi-Fi.';
 
   @override
   String get joinLiveGameTitle => 'Unirse a juego en vivo';
@@ -273,7 +273,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noHostsFound =>
-      'No se encontraron juegos. Pida al anfitrión el código QR.';
+      'No se encontraron juegos. Pida al anfitrión que comparta su código QR.';
 
   @override
   String get scanConnectionQr => 'Escanear QR de conexión';
@@ -310,11 +310,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get liveConnectionVersionMismatch =>
-      'La versión principal de la app no coincide con el anfitrión. Actualice ambos dispositivos a la misma versión principal de FS Score Card.';
+      'La versión principal de la app no coincide con la del anfitrión. Actualice ambos dispositivos a la misma versión principal de FS Score Card.';
 
   @override
   String get liveSyncAppVersionUnknown =>
-      'No se puede iniciar la vista en vivo hasta conocer la versión de la app. Reinicie la app e intente de nuevo.';
+      'No se puede iniciar el uso compartido en vivo hasta conocer la versión de la app. Reinicie la app e intente de nuevo.';
 
   @override
   String get liveConnectionCannotReachHost =>
@@ -328,4 +328,113 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get leaveLiveView => 'Salir';
+
+  @override
+  String get leaveLiveViewLabel => 'Salir de la vista en vivo';
+
+  @override
+  String get requestNewGameSameType => 'Solicitar nuevo juego, mismo tipo';
+
+  @override
+  String get scoreTableLabel => 'Tabla de puntuación';
+
+  @override
+  String roundLabel(int roundNumber) {
+    return 'Ronda $roundNumber';
+  }
+
+  @override
+  String roundLockButtonLabel(int roundNumber) {
+    return 'Botón de bloqueo de la ronda $roundNumber';
+  }
+
+  @override
+  String joinHostLabel(String hostName) {
+    return 'Unirse a $hostName';
+  }
+
+  @override
+  String get shareGameScores => 'Compartir puntuaciones del juego';
+
+  @override
+  String get requestChangeScorecardType =>
+      'Solicitar cambio de tipo de tarjeta de puntuación';
+
+  @override
+  String get roundScoreLabel => 'Puntuación de la ronda';
+
+  @override
+  String get milesDrivenLabel => 'Kilómetros recorridos';
+
+  @override
+  String get numberOfSafetiesLabel => 'Número de bottes';
+
+  @override
+  String get numberOfCoupFourreLabel => 'Número de coups fourrés';
+
+  @override
+  String get delayedActionBonusLabel => 'Bonificación de acción retardada';
+
+  @override
+  String get safeTripBonusLabel => 'Bonificación de viaje seguro';
+
+  @override
+  String get shutOutBonusLabel => 'Bonificación de capote';
+
+  @override
+  String get playerTotalLabel => 'Jugador y total';
+
+  @override
+  String playerNameAndTotalLabel(int playerNumber) {
+    return 'Nombre y puntuación total del jugador $playerNumber';
+  }
+
+  @override
+  String get playerNameLabel => 'Nombre del jugador';
+
+  @override
+  String get numberOfPlayersLabel => 'Número de jugadores';
+
+  @override
+  String get maximumRoundsLabel => 'Rondas máximas';
+
+  @override
+  String get gameModeLabel => 'Modo de juego';
+
+  @override
+  String get scoreFilterLabel => 'Filtro de puntuación';
+
+  @override
+  String get enableEndGameScoreLabel => 'Activar puntuación de fin de juego';
+
+  @override
+  String get endGameScoreLabel => 'Puntuación de fin de juego';
+
+  @override
+  String playerRoundScoreLabel(int playerNumber, int roundNumber) {
+    return 'Puntuación del jugador $playerNumber en la ronda $roundNumber';
+  }
+
+  @override
+  String playerGameModalLabel(int playerNumber) {
+    return 'Ventana del juego del jugador $playerNumber';
+  }
+
+  @override
+  String playerTotalScoreLabel(int playerNumber) {
+    return 'Puntuación total del jugador $playerNumber';
+  }
+
+  @override
+  String playerRoundPhaseLabel(int playerNumber, int roundNumber) {
+    return 'Fase del jugador $playerNumber en la ronda $roundNumber';
+  }
+
+  @override
+  String playerNameValueLabel(int playerNumber) {
+    return 'Nombre del jugador $playerNumber';
+  }
+
+  @override
+  String get liveConnectionQrLabel => 'Código QR de conexión en vivo';
 }

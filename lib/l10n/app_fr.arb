@@ -1,46 +1,46 @@
 {
-  "@@locale": "es",
-  "appTitle": "Tarjeta de Puntaje FreemanS",
+  "@@locale": "fr",
+  "appTitle": "Carte de score FreemanS",
   "@appTitle": {
     "description": "The application title"
   },
-  "continueButton": "Iniciar juego nuevo",
+  "continueButton": "Commencer une nouvelle partie",
   "@continueButton": {
     "description": "Button to start new game and transition from splash screen to score table"
   },
-  "numberOfPlayers": "Número de jugadores:",
+  "numberOfPlayers": "Nombre de joueurs :",
   "@numberOfPlayers": {
     "description": "Label for number of players dropdown"
   },
-  "numberOfPlayersTooltip": "Seleccione el número de jugadores para el juego",
+  "numberOfPlayersTooltip": "Sélectionnez le nombre de joueurs pour la partie",
   "@numberOfPlayersTooltip": {
     "description": "Tooltip for number of players field"
   },
-  "maximumRounds": "Rondas máximas:",
+  "maximumRounds": "Nombre maximal de manches :",
   "@maximumRounds": {
     "description": "Label for maximum rounds dropdown"
   },
-  "maximumRoundsTooltip": "Establezca el número máximo de rondas para el juego",
+  "maximumRoundsTooltip": "Définissez le nombre maximal de manches pour la partie",
   "@maximumRoundsTooltip": {
     "description": "Tooltip for maximum rounds field"
   },
-  "sheetStyle": "Estilo de hoja:",
+  "sheetStyle": "Style de feuille :",
   "@sheetStyle": {
     "description": "Label for sheet style dropdown"
   },
-  "sheetStyleTooltip": "Elija el estilo de la hoja de puntuación: básico o con fases",
+  "sheetStyleTooltip": "Choisissez le style de la feuille de score : basique ou avec phases",
   "@sheetStyleTooltip": {
     "description": "Tooltip for sheet style field"
   },
-  "gameMode": "Modo de juego:",
+  "gameMode": "Mode de jeu :",
   "@gameMode": {
     "description": "Label for game mode dropdown"
   },
-  "gameModeStandard": "Estándar",
+  "gameModeStandard": "Standard",
   "@gameModeStandard": {
     "description": "Standard game mode option"
   },
-  "gameModePhase10": "Fase 10",
+  "gameModePhase10": "Phase 10",
   "@gameModePhase10": {
     "description": "Phase 10 game mode option"
   },
@@ -52,47 +52,47 @@
   "@gameModeSkyjo": {
     "description": "Skyjo game mode option"
   },
-  "basicSheet": "Hoja Básica",
+  "basicSheet": "Feuille basique",
   "@basicSheet": {
     "description": "Option for basic sheet style"
   },
-  "includePhases": "Incluir Fases",
+  "includePhases": "Inclure les phases",
   "@includePhases": {
     "description": "Option for sheet style with phases"
   },
-  "scoreFilter": "Filtro de puntuación:",
+  "scoreFilter": "Filtre de score :",
   "@scoreFilter": {
     "description": "Label for score filter dropdown"
   },
-  "scoreFilterTooltip": "Limitar los valores de puntuación (p. ej., cualquier puntuación o las que terminan en 5 o 0)",
+  "scoreFilterTooltip": "Limitez les valeurs de score saisies (par ex. n'importe quel score ou ceux se terminant par 5 ou 0)",
   "@scoreFilterTooltip": {
     "description": "Tooltip for score filter field"
   },
-  "anyScore": "Cualquier puntuación",
+  "anyScore": "N'importe quel score",
   "@anyScore": {
     "description": "Option for any score filter"
   },
-  "mustEndIn0Or5": "Debe terminar en 0 o 5",
+  "mustEndIn0Or5": "Doit se terminer par 0 ou 5",
   "@mustEndIn0Or5": {
     "description": "Option for score filter that requires scores to end in 0 or 5"
   },
-  "endScore": "Puntuación final",
+  "endScore": "Score final",
   "@endScore": {
     "description": "Label for end game score field"
   },
-  "endScoreTooltip": "Permitir que el juego termine cuando un jugador alcanza esta puntuación",
+  "endScoreTooltip": "Permettre à la partie de se terminer lorsqu'un joueur atteint ce score",
   "@endScoreTooltip": {
     "description": "Tooltip for end game score field"
   },
-  "gameEndingScore": "Puntuación para terminar el juego",
+  "gameEndingScore": "Score de fin de partie",
   "@gameEndingScore": {
     "description": "Hint text for end game score input field"
   },
-  "copyright": "Derechos de autor (C) 2025 Joe Freeman",
+  "copyright": "Copyright (C) 2025 Joe Freeman",
   "@copyright": {
     "description": "Copyright text"
   },
-  "version": "Versión: {version}",
+  "version": "Version : {version}",
   "@version": {
     "description": "Version text with placeholder",
     "placeholders": {
@@ -101,35 +101,35 @@
       }
     }
   },
-  "scores": "Puntuaciones",
+  "scores": "Scores",
   "@scores": {
     "description": "App bar title for score table screen"
   },
-  "playerTotal": "Jugador\nTotal",
+  "playerTotal": "Joueur\nTotal",
   "@playerTotal": {
     "description": "Column header text for player and total"
   },
-  "lockColumn": "Bloquear columna",
+  "lockColumn": "Verrouiller la colonne",
   "@lockColumn": {
     "description": "Tooltip for lock column button"
   },
-  "unlockColumn": "Desbloquear columna",
+  "unlockColumn": "Déverrouiller la colonne",
   "@unlockColumn": {
     "description": "Tooltip for unlock column button"
   },
-  "name": "Nombre:",
+  "name": "Nom :",
   "@name": {
     "description": "Label for name field in player game modal"
   },
-  "phasesByRound": "Fases por ronda:",
+  "phasesByRound": "Phases par manche :",
   "@phasesByRound": {
     "description": "Label for phases by round section"
   },
-  "noPhasesCompleted": "No hay fases completadas",
+  "noPhasesCompleted": "Aucune phase terminée",
   "@noPhasesCompleted": {
     "description": "Text shown when no phases are completed"
   },
-  "roundPhase": "Ronda {roundNumber}: Fase {phaseNumber}",
+  "roundPhase": "Manche {roundNumber} : Phase {phaseNumber}",
   "@roundPhase": {
     "description": "Text showing round and phase",
     "placeholders": {
@@ -141,27 +141,27 @@
       }
     }
   },
-  "score": "Puntuación:",
+  "score": "Score :",
   "@score": {
     "description": "Label for score field"
   },
-  "scoreHint": "Puntuación",
+  "scoreHint": "Score",
   "@scoreHint": {
     "description": "Hint text for score input field"
   },
-  "phase": "Fase:",
+  "phase": "Phase :",
   "@phase": {
     "description": "Label for phase dropdown"
   },
-  "selectCompletedPhases": "Seleccione la(s) fase(s) completada(s)",
+  "selectCompletedPhases": "Sélectionnez la ou les phases terminées",
   "@selectCompletedPhases": {
     "description": "Tooltip for phase dropdown"
   },
-  "noPhase": "Sin fase",
+  "noPhase": "Aucune phase",
   "@noPhase": {
     "description": "Option for no phase selected"
   },
-  "phaseNumber": "Fase {phaseNumber}",
+  "phaseNumber": "Phase {phaseNumber}",
   "@phaseNumber": {
     "description": "Phase option text",
     "placeholders": {
@@ -170,7 +170,7 @@
       }
     }
   },
-  "playerRoundModalTitle": "Jugador {playerNumber} - Ronda {roundNumber}",
+  "playerRoundModalTitle": "Joueur {playerNumber} - Manche {roundNumber}",
   "@playerRoundModalTitle": {
     "description": "Title for player round modal",
     "placeholders": {
@@ -182,63 +182,63 @@
       }
     }
   },
-  "invalidScoreForRound": "Puntuación inválida para esta ronda",
+  "invalidScoreForRound": "Score invalide pour cette manche",
   "@invalidScoreForRound": {
     "description": "Error message when score doesn't match filter"
   },
-  "startNewGame": "¿Iniciar nuevo juego?",
+  "startNewGame": "Commencer une nouvelle partie ?",
   "@startNewGame": {
     "description": "Title for new game dialog"
   },
-  "startNewGameMessage": "¿Está seguro de que desea iniciar un nuevo juego? La tarjeta de puntuación se borrará.",
+  "startNewGameMessage": "Êtes-vous sûr de vouloir commencer une nouvelle partie ? La carte de score sera effacée.",
   "@startNewGameMessage": {
     "description": "Message in new game dialog"
   },
-  "clearPlayerNames": "Borrar los nombres de los jugadores",
+  "clearPlayerNames": "Effacer les noms des joueurs",
   "@clearPlayerNames": {
     "description": "Checkbox label for clearing player names"
   },
-  "cancel": "Cancelar",
+  "cancel": "Annuler",
   "@cancel": {
     "description": "Cancel button text"
   },
-  "newGame": "Nuevo juego",
+  "newGame": "Nouvelle partie",
   "@newGame": {
     "description": "New game button text"
   },
-  "gameReset": "¡Juego reiniciado!",
+  "gameReset": "Partie réinitialisée !",
   "@gameReset": {
     "description": "Snackbar message when game is reset"
   },
-  "newGameSameTypeTooltip": "Nuevo juego - Usando mismo tipo de tarjeta de puntuación",
+  "newGameSameTypeTooltip": "Nouvelle partie - Même type de carte de score",
   "@newGameSameTypeTooltip": {
     "description": "Tooltip for new game button"
   },
-  "changeScorecardType": "Cambiar tipo de tarjeta de puntuación",
+  "changeScorecardType": "Changer le type de carte de score",
   "@changeScorecardType": {
     "description": "Title for change scorecard type dialog"
   },
-  "changeScorecardTypeMessage": "¿Está seguro de que desea cambiar el tipo de tarjeta de puntuación? La tarjeta se borrará.",
+  "changeScorecardTypeMessage": "Êtes-vous sûr de vouloir changer le type de carte de score ? La carte de score sera effacée.",
   "@changeScorecardTypeMessage": {
     "description": "Message in change scorecard type dialog"
   },
-  "changeScorecard": "Cambiar tarjeta de puntuación",
+  "changeScorecard": "Changer la carte de score",
   "@changeScorecard": {
     "description": "Button text to change scorecard"
   },
-  "newGameChangeScorecardType": "Nuevo juego - Cambiar tipo de tarjeta de puntuación",
+  "newGameChangeScorecardType": "Nouvelle partie - Changer le type de carte de score",
   "@newGameChangeScorecardType": {
     "description": "Tooltip for change scorecard type button"
   },
-  "shareScores": "Compartir puntuaciones",
+  "shareScores": "Partager les scores",
   "@shareScores": {
     "description": "Tooltip for share button"
   },
-  "noScoresToShare": "No hay puntuaciones para compartir",
+  "noScoresToShare": "Aucun score à partager",
   "@noScoresToShare": {
     "description": "Message when there are no scores to share"
   },
-  "miles": "Kilómetros",
+  "miles": "Bornes",
   "@miles": {
     "description": "Miles travelled"
   },
@@ -246,71 +246,71 @@
   "@safeties": {
     "description": "Safeties played"
   },
-  "coupFourre": "Coup Fourré",
+  "coupFourre": "Coup fourré",
   "@coupFourre": {
     "description": "Coup fourre played"
   },
-  "delayedAction": "Acción retardada",
+  "delayedAction": "Couronnement",
   "@delayedAction": {
     "description": "Delayed action played"
   },
-  "safeTrip": "Viaje seguro",
+  "safeTrip": "Voyage sans les 200",
   "@safeTrip": {
     "description": "Safe trip played"
   },
-  "shutOut": "Capote",
+  "shutOut": "Capot",
   "@shutOut": {
     "description": "Bonus for completing the trip before opponents play any distance cards"
   },
-  "milesTooltip": "Cada equipo suma tantos puntos como el número total de kilómetros que ha recorrido.",
+  "milesTooltip": "Chaque équipe marque autant de points que le nombre total de bornes qu'elle a parcourues.",
   "@milesTooltip": {
     "description": "Tooltip for miles field"
   },
-  "safetiesTooltip": "100 puntos por cada botte (carta de seguridad) jugada.",
+  "safetiesTooltip": "100 points pour chaque botte jouée.",
   "@safetiesTooltip": {
     "description": "Tooltip for safeties section"
   },
-  "coupFourreTooltip": "300 puntos además de los 100 puntos por la botte.",
+  "coupFourreTooltip": "300 points en plus des 100 points de la botte.",
   "@coupFourreTooltip": {
     "description": "Tooltip for Coup Fourre section"
   },
-  "delayedActionTooltip": "Si el viaje se completa después de que se hayan jugado todas las cartas del mazo de robo.",
+  "delayedActionTooltip": "Si le voyage est terminé après que toutes les cartes de la pioche ont été jouées.",
   "@delayedActionTooltip": {
     "description": "Tooltip for Delayed Action bonus"
   },
-  "safeTripTooltip": "Si el viaje se completa sin jugar ninguna carta de 200 kilómetros.",
+  "safeTripTooltip": "Si le voyage est terminé sans jouer de carte 200 bornes.",
   "@safeTripTooltip": {
     "description": "Tooltip for Safe Trip bonus"
   },
-  "shutOutTooltip": "Completar el viaje de 1000 kilómetros antes de que los oponentes hayan jugado ninguna carta de distancia.",
+  "shutOutTooltip": "Terminer un voyage de 1000 bornes avant que les adversaires n'aient joué de carte de distance.",
   "@shutOutTooltip": {
     "description": "Tooltip for Shut Out bonus"
   },
-  "trademarkDisclaimer": "Todos los nombres de productos y empresas son marcas comerciales™ o marcas registradas® de sus respectivos propietarios. Su uso no implica ninguna afiliación o respaldo por su parte. FreemanS Score Card es una aplicación independiente y no está patrocinada ni aprobada por ningún propietario de marca comercial externo.",
+  "trademarkDisclaimer": "Tous les noms de produits et de sociétés sont des marques commerciales™ ou des marques déposées® de leurs détenteurs respectifs. Leur utilisation n'implique aucune affiliation ni approbation de leur part. FreemanS Score Card est une application indépendante et n'est ni parrainée ni approuvée par un tiers détenteur de marque.",
   "@trademarkDisclaimer": {
     "description": "Trademark disclaimer shown in the about dialog"
   },
-  "shareLive": "Compartir vista en vivo",
+  "shareLive": "Partager la vue en direct",
   "@shareLive": {
     "description": "Tooltip and semantic label for host live score sharing"
   },
-  "joinLiveGame": "Unirse a juego en vivo",
+  "joinLiveGame": "Rejoindre une partie en direct",
   "@joinLiveGame": {
     "description": "Button to join a live game as spectator"
   },
-  "joinLiveGameTooltip": "Ambos dispositivos deben estar en la misma red Wi-Fi.",
+  "joinLiveGameTooltip": "Les deux appareils doivent être sur le même réseau Wi-Fi.",
   "@joinLiveGameTooltip": {
     "description": "Tooltip on splash Join live game button"
   },
-  "liveSharingTitle": "Compartir en vivo",
+  "liveSharingTitle": "Partage en direct",
   "@liveSharingTitle": {
     "description": "Title for live host dialog"
   },
-  "liveSharingInstructions": "Otros jugadores en la misma Wi-Fi pueden escanear este código o elegir este juego en [Unirse a juego en vivo].",
+  "liveSharingInstructions": "Les joueurs sur le même Wi-Fi peuvent scanner ce code ou choisir cette partie depuis [Rejoindre une partie en direct].",
   "@liveSharingInstructions": {
     "description": "Instructions on host live dialog"
   },
-  "connectionPin": "PIN: {pin}",
+  "connectionPin": "NIP : {pin}",
   "@connectionPin": {
     "description": "PIN shown for live session",
     "placeholders": {
@@ -319,39 +319,39 @@
       }
     }
   },
-  "copyConnectionUrl": "Copiar enlace de conexión",
+  "copyConnectionUrl": "Copier le lien de connexion",
   "@copyConnectionUrl": {
     "description": "Copy ws connection URL to clipboard"
   },
-  "connectionUrlCopied": "Enlace de conexión copiado",
+  "connectionUrlCopied": "Lien de connexion copié",
   "@connectionUrlCopied": {
     "description": "Snackbar after copying connection URL"
   },
-  "stopLiveSharing": "Dejar de compartir",
+  "stopLiveSharing": "Arrêter le partage",
   "@stopLiveSharing": {
     "description": "Stop hosting live session"
   },
-  "liveSharingUnavailable": "El uso compartido en vivo está disponible en Android e iOS cuando todos están en la misma Wi-Fi.",
+  "liveSharingUnavailable": "Le partage en direct est disponible sur Android et iOS lorsque tout le monde est sur le même Wi-Fi.",
   "@liveSharingUnavailable": {
     "description": "Hint when live sync is not supported on this platform"
   },
-  "joinLiveGameTitle": "Unirse a juego en vivo",
+  "joinLiveGameTitle": "Rejoindre une partie en direct",
   "@joinLiveGameTitle": {
     "description": "Title for join live game screen"
   },
-  "discoveredHosts": "Juegos en esta red",
+  "discoveredHosts": "Parties sur ce réseau",
   "@discoveredHosts": {
     "description": "Section header for mDNS discovered hosts"
   },
-  "noHostsFound": "No se encontraron juegos. Pida al anfitrión que comparta su código QR.",
+  "noHostsFound": "Aucune partie trouvée. Demandez à l'hôte de partager son code QR.",
   "@noHostsFound": {
     "description": "Empty state for mDNS browse"
   },
-  "scanConnectionQr": "Escanear QR de conexión",
+  "scanConnectionQr": "Scanner le QR de connexion",
   "@scanConnectionQr": {
     "description": "Button to scan host QR"
   },
-  "manualConnection": "Conectar manualmente",
+  "manualConnection": "Se connecter manuellement",
   "@manualConnection": {
     "description": "Expand manual ws URL entry"
   },
@@ -359,19 +359,19 @@
   "@connectionUrlHint": {
     "description": "Hint for manual connection URL field"
   },
-  "connect": "Conectar",
+  "connect": "Se connecter",
   "@connect": {
     "description": "Connect to live host button"
   },
-  "liveSpectatorTitle": "Puntuaciones en vivo",
+  "liveSpectatorTitle": "Scores en direct",
   "@liveSpectatorTitle": {
     "description": "App bar title for spectator view"
   },
-  "liveConnectionConnecting": "Conectando…",
+  "liveConnectionConnecting": "Connexion…",
   "@liveConnectionConnecting": {
     "description": "Spectator banner while connecting"
   },
-  "liveConnectionConnected": "Conectado a {host}",
+  "liveConnectionConnected": "Connecté à {host}",
   "@liveConnectionConnected": {
     "description": "Spectator banner when connected to a host target",
     "placeholders": {
@@ -380,70 +380,70 @@
       }
     }
   },
-  "liveConnectionConnectedOnly": "Conectado",
+  "liveConnectionConnectedOnly": "Connecté",
   "@liveConnectionConnectedOnly": {
     "description": "Spectator banner when connected but no game id or IP is available"
   },
-  "liveConnectionReconnecting": "Reconectando…",
+  "liveConnectionReconnecting": "Reconnexion…",
   "@liveConnectionReconnecting": {
     "description": "Spectator banner while reconnecting"
   },
-  "liveConnectionWrongPin": "PIN incorrecto. Verifique el código del anfitrión.",
+  "liveConnectionWrongPin": "NIP incorrect. Vérifiez le code fourni par l'hôte.",
   "@liveConnectionWrongPin": {
     "description": "Spectator banner for wrong PIN"
   },
-  "liveConnectionVersionMismatch": "La versión principal de la app no coincide con la del anfitrión. Actualice ambos dispositivos a la misma versión principal de FS Score Card.",
+  "liveConnectionVersionMismatch": "La version majeure de l'application ne correspond pas à celle de l'hôte. Mettez à jour les deux appareils vers la même version majeure de FS Score Card.",
   "@liveConnectionVersionMismatch": {
     "description": "Spectator banner when app major version differs from host"
   },
-  "liveSyncAppVersionUnknown": "No se puede iniciar el uso compartido en vivo hasta conocer la versión de la app. Reinicie la app e intente de nuevo.",
+  "liveSyncAppVersionUnknown": "Impossible de démarrer le partage en direct tant que la version de l'application est inconnue. Redémarrez l'application et réessayez.",
   "@liveSyncAppVersionUnknown": {
     "description": "Error when host cannot determine app version for live sync"
   },
-  "liveConnectionCannotReachHost": "No se puede contactar al anfitrión. Use la misma Wi-Fi e intente de nuevo.",
+  "liveConnectionCannotReachHost": "Impossible de joindre l'hôte. Utilisez le même Wi-Fi et réessayez.",
   "@liveConnectionCannotReachHost": {
     "description": "Spectator banner when connection fails"
   },
-  "liveConnectionHostClosed": "El anfitrión dejó de compartir.",
+  "liveConnectionHostClosed": "L'hôte a arrêté le partage.",
   "@liveConnectionHostClosed": {
     "description": "Spectator banner when host closes session"
   },
-  "liveConnectionFailed": "Conexión fallida.",
+  "liveConnectionFailed": "Échec de la connexion.",
   "@liveConnectionFailed": {
     "description": "Spectator banner generic failure"
   },
-  "leaveLiveView": "Salir",
+  "leaveLiveView": "Quitter",
   "@leaveLiveView": {
     "description": "Leave spectator live view"
   },
-  "leaveLiveViewLabel": "Salir de la vista en vivo",
-  "requestNewGameSameType": "Solicitar nuevo juego, mismo tipo",
-  "scoreTableLabel": "Tabla de puntuación",
-  "roundLabel": "Ronda {roundNumber}",
-  "roundLockButtonLabel": "Botón de bloqueo de la ronda {roundNumber}",
-  "joinHostLabel": "Unirse a {hostName}",
-  "shareGameScores": "Compartir puntuaciones del juego",
-  "requestChangeScorecardType": "Solicitar cambio de tipo de tarjeta de puntuación",
-  "roundScoreLabel": "Puntuación de la ronda",
-  "milesDrivenLabel": "Kilómetros recorridos",
-  "numberOfSafetiesLabel": "Número de bottes",
-  "numberOfCoupFourreLabel": "Número de coups fourrés",
-  "delayedActionBonusLabel": "Bonificación de acción retardada",
-  "safeTripBonusLabel": "Bonificación de viaje seguro",
-  "shutOutBonusLabel": "Bonificación de capote",
-  "playerTotalLabel": "Jugador y total",
-  "playerNameAndTotalLabel": "Nombre y puntuación total del jugador {playerNumber}",
-  "playerNameLabel": "Nombre del jugador",
-  "numberOfPlayersLabel": "Número de jugadores",
-  "maximumRoundsLabel": "Rondas máximas",
-  "gameModeLabel": "Modo de juego",
-  "scoreFilterLabel": "Filtro de puntuación",
-  "enableEndGameScoreLabel": "Activar puntuación de fin de juego",
-  "endGameScoreLabel": "Puntuación de fin de juego",
-  "playerRoundScoreLabel": "Puntuación del jugador {playerNumber} en la ronda {roundNumber}",
-  "playerGameModalLabel": "Ventana del juego del jugador {playerNumber}",
-  "playerTotalScoreLabel": "Puntuación total del jugador {playerNumber}",
-  "playerRoundPhaseLabel": "Fase del jugador {playerNumber} en la ronda {roundNumber}",
-  "playerNameValueLabel": "Nombre del jugador {playerNumber}",
-  "liveConnectionQrLabel": "Código QR de conexión en vivo"
+  "leaveLiveViewLabel": "Quitter la vue en direct",
+  "requestNewGameSameType": "Demander une nouvelle partie, même type",
+  "scoreTableLabel": "Tableau des scores",
+  "roundLabel": "Manche {roundNumber}",
+  "roundLockButtonLabel": "Bouton de verrouillage de la manche {roundNumber}",
+  "joinHostLabel": "Rejoindre {hostName}",
+  "shareGameScores": "Partager les scores de la partie",
+  "requestChangeScorecardType": "Demander le changement de type de carte de score",
+  "roundScoreLabel": "Score de la manche",
+  "milesDrivenLabel": "Bornes parcourues",
+  "numberOfSafetiesLabel": "Nombre de bottes",
+  "numberOfCoupFourreLabel": "Nombre de coups fourrés",
+  "delayedActionBonusLabel": "Bonus de couronnement",
+  "safeTripBonusLabel": "Bonus voyage sans les 200",
+  "shutOutBonusLabel": "Bonus de capot",
+  "playerTotalLabel": "Joueur et total",
+  "playerNameAndTotalLabel": "Nom et score total du joueur {playerNumber}",
+  "playerNameLabel": "Nom du joueur",
+  "numberOfPlayersLabel": "Nombre de joueurs",
+  "maximumRoundsLabel": "Manches maximales",
+  "gameModeLabel": "Mode de jeu",
+  "scoreFilterLabel": "Filtre de score",
+  "enableEndGameScoreLabel": "Activer le score de fin de partie",
+  "endGameScoreLabel": "Score de fin de partie",
+  "playerRoundScoreLabel": "Score du joueur {playerNumber} à la manche {roundNumber}",
+  "playerGameModalLabel": "Fenêtre de jeu du joueur {playerNumber}",
+  "playerTotalScoreLabel": "Score total du joueur {playerNumber}",
+  "playerRoundPhaseLabel": "Phase du joueur {playerNumber} à la manche {roundNumber}",
+  "playerNameValueLabel": "Nom du joueur {playerNumber}",
+  "liveConnectionQrLabel": "QR code de connexion en direct"
 }

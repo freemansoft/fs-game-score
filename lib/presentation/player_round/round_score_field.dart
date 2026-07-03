@@ -144,7 +144,7 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Round Score',
+      label: AppLocalizations.of(context)!.roundScoreLabel,
       child: TextFormField(
         controller: _controller,
         focusNode: _focusNode,

@@ -101,7 +101,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 16),
         Semantics(
           button: true,
-          label: 'Number of Players',
+          label: l10n.numberOfPlayersLabel,
           child: DropdownButton<int>(
             key: SplashScreen.numPlayersDropdownKey,
             value: thisGame.configuration.numPlayers,
@@ -141,7 +141,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 12),
         Semantics(
           button: true,
-          label: 'Maximum Rounds',
+          label: l10n.maximumRoundsLabel,
           child: DropdownButton<int>(
             key: SplashScreen.maxRoundsDropdownKey,
             value: thisGame.configuration.maxRounds,
@@ -181,7 +181,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 12),
         Semantics(
           button: true,
-          label: 'Game Mode',
+          label: l10n.gameModeLabel,
           child: DropdownButton<GameMode>(
             key: SplashScreen.gameModeDropdownKey,
             value: thisGame.configuration.gameMode,
@@ -255,7 +255,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         const SizedBox(width: 12),
         Semantics(
           button: true,
-          label: 'Score Filter',
+          label: l10n.scoreFilterLabel,
           child: DropdownButton<String>(
             key: SplashScreen.scoreFilterDropdownKey,
             value: thisGame.configuration.scoreFilter,
@@ -304,7 +304,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             return Row(
               children: [
                 Semantics(
-                  label: 'Enable End Game Score',
+                  label: l10n.enableEndGameScoreLabel,
                   checked: _endGameScoreEnabled,
                   child: Checkbox(
                     key: SplashScreen.endGameScoreCheckboxKey,
@@ -327,7 +327,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 SizedBox(
                   width: 160,
                   child: Semantics(
-                    label: 'End Game Score',
+                    label: l10n.endGameScoreLabel,
                     child: TextField(
                       key: SplashScreen.endGameScoreFieldKey,
                       enabled: _endGameScoreEnabled,
@@ -451,7 +451,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 message: AppLocalizations.of(context)!.joinLiveGameTooltip,
                 child: Semantics(
                   button: true,
-                  label: 'Join live game',
+                  label: AppLocalizations.of(context)!.joinLiveGame,
                   child: OutlinedButton(
                     key: SplashScreen.joinLiveButtonKey,
                     onPressed: () => context.pushNamed('joinLive'),

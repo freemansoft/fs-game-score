@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
 
 // ignore_for_file: type=lint
 
@@ -96,6 +97,7 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('es'),
+    Locale('fr'),
   ];
 
   /// The application title
@@ -167,7 +169,7 @@ abstract class AppLocalizations {
   /// French Driving game mode option
   ///
   /// In en, this message translates to:
-  /// **'French Driving'**
+  /// **'Mille Bornes'**
   String get gameModeFrenchDriving;
 
   /// Skyjo game mode option
@@ -449,7 +451,7 @@ abstract class AppLocalizations {
   /// Bonus for completing the trip before opponents play any distance cards
   ///
   /// In en, this message translates to:
-  /// **'Shut Out'**
+  /// **'Shut-Out'**
   String get shutOut;
 
   /// Tooltip for miles field
@@ -667,6 +669,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leave'**
   String get leaveLiveView;
+
+  /// Semantic label for leave live view button
+  ///
+  /// In en, this message translates to:
+  /// **'Leave live view'**
+  String get leaveLiveViewLabel;
+
+  /// Semantic label for new game (same type) button
+  ///
+  /// In en, this message translates to:
+  /// **'Request new game, same type'**
+  String get requestNewGameSameType;
+
+  /// Semantic label for the score table
+  ///
+  /// In en, this message translates to:
+  /// **'Score table'**
+  String get scoreTableLabel;
+
+  /// Semantic label for a round column header
+  ///
+  /// In en, this message translates to:
+  /// **'Round {roundNumber}'**
+  String roundLabel(int roundNumber);
+
+  /// Semantic label for a round lock button
+  ///
+  /// In en, this message translates to:
+  /// **'Round {roundNumber} lock button'**
+  String roundLockButtonLabel(int roundNumber);
+
+  /// Semantic label for joining a discovered host
+  ///
+  /// In en, this message translates to:
+  /// **'Join {hostName}'**
+  String joinHostLabel(String hostName);
+
+  /// Semantic label for the share scores button
+  ///
+  /// In en, this message translates to:
+  /// **'Share game scores'**
+  String get shareGameScores;
+
+  /// Semantic label for the change scorecard type button
+  ///
+  /// In en, this message translates to:
+  /// **'Request change scorecard type'**
+  String get requestChangeScorecardType;
+
+  /// Semantic label for a round score field
+  ///
+  /// In en, this message translates to:
+  /// **'Round score'**
+  String get roundScoreLabel;
+
+  /// Semantic label for the Mille Bornes miles/distance field
+  ///
+  /// In en, this message translates to:
+  /// **'Miles driven'**
+  String get milesDrivenLabel;
+
+  /// Semantic label for the safeties count dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Number of safeties'**
+  String get numberOfSafetiesLabel;
+
+  /// Semantic label for the coup fourré count dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Coup Fourré'**
+  String get numberOfCoupFourreLabel;
+
+  /// Semantic label for the delayed action bonus checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed Action bonus'**
+  String get delayedActionBonusLabel;
+
+  /// Semantic label for the safe trip bonus checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'Safe Trip bonus'**
+  String get safeTripBonusLabel;
+
+  /// Semantic label for the shut-out bonus checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'Shut-Out bonus'**
+  String get shutOutBonusLabel;
+
+  /// Semantic label for the player/total column header
+  ///
+  /// In en, this message translates to:
+  /// **'Player and total'**
+  String get playerTotalLabel;
+
+  /// Semantic label for a player name and total score cell
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} name and total score'**
+  String playerNameAndTotalLabel(int playerNumber);
+
+  /// Semantic label for the player name field
+  ///
+  /// In en, this message translates to:
+  /// **'Player name'**
+  String get playerNameLabel;
+
+  /// Semantic label for the number of players selector
+  ///
+  /// In en, this message translates to:
+  /// **'Number of players'**
+  String get numberOfPlayersLabel;
+
+  /// Semantic label for the maximum rounds selector
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum rounds'**
+  String get maximumRoundsLabel;
+
+  /// Semantic label for the game mode selector
+  ///
+  /// In en, this message translates to:
+  /// **'Game mode'**
+  String get gameModeLabel;
+
+  /// Semantic label for the score filter selector
+  ///
+  /// In en, this message translates to:
+  /// **'Score filter'**
+  String get scoreFilterLabel;
+
+  /// Semantic label for the enable end game score toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Enable end game score'**
+  String get enableEndGameScoreLabel;
+
+  /// Semantic label for the end game score field
+  ///
+  /// In en, this message translates to:
+  /// **'End game score'**
+  String get endGameScoreLabel;
+
+  /// Semantic label for a player round score cell
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} round {roundNumber} score'**
+  String playerRoundScoreLabel(int playerNumber, int roundNumber);
+
+  /// Semantic label for the player game modal
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} game modal'**
+  String playerGameModalLabel(int playerNumber);
+
+  /// Semantic label for a player total score value
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} total score'**
+  String playerTotalScoreLabel(int playerNumber);
+
+  /// Semantic label for a player round phase value
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} round {roundNumber} phase'**
+  String playerRoundPhaseLabel(int playerNumber, int roundNumber);
+
+  /// Semantic label for a player name value
+  ///
+  /// In en, this message translates to:
+  /// **'Player name {playerNumber}'**
+  String playerNameValueLabel(int playerNumber);
+
+  /// Semantic label for the live connection QR code image
+  ///
+  /// In en, this message translates to:
+  /// **'Live connection QR code'**
+  String get liveConnectionQrLabel;
 }
 
 class _AppLocalizationsDelegate
@@ -680,7 +862,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'es'].contains(locale.languageCode);
+      <String>['en', 'es', 'fr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -693,6 +875,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
   }
 
   throw FlutterError(

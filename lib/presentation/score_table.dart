@@ -53,9 +53,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
     }
     final minWidth = 100 + game.configuration.maxRounds * 100;
     final readOnly = widget.readOnly;
+    final l10n = AppLocalizations.of(context)!;
 
     return Semantics(
-      label: 'Score Table',
+      label: l10n.scoreTableLabel,
       child: DataTable2(
         columnSpacing: 12,
         horizontalMargin: 12,
@@ -77,8 +78,8 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
         columns: [
           DataColumn2(
             label: Text(
-              AppLocalizations.of(context)!.playerTotal,
-              semanticsLabel: 'Player and Total',
+              l10n.playerTotal,
+              semanticsLabel: l10n.playerTotalLabel,
             ),
             headingRowAlignment: MainAxisAlignment.center,
             size: ColumnSize.L,
@@ -89,7 +90,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
             final allEnabled = players.allPlayersEnabledForRound(round);
             return DataColumn2(
               label: Semantics(
-                label: 'Round ${round + 1}',
+                label: l10n.roundLabel(round + 1),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -97,7 +98,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     const SizedBox(width: 4),
                     if (!readOnly)
                       Semantics(
-                        label: 'Round ${round + 1} lock button',
+                        label: l10n.roundLockButtonLabel(round + 1),
                         child: IconButton(
                           key: ScoreTable.lockRoundKey(round),
                           visualDensity: VisualDensity.comfortable,
