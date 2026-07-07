@@ -1,95 +1,59 @@
-# Game modes to support special scoring rules for different games in this application.
+---
+diataxis: reference
+---
 
-The game mode is selected on the splash screen. The scoring filter is automatically set based on the game mode.
+# Game modes and special scoring rules
 
-You can end a game and start a new game with a different game mode using the "New Game" icon in the app bar.
+Reference for the scoring rules and internal data model of each game mode. For the step-by-step of editing names and scores in the app, see **[How-To-Edit-Scores.md](How-To-Edit-Scores.md)**.
 
-## Overview
+The game mode is selected on the splash screen; the scoring filter is set automatically from the mode. A game can be ended and restarted in a different mode via the **New Game** icon in the app bar. The score sheet and editing panels change based on the active mode.
 
-This app supports the special scoring rules as a general purpose score sheet, for Phase-10 the card game for French Driving. The game mode is selected on the splash screen. The game sheet and editing panels change based on the game mode
+## Supported modes
 
-Player names can be edited by clicking on the name cell in the scoring table. The name can be changed in the modal editing panel that appears.
-
-Scores or rounds state is edited by clicking on the cell representing the round for the player. This will open a modal editing panel for that round. The modal editing panel will close when the user clicks anywhere outside of the panel border.
-
-### General Scoring: Validating input data
-
-Fields should validate input data and show an error message if the input is invalid. It can be the errorText on the TextFOrmField decorator `errorText` or a SnackBar message.
-
-## Game Mode Selection
-
-The game mode is selected on the splash screen. The game mode can be changed by clicking on the "New Game" icon in the app bar.
-
-Supported Game modes include
-
-- General Scoring
+- General (Standard) Scoring
 - Phase 10 Scoring
 - French Driving Scoring
 - Skyjo
 
-## Standard Mode Scoring
+The game sheet displays each player's per-round score in the round cell and a calculated **Total** column (sum of round scores). Player names appear in the Total column.
 
-This mode supports round base scoring an player total calculation on per round basis. The round score is displayed in the cell representing the round for the player. Total scores and player names are displayed in the "Total" column. The total column is the calculated sum of the per rounds scores.
+## Standard Mode
 
-An end-game condition can be specified that will cause the game to highlght any players that reach the "end game" score. The end game condition is specified as a number of points.
+Round-based scoring with per-round player totals. An optional **end-game condition** (a point value) highlights any player that reaches the end-game score.
 
-### Standard Mode Scoring: Editing Per Round Scores
+### Standard Mode internal model
 
-- Click on a score cell in the scoring table to edit the score.
-- The score can be changed in the modal editing panel that appears. The panel will show the _player name_, _round number_, and _round score_ for the selected round.
-- You can edit the _round score_ in the _round score_ field.
-- The _round_score_ field is a numeric field that can be positive numbers.
-- Close the editing panel by clicking anywhere outside of the panel border.
+Each `Player` has:
 
-The _round score_ field has focus when the modal is opened.
+- A `Scores` object — the _round score_ for each round.
+- A `RoundStates` object — per-round lock flags that block editing of a round's scores (prevents accidental changes).
 
-### Standard Mode Scoring internal model
+## Skyjo Mode
 
-The internal model is a list of Players. Each Player has
+Identical to Standard Mode plus:
 
-- A Scores object that contains a list containing the _round score_ for each round
-- A RoundStates object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
+- Negative round scores are allowed.
+- Selecting Skyjo on the splash screen auto-selects the end-score checkbox and sets the end score to **100**.
 
-## Skyjo Scoring
+## Phase 10 Mode
 
-This is identical to Standard Mode plus
+Round-based scoring plus collection of completed **phases**. Each round cell shows the round score and any phase completed that round. Round scores all end in **0 or 5**; a splash-screen filter can restrict entry to values ending in 0 or 5. Tapping a player in the Total column shows which phases they have completed.
 
-- Skyjo mode adds the ability to handle negative round scores
-- Selecting Skyjo mode on the splash screen auto-selects the end score checkbox and sets the end score to 100
+### Phase 10 internal model
 
-## Phase 10 Scoring
+Each `Player` has:
 
-This mode supports round base scoring an player total calculation on per round basis. The round score and any phase completed in that round is displayed in the cell representing the round for the player. Total scores and player names are displayed in the "Total" column. The total column is the calculated sum of the per rounds scores.
+- A `Scores` object — the _round score_ for each round.
+- A `Phases` object — the _phases_ completed by that player in specific rounds.
+- A `RoundStates` object — per-round lock flags (as Standard Mode).
 
-Phase-10 also supports the collection of completed phases and the display of the total score for each player. Total scores and player names are displayed in the "Total" column. You can click on a player in the total column to see which phases have been completed in a popup modal. Phase-10 rounds scores all end in 0 or 5 and a filter can be applied on the splash screen to only allow entry of rounds that end in 0 or 5.
+## French Driving Mode
 
-## Phase 10: Editing Per Round Scores
-
-- Click on a score cell in the scoring table to edit the score. The score can be changed in the modal editing panel that appears.
-- The panel will show the _player name_, _round number_, and _round score_ and the _phase completed_ for the selected round.
-- The _round_score_ field is a numeric field whose entry always ends in 0 or 5.
-- You can edit the _round score_ in the field and change the _phase completed_ in the dropdown.
-- Close the editing panel by clicking anywhere outside of the panel border.
-
-The _round score_ field has focus when the modal is opened.
-
-### Phase Scoring internal model
-
-The internal model is a list of Players. Each Player has
-
-- A Scores object that contains a list containing the _round score_ for each round
-- A Phases object that contains alist of _phases_ that represents the completed phases for that player in specific rounds.
-- A RoundStates object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
-
-## French Driving
-
-This program supports the special scoring rules for French Driving when configured in French Driving mode on the splash screen.
-
-- Selecting French Driving mode on the splash screen auto-selects the end score checkbox and sets the end score to 5000
+Special scoring rules for French Driving. Selecting the mode on the splash screen auto-selects the end-score checkbox and sets the end score to **5000**. The round score is **calculated** from the round's attributes and shown in the round cell; the composite category scores are visible by opening the cell.
 
 ### French Driving Scoring
 
-The per round score is calculated by applying the following rules to the attributes of the round. The score for a given round is displayed in the cell representing the round for the player. You can only see the composite category scores that made up the cell score by clicking on the cell. The score is totaled at the end of each hand, whether or not a trip of 1000 miles was completed, as follows:
+The score is totaled at the end of each hand, whether or not a 1000-mile trip was completed:
 
 | Event                                   | Notes                                                                               | Points         |
 | --------------------------------------- | ----------------------------------------------------------------------------------- | -------------- |
@@ -102,39 +66,16 @@ The per round score is calculated by applying the following rules to the attribu
 | Safe Trip bonus                         | If trip is completed without playing any 200 Mile Cards                             | 300            |
 | Shut Out bonus                          | Completing trip of 1000 miles before opponents have played any Distance Cards       | 500            |
 
-### French Driving Score Editing
+### French Driving internal model
 
-- Click on a score cell in the scoring table to edit the score. The score can be changed in the modal editing panel that appears.
-- The panel will show the following used to score the round
-  - non editable _player name_, _round number_, and aggregated _round score_ fields.
-  - a _miles traveled_ field
-  - The _miles_traveled_ field is a numeric field whose entry always ends in 0 or 5.
-  - dropdown for the number of Safties played that range from 0-4
-  - dropdown for the number of Coup Fourré played that range from 0-4
-  - check box for delayed action
-  - check box for safe trip
-  - check box for shut out
-- You cannot edit the _round score_ in the field.
-- Close the editing panel by clicking anywhere outside of the panel border.
+Each `Player` has:
 
-The _miles_ traveled field is a numeric field that can only hold positive integers. The _miles_ traveled field has focus when the modal is opened.
+- A `Scores` object — the _round score_ for each round.
+- A `FrenchDrivingRoundAttributes` list — the 8 per-round attributes used to calculate the score.
+- A `RoundStates` object — per-round lock flags (as Standard Mode).
 
-### French Driving Scoring internal model
+## System facts for developers
 
-The internal model is a list of Players. Each Player has
-
-- A Scores object that contains a list containing the _round score_ for each round
-- A FrenchDrivingRoundAttributes object that contains a list of French Driving round attribute objects that hold the 8 attributes of the round used to calculate the score
-- A RoundStates object that contains a list of per round lock flags that block editing of scores for that round. Locking is used to prevent accidental changes to the round scores.
-
-## Developer Notes
-
-This section is developer notes for developer and Agent based programming.
-
-### Internationalization
-
-This application supports multiple languages. The language is selected based on the device language. All user displayed text and labels are internationalized and can be found in the `lib/l10n` directory. The application will display the text in the selected language. If the selected language is not supported, the application will display the text in the default language, which is English.
-
-### Automated tests
-
-All major functional areas of the application are supported by automated tests. Full featured integration tests should exist for each game mode. Unit tests should exist for all data models and business logic.
+- **Internationalization:** All user-displayed text and labels are internationalized under `lib/l10n`. The app follows the device language and falls back to English when the selected language is unsupported. See the `fs-game-score-flutter-patterns` skill for the l10n workflow.
+- **Automated tests:** Each game mode has full integration test coverage; data models and business logic have unit tests. See the `fs-game-score-testing-workflow` skill.
+- **Input validation:** Fields validate input and show an error via `errorText` or a SnackBar. Editing procedures are in [How-To-Edit-Scores.md](How-To-Edit-Scores.md).

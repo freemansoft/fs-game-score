@@ -4,6 +4,9 @@
 *.pyc
 *.swp
 .DS_Store
+
+# Node (Prettier markdown toolchain)
+node_modules/
 .atom/
 .build/
 .buildlog/

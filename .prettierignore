@@ -1,0 +1,19 @@
+# Build output and tool caches
+build/
+.dart_tool/
+.fvm/
+node_modules/
+
+# Generated / platform scaffolding (not hand-authored docs)
+android/
+ios/
+macos/
+windows/
+linux/
+web/
+
+# Externally-sourced (vendored) skills — keep byte-identical to upstream so
+# diffs from the source repos stay obvious. Do not reformat.
+.agents/skills/dart-*/
+.agents/skills/flutter-*/
+.agents/skills/release-flutter-upgrade-sdk/

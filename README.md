@@ -87,10 +87,10 @@ More detail: [docs/Game-Modes.md](docs/Game-Modes.md).
 
 The app stores game data locally with **SharedPreferences** (browser **localStorage** on web). There is no cloud sync; live spectator views are not saved to disk.
 
-| What | When it is saved | Prefs key |
-| --- | --- | --- |
-| **Game configuration** | When you tap **Start new game** on the splash screen (players, rounds, mode, filters, end-game score) | `game_state` |
-| **Initial roster** | Immediately after **Start new game**, before the score table opens (empty scores, default names) | `players_state` |
+| What                   | When it is saved                                                                                      | Prefs key       |
+| ---------------------- | ----------------------------------------------------------------------------------------------------- | --------------- |
+| **Game configuration** | When you tap **Start new game** on the splash screen (players, rounds, mode, filters, end-game score) | `game_state`    |
+| **Initial roster**     | Immediately after **Start new game**, before the score table opens (empty scores, default names)      | `players_state` |
 | **Scores during play** | Automatically while you edit the score table (coalesced saves—one write in flight, latest state wins) | `players_state` |
 
 ### Resume after restart
@@ -101,12 +101,12 @@ This supports accidental browser reloads, app suspension on mobile, and closing 
 
 ### Clearing state
 
-| Action | Game configuration (`game_state`) | Player progress (`players_state`) |
-| --- | --- | --- |
-| **Start new game** (splash) | Replaced with new settings | Replaced with a fresh roster |
-| **New Game** (score table app bar) | Unchanged | Scores cleared; names optional |
-| **Change Scorecard Type** (return to splash) | Kept as splash defaults | Cleared when splash loads |
-| **Join live game** (spectator) | Unchanged on your device | Not written; view is in memory only |
+| Action                                       | Game configuration (`game_state`) | Player progress (`players_state`)   |
+| -------------------------------------------- | --------------------------------- | ----------------------------------- |
+| **Start new game** (splash)                  | Replaced with new settings        | Replaced with a fresh roster        |
+| **New Game** (score table app bar)           | Unchanged                         | Scores cleared; names optional      |
+| **Change Scorecard Type** (return to splash) | Kept as splash defaults           | Cleared when splash loads           |
+| **Join live game** (spectator)               | Unchanged on your device          | Not written; view is in memory only |
 
 Entering the splash screen clears in-memory and persisted player progress so the next **Start new game** begins with a clean roster. Returning from the score table waits for that clear to finish before navigation.
 

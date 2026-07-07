@@ -1,3 +1,7 @@
+---
+diataxis: reference
+---
+
 # Semantics Labels
 
 All of the important UI elements must have semantic labels. This includes any controls like buttons and any input fields. The following widgets have semantics labels defined to support accessibility and to support web and other e2e tests.

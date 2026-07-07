@@ -14,19 +14,19 @@ This project uses **FVM** (Flutter Version Management) to manage the Flutter SDK
 
 ### Correct Command Usage Examples
 
-| Task | Incorrect Command | Correct Command |
-| :--- | :--- | :--- |
-| **Install / pin SDK** | `flutter install` | `fvm install` / `fvm use` |
-| **Clean Project** | `flutter clean` | `fvm flutter clean` |
-| **Get Dependencies** | `flutter pub get` | `fvm flutter pub get` |
-| **Generate l10n** | `flutter gen-l10n` | `fvm flutter gen-l10n` |
-| **Run App** | `flutter run` | `fvm flutter run` |
-| **Build** | `flutter build …` | `fvm flutter build <platform>` |
-| **Build Web** | `flutter build web …` | `fvm flutter build web …` |
-| **Run Analysis** | `flutter analyze` | `fvm flutter analyze` |
-| **Run Tests** | `flutter test` | `fvm flutter test` |
-| **Format Code** | `dart format .` | `fvm dart format .` |
-| **Run Dart tool** | `dart run …` | `fvm dart run …` |
+| Task                  | Incorrect Command     | Correct Command                |
+| :-------------------- | :-------------------- | :----------------------------- |
+| **Install / pin SDK** | `flutter install`     | `fvm install` / `fvm use`      |
+| **Clean Project**     | `flutter clean`       | `fvm flutter clean`            |
+| **Get Dependencies**  | `flutter pub get`     | `fvm flutter pub get`          |
+| **Generate l10n**     | `flutter gen-l10n`    | `fvm flutter gen-l10n`         |
+| **Run App**           | `flutter run`         | `fvm flutter run`              |
+| **Build**             | `flutter build …`     | `fvm flutter build <platform>` |
+| **Build Web**         | `flutter build web …` | `fvm flutter build web …`      |
+| **Run Analysis**      | `flutter analyze`     | `fvm flutter analyze`          |
+| **Run Tests**         | `flutter test`        | `fvm flutter test`             |
+| **Format Code**       | `dart format .`       | `fvm dart format .`            |
+| **Run Dart tool**     | `dart run …`          | `fvm dart run …`               |
 
 > [!WARNING]
 > Running commands without the `fvm` prefix can cause compilation issues, version mismatch errors, or corrupt the local build cache due to using a different system-installed Flutter version than the one specified in `.fvmrc`.
@@ -119,14 +119,14 @@ fvm flutter test integration_test/*_test.dart
 
 Cursor and Antigravity auto-discover skills in [`.agents/skills/`](.agents/skills/) when frontmatter is valid. Copilot reads this file — open the skill file when the task matches.
 
-| Skill | Use when |
-| :--- | :--- |
-| `fs-game-score-widgets-holding-player-game-data` | Player/round UI, widget keys, semantics, modals |
-| `fs-game-score-flutter-patterns` | General Flutter/Riverpod UI work |
-| `fs-game-score-testing-workflow` | Tests, widget keys in tests, accessibility |
-| `fs-game-score-live-sync` | LAN live sharing (host/spectator, protocol, join UI) |
-| `fs-game-score-release-engineer` | Version tagging, builds, CHANGELOG, store release notes |
-| `release-flutter-upgrade-sdk` | Flutter/Dart SDK upgrades (FVM, CI, changelogs) |
+| Skill                                            | Use when                                                |
+| :----------------------------------------------- | :------------------------------------------------------ |
+| `fs-game-score-widgets-holding-player-game-data` | Player/round UI, widget keys, semantics, modals         |
+| `fs-game-score-flutter-patterns`                 | General Flutter/Riverpod UI work                        |
+| `fs-game-score-testing-workflow`                 | Tests, widget keys in tests, accessibility              |
+| `fs-game-score-live-sync`                        | LAN live sharing (host/spectator, protocol, join UI)    |
+| `fs-game-score-release-engineer`                 | Version tagging, builds, CHANGELOG, store release notes |
+| `release-flutter-upgrade-sdk`                    | Flutter/Dart SDK upgrades (FVM, CI, changelogs)         |
 
 Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests, widget tests, l10n, routing, etc.).
 
@@ -141,14 +141,14 @@ Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests,
 
 ## Quick file references
 
-| Area | Paths |
-| :--- | :--- |
-| Widget key helpers | [player_round_modal.dart](lib/presentation/player_round/player_round_modal.dart), [player_game_cell.dart](lib/presentation/player_game/player_game_cell.dart), [player_round_cell.dart](lib/presentation/player_round/player_round_cell.dart) |
-| Providers | [prefs_provider.dart](lib/provider/prefs_provider.dart), [game_provider.dart](lib/provider/game_provider.dart), [players_provider.dart](lib/provider/players_provider.dart) |
-| Persistence & splash | [game_repository.dart](lib/data/game_repository.dart), [players_repository.dart](lib/data/players_repository.dart), [splash_screen.dart](lib/presentation/splash_screen.dart) |
-| Docs | [State-Management.md](docs/State-Management.md), [Game-Sync.md](docs/Game-Sync.md), [Live-Score-Sharing-Design.md](docs/Live-Score-Sharing-Design.md) |
-| Tests | `integration_test/*_test.dart`, [app_test_helpers.dart](integration_test/app_test_helpers.dart) |
-| Project skills | `.agents/skills/fs-game-score-*/SKILL.md`, [release-flutter-upgrade-sdk](.agents/skills/release-flutter-upgrade-sdk/SKILL.md) |
-| Release | [fs-game-score-release-engineer](.agents/skills/fs-game-score-release-engineer/SKILL.md), [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md) |
+| Area                 | Paths                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Widget key helpers   | [player_round_modal.dart](lib/presentation/player_round/player_round_modal.dart), [player_game_cell.dart](lib/presentation/player_game/player_game_cell.dart), [player_round_cell.dart](lib/presentation/player_round/player_round_cell.dart)                                                                                                                                                                                                                  |
+| Providers            | [prefs_provider.dart](lib/provider/prefs_provider.dart), [game_provider.dart](lib/provider/game_provider.dart), [players_provider.dart](lib/provider/players_provider.dart)                                                                                                                                                                                                                                                                                    |
+| Persistence & splash | [game_repository.dart](lib/data/game_repository.dart), [players_repository.dart](lib/data/players_repository.dart), [splash_screen.dart](lib/presentation/splash_screen.dart)                                                                                                                                                                                                                                                                                  |
+| Docs                 | State: [State-Management.md](docs/State-Management.md) (concepts), [State-Reference.md](docs/State-Reference.md) (model/keys), [How-To-Riverpod.md](docs/How-To-Riverpod.md) (rules). Sync: [Game-Sync.md](docs/Game-Sync.md), [Live-Sync-Architecture.md](docs/Live-Sync-Architecture.md), [Live-Score-Sharing-Design.md](docs/Live-Score-Sharing-Design.md). Modes: [Game-Modes.md](docs/Game-Modes.md), [How-To-Edit-Scores.md](docs/How-To-Edit-Scores.md) |
+| Tests                | `integration_test/*_test.dart`, [app_test_helpers.dart](integration_test/app_test_helpers.dart)                                                                                                                                                                                                                                                                                                                                                                |
+| Project skills       | `.agents/skills/fs-game-score-*/SKILL.md`, [release-flutter-upgrade-sdk](.agents/skills/release-flutter-upgrade-sdk/SKILL.md)                                                                                                                                                                                                                                                                                                                                  |
+| Release              | [fs-game-score-release-engineer](.agents/skills/fs-game-score-release-engineer/SKILL.md), [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md)                                                                                                                                                                                                                                                                                                             |
 
 Thank you for building responsibly!
