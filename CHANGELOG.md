@@ -7,24 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0] - not yet released
 
-### Developer documentation and tooling
-
 - Restructured `docs/` to the [Diátaxis](https://diataxis.fr) framework — one quadrant (tutorial / how-to / reference / explanation) per file, tagged in front matter; split mixed docs into [How-To-Edit-Scores.md](docs/How-To-Edit-Scores.md), [How-To-Riverpod.md](docs/How-To-Riverpod.md), [State-Reference.md](docs/State-Reference.md), and [Live-Sync-Architecture.md](docs/Live-Sync-Architecture.md); design, spec, and planning docs excluded
 - Added the `fs-game-score-docs-diataxis` project skill to classify, audit, and author docs against the Diátaxis quadrants
 - Added a Prettier Markdown formatting toolchain (`.prettierrc.json`, `npm run format:md` / `check:md`, Markdown Format CI workflow); vendored `dart-*` / `flutter-*` / `release-flutter-upgrade-sdk` skills excluded to stay byte-identical to upstream
+- Added first pass machine generated localization
+- Localized hard coded live view UI strings missed in previous release
+- Localized hard coded semantics strings
+- Added Claude Code support linking the existing to directories picked up by claude
 
 ## [2.0.0] - 2026-05-25
-
-### Live score sharing (LAN, view-only)
 
 - Host live games on Android and iOS from the in-game app bar (**Live share**): local WebSocket server, mDNS advertisement, QR code, and copyable connection URL with session PIN
 - Join a live game from the splash screen: browse hosts on the same Wi-Fi, scan the host QR code, or enter a `ws://` URL manually in debug builds
 - Spectator **read-only** score table with connection status banner; scores update as the host plays (no editing, no persistence on the spectator device)
 - Admission requires matching 6-digit PIN and the same app build version on host and spectator (`PackageInfo` version, e.g. `1.12.0+236`)
 - Privacy policy updated for LAN discovery and local network use on mobile
-
-### Architecture and quality
-
 - Replace player-state save debounce with coalesced single-flight persist in `PlayersNotifier` (better crash recovery, serialized writes)
 - Rework Riverpod to follow recommended practices: `sharedPreferencesProvider`, repository providers, and separate `gameSyncHostProvider` / `gameSyncSpectatorProvider` for live sync (see [docs/Game-Sync.md](docs/Game-Sync.md))
 - Use `Player` as an immutable data object
@@ -35,9 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed Android Gradle Kotlin plugin application so the bonsoir Android library builds correctly
 - Fixed live share host dialog crash when the QR code was placed in a scrollable `AlertDialog` (intrinsic dimension error)
 - Fixed Android CI integration test race where `pumpAndSettle` could run before the splash screen mounted
-
-### Developer documentation and tooling
-
 - Added [AGENTS.md](AGENTS.md) for AI agent guidance; expanded [docs/State-Management.md](docs/State-Management.md) and added [docs/Game-Sync.md](docs/Game-Sync.md)
 - Added Google [Flutter Skills](https://github.com/flutter/skills) and [dart-lang skills](https://github.com/dart-lang/skills); project skills for live sync and testing workflow
 - Updated Cursor rules; added Antigravity rules; removed continue.dev rules
