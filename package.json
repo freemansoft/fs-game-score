@@ -1,0 +1,13 @@
+{
+  "name": "fs-game-score-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Markdown formatting toolchain for fs-game-score docs (Prettier).",
+  "scripts": {
+    "format:md": "prettier --write \"**/*.md\"",
+    "check:md": "prettier --check \"**/*.md\""
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}

@@ -1,0 +1,22 @@
+name: Markdown Format
+
+on: [push, pull_request]
+
+jobs:
+  prettier_markdown:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check Markdown formatting
+        run: npm run check:md
