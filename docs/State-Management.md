@@ -1,4 +1,10 @@
+---
+diataxis: explanation
+---
+
 # State Management Documentation
+
+How the app retains state and why it is structured around Riverpod notifiers and repositories. For the day-to-day coding rules, see **[How-To-Riverpod.md](How-To-Riverpod.md)**. For the domain model, repositories, and prefs keys, see **[State-Reference.md](State-Reference.md)**.
 
 ## Retaining and Managing State
 
@@ -19,17 +25,7 @@ None currently tracked for startup persistence. Player roster state is saved imm
 
 ## Data Model
 
-A game is represented by the `Game` class that contains a game `id` (automatically generated as a UUID) and a game `configuration` implemented by the `GameConfiguration` class. The `GameConfiguration` contains the number of players, the maximum number of rounds, the game mode (`Standard`, `Phase 10`, `French Driving`, `Skyjo`), the score filter, the end game score, and the version.
-
-The players and their scores in a game are represented by the `Players` class, which wraps a list of `Player` objects.
-
-Each player is represented by a `Player` object that contains:
-
-- `name`: The player's display name.
-- `scores`: A `Scores` object containing individual round scores.
-- `phases`: A `Phases` object tracking phase completion status.
-- `frenchDrivingAttributes`: A list of `FrenchDrivingRoundAttributes` (for the French Driving game mode).
-- `roundStates`: A `RoundStates` object representing per-round information (such as round column locks that tell the UI to block editing for that round).
+The `Game`, `GameConfiguration`, `Players`, and `Player` structures are documented in **[State-Reference.md — Data Model](State-Reference.md#data-model)**.
 
 ---
 
@@ -54,80 +50,7 @@ This application uses **Riverpod 3** (via `flutter_riverpod` and `hooks_riverpod
 
 ## Riverpod Usage Guidelines
 
-Follow these rules when adding features or fixing bugs. See [Provider Architecture](#provider-architecture) for repository vs notifier comparisons.
-
-### Provider layers (top to bottom)
-
-| Provider | Responsibility |
-| -------- | -------------- |
-| `sharedPreferencesProvider` | Injects the single `SharedPreferences` instance (must be overridden in `bootstrapApp`) |
-| `gameRepositoryProvider` / `playersRepositoryProvider` | Stateless persistence services (`load*`, `save*`, `clear*`) |
-| `gameNotifierProvider` / `playersNotifierProvider` | In-memory app state (`Game`, `Players`) and gameplay mutations |
-| `appRouterProvider` | `GoRouter` wired to prefs for initial route |
-| UI (`ConsumerWidget`) | `ref.watch` notifier providers; never own persistence logic |
-
-### `ref.watch` vs `ref.read`
-
-- **`ref.watch`**: Use in widget `build()` methods and in other providers' `build()` when the consumer must rebuild when dependencies change.
-- **`ref.read`**: Use in callbacks (`onPressed`, `initState` one-shot setup), notifier mutation methods, and when calling `.notifier` to run an action without subscribing.
-- **Do not** call `ref.watch` inside event handlers; it does not subscribe the widget and is misleading.
-
-### UI and notifier rules
-
-- Widgets should use **`gameNotifierProvider`** and **`playersNotifierProvider`** for display and actions (`ref.read(...notifier).updateScore(...)`).
-- Do **not** call `GameRepository` / `PlayersRepository` from widgets except documented exceptions:
-  - Splash: `playersNotifierProvider.notifier.prepareForSplashEntry()` on entry (via `SplashScreen`; see [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race))
-  - Router: `initialLocation()` reads repos before the widget tree exists (see below)
-- Do **not** push loaded state from repositories into notifiers via side channels; restore in `Notifier.build()` only.
-
-### `Notifier.build()` rules
-
-- Load synchronously from the matching repository provider (`ref.watch(gameRepositoryProvider)` then `loadGame()`).
-- Return persisted data when validation passes (`playersMatchConfiguration` for players).
-- **No** saves, timers, or `unawaited` disk writes in `build()` — those belong in mutation methods or explicit UI flows (e.g. splash **Start new game** saving the baseline roster).
-
-### Mutations and persistence
-
-1. Update `state` on the notifier.
-2. Persist with `ref.read(gameRepositoryProvider).saveGame(state)` or `playersRepositoryProvider` (coalesced single-flight for players).
-
-### Startup and `UncontrolledProviderScope`
-
-`bootstrapApp()` in `lib/main.dart`:
-
-1. Awaits `SharedPreferences.getInstance()` before `runApp`.
-2. Creates a `ProviderContainer` with `sharedPreferencesProvider.overrideWithValue(sharedPrefs)`.
-3. Mounts the tree with **`UncontrolledProviderScope`** so the container created in `main` is the app's provider scope (the framework does not create a separate container).
-
-Notifiers load persisted data the first time something `watch`es or `read`s them — there is no imperative `repositoryDidLoadPrefs()`.
-
-### Anti-patterns (do not reintroduce)
-
-| Anti-pattern | Why it fails |
-| ------------ | ------------ |
-| Singleton `GameRepository()` / `PlayersRepository()` | Untestable, hides DI, duplicate prefs instances |
-| `repositoryDidLoadPrefs()` on notifiers | Bypasses `build()` validation; caused restore bugs |
-| Resume routing via `prefs.containsKey` only | Routes to score table when JSON is invalid or mismatched |
-| `phases.completedPhases.length == numPhases` | Wrong dimension; phases lists are sized by `maxRounds` |
-| Fire-and-forget `main()` in integration tests | Races `runApp` on slow Android devices |
-
-### Integration and widget testing
-
-**Unit / widget tests** (`test/`):
-
-- `test/flutter_test_config.dart` sets `SharedPreferences.setMockInitialValues({})` before each run.
-- Widget tests that need repositories should wrap the widget in `ProviderScope` and override `sharedPreferencesProvider` with the same mock instance.
-
-**Integration tests** (`integration_test/`):
-
-- Use helpers in `integration_test/app_test_helpers.dart`:
-  - `clearPersistedGameState()` in `setUp` / `tearDown` (real prefs on devices)
-  - `await launchApp(tester)` or `launchAppOnSplash(tester)` — **must** `await bootstrapApp()`, not `main()` without await
-  - `waitForSplashReady(tester)` — before tapping Continue on initial splash (Android CI prefs race)
-  - `waitForScoreTable(tester)` — after Continue / navigation to score table
-  - `pumpUntilFound` when waiting for splash widgets on slow emulators
-  - `waitForSplashPlayersCleared(tester)` after navigating back to splash when asserting `players_state` was removed (see [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race))
-- Read notifier state via `ProviderScope.containerOf(element).read(gameNotifierProvider)` — works with `UncontrolledProviderScope`.
+The rules for `ref.watch` vs `ref.read`, `Notifier.build()`, mutations, anti-patterns, and testing have moved to **[How-To-Riverpod.md](How-To-Riverpod.md)**.
 
 ---
 
@@ -146,7 +69,7 @@ The application implements a persistence strategy using `SharedPreferences` to h
 
 The application separates **persistence** (repository providers) from **in-memory application state** (notifier providers). UI and business logic should almost always use the notifier providers (`gameNotifierProvider`, `playersNotifierProvider`). Repository providers exist to supply wired `GameRepository` / `PlayersRepository` instances for disk access.
 
-For day-to-day coding rules (`ref.watch` vs `ref.read`, testing, anti-patterns), see [Riverpod Usage Guidelines](#riverpod-usage-guidelines).
+For day-to-day coding rules (`ref.watch` vs `ref.read`, testing, anti-patterns), see [How-To-Riverpod.md](How-To-Riverpod.md).
 
 ```mermaid
 flowchart TB
@@ -177,16 +100,16 @@ flowchart TB
 
 ### `gameRepositoryProvider` vs `gameNotifierProvider`
 
-| | `gameRepositoryProvider` | `gameNotifierProvider` |
-| -- | -- | -- |
-| **Type** | `Provider<GameRepository>` | `NotifierProvider<GameNotifier, Game>` |
-| **Location** | `lib/provider/game_provider.dart` | `lib/provider/game_provider.dart` |
-| **Layer** | Data access / persistence | Application state |
-| **Value exposed** | A `GameRepository` instance | The live `Game` model (configuration + `gameId`) |
-| **Stateful?** | No — each method reads or writes prefs | Yes — holds the active game in memory |
-| **Reactive?** | Only rebuilds if `sharedPreferencesProvider` changes | Rebuilds watchers when game config or `gameId` changes |
-| **Typical use** | Called from `GameNotifier`, router startup, tests | `ref.watch(gameNotifierProvider)` in widgets; `ref.read(gameNotifierProvider.notifier).newGame(...)` for actions |
-| **Persistence** | `loadGame()`, `saveGame()`, `clearGame()` on key `game_state` | Loads via repository in `build()`; saves when `newGame()` runs |
+|                   | `gameRepositoryProvider`                                      | `gameNotifierProvider`                                                                                           |
+| ----------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Type**          | `Provider<GameRepository>`                                    | `NotifierProvider<GameNotifier, Game>`                                                                           |
+| **Location**      | `lib/provider/game_provider.dart`                             | `lib/provider/game_provider.dart`                                                                                |
+| **Layer**         | Data access / persistence                                     | Application state                                                                                                |
+| **Value exposed** | A `GameRepository` instance                                   | The live `Game` model (configuration + `gameId`)                                                                 |
+| **Stateful?**     | No — each method reads or writes prefs                        | Yes — holds the active game in memory                                                                            |
+| **Reactive?**     | Only rebuilds if `sharedPreferencesProvider` changes          | Rebuilds watchers when game config or `gameId` changes                                                           |
+| **Typical use**   | Called from `GameNotifier`, router startup, tests             | `ref.watch(gameNotifierProvider)` in widgets; `ref.read(gameNotifierProvider.notifier).newGame(...)` for actions |
+| **Persistence**   | `loadGame()`, `saveGame()`, `clearGame()` on key `game_state` | Loads via repository in `build()`; saves when `newGame()` runs                                                   |
 
 **`gameRepositoryProvider`** constructs a `GameRepository` with the injected `SharedPreferences` instance. It does not represent “the current game”; it is a stateless service for serializing and deserializing game configuration to disk.
 
@@ -217,25 +140,20 @@ class GameNotifier extends Notifier<Game> {
 final gameNotifierProvider = NotifierProvider<GameNotifier, Game>(GameNotifier.new);
 ```
 
-**State managed by `gameNotifierProvider` (`Game`):**
-
-- `gameId`: Unique string identifying the current game session (new UUID on each `newGame()`).
-- `configuration`: `GameConfiguration` — `numPlayers`, `maxRounds`, `gameMode`, `scoreFilter`, `endGameScore`, `version`, plus derived helpers (`numPhases`, `allowNegativeScores`, `enablePhases`).
-
 ---
 
 ### `playersRepositoryProvider` vs `playersNotifierProvider`
 
-| | `playersRepositoryProvider` | `playersNotifierProvider` |
-| -- | -- | -- |
-| **Type** | `Provider<PlayersRepository>` | `NotifierProvider<PlayersNotifier, Players>` |
-| **Location** | `lib/provider/players_provider.dart` | `lib/provider/players_provider.dart` |
-| **Layer** | Data access / persistence | Application state |
-| **Value exposed** | A `PlayersRepository` instance | The live `Players` roster (scores, names, phases, locks) |
-| **Stateful?** | No — load/save/clear methods only | Yes — mutates roster during play |
-| **Reactive?** | Only rebuilds if `sharedPreferencesProvider` changes | Rebuilds when `gameNotifierProvider` changes or roster is updated |
-| **Typical use** | Immediate save after Continue; disk access from `PlayersNotifier` internals | `ref.watch(playersNotifierProvider)` in score table; `ref.read(playersNotifierProvider.notifier).updateScore(...)` etc. |
-| **Persistence** | `loadPlayers()`, `savePlayers()`, `clearPlayers()` on key `players_state` | Loads in `build()` if data matches game config; coalesced persist on edits; `prepareForSplashEntry()` clears prefs + memory; flush on dispose if dirty or in-flight |
+|                   | `playersRepositoryProvider`                                                 | `playersNotifierProvider`                                                                                                                                           |
+| ----------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Type**          | `Provider<PlayersRepository>`                                               | `NotifierProvider<PlayersNotifier, Players>`                                                                                                                        |
+| **Location**      | `lib/provider/players_provider.dart`                                        | `lib/provider/players_provider.dart`                                                                                                                                |
+| **Layer**         | Data access / persistence                                                   | Application state                                                                                                                                                   |
+| **Value exposed** | A `PlayersRepository` instance                                              | The live `Players` roster (scores, names, phases, locks)                                                                                                            |
+| **Stateful?**     | No — load/save/clear methods only                                           | Yes — mutates roster during play                                                                                                                                    |
+| **Reactive?**     | Only rebuilds if `sharedPreferencesProvider` changes                        | Rebuilds when `gameNotifierProvider` changes or roster is updated                                                                                                   |
+| **Typical use**   | Immediate save after Continue; disk access from `PlayersNotifier` internals | `ref.watch(playersNotifierProvider)` in score table; `ref.read(playersNotifierProvider.notifier).updateScore(...)` etc.                                             |
+| **Persistence**   | `loadPlayers()`, `savePlayers()`, `clearPlayers()` on key `players_state`   | Loads in `build()` if data matches game config; coalesced persist on edits; `prepareForSplashEntry()` clears prefs + memory; flush on dispose if dirty or in-flight |
 
 **`playersRepositoryProvider`** supplies a `PlayersRepository` backed by the same `SharedPreferences` instance. It has no concept of “current scores”; it only reads and writes JSON for the player roster.
 
@@ -273,34 +191,13 @@ class PlayersNotifier extends Notifier<Players> {
 final playersNotifierProvider = NotifierProvider<PlayersNotifier, Players>(PlayersNotifier.new);
 ```
 
-**State managed by `playersNotifierProvider` (`Players`):**
-
-- Player names and per-player metadata.
-- Individual round scores, phase completion (Phase 10), French Driving attributes.
-- Round enable/disable (column locks).
-- Derived total scores for display.
+The full `Game` / `Players` field inventory is in [State-Reference.md — Data Model](State-Reference.md#data-model).
 
 ---
 
 ## Data Access Layer (Repositories)
 
-Repository **classes** live under `lib/data/`. They are exposed to Riverpod through **`gameRepositoryProvider`** and **`playersRepositoryProvider`** (not used directly as singletons).
-
-### GameRepository
-
-**Location**: `lib/data/game_repository.dart`
-
-- **Responsibility**: Persist `Game` configuration (not the full in-memory `gameId` lifecycle on every load — see `Game.fromJson` / `toJson` in the model).
-- **Key Methods**: `loadGame()`, `saveGame()`, `clearGame()`
-- **Prefs key**: `game_state`
-
-### PlayersRepository
-
-**Location**: `lib/data/players_repository.dart`
-
-- **Responsibility**: Persist the `Players` roster and all per-player gameplay fields.
-- **Key Methods**: `loadPlayers()`, `savePlayers()`, `clearPlayers()`
-- **Prefs key**: `players_state`
+Repository classes, methods, and prefs keys are documented in **[State-Reference.md — Data Access Layer](State-Reference.md#data-access-layer-repositories)**. They are exposed to Riverpod through `gameRepositoryProvider` and `playersRepositoryProvider` (not used directly as singletons).
 
 ---
 
@@ -337,9 +234,9 @@ String initialLocation(SharedPreferences prefs) {
 1. Entering the Splash Screen clears previous player data to guarantee a fresh roster on the next start (see [Splash entry and coalesced persist race](#splash-entry-and-coalesced-persist-race)).
 2. User configures game options on the UI (local state seeded from `gameNotifierProvider`, which loads any saved configuration).
 3. User clicks **Start new game** (`continueButton`):
-    - Creates and saves a new game configuration via `ref.read(gameNotifierProvider.notifier).newGame(...)`.
-    - Materializes the new roster with `ref.read(playersNotifierProvider)` and persists it immediately via `playersRepositoryProvider.savePlayers(...)`.
-    - Navigates to `/score-table`.
+   - Creates and saves a new game configuration via `ref.read(gameNotifierProvider.notifier).newGame(...)`.
+   - Materializes the new roster with `ref.read(playersNotifierProvider)` and persists it immediately via `playersRepositoryProvider.savePlayers(...)`.
+   - Navigates to `/score-table`.
 
 During gameplay, player mutations trigger coalesced persistence — at most one disk write in flight, with a follow-up write if edits arrive during a save.
 
@@ -347,11 +244,11 @@ During gameplay, player mutations trigger coalesced persistence — at most one 
 
 **Problem:** Score edits schedule async writes to `players_state`. When the user returns to the splash screen (e.g. **New Score Card** → change scorecard type), clearing prefs alone is not enough:
 
-| Failure mode | What happens |
-| --- | --- |
-| **Async clear** | `clearPlayers()` is async; tests or UI can read prefs before removal finishes. |
-| **Stale in-flight save** | A `savePlayers` started on the score table can complete **after** prefs were cleared and write old scores back. |
-| **Memory vs disk** | Clearing prefs without resetting `playersNotifierProvider` leaves stale in-memory roster until the next **Start new game**. |
+| Failure mode             | What happens                                                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| **Async clear**          | `clearPlayers()` is async; tests or UI can read prefs before removal finishes.                                              |
+| **Stale in-flight save** | A `savePlayers` started on the score table can complete **after** prefs were cleared and write old scores back.             |
+| **Memory vs disk**       | Clearing prefs without resetting `playersNotifierProvider` leaves stale in-memory roster until the next **Start new game**. |
 
 **Solution:** `PlayersNotifier.prepareForSplashEntry()` in `lib/provider/players_provider.dart`:
 
@@ -363,10 +260,10 @@ During gameplay, player mutations trigger coalesced persistence — at most one 
 
 **Call sites:**
 
-| Location | When |
-| --- | --- |
-| `SplashScreen.initState` | Post-frame `await prepareForSplashEntry()` on every splash mount |
-| `NewScoreCardControl` | `await prepareForSplashEntry()` **before** `goNamed('splash')` so clear completes before navigation |
+| Location                 | When                                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------------------- |
+| `SplashScreen.initState` | Post-frame `await prepareForSplashEntry()` on every splash mount                                    |
+| `NewScoreCardControl`    | `await prepareForSplashEntry()` **before** `goNamed('splash')` so clear completes before navigation |
 
 `prepareForSplashEntry()` is **idempotent** — concurrent callers share one in-flight `Future`.
 
@@ -409,15 +306,15 @@ Returning to splash while a persist was in flight could leave `players_state` in
 
 ## Live score sync (LAN, v1)
 
-Detailed design, handshake, and validation: **[Game-Sync.md](Game-Sync.md)**.
+Detailed design, handshake, and validation: **[Game-Sync.md](Game-Sync.md)**. Architecture and design intent: **[Live-Sync-Architecture.md](Live-Sync-Architecture.md)**.
 
 ### Providers
 
-| Provider | Responsibility |
-| --- | --- |
-| `gameSyncHostProvider` | Host session (PIN, `wsUrl`, revision). Reads `gameNotifierProvider` / `playersNotifierProvider`, pushes `GameSyncSnapshot` over LAN when scores change. |
-| `gameSyncSpectatorProvider` | Spectator connection + **mirrored** `Game` / `Players` (not persisted). `connect()` returns `GameSyncConnectResult` and creates a fresh transport per attempt. |
-| `gameSyncTransportFactoryProvider` | `GameSyncTransport Function()`; override in tests with `() => FakeGameSyncTransport`. |
+| Provider                           | Responsibility                                                                                                                                                 |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gameSyncHostProvider`             | Host session (PIN, `wsUrl`, revision). Reads `gameNotifierProvider` / `playersNotifierProvider`, pushes `GameSyncSnapshot` over LAN when scores change.        |
+| `gameSyncSpectatorProvider`        | Spectator connection + **mirrored** `Game` / `Players` (not persisted). `connect()` returns `GameSyncConnectResult` and creates a fresh transport per attempt. |
+| `gameSyncTransportFactoryProvider` | `GameSyncTransport Function()`; override in tests with `() => FakeGameSyncTransport`.                                                                          |
 
 Host and spectator **do not** share a single notifier. The host owns authoritative state in the normal game providers; the spectator only reflects wire snapshots.
 
@@ -442,22 +339,6 @@ The spectator also checks the host’s `appVersion` in the `welcome` message. Se
 
 ---
 
-## Key Files Referenced
+## Key Files
 
-- `lib/provider/prefs_provider.dart` - SharedPreferences dependency injection
-- `lib/provider/game_provider.dart` - Game configuration state and UUID logic
-- `lib/provider/players_provider.dart` - Player data state, validations, coalesced single-flight persist, `prepareForSplashEntry()`, `_persistGeneration`
-- `test/players_notifier_persist_test.dart` - Coalesce burst, splash clear, in-flight + splash race
-- `lib/data/game_repository.dart` - Game configuration persistence using SharedPreferences
-- `lib/data/players_repository.dart` - Player state persistence using SharedPreferences
-- `lib/main.dart` - `bootstrapApp()`, prefs pre-init, `UncontrolledProviderScope`
-- `lib/router/app_router.dart` - App router with initial route resume logic
-- `lib/presentation/splash_screen.dart` - Game configuration setting UI & new game initialization
-- `lib/presentation/new_score_card_control.dart` - Awaits `prepareForSplashEntry()` before navigating to splash
-- `integration_test/app_test_helpers.dart` - `waitForSplashPlayersCleared()` for splash-clear integration tests
-- `docs/Game-Sync.md` - Live sync providers, protocol, handshake, labels, debug logging
-- `lib/sync/game_sync_connection_label.dart` - Banner / snapshot host display labels
-- `lib/sync/game_sync_log.dart` - Assert-wrapped debug logging for live sync
-- `lib/sync/` - Live sync protocol, LAN transport, connection QR
-- `lib/provider/game_sync_host_provider.dart` - Host live session state
-- `lib/provider/game_sync_spectator_provider.dart` - Spectator live session state
+The referenced provider, repository, sync, and test files are listed in **[State-Reference.md — Key Files](State-Reference.md#key-files)**.

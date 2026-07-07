@@ -7,7 +7,7 @@ description: >
 
 # FS Score Card — Testing and accessibility
 
-See [docs/State-Management.md — Integration and widget testing](../../../docs/State-Management.md#integration-and-widget-testing).
+See [docs/How-To-Riverpod.md — Integration and widget testing](../../../docs/How-To-Riverpod.md#integration-and-widget-testing).
 
 Always run tests with **`fvm flutter test`** per [AGENTS.md](../../../AGENTS.md).
 

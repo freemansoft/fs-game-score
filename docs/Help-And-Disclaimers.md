@@ -1,4 +1,8 @@
-# Description of trademarks and copyrights.
+---
+diataxis: reference
+---
+
+# Description of trademarks and copyrights
 
 ## Copyrights
 

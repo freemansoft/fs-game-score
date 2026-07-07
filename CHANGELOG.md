@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - not yet released
+## [2.1.0] - not yet released
+
+### Developer documentation and tooling
+
+- Restructured `docs/` to the [Diátaxis](https://diataxis.fr) framework — one quadrant (tutorial / how-to / reference / explanation) per file, tagged in front matter; split mixed docs into [How-To-Edit-Scores.md](docs/How-To-Edit-Scores.md), [How-To-Riverpod.md](docs/How-To-Riverpod.md), [State-Reference.md](docs/State-Reference.md), and [Live-Sync-Architecture.md](docs/Live-Sync-Architecture.md); design, spec, and planning docs excluded
+- Added the `fs-game-score-docs-diataxis` project skill to classify, audit, and author docs against the Diátaxis quadrants
+- Added a Prettier Markdown formatting toolchain (`.prettierrc.json`, `npm run format:md` / `check:md`, Markdown Format CI workflow); vendored `dart-*` / `flutter-*` / `release-flutter-upgrade-sdk` skills excluded to stay byte-identical to upstream
+
+## [2.0.0] - 2026-05-25
 
 ### Live score sharing (LAN, view-only)
 

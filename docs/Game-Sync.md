@@ -1,3 +1,7 @@
+---
+diataxis: reference
+---
+
 # Live game sync (LAN)
 
 For transport options, platform scope, post-v1 roadmap, and the decision log, see [Live-Score-Sharing-Design.md](Live-Score-Sharing-Design.md).
@@ -10,38 +14,7 @@ See also [State-Management.md](State-Management.md) for general Riverpod pattern
 
 ---
 
-## Architecture
-
-```mermaid
-sequenceDiagram
-  participant UI as LiveShareControl / JoinLiveGame
-  participant HostP as gameSyncHostProvider
-  participant SpecP as gameSyncSpectatorProvider
-  participant LAN as game_sync_lan_io
-  participant Game as gameNotifierProvider
-  participant Players as playersNotifierProvider
-
-  UI->>HostP: startHosting()
-  HostP->>Game: read Game + Players
-  HostP->>LAN: startGameSyncHost(snapshot, pin, requiredAppVersion)
-  LAN-->>HostP: GameSyncHostSession (wsUrl, pin)
-  Game-->>HostP: listen (score changes)
-  Players-->>HostP: listen (score changes)
-  HostP->>LAN: broadcastGameSyncSnapshot(revision++)
-
-  UI->>SpecP: connect(wsUrl, pin)
-  SpecP->>LAN: GameSyncTransport.connect(appVersion)
-  LAN->>LAN: WebSocket hello (pin, appVersion)
-  LAN-->>SpecP: welcome / reject / snapshot stream
-  SpecP-->>SpecP: await first snapshot (GameSyncConnectResult)
-  SpecP-->>UI: navigate to /live-spectator when connected
-```
-
-| Layer | Role |
-| --- | --- |
-| **Providers** | Session UI state, wire listeners, map snapshots ↔ domain models |
-| **`lib/sync/`** | Protocol, mapper, LAN I/O, QR URLs, platform gates |
-| **`GameSyncTransport`** | Spectator connection abstraction (LAN v1; fake for tests) |
+For the architecture, sequence diagram, and design intent (why host/spectator are split, why spectator state is not persisted), see **[Live-Sync-Architecture.md](Live-Sync-Architecture.md)**.
 
 ---
 
@@ -118,9 +91,9 @@ Admission runs on the **host** WebSocket handler (`_handleHostClient` in `game_s
 
 **Reject reasons** (`game_sync_protocol.dart`):
 
-| Constant | Wire `reason` | UI state |
-| --- | --- | --- |
-| `gameSyncRejectWrongPin` | `wrong_pin` | `wrongPin` |
+| Constant                        | Wire `reason`      | UI state          |
+| ------------------------------- | ------------------ | ----------------- |
+| `gameSyncRejectWrongPin`        | `wrong_pin`        | `wrongPin`        |
 | `gameSyncRejectVersionMismatch` | `version_mismatch` | `versionMismatch` |
 
 User-facing copy: `liveConnectionWrongPin`, `liveConnectionVersionMismatch`, `liveSyncAppVersionUnknown` (EN/ES in `lib/l10n/`).
@@ -129,10 +102,10 @@ User-facing copy: `liveConnectionWrongPin`, `liveConnectionVersionMismatch`, `li
 
 ## App version resolution
 
-| Source | When |
-| --- | --- |
+| Source                             | When                                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------------- |
 | Global `appVersion` in `main.dart` | Set in `bootstrapApp()` from `PackageInfo` (`version+buildNumber`, e.g. `1.12.0+236`) |
-| `GameConfiguration.version` | Fallback when global is null (tests, edge startup) |
+| `GameConfiguration.version`        | Fallback when global is null (tests, edge startup)                                    |
 
 **Helper:** `resolveLiveSyncAppVersion(game)` in `lib/sync/game_sync_app_version.dart` — prefers package info, then persisted config version.
 
@@ -160,12 +133,12 @@ Spectator **`LiveConnectionBanner`** must not show device hostnames like `localh
 
 ## Join UI behavior
 
-| Flow | Behavior |
-| --- | --- |
-| QR scan | `_JoinLiveScanDialog` uses one-shot detection (`DetectionSpeed.noDuplicates`, `_handled` flag) — multiple `Navigator.pop` calls break GoRouter |
-| Connect | “Connecting…” overlay; **awaits** `GameSyncConnectResult` before navigating to `/live-spectator` |
-| Errors | Snackbars for `wrongPin`, `versionMismatch`, `cannotReachHost`, `timedOut`, `failed` |
-| Host dialog | `LiveShareControl` AlertDialog title row includes **`CloseButton`** (dismisses dialog only; sharing continues until **Stop live sharing**) |
+| Flow        | Behavior                                                                                                                                       |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| QR scan     | `_JoinLiveScanDialog` uses one-shot detection (`DetectionSpeed.noDuplicates`, `_handled` flag) — multiple `Navigator.pop` calls break GoRouter |
+| Connect     | “Connecting…” overlay; **awaits** `GameSyncConnectResult` before navigating to `/live-spectator`                                               |
+| Errors      | Snackbars for `wrongPin`, `versionMismatch`, `cannotReachHost`, `timedOut`, `failed`                                                           |
+| Host dialog | `LiveShareControl` AlertDialog title row includes **`CloseButton`** (dismisses dialog only; sharing continues until **Stop live sharing**)     |
 
 ---
 
@@ -182,13 +155,13 @@ Logged from join screen (QR URL, connect results), `GameSyncSpectatorNotifier`, 
 
 ## UI and routing
 
-| Screen / control | Provider |
-| --- | --- |
-| `LiveShareControl` (in-game app bar) | `gameSyncHostProvider` |
-| `JoinLiveGameScreen` (`/join-live`) | `gameSyncSpectatorProvider` discovery + connect |
-| `SpectatorScoreTableScreen` (`/live-spectator`) | `gameSyncSpectatorProvider` |
-| `LiveConnectionBanner` | `connectionState`, `gameId`, `connectedHostIp`; label via `resolveLiveConnectionBannerTarget` |
-| `ScoreTable` (`readOnly`) | Can watch spectator state when spectating |
+| Screen / control                                | Provider                                                                                      |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `LiveShareControl` (in-game app bar)            | `gameSyncHostProvider`                                                                        |
+| `JoinLiveGameScreen` (`/join-live`)             | `gameSyncSpectatorProvider` discovery + connect                                               |
+| `SpectatorScoreTableScreen` (`/live-spectator`) | `gameSyncSpectatorProvider`                                                                   |
+| `LiveConnectionBanner`                          | `connectionState`, `gameId`, `connectedHostIp`; label via `resolveLiveConnectionBannerTarget` |
+| `ScoreTable` (`readOnly`)                       | Can watch spectator state when spectating                                                     |
 
 Platform gates: `canHostLiveSync` / `canJoinLiveSync` in `game_sync_platform.dart` (mobile native only in v1).
 
@@ -196,11 +169,11 @@ Platform gates: `canHostLiveSync` / `canJoinLiveSync` in `game_sync_platform.dar
 
 ## Testing
 
-| Area | Approach |
-| --- | --- |
-| Protocol / version / QR / mapper / connection labels | Unit tests in `test/game_sync_*.dart` |
-| Widget / provider tests | Override `gameSyncTransportFactoryProvider` with `() => FakeGameSyncTransport`; set `pinAccepted`, `appVersionAccepted`, `expectedHostAppVersion` |
-| E2E LAN + mDNS | Two physical devices, same Wi-Fi; emulators use manual `ws://` URL (`kDebugMode` on join screen) |
+| Area                                                 | Approach                                                                                                                                          |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Protocol / version / QR / mapper / connection labels | Unit tests in `test/game_sync_*.dart`                                                                                                             |
+| Widget / provider tests                              | Override `gameSyncTransportFactoryProvider` with `() => FakeGameSyncTransport`; set `pinAccepted`, `appVersionAccepted`, `expectedHostAppVersion` |
+| E2E LAN + mDNS                                       | Two physical devices, same Wi-Fi; emulators use manual `ws://` URL (`kDebugMode` on join screen)                                                  |
 
 **Do not** persist spectator snapshots to prefs. **Do not** write scores through spectator providers into host notifiers.
 
