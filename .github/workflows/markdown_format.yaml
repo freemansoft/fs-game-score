@@ -3,12 +3,12 @@ name: Markdown Format
 on: [push, pull_request]
 
 jobs:
-  prettier_markdown:
+  markdown-format:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -16,7 +16,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Check Markdown formatting
         run: npm run check:md

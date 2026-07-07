@@ -4,6 +4,13 @@ build/
 .fvm/
 node_modules/
 
+# Process / decision-record artifacts — frozen, not formatted
+# (mirrors the Diátaxis governance scope: published docs only)
+docs/plans/
+docs/superpowers/
+docs/reviews/
+docs/archive/
+
 # Generated / platform scaffolding (not hand-authored docs)
 android/
 ios/
