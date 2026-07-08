@@ -415,7 +415,7 @@ _. Prettier (legacy) - Code formatter
 AI coding tools share a single rules layout:
 
 - **[AGENTS.md](AGENTS.md)** — project rules for Cursor, GitHub Copilot, and Antigravity (keep under 12,000 characters for Antigravity)
-- **[`.agents/skills/`](.agents/skills/)** — upstream [Dart](https://github.com/dart-lang/skills) and [Flutter](https://github.com/flutter/skills) skills, plus project skills (`fs-game-score-*`, `release-flutter-upgrade-sdk`)
+- **[`.agents/skills/`](.agents/skills/)** — upstream [Dart](https://github.com/dart-lang/skills) and [Flutter](https://github.com/flutter/skills) skills, plus project skills (`fs-game-score-*`)
 
 Cursor and Antigravity auto-discover skills from `.agents/skills/` when each skill has a valid `SKILL.md` with YAML frontmatter. Copilot reads `AGENTS.md`; project skills are referenced there for deeper workflows (live sync, testing, widget keys).
 
