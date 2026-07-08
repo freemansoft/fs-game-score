@@ -140,10 +140,10 @@
       "sourceType": "project",
       "skillPath": ".agents/skills/fs-game-score-release-engineer/SKILL.md"
     },
-    "release-flutter-upgrade-sdk": {
+    "fs-game-score-release-flutter-upgrade-sdk": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/release-flutter-upgrade-sdk/SKILL.md"
+      "skillPath": ".agents/skills/fs-game-score-release-flutter-upgrade-sdk/SKILL.md"
     }
   }
 }

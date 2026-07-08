@@ -23,4 +23,4 @@ web/
 # diffs from the source repos stay obvious. Do not reformat.
 .agents/skills/dart-*/
 .agents/skills/flutter-*/
-.agents/skills/release-flutter-upgrade-sdk/
+.agents/skills/fs-game-score-release-flutter-upgrade-sdk/

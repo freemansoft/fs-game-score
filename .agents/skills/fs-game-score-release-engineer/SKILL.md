@@ -11,8 +11,8 @@ description: >
 Always use **`fvm`** for Flutter/Dart commands per [AGENTS.md](../../../AGENTS.md).
 
 For **Flutter/Dart SDK upgrades** (FVM, CI workflows, pubspec constraints), use
-**`release-flutter-upgrade-sdk`**
-([SKILL.md](../release-flutter-upgrade-sdk/SKILL.md)).
+**`fs-game-score-release-flutter-upgrade-sdk`**
+([SKILL.md](../fs-game-score-release-flutter-upgrade-sdk/SKILL.md)).
 
 Scripts at repository root: [tag-push.sh](../../../tag-push.sh),
 [build-distributable.sh](../../../build-distributable.sh),
