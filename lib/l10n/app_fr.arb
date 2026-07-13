@@ -442,6 +442,8 @@
   "endGameScoreLabel": "Score de fin de partie",
   "playerRoundScoreLabel": "Score du joueur {playerNumber} à la manche {roundNumber}",
   "playerGameModalLabel": "Fenêtre de jeu du joueur {playerNumber}",
+  "playerRoundModalLabel": "Fenêtre du joueur {playerNumber} à la manche {roundNumber}",
+  "playerRoundPhaseSelectorLabel": "Sélecteur de phase du joueur {playerNumber} à la manche {roundNumber}",
   "playerTotalScoreLabel": "Score total du joueur {playerNumber}",
   "playerRoundPhaseLabel": "Phase du joueur {playerNumber} à la manche {roundNumber}",
   "playerNameValueLabel": "Nom du joueur {playerNumber}",

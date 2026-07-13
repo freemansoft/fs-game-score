@@ -553,6 +553,30 @@
       }
     }
   },
+  "playerRoundModalLabel": "Player {playerNumber} round {roundNumber} modal",
+  "@playerRoundModalLabel": {
+    "description": "Semantic label for the player round score modal",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      },
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "playerRoundPhaseSelectorLabel": "Player {playerNumber} round {roundNumber} phase selector",
+  "@playerRoundPhaseSelectorLabel": {
+    "description": "Semantic label for the player round phase selector dropdown",
+    "placeholders": {
+      "playerNumber": {
+        "type": "int"
+      },
+      "roundNumber": {
+        "type": "int"
+      }
+    }
+  },
   "playerTotalScoreLabel": "Player {playerNumber} total score",
   "@playerTotalScoreLabel": {
     "description": "Semantic label for a player total score value",

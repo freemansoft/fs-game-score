@@ -421,6 +421,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String playerRoundModalLabel(int playerNumber, int roundNumber) {
+    return 'Fenêtre du joueur $playerNumber à la manche $roundNumber';
+  }
+
+  @override
+  String playerRoundPhaseSelectorLabel(int playerNumber, int roundNumber) {
+    return 'Sélecteur de phase du joueur $playerNumber à la manche $roundNumber';
+  }
+
+  @override
   String playerTotalScoreLabel(int playerNumber) {
     return 'Score total du joueur $playerNumber';
   }

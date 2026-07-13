@@ -442,6 +442,8 @@
   "endGameScoreLabel": "Puntuación de fin de juego",
   "playerRoundScoreLabel": "Puntuación del jugador {playerNumber} en la ronda {roundNumber}",
   "playerGameModalLabel": "Ventana del juego del jugador {playerNumber}",
+  "playerRoundModalLabel": "Ventana del jugador {playerNumber} en la ronda {roundNumber}",
+  "playerRoundPhaseSelectorLabel": "Selector de fase del jugador {playerNumber} en la ronda {roundNumber}",
   "playerTotalScoreLabel": "Puntuación total del jugador {playerNumber}",
   "playerRoundPhaseLabel": "Fase del jugador {playerNumber} en la ronda {roundNumber}",
   "playerNameValueLabel": "Nombre del jugador {playerNumber}",
