@@ -8,6 +8,6 @@ PluginBase createPlugin() => _FsScoreLints();
 class _FsScoreLints extends PluginBase {
   @override
   List<LintRule> getLintRules(CustomLintConfigs configs) => [
-        const LocalizeSemanticLabels(),
-      ];
+    const LocalizeSemanticLabels(),
+  ];
 }

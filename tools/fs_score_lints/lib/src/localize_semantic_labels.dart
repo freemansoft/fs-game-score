@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/error.dart' show ErrorSeverity;
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
@@ -23,7 +22,6 @@ class LocalizeSemanticLabels extends DartLintRule {
     correctionMessage:
         'Use a *Label-suffixed l10n key: '
         'AppLocalizations.of(context)!.yourLabel(...).',
-    errorSeverity: ErrorSeverity.WARNING,
   );
 
   /// Named arguments that are always screen-reader labels, on any widget.
@@ -32,7 +30,7 @@ class LocalizeSemanticLabels extends DartLintRule {
   @override
   void run(
     CustomLintResolver resolver,
-    ErrorReporter reporter,
+    DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
     // semanticLabel: / semanticsLabel: anywhere.
@@ -45,7 +43,7 @@ class LocalizeSemanticLabels extends DartLintRule {
 
     // label: only when the enclosing constructor is Semantics(...).
     context.registry.addInstanceCreationExpression((node) {
-      if (node.constructorName.type.name2.lexeme != 'Semantics') return;
+      if (node.constructorName.type.name.lexeme != 'Semantics') return;
       for (final arg in node.argumentList.arguments) {
         if (arg is NamedExpression &&
             arg.name.label.name == 'label' &&
