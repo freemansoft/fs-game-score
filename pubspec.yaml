@@ -67,9 +67,14 @@ dependencies:
   web_socket_channel: ^3.0.3
 
 dev_dependencies:
+  # In-editor lint for hardcoded a11y labels (localize_semantic_labels).
+  # Enabled via analyzer plugins in analysis_options.yaml.
+  custom_lint: ^0.8.1
   flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
+  fs_score_lints:
+    path: tools/fs_score_lints
   integration_test:
     sdk: flutter
   msix: ^3.16.12

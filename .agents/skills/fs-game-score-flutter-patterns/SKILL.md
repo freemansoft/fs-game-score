@@ -114,7 +114,7 @@ Adding a new locale = new `app_<locale>.arb` (all keys) **plus** a `Locale('<cod
 
 **`Semantics.label`, `semanticLabel`, and `Text(semanticsLabel:)` ARE user-facing** (screen readers) and **must be localized** — do not hardcode them. Use a `*Label` key suffix to mark semantics-only strings (e.g. `scoreTableLabel`, `playerRoundScoreLabel`, `numberOfSafetiesLabel`). Pass runtime values as placeholders: `l10n.playerRoundScoreLabel(playerIdx + 1, round + 1)`. When a file has no l10n yet, add `import 'package:fs_score_card/l10n/app_localizations.dart';` and read `AppLocalizations.of(context)!`.
 
-A CI guard — **`tool/check_semantic_l10n.py`** — fails the build if any `semanticLabel:` / `semanticsLabel:` / `Semantics(label:)` is a hardcoded string literal instead of an `l10n` / `AppLocalizations` call.
+A custom analyzer lint — **`localize_semantic_labels`** (package `tools/fs_score_lints`, enabled via `custom_lint` in `analysis_options.yaml`) — flags any `semanticLabel:` / `semanticsLabel:` / `Semantics(label:)` that is a hardcoded string literal instead of an `l10n` / `AppLocalizations` call. It surfaces in-editor and via `fvm dart run custom_lint`.
 
 ### Game terminology — use authentic Mille Bornes lingo per locale
 

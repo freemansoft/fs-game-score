@@ -1,0 +1,11 @@
+name: fs_score_lints
+description: Custom analyzer lints for fs-game-score (prototype).
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  analyzer: ^8.0.0
+  custom_lint_builder: ^0.8.1
