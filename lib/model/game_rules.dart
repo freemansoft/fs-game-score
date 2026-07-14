@@ -1,0 +1,133 @@
+import 'package:fs_score_card/model/score_filters.dart';
+
+/// The scoring styles the app supports.
+///
+/// This enum is the persisted key for a game's rules (see
+/// `GameConfiguration.toJson`); its `toString()` values must stay stable for
+/// backward compatibility. Behavior for each mode is declared once in the
+/// [GameRules] descriptor returned by [rulesFor] — not by branching on this
+/// enum across the codebase.
+enum GameMode { standard, phase10, frenchDriving, skyjo }
+
+/// How a round's score is entered for a mode.
+enum RoundInput {
+  /// The scorekeeper types the round score directly.
+  typedScore,
+
+  /// The round score is calculated from French Driving round attributes;
+  /// the typed field is read-only.
+  calculatedFrenchDriving,
+}
+
+/// How player scores are aggregated into standings.
+///
+/// Only [sumPerPlayer] exists today. Team roll-up and low-score-wins are
+/// Tier 1–2 of the game-mode roadmap; they add values here rather than new
+/// branches elsewhere.
+enum ScoreAggregation { sumPerPlayer }
+
+/// How/when the game signals an end or a leader.
+///
+/// Only [reachTargetHighlight] exists today (a player whose total reaches the
+/// end-game score is highlighted). Loser-threshold and winner detection are
+/// Tier 2; they add values here.
+enum EndCondition { reachTargetHighlight }
+
+/// Immutable descriptor of the scoring rules for a [GameMode].
+///
+/// Centralizes behavior that used to be scattered as `switch`/`if` on
+/// `GameMode` across the model and presentation layers. To add a game mode,
+/// add an enum value and a descriptor to [_rulesByMode] — you should not need
+/// to thread a new enum case through the model, splash screen, round editors,
+/// and tests.
+class GameRules {
+  const GameRules({
+    required this.roundInput,
+    required this.allowNegativeScores,
+    required this.enablePhases,
+    required this.numPhases,
+    required this.suggestedScoreFilter,
+    required this.suggestedEndGameScore,
+    this.aggregation = ScoreAggregation.sumPerPlayer,
+    this.endCondition = EndCondition.reachTargetHighlight,
+  });
+
+  /// How the round score is entered.
+  final RoundInput roundInput;
+
+  /// Whether negative round scores are accepted.
+  final bool allowNegativeScores;
+
+  /// Whether the mode collects a completed-phase number per round.
+  final bool enablePhases;
+
+  /// Number of phases in the mode (0 when [enablePhases] is false).
+  final int numPhases;
+
+  /// Score-entry filter suggested when this mode is selected on the splash
+  /// screen. See [ScoreFilters].
+  final String suggestedScoreFilter;
+
+  /// End-game target suggested when this mode is selected; 0 means "none".
+  final int suggestedEndGameScore;
+
+  /// How scores aggregate into standings (Tier 0: always [ScoreAggregation.sumPerPlayer]).
+  final ScoreAggregation aggregation;
+
+  /// How the game signals an end/leader (Tier 0: always [EndCondition.reachTargetHighlight]).
+  final EndCondition endCondition;
+}
+
+/// The number of phases in Phase 10.
+const int _phase10PhaseCount = 10;
+
+const GameRules _standardRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  suggestedEndGameScore: 0,
+);
+
+const GameRules _phase10Rules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: false,
+  enablePhases: true,
+  numPhases: _phase10PhaseCount,
+  // Phase 10 scores always end in 0 or 5.
+  suggestedScoreFilter: ScoreFilters.endsWith0or5,
+  suggestedEndGameScore: 0,
+);
+
+const GameRules _frenchDrivingRules = GameRules(
+  roundInput: RoundInput.calculatedFrenchDriving,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  // French Driving mile totals always end in 0 or 5.
+  suggestedScoreFilter: ScoreFilters.endsWith0or5,
+  suggestedEndGameScore: 5000,
+);
+
+const GameRules _skyjoRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: true,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  suggestedEndGameScore: 100,
+);
+
+const Map<GameMode, GameRules> _rulesByMode = {
+  GameMode.standard: _standardRules,
+  GameMode.phase10: _phase10Rules,
+  GameMode.frenchDriving: _frenchDrivingRules,
+  GameMode.skyjo: _skyjoRules,
+};
+
+/// Returns the [GameRules] descriptor for [mode].
+///
+/// Every [GameMode] has a descriptor; this is the single lookup that replaces
+/// the former `switch (gameMode)` sites.
+GameRules rulesFor(GameMode mode) => _rulesByMode[mode]!;

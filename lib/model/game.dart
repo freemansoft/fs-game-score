@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:fs_score_card/model/game_rules.dart';
 import 'package:fs_score_card/model/score_filters.dart';
 import 'package:uuid/uuid.dart';
 
-enum GameMode { standard, phase10, frenchDriving, skyjo }
+// GameMode now lives in game_rules.dart alongside its rules descriptor.
+// Re-exported so the many `import '.../model/game.dart'` call sites keep
+// resolving GameMode, rulesFor, RoundInput, etc. without new imports.
+export 'package:fs_score_card/model/game_rules.dart';
 
 class GameConfiguration {
   GameConfiguration({
@@ -34,30 +38,24 @@ class GameConfiguration {
   }
 
   static const int defaultMaxRounds = 14;
-  // Default number of phases for phase 10 - really the only legal value
-  static const int defaultNumPhases = 10;
   static const int defaultNumPlayers = 8;
-  // static const bool defaultEnablePhases = false;
   static const GameMode defaultGameMode = GameMode.standard;
   static const String defaultScoreFilter = ScoreFilters.none;
   static const int defaultEndGameScore = 0;
 
   final int maxRounds;
-  int get numPhases {
-    return gameMode == GameMode.phase10 ? defaultNumPhases : 0;
-  }
 
-  bool get allowNegativeScores {
-    // we'll have more here someday
-    // ignore: avoid_bool_literals_in_conditional_expressions
-    return gameMode == GameMode.skyjo ? true : false;
-  }
+  /// The scoring rules for the current [gameMode].
+  GameRules get rules => rulesFor(gameMode);
+
+  // Thin facades over [rules] so existing call sites and tests are unchanged.
+  int get numPhases => rules.numPhases;
+  bool get allowNegativeScores => rules.allowNegativeScores;
 
   final int numPlayers;
-  // final bool enablePhases;
   final GameMode gameMode;
 
-  bool get enablePhases => gameMode == GameMode.phase10;
+  bool get enablePhases => rules.enablePhases;
   final String scoreFilter;
   final int endGameScore;
 

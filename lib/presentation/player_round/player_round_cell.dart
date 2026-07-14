@@ -92,7 +92,7 @@ class PlayerRoundCell extends StatelessWidget {
               context,
             )!.playerRoundScoreLabel(playerIdx + 1, round + 1),
           ),
-          if (gameMode == GameMode.phase10) ...[
+          if (rulesFor(gameMode).enablePhases) ...[
             const SizedBox(height: 2),
             Text(
               selectedPhase != null && selectedPhase! > 0
