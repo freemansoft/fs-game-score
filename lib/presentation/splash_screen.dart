@@ -62,12 +62,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       await ref.read(playersNotifierProvider.notifier).prepareForSplashEntry();
     });
 
-    // Auto-set score filter based on initially loaded game mode
-    final autoFilter =
-        (thisGame.configuration.gameMode == GameMode.phase10 ||
-            thisGame.configuration.gameMode == GameMode.frenchDriving)
-        ? r'^[0-9]*[05]$'
-        : '';
+    // Auto-set score filter based on the initially loaded game mode.
+    final autoFilter = rulesFor(
+      thisGame.configuration.gameMode,
+    ).suggestedScoreFilter;
     thisGame = thisGame.copyWith(
       configuration: thisGame.configuration.copyWith(
         scoreFilter: autoFilter,
@@ -205,19 +203,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ],
             onChanged: (value) {
               if (value != null) {
-                // Auto-set score filter based on game mode:
-                // Phase 10 and French Driving scores always end in 0 or 5
-                final autoFilter =
-                    (value == GameMode.phase10 ||
-                        value == GameMode.frenchDriving)
-                    ? ScoreFilters.endsWith0or5
-                    : ScoreFilters.none;
-                // Auto-enable end game score: Skyjo=100, French Driving=5000
-                final autoEndGameScore = value == GameMode.skyjo
-                    ? 100
-                    : value == GameMode.frenchDriving
-                    ? 5000
-                    : 0;
+                // Score filter and suggested end-game score come from the
+                // mode's rules descriptor (see game_rules.dart).
+                final rules = rulesFor(value);
+                final autoFilter = rules.suggestedScoreFilter;
+                final autoEndGameScore = rules.suggestedEndGameScore;
                 final autoEndGameEnabled = autoEndGameScore > 0;
                 setState(() {
                   _endGameScoreEnabled = autoEndGameEnabled;

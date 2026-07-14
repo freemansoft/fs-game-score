@@ -82,6 +82,10 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
 
   Widget _buildScoreField(BuildContext context, int? currentScore) {
     final l10n = AppLocalizations.of(context)!;
+    final rules = rulesFor(widget.gameMode);
+    // Calculated modes (French Driving) show the score read-only; the value
+    // comes from the attributes panel, so we don't focus or enable the field.
+    final typedScore = rules.roundInput == RoundInput.typedScore;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -96,9 +100,9 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
           score: currentScore,
           onChanged: widget.onScoreChanged,
           scoreFilter: widget.scoreFilter,
-          autofocus: widget.gameMode != GameMode.frenchDriving,
-          enabled: widget.gameMode != GameMode.frenchDriving,
-          allowNegative: widget.gameMode == GameMode.skyjo,
+          autofocus: typedScore,
+          enabled: typedScore,
+          allowNegative: rules.allowNegativeScores,
           onSubmitted: _shouldCloseOnReturnKey() ? _closeModal : null,
         ),
       ],
@@ -147,6 +151,11 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     // Check orientation using MediaQuery
     final orientation = MediaQuery.of(context).orientation;
 
+    final rules = rulesFor(widget.gameMode);
+    final showFrenchDrivingPanel =
+        rules.roundInput == RoundInput.calculatedFrenchDriving;
+    final showPhaseDropdown = rules.enablePhases;
+
     final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       key: PlayerRoundModal.modalKey(widget.playerIdx, widget.round),
@@ -170,7 +179,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       _buildScoreField(context, currentScore),
-                      if (widget.gameMode == GameMode.frenchDriving) ...[
+                      if (showFrenchDrivingPanel) ...[
                         const SizedBox(height: 16),
                         FrenchDrivingRoundPanel(
                           attributes:
@@ -181,7 +190,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
                     ],
                   ),
                 ),
-                if (widget.gameMode == GameMode.phase10) ...[
+                if (showPhaseDropdown) ...[
                   const SizedBox(width: 16),
                   Expanded(
                     child: _buildPhaseDropdown(
@@ -198,7 +207,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildScoreField(context, currentScore),
-                if (widget.gameMode == GameMode.phase10) ...[
+                if (showPhaseDropdown) ...[
                   const SizedBox(height: 16),
                   _buildPhaseDropdown(
                     context,
@@ -206,7 +215,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
                     completedPhases,
                   ),
                 ],
-                if (widget.gameMode == GameMode.frenchDriving) ...[
+                if (showFrenchDrivingPanel) ...[
                   const SizedBox(height: 16),
                   FrenchDrivingRoundPanel(
                     attributes: player.frenchDrivingAttributes[widget.round],

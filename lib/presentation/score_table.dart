@@ -209,7 +209,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
       },
       totalScore: player.totalScore,
       phases: player.phases,
-      enablePhases: game.configuration.gameMode == GameMode.phase10,
+      enablePhases: game.configuration.enablePhases,
       maxRounds: game.configuration.maxRounds,
     );
   }
