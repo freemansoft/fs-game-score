@@ -109,4 +109,4 @@ Details: **`fs-game-score-live-sync`**, [docs/Game-Sync.md](../../../docs/Game-S
 
 - Wrap player-data widgets in **`Semantics`** or set **`semanticLabel`**.
 - Target **4.5:1** text contrast; verify UI at increased system font scale.
-- **Semantic labels are user-facing (read by screen readers) and MUST be localized** with a `*Label`-suffixed l10n key — see **`fs-game-score-flutter-patterns`** and **`fs-game-score-widgets-holding-player-game-data`**.
+- Semantic labels are screen-reader text and **must be localized** — canonical rule in **`fs-game-score-flutter-patterns` → Localization**. The `localize_semantic_labels` custom lint (`fvm dart run custom_lint`) flags hardcoded labels in-editor.

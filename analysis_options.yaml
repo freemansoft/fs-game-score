@@ -8,6 +8,9 @@
 # Use Very Good Ventures' analysis package (very_good_analysis)
 # See: https://pub.dev/packages/very_good_analysis
 analyzer:
+  plugins:
+    # Prototype: fs_score_lints custom rules (localize_semantic_labels).
+    - custom_lint
   errors:
     # key: on widget is not named but is usually first by convention
     always_put_required_named_parameters_first: ignore

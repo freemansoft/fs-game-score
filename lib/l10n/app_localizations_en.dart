@@ -417,6 +417,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String playerRoundModalLabel(int playerNumber, int roundNumber) {
+    return 'Player $playerNumber round $roundNumber modal';
+  }
+
+  @override
+  String playerRoundPhaseSelectorLabel(int playerNumber, int roundNumber) {
+    return 'Player $playerNumber round $roundNumber phase selector';
+  }
+
+  @override
   String playerTotalScoreLabel(int playerNumber) {
     return 'Player $playerNumber total score';
   }

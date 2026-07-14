@@ -826,6 +826,18 @@ abstract class AppLocalizations {
   /// **'Player {playerNumber} game modal'**
   String playerGameModalLabel(int playerNumber);
 
+  /// Semantic label for the player round score modal
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} round {roundNumber} modal'**
+  String playerRoundModalLabel(int playerNumber, int roundNumber);
+
+  /// Semantic label for the player round phase selector dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} round {roundNumber} phase selector'**
+  String playerRoundPhaseSelectorLabel(int playerNumber, int roundNumber);
+
   /// Semantic label for a player total score value
   ///
   /// In en, this message translates to:

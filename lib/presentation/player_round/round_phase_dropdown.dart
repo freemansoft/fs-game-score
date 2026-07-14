@@ -71,8 +71,10 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
 
     return Semantics(
       button: true,
-      label:
-          'Player ${widget.playerIdx + 1} Round ${widget.round + 1} Phase Selector',
+      label: l10n.playerRoundPhaseSelectorLabel(
+        widget.playerIdx + 1,
+        widget.round + 1,
+      ),
       child: Focus(
         focusNode: _focusNode,
         child: PopupMenuButton<int?>(
