@@ -15,6 +15,8 @@ The game mode is selected on the splash screen; the scoring filter is set automa
 - French Driving Scoring
 - Skyjo
 
+For modes and games the app could support in the future, see the **[Game-Modes-Roadmap.md](Game-Modes-Roadmap.md)**.
+
 The game sheet displays each player's per-round score in the round cell and a calculated **Total** column (sum of round scores). Player names appear in the Total column.
 
 ## Standard Mode
