@@ -27,19 +27,21 @@ The two reusable precedents worth reusing when building new modes are the **calc
 
 ## Priority tiers
 
-### Phase 0 — generic rules abstraction (foundation, do first)
+### Phase 0 — generic rules abstraction (foundation)
 
-Everything below is currently implemented as hard-coded `switch` / `if` on the `GameMode` enum (see [Architectural note](#architectural-note)). That has scaled fine to four modes, but the Tier 1–2 work multiplies the branches — bidding formulas, team grouping, and low-score-wins each fork mode behaviour in several files at once. Building those on top of the current structure would entrench the branching further.
+**Status: ✅ delivered.** Implemented as `lib/model/game_rules.dart` (`GameRules` descriptor + `rulesFor(GameMode)`); see [Tier-0-Rules-Abstraction-Plan.md](Tier-0-Rules-Abstraction-Plan.md). The four existing modes behave identically (covered by the existing per-mode integration tests plus `test/game_rules_test.dart`).
 
-Phase 0 replaces the per-mode `switch` with a **config-driven rules abstraction** so later tiers add data, not scattered conditionals. Concretely, lift the behaviours today derived ad hoc on `GameConfiguration` (`numPhases`, `allowNegativeScores`, `enablePhases`) and per-mode UI selection into a single **rules descriptor** per mode that declares:
+Before this phase, per-mode behaviour was hard-coded as `switch` / `if` on the `GameMode` enum across the model, splash screen, and round editors. That had scaled fine to four modes, but the Tier 1–2 work multiplies the branches — bidding formulas, team grouping, and low-score-wins each fork mode behaviour in several files at once — so building those on top of the old structure would have entrenched the branching further.
 
-- the per-round **input shape** (typed score, calculated attributes, extra dropdown) and its validation filter;
-- **aggregation** (sum, and later per-team roll-up, low-vs-high, subtractive);
-- the **end / win condition** (reach-target highlight today; loser-threshold and winner detection later);
-- which **round editor** to render.
+Phase 0 replaced the per-mode `switch` with a **config-driven rules abstraction** so later tiers add data, not scattered conditionals. The behaviours formerly derived ad hoc on `GameConfiguration` (`numPhases`, `allowNegativeScores`, `enablePhases`) and per-mode UI selection now live in a single **rules descriptor** per mode that declares:
 
-- **Unlocks:** nothing player-visible on its own — it is the substrate every tier below plugs into. The four existing modes are re-expressed as descriptors with identical behaviour (regression-covered by the existing per-mode integration tests).
-- **Engine gaps / touch points:** `lib/model/game.dart` (mode getters → descriptor), `lib/model/score_filters.dart`, the round-editor selection in `lib/presentation/player_round/`, and the total/highlight logic in `lib/presentation/player_game/player_game_cell.dart`.
+- the per-round **input shape** (`RoundInput.typedScore` / `calculatedFrenchDriving`) and its suggested validation filter;
+- **aggregation** (`ScoreAggregation.sumPerPlayer` today; later per-team roll-up, low-vs-high, subtractive);
+- the **end / win condition** (`EndCondition.reachTargetHighlight` today; loser-threshold and winner detection later);
+- whether phases are collected and the suggested end-game target.
+
+- **Unlocks:** nothing player-visible on its own — it is the substrate every tier below plugs into.
+- **Touch points delivered:** new `lib/model/game_rules.dart`; `lib/model/game.dart` getters delegate to it; splash auto-config and the round editors (`lib/presentation/player_round/`) read from it. The `aggregation` / `endCondition` fields exist with a single value today as the seam Tier 1–2 extend.
 
 Doing this first is a deliberate trade: it delays the first new game, but Tiers 1–4 then become "add a descriptor (plus any genuinely new primitive)" rather than "thread another `switch` case through the model, splash, editors, and tests."
 
@@ -87,6 +89,6 @@ New scoring shapes that go beyond the additive accumulator:
 
 ## Architectural note
 
-Adding a mode today means: a new `GameMode` enum value, `GameConfiguration` getters, an optional per-round attributes class, a per-mode round-editor panel, splash-screen wiring, l10n keys, and integration tests — all hard-coded as `switch` / `if` on the enum. That has scaled fine to four modes.
+Before [Phase 0](#phase-0--generic-rules-abstraction-foundation), adding a mode meant a new `GameMode` enum value plus per-mode behaviour hard-coded as `switch` / `if` on the enum across `GameConfiguration` getters, the splash screen, and the round editors. That scaled fine to four modes but would have compounded with each new tier.
 
-The **generic rules abstraction** — a config-driven scoring formula and first-class team grouping — is what [Phase 0](#phase-0--generic-rules-abstraction-foundation-do-first) introduces, ahead of the game-facing tiers, so that later modes add a descriptor rather than another `switch` case. The trade-off is that it delays the first new game to pay down structure first; the payoff is that bidding-plus-teams (Tier 1) and every tier after it land as data on the abstraction instead of new branches across the model, splash, editors, and tests.
+Phase 0 introduced the **generic rules abstraction** (`lib/model/game_rules.dart`) ahead of the game-facing tiers, so a mode's behaviour is now declared once in a `GameRules` descriptor. Adding a game still needs its genuinely new primitives — a bid attributes class, a round-editor panel, team grouping, l10n keys, and tests — but it plugs those into the descriptor rather than threading another `switch` case through the model, splash, editors, and tests. First-class team grouping and win/aggregation variants are the descriptor fields (`aggregation`, `endCondition`) that Tiers 1–2 fill in.

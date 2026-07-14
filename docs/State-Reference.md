@@ -8,7 +8,7 @@ Lookup facts for the domain model, repositories, and persistence keys. For how t
 
 ## Data Model
 
-A game is represented by the `Game` class that contains a game `id` (automatically generated as a UUID) and a game `configuration` implemented by the `GameConfiguration` class. The `GameConfiguration` contains the number of players, the maximum number of rounds, the game mode (`Standard`, `Phase 10`, `French Driving`, `Skyjo`), the score filter, the end game score, and the version.
+A game is represented by the `Game` class that contains a game `id` (automatically generated as a UUID) and a game `configuration` implemented by the `GameConfiguration` class. The `GameConfiguration` contains the number of players, the maximum number of rounds, the game mode (`Standard`, `Phase 10`, `French Driving`, `Skyjo`), the score filter, the end game score, and the version. The mode's scoring behavior — round-input style, negative scores, phases, and suggested score filter / end-game target — is declared in a `GameRules` descriptor (`lib/model/game_rules.dart`, via `rulesFor(gameMode)`); the `numPhases`, `allowNegativeScores`, and `enablePhases` getters delegate to it.
 
 The players and their scores in a game are represented by the `Players` class, which wraps a list of `Player` objects.
 
@@ -52,6 +52,7 @@ Repository **classes** live under `lib/data/`. They are exposed to Riverpod thro
 ## Key Files
 
 - `lib/provider/prefs_provider.dart` - SharedPreferences dependency injection
+- `lib/model/game_rules.dart` - Per-mode `GameRules` descriptor and `rulesFor(GameMode)` lookup
 - `lib/provider/game_provider.dart` - Game configuration state and UUID logic
 - `lib/provider/players_provider.dart` - Player data state, validations, coalesced single-flight persist, `prepareForSplashEntry()`, `_persistGeneration`
 - `test/players_notifier_persist_test.dart` - Coalesce burst, splash clear, in-flight + splash race

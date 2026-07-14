@@ -17,6 +17,8 @@ The game mode is selected on the splash screen; the scoring filter is set automa
 
 For modes and games the app could support in the future, see the **[Game-Modes-Roadmap.md](Game-Modes-Roadmap.md)**.
 
+Each mode's behavior — round-input style, whether negative scores are allowed, whether phases are collected, and the suggested score filter and end-game target — is declared once in a **`GameRules` descriptor** (`lib/model/game_rules.dart`, returned by `rulesFor(GameMode)`). The `GameConfiguration` getters (`numPhases`, `allowNegativeScores`, `enablePhases`) delegate to it, and the splash screen and round editors read from it rather than branching on the mode.
+
 The game sheet displays each player's per-round score in the round cell and a calculated **Total** column (sum of round scores). Player names appear in the Total column.
 
 ## Standard Mode
@@ -78,6 +80,7 @@ Each `Player` has:
 
 ## System facts for developers
 
+- **Rules descriptor:** Per-mode behavior lives in `lib/model/game_rules.dart` (`GameRules` + `rulesFor`). Add a mode by adding a `GameMode` value and a descriptor — not by branching on `GameMode` across the model, splash screen, and round editors.
 - **Internationalization:** All user-displayed text and labels are internationalized under `lib/l10n`. The app follows the device language and falls back to English when the selected language is unsupported. See the `fs-game-score-flutter-patterns` skill for the l10n workflow.
 - **Automated tests:** Each game mode has full integration test coverage; data models and business logic have unit tests. See the `fs-game-score-testing-workflow` skill.
 - **Input validation:** Fields validate input and show an error via `errorText` or a SnackBar. Editing procedures are in [How-To-Edit-Scores.md](How-To-Edit-Scores.md).
