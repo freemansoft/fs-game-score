@@ -29,7 +29,7 @@ The two reusable precedents worth reusing when building new modes are the **calc
 
 ### Phase 0 — generic rules abstraction (foundation)
 
-**Status: ✅ delivered.** Implemented as `lib/model/game_rules.dart` (`GameRules` descriptor + `rulesFor(GameMode)`); see [Tier-0-Rules-Abstraction-Plan.md](Tier-0-Rules-Abstraction-Plan.md). The four existing modes behave identically (covered by the existing per-mode integration tests plus `test/game_rules_test.dart`).
+**Status: ✅ delivered.** Implemented as `lib/model/game_rules.dart` (`GameRules` descriptor + `rulesFor(GameMode)`); see [Tier-0 rules abstraction plan](plans/2026-07-14-tier-0-rules-abstraction.md). The four existing modes behave identically (covered by the existing per-mode integration tests plus `test/game_rules_test.dart`).
 
 Before this phase, per-mode behaviour was hard-coded as `switch` / `if` on the `GameMode` enum across the model, splash screen, and round editors. That had scaled fine to four modes, but the Tier 1–2 work multiplies the branches — bidding formulas, team grouping, and low-score-wins each fork mode behaviour in several files at once — so building those on top of the old structure would have entrenched the branching further.
 

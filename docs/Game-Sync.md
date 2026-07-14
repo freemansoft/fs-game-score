@@ -4,7 +4,7 @@ diataxis: reference
 
 # Live game sync (LAN)
 
-For transport options, platform scope, post-v1 roadmap, and the decision log, see [Live-Score-Sharing-Design.md](Live-Score-Sharing-Design.md).
+For transport options, platform scope, post-v1 roadmap, and the decision log, see [Live score sharing design](specs/2026-05-25-live-score-sharing.md).
 
 View-only live score sharing over local Wi-Fi. The **host** device runs the real game (`gameNotifierProvider` / `playersNotifierProvider`); **spectators** mirror snapshots into `gameSyncSpectatorProvider` and render a read-only `ScoreTable`. Spectator state is **not** written to `SharedPreferences`.
 

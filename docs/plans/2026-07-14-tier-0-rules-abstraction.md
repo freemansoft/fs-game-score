@@ -1,6 +1,6 @@
 # Tier 0 implementation plan: generic rules abstraction
 
-Planning artifact for **Phase 0 / Tier 0** of the [Game-Modes-Roadmap](Game-Modes-Roadmap.md). Not Diátaxis prose — this is a design/plan record and is out of scope for the docs-diataxis skill.
+Planning artifact for **Phase 0 / Tier 0** of the [Game-Modes-Roadmap](../Game-Modes-Roadmap.md). Not Diátaxis prose — this is a design/plan record and is out of scope for the docs-diataxis skill.
 
 ## Goal
 

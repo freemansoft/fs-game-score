@@ -4,7 +4,7 @@ diataxis: explanation
 
 # Live sync — architecture and design intent
 
-Why LAN live sync is shaped the way it is. For the concrete provider APIs, wire protocol, handshake, and testing, see **[Game-Sync.md](Game-Sync.md)**. For transport options and the decision log, see [Live-Score-Sharing-Design.md](Live-Score-Sharing-Design.md).
+Why LAN live sync is shaped the way it is. For the concrete provider APIs, wire protocol, handshake, and testing, see **[Game-Sync.md](Game-Sync.md)**. For transport options and the decision log, see [Live score sharing design](specs/2026-05-25-live-score-sharing.md).
 
 ## The core idea
 

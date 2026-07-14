@@ -21,12 +21,12 @@ Every prose doc under [`docs/`](../../../docs) belongs to **exactly one** [Diát
 
 **Out of scope — never restructure or tag these:**
 
-| Excluded                                                                                               | Why                                                  |
-| ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
-| `docs/*-Design.md` (e.g. `Live-Score-Sharing-Design.md`)                                               | Design / decision log — a record, not Diátaxis prose |
-| Anything under `specs/`, `plans/`, `archive/`, `adr/`, `rfc/`                                          | Planning artifacts, superseded content               |
-| `CHANGELOG.md`, `AGENTS.md`, `CLAUDE.md`, `README.md`                                                  | Project meta / release records                       |
-| Files whose title or front matter reads "design", "spec", "plan", "proposal", "decision", "RFC", "ADR" | Same reason — record, not documentation              |
+| Excluded                                                                                               | Why                                                                                         |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| `docs/*-Design.md` design / decision logs                                                              | Design / decision log — a record, not Diátaxis prose                                        |
+| Anything under `docs/specs/`, `docs/plans/`, `archive/`, `adr/`, `rfc/`                                | Planning artifacts (e.g. `docs/specs/2026-05-25-live-score-sharing.md`), superseded content |
+| `CHANGELOG.md`, `AGENTS.md`, `CLAUDE.md`, `README.md`                                                  | Project meta / release records                                                              |
+| Files whose title or front matter reads "design", "spec", "plan", "proposal", "decision", "RFC", "ADR" | Same reason — record, not documentation                                                     |
 
 When asked to "Diátaxis the docs," **skip excluded files silently** and list them under a "Skipped (out of scope)" heading so the exclusion is visible.
 
@@ -99,18 +99,17 @@ For each in-scope file:
 
 Current doc set after the 2026-07-07 restructure. Each doc is one quadrant; verify before acting — content drifts:
 
-| File                           | Quadrant       | Notes                                                                     |
-| ------------------------------ | -------------- | ------------------------------------------------------------------------- |
-| `Semantics-Labels.md`          | reference      | widget keys / semantics labels                                            |
-| `Help-And-Disclaimers.md`      | reference      | legal / trademark facts                                                   |
-| `Game-Modes.md`                | reference      | per-mode scoring rules + internal models                                  |
-| `State-Reference.md`           | reference      | domain model, repositories, prefs keys, key files                         |
-| `Game-Sync.md`                 | reference      | sync providers, wire protocol, handshake                                  |
-| `How-To-Edit-Scores.md`        | how-to         | editing names/scores per mode (extracted from `Game-Modes.md`)            |
-| `How-To-Riverpod.md`           | how-to         | Riverpod coding rules + test setup (extracted from `State-Management.md`) |
-| `State-Management.md`          | explanation    | state/persistence concepts, provider architecture, startup + splash-race  |
-| `Live-Sync-Architecture.md`    | explanation    | sync design intent (extracted from `Game-Sync.md`)                        |
-| `Live-Score-Sharing-Design.md` | — **excluded** | design / decision log                                                     |
+| File                        | Quadrant    | Notes                                                                     |
+| --------------------------- | ----------- | ------------------------------------------------------------------------- |
+| `Semantics-Labels.md`       | reference   | widget keys / semantics labels                                            |
+| `Help-And-Disclaimers.md`   | reference   | legal / trademark facts                                                   |
+| `Game-Modes.md`             | reference   | per-mode scoring rules + internal models                                  |
+| `State-Reference.md`        | reference   | domain model, repositories, prefs keys, key files                         |
+| `Game-Sync.md`              | reference   | sync providers, wire protocol, handshake                                  |
+| `How-To-Edit-Scores.md`     | how-to      | editing names/scores per mode (extracted from `Game-Modes.md`)            |
+| `How-To-Riverpod.md`        | how-to      | Riverpod coding rules + test setup (extracted from `State-Management.md`) |
+| `State-Management.md`       | explanation | state/persistence concepts, provider architecture, startup + splash-race  |
+| `Live-Sync-Architecture.md` | explanation | sync design intent (extracted from `Game-Sync.md`)                        |
 
 **Known residual compromises (deliberate, not yet split):**
 

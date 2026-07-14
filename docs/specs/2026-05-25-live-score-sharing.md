@@ -2,7 +2,7 @@
 
 Serverless, view-only live score sharing for FS Score Card: the **host** edits scores on one device; **spectators** mirror snapshots over the local network. v1 assumes all participants are on the **same Wi‑Fi or subnet** and ships on **Android and iOS** only.
 
-For protocol, providers, handshake, and testing, see [Game-Sync.md](Game-Sync.md). For Riverpod and persistence patterns, see [State-Management.md](State-Management.md).
+For protocol, providers, handshake, and testing, see [Game-Sync.md](../Game-Sync.md). For Riverpod and persistence patterns, see [State-Management.md](../State-Management.md).
 
 ---
 
@@ -40,7 +40,7 @@ Sync payload and Riverpod wiring stay **transport-agnostic** (`GameSyncTransport
 | Authority         | Host-only writes; spectators do not persist wire state                          |
 | Cross-network     | Out of scope v1                                                                 |
 
-**Admission:** Spectator `hello` sends PIN and `appVersion`. Host and spectator both use `gameSyncAppVersionsMatch()` — non-empty strings must share the same **major** semver segment (e.g. `1.12.0+236` matches `1.13.0+200`; `1.12.0` does not match `2.12.0`). Details: [Game-Sync.md — Handshake and validation](Game-Sync.md#handshake-and-validation).
+**Admission:** Spectator `hello` sends PIN and `appVersion`. Host and spectator both use `gameSyncAppVersionsMatch()` — non-empty strings must share the same **major** semver segment (e.g. `1.12.0+236` matches `1.13.0+200`; `1.12.0` does not match `2.12.0`). Details: [Game-Sync.md — Handshake and validation](../Game-Sync.md#handshake-and-validation).
 
 **Pairing flow:**
 
@@ -233,7 +233,7 @@ When product requires different networks (cellular host, remote spectator withou
 
 - Implement `GameSyncTransport` over WebRTC data channels; same JSON snapshot schema.
 - Discovery via QR / paste SDP + ICE; public STUN allowed; optional user TURN.
-- Update [PRIVACY_POLICY.md](../PRIVACY_POLICY.md) for STUN/TURN disclosure.
+- Update [PRIVACY_POLICY.md](../../PRIVACY_POLICY.md) for STUN/TURN disclosure.
 
 ### HTTPS web spectator (`wss://`)
 
@@ -248,7 +248,7 @@ If production web spectator must work on GitHub Pages (HTTPS), host may need **W
 
 ## Implementation status
 
-**v1 (Option A, Android/iOS view-only) — implemented in repo.** Operational detail: [Game-Sync.md](Game-Sync.md). Skill: `.agents/skills/fs-game-score-live-sync/SKILL.md`.
+**v1 (Option A, Android/iOS view-only) — implemented in repo.** Operational detail: [Game-Sync.md](../Game-Sync.md). Skill: `.agents/skills/fs-game-score-live-sync/SKILL.md`.
 
 | Area                          | Status | Notes                                                                                         |
 | ----------------------------- | ------ | --------------------------------------------------------------------------------------------- |
@@ -268,7 +268,7 @@ If production web spectator must work on GitHub Pages (HTTPS), host may need **W
 
 **Related improvements** (landed with live sync, not original P2P scope):
 
-- Splash player clear race — `prepareForSplashEntry()`, coalesced persist — [State-Management.md#splash-entry-and-coalesced-persist-race](State-Management.md#splash-entry-and-coalesced-persist-race)
+- Splash player clear race — `prepareForSplashEntry()`, coalesced persist — [State-Management.md#splash-entry-and-coalesced-persist-race](../State-Management.md#splash-entry-and-coalesced-persist-race)
 - Integration helpers — `waitForSplashReady()`, `waitForScoreTable()` — see testing skill / `integration_test/app_test_helpers.dart`
 
 ---
@@ -294,12 +294,12 @@ If production web spectator must work on GitHub Pages (HTTPS), host may need **W
 
 | Topic                  | Location                                                                                     |
 | ---------------------- | -------------------------------------------------------------------------------------------- |
-| Implementation guide   | [Game-Sync.md](Game-Sync.md)                                                                 |
-| State / splash race    | [State-Management.md](State-Management.md)                                                   |
-| Privacy (LAN sessions) | [PRIVACY_POLICY.md](../PRIVACY_POLICY.md)                                                    |
+| Implementation guide   | [Game-Sync.md](../Game-Sync.md)                                                              |
+| State / splash race    | [State-Management.md](../State-Management.md)                                                |
+| Privacy (LAN sessions) | [PRIVACY_POLICY.md](../../PRIVACY_POLICY.md)                                                 |
 | Sync layer             | `lib/sync/` — protocol, mapper, LAN I/O, QR, platform gates                                  |
 | Providers              | `lib/provider/game_sync_host_provider.dart`, `game_sync_spectator_provider.dart`             |
 | UI                     | `live_share_control.dart`, `join_live_game_screen.dart`, `spectator_score_table_screen.dart` |
 | Agent skill            | `.agents/skills/fs-game-score-live-sync/SKILL.md`                                            |
 
-Wire protocol and message types: `lib/sync/game_sync_protocol.dart` (documented in [Game-Sync.md](Game-Sync.md)).
+Wire protocol and message types: `lib/sync/game_sync_protocol.dart` (documented in [Game-Sync.md](../Game-Sync.md)).
