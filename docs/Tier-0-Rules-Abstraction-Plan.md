@@ -9,24 +9,24 @@ Replace the per-mode `switch` / `if`-on-`GameMode` branching that is scattered a
 ## Non-goals (explicitly out of scope for Tier 0)
 
 - **No new player-visible behavior.** The four existing modes (`standard`, `phase10`, `frenchDriving`, `skyjo`) must behave **identically** after the refactor.
-- **No teams, no low-score-wins, no new games.** Those are Tiers 1–4. Tier 0 only reshapes *how* behavior is selected, and leaves **hooks** (descriptor fields) where those tiers will plug in.
+- **No teams, no low-score-wins, no new games.** Those are Tiers 1–4. Tier 0 only reshapes _how_ behavior is selected, and leaves **hooks** (descriptor fields) where those tiers will plug in.
 - **No change to the persisted JSON shape or the live-sync wire format** (see Invariants).
 
 ## Current state — where mode behavior lives today
 
 `GameMode` is one enum (`lib/model/game.dart:5`) with behavior derived ad hoc in these places:
 
-| Concern | Site | Current logic |
-| --- | --- | --- |
-| Phase count | `game.dart` `numPhases` | `phase10 ? 10 : 0` |
-| Negative scores | `game.dart` `allowNegativeScores` | `skyjo` only |
-| Phases enabled | `game.dart` `enablePhases` | `phase10` only |
-| Mode picker + auto-config | `splash_screen.dart` `_buildGameModeField` (169–235) | dropdown items; auto score filter for `phase10`/`frenchDriving`; auto end score `skyjo`→100, `frenchDriving`→5000 |
-| Round editor layout | `player_round_modal.dart` (99–215) | `frenchDriving` disables typed field + shows `FrenchDrivingRoundPanel`; `phase10` shows phase dropdown; `skyjo` allows negative |
-| Round cell display | `player_round_cell.dart` (95) | phase shown only for `phase10` |
-| Total-cell / game modal | `player_game_modal.dart`, `score_table.dart:212` | `enablePhases` display toggle |
-| End-game highlight | `player_game_cell.dart:52` | `endGameScore > 0 && totalScore >= endGameScore` (reach-target only) |
-| Score filters | `score_filters.dart` | `none`, `endsWith0or5`, `signedDigits` |
+| Concern                   | Site                                                 | Current logic                                                                                                                   |
+| ------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Phase count               | `game.dart` `numPhases`                              | `phase10 ? 10 : 0`                                                                                                              |
+| Negative scores           | `game.dart` `allowNegativeScores`                    | `skyjo` only                                                                                                                    |
+| Phases enabled            | `game.dart` `enablePhases`                           | `phase10` only                                                                                                                  |
+| Mode picker + auto-config | `splash_screen.dart` `_buildGameModeField` (169–235) | dropdown items; auto score filter for `phase10`/`frenchDriving`; auto end score `skyjo`→100, `frenchDriving`→5000               |
+| Round editor layout       | `player_round_modal.dart` (99–215)                   | `frenchDriving` disables typed field + shows `FrenchDrivingRoundPanel`; `phase10` shows phase dropdown; `skyjo` allows negative |
+| Round cell display        | `player_round_cell.dart` (95)                        | phase shown only for `phase10`                                                                                                  |
+| Total-cell / game modal   | `player_game_modal.dart`, `score_table.dart:212`     | `enablePhases` display toggle                                                                                                   |
+| End-game highlight        | `player_game_cell.dart:52`                           | `endGameScore > 0 && totalScore >= endGameScore` (reach-target only)                                                            |
+| Score filters             | `score_filters.dart`                                 | `none`, `endsWith0or5`, `signedDigits`                                                                                          |
 
 `Player` (`lib/model/player.dart`) already carries **all** extension collections (`scores`, `phases`, `frenchDrivingAttributes`, `roundStates`) regardless of mode, and serializes them all. Tier 0 does **not** change this.
 
@@ -43,7 +43,7 @@ Introduce `lib/model/game_rules.dart`:
   - **Hooks for later tiers** (declared now, single value for now, so Tier 1–2 add data not branches):
     - `aggregation` — enum `{ sumPerPlayer }` today; `sumPerTeam`, `lowScoreWins` later.
     - `endCondition` — enum `{ reachTargetHighlight }` today; `loserThreshold`, `winnerDetection` later.
-- **`GameRules rulesFor(GameMode mode)`** — a `const`/lazy registry (map or `switch` in **one** place) returning the descriptor. This is the *only* remaining `switch` on `GameMode`.
+- **`GameRules rulesFor(GameMode mode)`** — a `const`/lazy registry (map or `switch` in **one** place) returning the descriptor. This is the _only_ remaining `switch` on `GameMode`.
 
 Then migrate call sites to read from the descriptor:
 
@@ -68,14 +68,14 @@ Then migrate call sites to read from the descriptor:
 
 ## Docs to update (become out of date after this change)
 
-| Doc | Why it goes stale | Update |
-| --- | --- | --- |
-| `docs/Game-Modes.md` | "internal model" sections + "System facts" describe per-mode getters; still reference the `switch` mental model | Add a short "Rules descriptor" note; point per-mode internal-model sections at the descriptor fields. Keep it **reference** voice. |
-| `docs/State-Reference.md` | Lists `GameConfiguration` fields/getters (`numPhases`, `allowNegativeScores`, `enablePhases`) and key files | Note the getters now delegate to `GameRules`; add `lib/model/game_rules.dart` to the key-files list. |
-| `docs/Game-Modes-Roadmap.md` | Phase 0 is "do first" and the Architectural note describes the `switch` as current state | Mark Phase 0 delivered; reword the Architectural note to past tense; confirm Tier 1 "built as descriptors" framing. |
-| `.claude/skills/fs-game-score-flutter-patterns/SKILL.md` **and** `.agents/skills/fs-game-score-flutter-patterns/SKILL.md` | "how to add a game mode" guidance describes the old scattered-`switch` procedure | Rewrite the add-a-mode steps to "add a `GameRules` descriptor + register it"; keep both copies in sync (check `skills-lock.json`). |
-| `README.md` | User-facing game-types table is fine; only the **Developer notes** section may mention the mode-dispatch approach | Update only if it describes internals; leave the user-facing table unchanged (no behavior change). |
-| `docs/How-To-Edit-Scores.md`, `docs/Semantics-Labels.md` | User-facing steps / widget keys — unaffected by an internal refactor | Verify only; expect no change. |
+| Doc                                                                                                                       | Why it goes stale                                                                                                 | Update                                                                                                                             |
+| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `docs/Game-Modes.md`                                                                                                      | "internal model" sections + "System facts" describe per-mode getters; still reference the `switch` mental model   | Add a short "Rules descriptor" note; point per-mode internal-model sections at the descriptor fields. Keep it **reference** voice. |
+| `docs/State-Reference.md`                                                                                                 | Lists `GameConfiguration` fields/getters (`numPhases`, `allowNegativeScores`, `enablePhases`) and key files       | Note the getters now delegate to `GameRules`; add `lib/model/game_rules.dart` to the key-files list.                               |
+| `docs/Game-Modes-Roadmap.md`                                                                                              | Phase 0 is "do first" and the Architectural note describes the `switch` as current state                          | Mark Phase 0 delivered; reword the Architectural note to past tense; confirm Tier 1 "built as descriptors" framing.                |
+| `.claude/skills/fs-game-score-flutter-patterns/SKILL.md` **and** `.agents/skills/fs-game-score-flutter-patterns/SKILL.md` | "how to add a game mode" guidance describes the old scattered-`switch` procedure                                  | Rewrite the add-a-mode steps to "add a `GameRules` descriptor + register it"; keep both copies in sync (check `skills-lock.json`). |
+| `README.md`                                                                                                               | User-facing game-types table is fine; only the **Developer notes** section may mention the mode-dispatch approach | Update only if it describes internals; leave the user-facing table unchanged (no behavior change).                                 |
+| `docs/How-To-Edit-Scores.md`, `docs/Semantics-Labels.md`                                                                  | User-facing steps / widget keys — unaffected by an internal refactor                                              | Verify only; expect no change.                                                                                                     |
 
 Do the doc updates **in the same PR** as the code so the repo never describes a structure that no longer exists.
 

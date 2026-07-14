@@ -61,7 +61,7 @@ These two were chosen as the first game-facing priority because trick-taking car
 
 ### Tier 2 — high leverage, smaller
 
-**Low-score-wins + loser-threshold end condition.** Today `endGameScore` only bolds players who *reach* it, identically in every mode. Add a per-mode flag for "lowest total wins" and for "the game ends when someone crosses the target."
+**Low-score-wins + loser-threshold end condition.** Today `endGameScore` only bolds players who _reach_ it, identically in every mode. Add a per-mode flag for "lowest total wins" and for "the game ends when someone crosses the target."
 
 - **Unlocks:** Hearts, Golf (card and sport), dominoes (Muggins / Mexican Train), Rummy scored to a penalty target.
 - **Engine gaps:** winner detection / ranking (absent today); invert the highlight logic in `player_game_cell.dart`.
