@@ -410,7 +410,9 @@ _. Flutter
 _. markdownlint
 _. Prettier (legacy) - Code formatter
 
-### LLM Rules
+### LLM Agent Support and Rules
+
+#### LLM Agent Support
 
 AI coding tools share a single rules layout:
 
@@ -420,3 +422,14 @@ AI coding tools share a single rules layout:
 Cursor and Antigravity auto-discover skills from `.agents/skills/` when each skill has a valid `SKILL.md` with YAML frontmatter. Copilot reads `AGENTS.md`; project skills are referenced there for deeper workflows (live sync, testing, widget keys).
 
 Removed redundant copies: `.cursor/rules/`, `.agents/rules/`, `.github/copilot-instructions.md`, and `.github/instructions/copilot.instructions.md`.
+
+#### Superpowers support
+
+This workspace auto configures superpowers in the workspace for `cursor` and `claude`.
+
+| Tool              | Project-level plugin declaration | Config file                                                                           |
+| ----------------- | -------------------------------- | ------------------------------------------------------------------------------------- |
+| Claude Code       | ✅ Yes                           | .claude/settings.json → enabledPlugins                                                |
+| Cursor            | ✅ Yes                           | .cursor/settings.json → plugins                                                       |
+| GitHub Copilot    | ❌ No                            | No project-scoped config exists                                                       |
+| Antigravity (agy) | ❌ No                            | No project-scoped config exists; all plugin state lives in ~/.gemini/antigravity-cli/ |
