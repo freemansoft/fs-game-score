@@ -146,14 +146,14 @@ See **`flutter-setup-localization`** for generic l10n setup.
 
 ## Anti-patterns (do not reintroduce)
 
-| Anti-pattern                                   | Why                                                                               |
-| ---------------------------------------------- | --------------------------------------------------------------------------------- |
-| Singleton repositories                         | Breaks DI and tests                                                               |
-| `repositoryDidLoadPrefs()`                     | Bypasses `build()` validation                                                     |
-| Fire-and-forget `main()` in integration tests  | Android startup race                                                              |
-| `ref.watch` in event handlers                  | Does not subscribe the widget                                                     |
+| Anti-pattern                                   | Why                                                                                                                    |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Singleton repositories                         | Breaks DI and tests                                                                                                    |
+| `repositoryDidLoadPrefs()`                     | Bypasses `build()` validation                                                                                          |
+| Fire-and-forget `main()` in integration tests  | Android startup race                                                                                                   |
+| `ref.watch` in event handlers                  | Does not subscribe the widget                                                                                          |
 | `switch (gameMode)` / `== GameMode.x` behavior | Put per-mode behavior in the `GameRules` descriptor (`lib/model/game_rules.dart`) — enforced convention, see AGENTS.md |
-| Saves/timers in `Notifier.build()`             | Belongs in mutators or explicit UI flows                                          |
+| Saves/timers in `Notifier.build()`             | Belongs in mutators or explicit UI flows                                                                               |
 
 ---
 
