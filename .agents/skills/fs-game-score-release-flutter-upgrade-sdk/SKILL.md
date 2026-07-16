@@ -17,7 +17,7 @@ You can manually update flutter versions by running:
 
 - Run `fvm install <new-flutter-version>` (e.g., `fvm install 3.44.0`) in the root of the repository if the new target version of flutter is not already installed.
 - Run `fvm use <new-flutter-version>` (e.g., `fvm use 3.44.0`) in the root of the repository.
-- Verify that `.fvm/fvm_config.json` has been updated with the new version.
+- Verify that **`.fvmrc`** — the tracked source of truth — now reads `{ "flutter": "<new-flutter-version>" }`, and commit it. (`.fvm/fvm_config.json` is a legacy, gitignored file `fvm use` also writes; `.fvmrc` is the one that must be committed.)
 
 ## 2. Update CI/CD Workflows
 

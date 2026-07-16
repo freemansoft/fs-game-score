@@ -152,8 +152,7 @@ See **`flutter-setup-localization`** for generic l10n setup.
 | `repositoryDidLoadPrefs()`                     | Bypasses `build()` validation                                                     |
 | Fire-and-forget `main()` in integration tests  | Android startup race                                                              |
 | `ref.watch` in event handlers                  | Does not subscribe the widget                                                     |
-| `switch (gameMode)` / `== GameMode.x` behavior | Put per-mode behavior in the `GameRules` descriptor (`lib/model/game_rules.dart`) |
-| `switch (gameMode)` / `== GameMode.x` behavior | Put per-mode behavior in the `GameRules` descriptor (`lib/model/game_rules.dart`) |
+| `switch (gameMode)` / `== GameMode.x` behavior | Put per-mode behavior in the `GameRules` descriptor (`lib/model/game_rules.dart`) — enforced convention, see AGENTS.md |
 | Saves/timers in `Notifier.build()`             | Belongs in mutators or explicit UI flows                                          |
 
 ---
@@ -161,7 +160,6 @@ See **`flutter-setup-localization`** for generic l10n setup.
 ## Key files
 
 - `lib/provider/game_provider.dart`, `lib/provider/players_provider.dart`
-- `lib/model/game_rules.dart` — `GameRules` descriptor + `rulesFor(GameMode)`; add a mode here, don't branch on `GameMode`
 - `lib/model/game_rules.dart` — `GameRules` descriptor + `rulesFor(GameMode)`; add a mode here, don't branch on `GameMode`
 - `lib/provider/prefs_provider.dart`, `lib/data/*_repository.dart`
 - `lib/main.dart`, `lib/router/app_router.dart`

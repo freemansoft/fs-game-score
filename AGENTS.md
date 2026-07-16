@@ -82,6 +82,7 @@ Flutter app (multi-platform) for a player/round score card. Key folders:
   - Tests should use these functions (see `integration_test/`). Modal/global panel fields need repeatable keys per player/round — use the **`fs-game-score-widgets-holding-player-game-data`** skill.
 - **Semantics & modals**: Widgets showing player/game data must expose semantic labels or be wrapped in `Semantics`. Modal `AlertDialog` content should be scrollable and adapt layout by orientation when there are 2–3 fields — use the **`fs-game-score-widgets-holding-player-game-data`** skill.
 - **State management**: Use Riverpod 3 `Notifier` patterns; UI watches `gameNotifierProvider` / `playersNotifierProvider`.
+- **Game modes**: Never branch on `GameMode` (`switch (gameMode)` / `== GameMode.x`) to vary behavior. Add per-mode behavior to the `GameRules` descriptor in [game_rules.dart](lib/model/game_rules.dart) (`rulesFor(GameMode)`) — see the **`fs-game-score-flutter-patterns`** skill.
 
 ### Code quality and styling
 
