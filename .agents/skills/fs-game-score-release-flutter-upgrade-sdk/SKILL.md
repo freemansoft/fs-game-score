@@ -9,6 +9,10 @@ description: >
 
 Follow this procedure when upgrading the Flutter and Dart SDK versions used in this repository. Ensuring all configurations, packages, and CI pipelines stay in sync is critical for monorepo health.
 
+**Related skills:** `fs-game-score-release-engineer`
+([SKILL.md](../fs-game-score-release-engineer/SKILL.md)) — version tagging,
+CHANGELOG bumps, and distributable builds once the SDK upgrade lands.
+
 ## 1. Upgrade FVM (Flutter Version Management)
 
 FVM is the source of truth for the local development environment. `fvm flutter --version` will automatically update the fvm managed local flutter to the correct version if it is not already installed.
@@ -45,7 +49,17 @@ Document the SDK bump so consumers of the packages are aware of the new minimum 
 - Add a bullet point to the `CHANGELOG.md` file for every updated package under the `Unreleased` or upcoming version heading.
 - Example: `- Require Dart SDK <new-dart-version> and Flutter <new-flutter-version>`
 
-## 5. Verify the Upgrade
+## 5. Update Version Mentions in Skills and Docs
+
+Some skills pin the Flutter version in prose (e.g. `run-fs-game-score` states the
+`.fvmrc`-pinned version so agents don't corrupt the build cache with a mismatched
+system Flutter). Stale mentions silently mislead future sessions.
+
+- Grep `.agents/skills/` (canonical location; `.claude/skills` is a symlink to it)
+  for the **old** Flutter version and update every hit to the new version.
+- Do the same for `AGENTS.md` and `README.md` if they name the version.
+
+## 6. Verify the Upgrade
 
 Ensure that the new SDK version does not break existing code or cause new linting errors.
 

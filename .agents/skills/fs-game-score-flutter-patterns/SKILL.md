@@ -1,8 +1,12 @@
 ---
 name: fs-game-score-flutter-patterns
 description: >
-  Riverpod 3, routing, persistence, and Flutter UI conventions for fs-game-score.
-  Use for general feature work, providers, splash/score-table flows, and l10n.
+  Riverpod 3 Notifier patterns, go_router routing, SharedPreferences persistence,
+  and Flutter UI conventions for fs-game-score. Use for any feature work or
+  provider change, splash/score-table flows, adding or translating user-facing
+  strings (.arb files, gen-l10n), localizing semantic labels, and Mille Bornes /
+  game-mode terminology — even when the request doesn't mention architecture or
+  l10n by name.
 ---
 
 # FS Score Card — Flutter patterns

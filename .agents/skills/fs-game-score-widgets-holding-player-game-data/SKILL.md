@@ -18,6 +18,8 @@ Rules for widgets that display player or game data. Tests must use the **static 
 - **Round index** suffix: `r` + index after player prefix (e.g. `p0_r2_score_field`).
 - Modal/global panel fields need repeatable keys including player and/or round when applicable.
 
+The tables below are a snapshot — the listed source files are the truth; verify there before relying on a pattern, and update these tables when keys change.
+
 ### Player game column (`lib/presentation/player_game/`)
 
 | Function                          | Key pattern        | File                     |

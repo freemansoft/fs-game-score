@@ -1,8 +1,11 @@
 ---
 name: fs-game-score-live-sync
 description: >
-  LAN host/spectator live sync, WebSocket protocol, and join/host UI for this app.
-  Use when changing gameSyncHostProvider, gameSyncSpectatorProvider, or sync flows.
+  LAN host/spectator live score sync for this app: WebSocket wire protocol, mDNS
+  discovery, QR-code join, PIN and app-version validation, and the host/join/
+  spectator UI. Use when changing gameSyncHostProvider, gameSyncSpectatorProvider,
+  the join or live-share screens, the connection banner, or anything mentioning
+  spectators, live sharing, QR scan, or ws:// URLs.
 ---
 
 # FS Score Card — Live game sync
