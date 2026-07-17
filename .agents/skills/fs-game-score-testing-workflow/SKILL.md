@@ -1,8 +1,12 @@
 ---
 name: fs-game-score-testing-workflow
 description: >
-  Unit, widget, and integration testing patterns, widget keys in tests, and a11y for this app.
-  Use when writing or updating tests or accessibility behavior.
+  Unit, widget, and integration testing patterns for this app: ProviderScope
+  overrides, integration_test helpers (launchApp, waitForScoreTable,
+  pumpUntilFound), fake sync transports, widget-key lookups in tests, and
+  accessibility/semantics checks. Use whenever writing, fixing, or reviewing any
+  test, debugging a flaky integration flow or splash-clear race, or changing
+  screen-reader/a11y behavior.
 ---
 
 # FS Score Card — Testing and accessibility
@@ -43,6 +47,8 @@ container.read(gameNotifierProvider);
 Works with **`UncontrolledProviderScope`** from `bootstrapApp()`.
 
 ### Project unit tests (examples)
+
+Snapshot of representative tests — verify against `test/` before citing; this list drifts.
 
 | File                                                               | Covers                                                         |
 | ------------------------------------------------------------------ | -------------------------------------------------------------- |
