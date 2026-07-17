@@ -30,6 +30,8 @@ App state uses **`Notifier` / `NotifierProvider`** (`hooks_riverpod` ^3.1.0), no
 | Live state  | `gameNotifierProvider`, `playersNotifierProvider`                                         |
 | Routing     | `appRouterProvider` — resume via `initialLocation(prefs)`                                 |
 
+Per-provider responsibilities and the `ref.watch` / `ref.read` rules are canonical in [How-To-Riverpod.md — Provider layers](../../../docs/How-To-Riverpod.md#provider-layers-top-to-bottom); this table is the at-a-glance map.
+
 **UI rules:**
 
 - Widgets **`ref.watch`** / **`ref.read`** notifier providers — not repositories (except documented splash/router flows).
@@ -81,10 +83,7 @@ See **`flutter-setup-declarative-routing`** for generic go_router patterns.
 
 ## Persistence keys
 
-| Key             | Repository          | Content                   |
-| --------------- | ------------------- | ------------------------- |
-| `game_state`    | `GameRepository`    | `Game.configuration` JSON |
-| `players_state` | `PlayersRepository` | Full roster JSON          |
+Prefs keys and repository responsibilities are canonical in [State-Reference.md — Prefs keys](../../../docs/State-Reference.md#prefs-keys) (`game_state` → `GameRepository`, `players_state` → `PlayersRepository`).
 
 Splash **Start new game** saves config via `newGame()` and baseline roster via `playersRepositoryProvider.savePlayers(...)`.
 
@@ -150,14 +149,13 @@ See **`flutter-setup-localization`** for generic l10n setup.
 
 ## Anti-patterns (do not reintroduce)
 
+Riverpod / persistence anti-patterns are canonical in [How-To-Riverpod.md — Anti-patterns](../../../docs/How-To-Riverpod.md#anti-patterns-do-not-reintroduce) — singleton repositories, `repositoryDidLoadPrefs()`, `ref.watch` in event handlers, saves/timers in `Notifier.build()`, and fire-and-forget `main()` in integration tests. Follow that list.
+
+One project convention beyond those:
+
 | Anti-pattern                                   | Why                                                                                                                    |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Singleton repositories                         | Breaks DI and tests                                                                                                    |
-| `repositoryDidLoadPrefs()`                     | Bypasses `build()` validation                                                                                          |
-| Fire-and-forget `main()` in integration tests  | Android startup race                                                                                                   |
-| `ref.watch` in event handlers                  | Does not subscribe the widget                                                                                          |
 | `switch (gameMode)` / `== GameMode.x` behavior | Put per-mode behavior in the `GameRules` descriptor (`lib/model/game_rules.dart`) — enforced convention, see AGENTS.md |
-| Saves/timers in `Notifier.build()`             | Belongs in mutators or explicit UI flows                                                                               |
 
 ---
 

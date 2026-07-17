@@ -6,6 +6,8 @@ diataxis: reference
 
 All of the important UI elements must have semantic labels. This includes any controls like buttons and any input fields. The following widgets have semantics labels defined to support accessibility and to support web and other e2e tests.
 
+> Tests reference these keys through **static key functions** on the widget classes (e.g. `PlayerRoundModal.scoreFieldKey(i, r)`), catalogued in the `fs-game-score-widgets-holding-player-game-data` skill — use those functions, never hardcode the key strings below.
+
 ## In Game App Bar Controls
 
 | Widget                     | Key                         | Semantics Label                                    |

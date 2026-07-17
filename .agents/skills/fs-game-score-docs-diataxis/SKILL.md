@@ -104,6 +104,7 @@ Current doc set after the 2026-07-07 restructure. Each doc is one quadrant; veri
 | `Semantics-Labels.md`       | reference   | widget keys / semantics labels                                            |
 | `Help-And-Disclaimers.md`   | reference   | legal / trademark facts                                                   |
 | `Game-Modes.md`             | reference   | per-mode scoring rules + internal models                                  |
+| `Game-Modes-Roadmap.md`     | explanation | future/candidate game modes the app could support                         |
 | `State-Reference.md`        | reference   | domain model, repositories, prefs keys, key files                         |
 | `Game-Sync.md`              | reference   | sync providers, wire protocol, handshake                                  |
 | `How-To-Edit-Scores.md`     | how-to      | editing names/scores per mode (extracted from `Game-Modes.md`)            |

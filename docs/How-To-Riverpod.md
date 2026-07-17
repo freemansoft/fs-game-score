@@ -60,6 +60,8 @@ Notifiers load persisted data the first time something `watch`es or `read`s them
 | Resume routing via `prefs.containsKey` only          | Routes to score table when JSON is invalid or mismatched |
 | `phases.completedPhases.length == numPhases`         | Wrong dimension; phases lists are sized by `maxRounds`   |
 | Fire-and-forget `main()` in integration tests        | Races `runApp` on slow Android devices                   |
+| `ref.watch` inside event handlers / callbacks        | Does not subscribe the widget — use `ref.read`           |
+| Saves / timers / `unawaited` writes in `build()`     | Belong in mutators or explicit UI flows, not `build()`   |
 
 ## Integration and widget testing
 
