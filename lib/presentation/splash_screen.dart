@@ -144,8 +144,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             key: SplashScreen.maxRoundsDropdownKey,
             value: thisGame.configuration.maxRounds,
             items: [
-              for (var i = 1; i <= 20; i++)
-                DropdownMenuItem(value: i, child: Text(i.toString())),
+              for (final r in rulesFor(
+                thisGame.configuration.gameMode,
+              ).roundOptions)
+                DropdownMenuItem(value: r, child: Text(r.toString())),
             ],
             onChanged: (value) {
               if (value != null) {
@@ -217,6 +219,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 final autoFilter = rules.suggestedScoreFilter;
                 final autoEndGameScore = rules.suggestedEndGameScore;
                 final autoEndGameEnabled = autoEndGameScore > 0;
+                // Keep the current round count if the new mode offers it;
+                // otherwise snap to the mode's suggested default (e.g. Golf
+                // offers only 9/18, so a 14-round game snaps to 18).
+                final currentRounds = thisGame.configuration.maxRounds;
+                final newRounds = rules.roundOptions.contains(currentRounds)
+                    ? currentRounds
+                    : rules.suggestedMaxRounds;
                 setState(() {
                   _endGameScoreEnabled = autoEndGameEnabled;
                   _endGameScoreController.text = autoEndGameScore > 0
@@ -227,6 +236,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       gameMode: value,
                       scoreFilter: autoFilter,
                       endGameScore: autoEndGameScore,
+                      maxRounds: newRounds,
                     ),
                   );
                 });
