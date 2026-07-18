@@ -26,12 +26,22 @@ enum RoundInput {
 /// branches elsewhere.
 enum ScoreAggregation { sumPerPlayer }
 
-/// How/when the game signals an end or a leader.
+/// Whether the highest or the lowest total wins.
 ///
-/// Only [reachTargetHighlight] exists today (a player whose total reaches the
-/// end-game score is highlighted). Loser-threshold and winner detection are
-/// Tier 2; they add values here.
-enum EndCondition { reachTargetHighlight }
+/// Orthogonal to [ScoreAggregation]: win direction and per-player-vs-team
+/// roll-up compose independently, so this is its own field rather than more
+/// values on [ScoreAggregation].
+enum WinDirection { highestWins, lowestWins }
+
+/// How/when the game signals an end or a leader.
+enum EndCondition {
+  /// A player whose total reaches the end-game score is highlighted.
+  reachTargetHighlight,
+
+  /// The end-game score is a limit: a player crossing it ends the game;
+  /// the winner is the lowest total (see [WinDirection.lowestWins]).
+  loserThreshold,
+}
 
 /// Immutable descriptor of the scoring rules for a [GameMode].
 ///
@@ -50,6 +60,7 @@ class GameRules {
     required this.suggestedEndGameScore,
     this.aggregation = ScoreAggregation.sumPerPlayer,
     this.endCondition = EndCondition.reachTargetHighlight,
+    this.winDirection = WinDirection.highestWins,
   });
 
   /// How the round score is entered.
@@ -76,6 +87,11 @@ class GameRules {
 
   /// How the game signals an end/leader (Tier 0: always [EndCondition.reachTargetHighlight]).
   final EndCondition endCondition;
+
+  /// Whether the highest or lowest total wins (Tier 0: always
+  /// [WinDirection.highestWins]; low-score-wins modes set
+  /// [WinDirection.lowestWins]).
+  final WinDirection winDirection;
 }
 
 /// The number of phases in Phase 10.

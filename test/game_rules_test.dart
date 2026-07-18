@@ -61,6 +61,21 @@ void main() {
         }
       },
     );
+
+    test('existing modes win on the highest total', () {
+      for (final mode in [
+        GameMode.standard,
+        GameMode.phase10,
+        GameMode.frenchDriving,
+        GameMode.skyjo,
+      ]) {
+        expect(rulesFor(mode).winDirection, WinDirection.highestWins);
+      }
+    });
+
+    test('EndCondition exposes a loserThreshold value', () {
+      expect(EndCondition.values, contains(EndCondition.loserThreshold));
+    });
   });
 
   group('GameConfiguration getters delegate to rules', () {
