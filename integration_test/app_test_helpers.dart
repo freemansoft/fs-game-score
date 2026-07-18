@@ -134,7 +134,11 @@ Future<void> launchAppOnSplash(WidgetTester tester) async {
 /// clearing is async and coalesced saves from the score table can race.
 Future<void> waitForSplashPlayersCleared(WidgetTester tester) async {
   final splashFinder = find.byType(SplashScreen);
-  expect(splashFinder, findsOneWidget);
+  // Navigation back to splash (via "Change Scorecard") is async: on slow
+  // Android CI emulators the route can still be mounting when the caller's
+  // pumpAndSettle returns. Poll for the splash before reading its element —
+  // same race class that 1e9f11a fixed for the Continue button.
+  await pumpUntilFound(tester, splashFinder);
   final container = ProviderScope.containerOf(tester.element(splashFinder));
   await container
       .read(playersNotifierProvider.notifier)

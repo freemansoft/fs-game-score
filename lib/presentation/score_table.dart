@@ -51,6 +51,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
     if (players == null || game == null) {
       return const SizedBox.shrink();
     }
+    final rules = game.configuration.rules;
+    final leaders = rules.winDirection == WinDirection.lowestWins
+        ? players.leaderIndices(rules.winDirection)
+        : const <int>[];
     final minWidth = 100 + game.configuration.maxRounds * 100;
     final readOnly = widget.readOnly;
     final l10n = AppLocalizations.of(context)!;
@@ -144,6 +148,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   name: player.name,
                   totalScore: player.totalScore,
                   endGameScore: game.configuration.endGameScore,
+                  isLeader: leaders.contains(playerIdx),
                   readOnly: readOnly,
                   onTap: readOnly
                       ? null

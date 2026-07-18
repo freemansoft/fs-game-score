@@ -12,6 +12,7 @@ class PlayerGameCell extends StatelessWidget {
     required this.totalScore,
     this.onTap,
     this.endGameScore = 0,
+    this.isLeader = false,
     this.readOnly = false,
   });
 
@@ -47,6 +48,10 @@ class PlayerGameCell extends StatelessWidget {
   /// The score at which the game ends for this player
   final int endGameScore;
 
+  /// Whether this player currently holds the winning total (low-score-wins
+  /// modes only). Renders a leader marker inside the total row.
+  final bool isLeader;
+
   @override
   Widget build(BuildContext context) {
     final gameOverDueToScore = endGameScore > 0 && totalScore >= endGameScore;
@@ -74,15 +79,44 @@ class PlayerGameCell extends StatelessWidget {
               context,
             )!.playerNameValueLabel(playerIdx + 1),
           ),
-          Text(
-            '$totalScore',
-            key: totalScoreKey(playerIdx),
-            textAlign: TextAlign.center,
-            style: textStyle,
-            semanticsLabel: AppLocalizations.of(
-              context,
-            )!.playerTotalScoreLabel(playerIdx + 1),
-          ),
+          if (isLeader)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.emoji_events,
+                  size: 14,
+                  color: Theme.of(context).colorScheme.primary,
+                  semanticLabel: AppLocalizations.of(
+                    context,
+                  )!.playerLeaderLabel(playerIdx + 1),
+                ),
+                const SizedBox(width: 2),
+                Text(
+                  '$totalScore',
+                  key: totalScoreKey(playerIdx),
+                  textAlign: TextAlign.center,
+                  style: (textStyle ?? const TextStyle()).copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  semanticsLabel: AppLocalizations.of(
+                    context,
+                  )!.playerTotalScoreLabel(playerIdx + 1),
+                ),
+              ],
+            )
+          else
+            Text(
+              '$totalScore',
+              key: totalScoreKey(playerIdx),
+              textAlign: TextAlign.center,
+              style: textStyle,
+              semanticsLabel: AppLocalizations.of(
+                context,
+              )!.playerTotalScoreLabel(playerIdx + 1),
+            ),
         ],
       ),
     );

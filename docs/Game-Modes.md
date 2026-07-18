@@ -14,12 +14,14 @@ The game mode is selected on the splash screen; the scoring filter is set automa
 - Phase 10 Scoring
 - French Driving Scoring
 - Skyjo
+- Golf
+- Hearts
 
 For modes and games the app could support in the future, see the **[Game-Modes-Roadmap.md](Game-Modes-Roadmap.md)**.
 
 Each mode's behavior — round-input style, whether negative scores are allowed, whether phases are collected, and the suggested score filter and end-game target — is declared once in a **`GameRules` descriptor** (`lib/model/game_rules.dart`, returned by `rulesFor(GameMode)`). The `GameConfiguration` getters (`numPhases`, `allowNegativeScores`, `enablePhases`) delegate to it, and the splash screen and round editors read from it rather than branching on the mode.
 
-The game sheet displays each player's per-round score in the round cell and a calculated **Total** column (sum of round scores). Player names appear in the Total column.
+The game sheet displays each player's per-round score in the round cell and a calculated **Total** column (sum of round scores). Player names appear in the Total column. In the low-score-wins modes (Golf, Hearts) the current leader — the player with the **lowest** total — is marked in the Total column.
 
 ## Standard Mode
 
@@ -77,6 +79,22 @@ Each `Player` has:
 - A `Scores` object — the _round score_ for each round.
 - A `FrenchDrivingRoundAttributes` list — the 8 per-round attributes used to calculate the score.
 - A `RoundStates` object — per-round lock flags (as Standard Mode).
+
+## Golf Mode
+
+Card-game Golf scoring where the **lowest total wins**. Golf is played over **9 or 18 rounds** — the splash screen offers only those two counts and a new Golf game defaults to **18**. There is no end-game target; play the rounds and compare totals. The player with the lowest total is marked as the current leader in the score table. Round scores are typed directly.
+
+### Golf Mode internal model
+
+Identical to Standard Mode — a `Scores` object and a `RoundStates` object per `Player`. The winning direction (lowest total) is declared in the `GameRules` descriptor, not stored per player.
+
+## Hearts Mode
+
+Lowest-total-wins scoring for Hearts. Selecting Hearts on the splash screen sets a suggested **loser threshold of 100**: when a player's total crosses it the game ends, and the player with the **lowest** total wins. Round scores are typed directly — a "shoot the moon" hand is entered as the resulting number, so no special editor is needed. The current leader (lowest total) is marked in the score table.
+
+### Hearts Mode internal model
+
+Identical to Standard Mode — a `Scores` object and a `RoundStates` object per `Player`. The winning direction (lowest total) and the loser-threshold end condition are declared in the `GameRules` descriptor.
 
 ## System facts for developers
 

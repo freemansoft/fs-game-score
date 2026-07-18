@@ -49,6 +49,9 @@
     "description": "French Driving game mode option"
   },
   "gameModeSkyjo": "Skyjo",
+  "gameModeGolf": "Golf",
+  "gameModeHearts": "Corazones",
+  "playerLeaderLabel": "El jugador {playerNumber} va en cabeza",
   "@gameModeSkyjo": {
     "description": "Skyjo game mode option"
   },

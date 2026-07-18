@@ -1310,4 +1310,167 @@ void main() {
       '-20',
     );
   });
+
+  testWidgets(
+    'Golf full flow: splash to scoring, scores, totals, leader, modal edit',
+    (tester) async {
+      await launchAppOnSplash(tester);
+
+      // Two players keeps the table on-screen.
+      await tester.tap(find.byKey(SplashScreen.numPlayersDropdownKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('2').last);
+      await tester.pumpAndSettle();
+
+      // Select Golf (low-score-wins).
+      await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Golf').last);
+      await tester.pumpAndSettle();
+
+      // Continue to the score table.
+      await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+      await waitForScoreTable(tester);
+
+      // Enters a round score through the round modal, then closes it.
+      Future<void> enterRoundScore(int p, int r, String value) async {
+        await tester.tap(find.byKey(PlayerRoundCell.scoreKey(p, r)));
+        await tester.pumpAndSettle();
+        expect(find.byType(PlayerRoundModal), findsOneWidget);
+        await tester.enterText(
+          find.byKey(PlayerRoundModal.scoreFieldKey(p, r)),
+          value,
+        );
+        await tester.pumpAndSettle();
+        await tester.tapAt(
+          tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+        );
+        await tester.pumpAndSettle();
+      }
+
+      String cellText(Key key) =>
+          (tester.widget(find.byKey(key)) as Text).data!;
+
+      Finder leaderIn(int playerIdx) => find.descendant(
+        of: find.byKey(PlayerGameCell.cellKey(playerIdx)),
+        matching: find.byIcon(Icons.emoji_events),
+      );
+
+      // Player 0: 20 + 40 = 60.
+      await enterRoundScore(0, 0, '20');
+      await enterRoundScore(0, 1, '40');
+      expect(cellText(PlayerRoundCell.scoreKey(0, 0)), '20');
+      expect(cellText(PlayerRoundCell.scoreKey(0, 1)), '40');
+      expect(cellText(PlayerGameCell.totalScoreKey(0)), '60');
+
+      // Player 1: 10 + 20 = 30 (the lower total).
+      await enterRoundScore(1, 0, '10');
+      await enterRoundScore(1, 1, '20');
+      expect(cellText(PlayerGameCell.totalScoreKey(1)), '30');
+
+      // Leader marker sits on the lowest total (player 1), not player 0.
+      expect(leaderIn(1), findsOneWidget);
+      expect(leaderIn(0), findsNothing);
+
+      // Modal score EDITING: change player 0 round 1 from 40 to 5.
+      await enterRoundScore(0, 1, '5');
+      expect(cellText(PlayerRoundCell.scoreKey(0, 1)), '5');
+      expect(cellText(PlayerGameCell.totalScoreKey(0)), '25'); // 20 + 5
+
+      // Player 0 (25) is now below player 1 (30): the leader marker moves.
+      expect(leaderIn(0), findsOneWidget);
+      expect(leaderIn(1), findsNothing);
+
+      // The player game modal opens from the total cell and shows the name field.
+      await tester.tap(find.byKey(PlayerGameCell.cellKey(0)));
+      await tester.pumpAndSettle();
+      expect(find.byType(PlayerGameModal), findsOneWidget);
+      expect(find.byKey(PlayerGameModal.nameFieldKey(0)), findsOneWidget);
+      await tester.tapAt(
+        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(PlayerGameModal), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'Hearts full flow: leader marker and loser-threshold crossing coexist',
+    (tester) async {
+      await launchAppOnSplash(tester);
+
+      // Two players keeps the table on-screen.
+      await tester.tap(find.byKey(SplashScreen.numPlayersDropdownKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('2').last);
+      await tester.pumpAndSettle();
+
+      // Select Hearts (low-score-wins; suggests a 100 loser threshold).
+      await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Hearts').last);
+      await tester.pumpAndSettle();
+
+      // Selecting Hearts auto-fills the end-game (loser threshold) with 100.
+      expect(
+        tester
+            .widget<TextField>(find.byKey(SplashScreen.endGameScoreFieldKey))
+            .controller
+            ?.text,
+        '100',
+      );
+
+      // Continue to the score table.
+      await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+      await waitForScoreTable(tester);
+
+      Future<void> enterRoundScore(int p, int r, String value) async {
+        await tester.tap(find.byKey(PlayerRoundCell.scoreKey(p, r)));
+        await tester.pumpAndSettle();
+        expect(find.byType(PlayerRoundModal), findsOneWidget);
+        await tester.enterText(
+          find.byKey(PlayerRoundModal.scoreFieldKey(p, r)),
+          value,
+        );
+        await tester.pumpAndSettle();
+        await tester.tapAt(
+          tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+        );
+        await tester.pumpAndSettle();
+      }
+
+      String cellText(Key key) =>
+          (tester.widget(find.byKey(key)) as Text).data!;
+
+      Finder leaderIn(int playerIdx) => find.descendant(
+        of: find.byKey(PlayerGameCell.cellKey(playerIdx)),
+        matching: find.byIcon(Icons.emoji_events),
+      );
+
+      // Player 0 crosses the 100 loser threshold: 60 + 50 = 110.
+      await enterRoundScore(0, 0, '60');
+      await enterRoundScore(0, 1, '50');
+      expect(cellText(PlayerGameCell.totalScoreKey(0)), '110');
+
+      // Player 1 stays low: 10 + 20 = 30 (the leader).
+      await enterRoundScore(1, 0, '10');
+      await enterRoundScore(1, 1, '20');
+      expect(cellText(PlayerGameCell.totalScoreKey(1)), '30');
+
+      // Allow the crossing highlight to settle.
+      await tester.pumpAndSettle();
+
+      // Player 1 (lowest total) is the leader; player 0 is not.
+      expect(leaderIn(1), findsOneWidget);
+      expect(leaderIn(0), findsNothing);
+
+      // Player 0 crossed the threshold -> bold + italic (game-over highlight),
+      // independent of the leader marker on the other player.
+      final p0Total = tester.widget<Text>(
+        find.byKey(PlayerGameCell.totalScoreKey(0)),
+      );
+      expect(p0Total.style?.fontWeight, FontWeight.bold);
+      expect(p0Total.style?.fontStyle, FontStyle.italic);
+    },
+  );
 }

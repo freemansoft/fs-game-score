@@ -178,6 +178,24 @@ abstract class AppLocalizations {
   /// **'Skyjo'**
   String get gameModeSkyjo;
 
+  /// Golf card game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Golf'**
+  String get gameModeGolf;
+
+  /// Hearts card game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Hearts'**
+  String get gameModeHearts;
+
+  /// Screen-reader label announced on the leading player's total cell
+  ///
+  /// In en, this message translates to:
+  /// **'Player {playerNumber} is leading'**
+  String playerLeaderLabel(int playerNumber);
+
   /// Option for basic sheet style
   ///
   /// In en, this message translates to:
