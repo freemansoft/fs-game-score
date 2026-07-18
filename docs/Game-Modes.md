@@ -82,7 +82,7 @@ Each `Player` has:
 
 ## Golf Mode
 
-Card-game Golf scoring where the **lowest total wins**. There is no end-game target — play the fixed number of rounds and compare totals. The player with the lowest total is marked as the current leader in the score table. Round scores are typed directly.
+Card-game Golf scoring where the **lowest total wins**. Golf is played over **9 or 18 rounds** — the splash screen offers only those two counts and a new Golf game defaults to **18**. There is no end-game target; play the rounds and compare totals. The player with the lowest total is marked as the current leader in the score table. Round scores are typed directly.
 
 ### Golf Mode internal model
 

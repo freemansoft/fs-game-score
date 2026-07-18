@@ -8,14 +8,14 @@ For the descriptor architecture this plugs into, see [Game-Modes-Roadmap.md — 
 
 ## Overview
 
-| Aspect         | Selection                                                                                                                   |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Scope          | **Two new modes** — Golf and Hearts — plus the shared low-score-wins primitive                                              |
-| New capability | **Lowest total wins** (relative, cross-player) + **loser-threshold** end condition                                          |
-| Round input    | **`RoundInput.typedScore`** — no custom editor; scorekeeper types the number                                                |
-| New UI         | A **leader marker** inside the existing two-row player cell (accent color + inline icon)                                    |
-| Blast radius   | Existing modes (standard, phase10, frenchDriving, skyjo) are **behaviorally unchanged**                                     |
-| Out of scope   | Global game-over banner, full ranking beyond 1st place, auto-lock at threshold, per-mode default round counts, team roll-up |
+| Aspect         | Selection                                                                                    |
+| -------------- | -------------------------------------------------------------------------------------------- |
+| Scope          | **Two new modes** — Golf and Hearts — plus the shared low-score-wins primitive               |
+| New capability | **Lowest total wins** (relative, cross-player) + **loser-threshold** end condition           |
+| Round input    | **`RoundInput.typedScore`** — no custom editor; scorekeeper types the number                 |
+| New UI         | A **leader marker** inside the existing two-row player cell (accent color + inline icon)     |
+| Blast radius   | Existing modes (standard, phase10, frenchDriving, skyjo) are **behaviorally unchanged**      |
+| Out of scope   | Global game-over banner, full ranking beyond 1st place, auto-lock at threshold, team roll-up |
 
 ---
 
@@ -130,6 +130,6 @@ Regenerate with `fvm flutter gen-l10n`; verify key parity across the three `.arb
 - **Global "game over" banner** — matches today (there is none); the threshold crossing is conveyed by the existing bold+italic cell style.
 - **Ranking beyond 1st place** — only the leader(s) are marked, not 2nd/3rd.
 - **Auto-lock rounds at threshold** — crossing the Hearts limit does not freeze input.
-- **Per-mode default round counts** — a separate splash-configuration expansion.
+- ~~**Per-mode default round counts**~~ — **added after review.** Golf needs 18 rounds, but the global default is 14; rather than raise the global default (which would affect every mode), `GameRules` gained `roundOptions` (the counts the splash offers — Golf `[9, 18]`, others `1..20`) and `suggestedMaxRounds` (applied on mode-select when the current count isn't offered — Golf `18`, others `14`). Both are `required`, per the explicit-config convention.
 - **Custom round editor for low-wins games** — not needed for typed-score Golf/Hearts; the `RoundInput` seam is ready if a future bid-based low-wins game needs one.
 - **Team roll-up** — Tier 1; `leaderIndices` is written so it can be extended to team totals later.

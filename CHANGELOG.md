@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0] - not yet released
 
-- Added two **low-score-wins** game modes: **Golf** (play the fixed rounds; lowest total wins) and **Hearts** (lowest total wins, with a suggested loser threshold of 100 that ends the game when a player crosses it). The current leader is marked in the score table, and both modes are localized in English, Spanish, and French. See [docs/Game-Modes-Roadmap.md](docs/Game-Modes-Roadmap.md) (Tier 2)
+- Added two **low-score-wins** game modes: **Golf** (offers 9 or 18 rounds, defaults to 18; lowest total wins) and **Hearts** (lowest total wins, with a suggested loser threshold of 100 that ends the game when a player crosses it). The current leader is marked in the score table, and both modes are localized in English, Spanish, and French. See [docs/Game-Modes-Roadmap.md](docs/Game-Modes-Roadmap.md) (Tier 2)
 - Restructured `docs/` to the [Diátaxis](https://diataxis.fr) framework — one quadrant (tutorial / how-to / reference / explanation) per file, tagged in front matter; split mixed docs into [How-To-Edit-Scores.md](docs/How-To-Edit-Scores.md), [How-To-Riverpod.md](docs/How-To-Riverpod.md), [State-Reference.md](docs/State-Reference.md), and [Live-Sync-Architecture.md](docs/Live-Sync-Architecture.md); design, spec, and planning docs excluded
 - Added the `fs-game-score-docs-diataxis` project skill to classify, audit, and author docs against the Diátaxis quadrants
 - Added a Prettier Markdown formatting toolchain (`.prettierrc.json`, `npm run format:md` / `check:md`, Markdown Format CI workflow); vendored `dart-*` / `flutter-*` / `fs-game-score-release-flutter-upgrade-sdk` skills excluded to stay byte-identical to upstream
