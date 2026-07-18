@@ -1637,20 +1637,21 @@ void main() {
   testWidgets('Oh Hell computes the round score from bid and tricks', (
     tester,
   ) async {
-    // Tall window so the full 12-item mode dropdown renders (Oh Hell/Wizard
-    // are the last entries and are otherwise off-screen/unbuilt).
-    tester.view.physicalSize = const Size(1400, 2400);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-
     await launchAppOnSplash(tester);
 
+    // Oh Hell is near the bottom of a long mode list; scroll the open
+    // dropdown until the item is visible before tapping it.
     await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Oh Hell').last);
+    final ohHellItem = find.text('Oh Hell', skipOffstage: false).last;
+    await tester.dragUntilVisible(
+      ohHellItem,
+      find.byType(Scrollable).last,
+      const Offset(0, -200),
+      maxIteration: 50,
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Oh Hell').last);
+    await tester.tap(ohHellItem);
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(SplashScreen.continueButtonKey));
@@ -1682,19 +1683,20 @@ void main() {
   });
 
   testWidgets('Wizard scores a missed bid negative', (tester) async {
-    // Tall window so the full 12-item mode dropdown renders (Wizard is last).
-    tester.view.physicalSize = const Size(1400, 2400);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-
     await launchAppOnSplash(tester);
 
+    // Wizard is the last mode in a long list; scroll the open dropdown to it.
     await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Wizard').last);
+    final wizardItem = find.text('Wizard', skipOffstage: false).last;
+    await tester.dragUntilVisible(
+      wizardItem,
+      find.byType(Scrollable).last,
+      const Offset(0, -200),
+      maxIteration: 50,
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Wizard').last);
+    await tester.tap(wizardItem);
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(SplashScreen.continueButtonKey));
