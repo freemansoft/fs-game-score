@@ -834,9 +834,9 @@ git commit -m "docs: mark Tier 2 delivered; record WinDirection deviation"
 
 ---
 
-### Task 9: Full-flow integration test (splash → score table → scores → totals → leader)
+### Task 9: Full-flow integration tests, one per new mode (Golf + Hearts)
 
-End-to-end coverage requested in review: drive the real app from the startup page through scoring, exercising modal score entry/editing, table cell values, totals, and the new leader marker.
+End-to-end coverage requested in review: drive the real app from the startup page through scoring, exercising modal score entry/editing, table cell values, totals, and the new leader marker. **Each new game mode gets its own integration test.** The Golf test is shown in full below; the Hearts test mirrors its structure and additionally asserts that selecting Hearts auto-fills the 100 loser threshold and that a player crossing 100 shows the bold+italic game-over highlight **while** the leader marker sits on the other (lowest-total) player.
 
 **Files:**
 - Modify: `integration_test/app_test.dart`
@@ -959,7 +959,7 @@ git commit -m "test: full-flow Golf integration test (scores, totals, leader, mo
 - l10n en/es/fr (mode names + `playerLeaderLabel`) → Task 4 ✅
 - Splash picker offers the modes and auto-applies target → Task 7 ✅
 - Tests: game_rules, players, cell widget, table widget, splash → Tasks 1–7 ✅
-- Full-flow integration test (splash → scores → totals → modal edit → leader) → Task 9 ✅
+- Full-flow integration tests, one per new mode: Golf (scores → totals → modal edit → leader) and Hearts (loser-threshold crossing + leader coexist) → Task 9 ✅
 - Roadmap deviation action item → Task 8 ✅
 - Out-of-scope items (no game-over banner, no ranking beyond 1st, no auto-lock, no per-mode round counts, no custom editor, no teams) → none implemented ✅
 
