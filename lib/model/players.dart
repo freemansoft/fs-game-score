@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fs_score_card/model/game_rules.dart';
 import 'package:fs_score_card/model/player.dart';
 
 /// The collection of players in a game.
@@ -49,6 +50,27 @@ class Players {
 
   bool allPlayersEnabledForRound(int round) {
     return players.every((p) => p.roundStates.isEnabled(round));
+  }
+
+  /// Indices of the player(s) currently winning under [dir]:
+  /// the minimum ([WinDirection.lowestWins]) or maximum total. Ties return
+  /// all matching indices. Returns an empty list until at least one score
+  /// has been entered, so a fresh 0–0 board highlights no one.
+  List<int> leaderIndices(WinDirection dir) {
+    final anyScore = players.any(
+      (p) => p.scores.roundScores.any((s) => s != null),
+    );
+    if (players.isEmpty || !anyScore) return const [];
+
+    final totals = players.map((p) => p.totalScore).toList();
+    final extreme = dir == WinDirection.lowestWins
+        ? totals.reduce((a, b) => a < b ? a : b)
+        : totals.reduce((a, b) => a > b ? a : b);
+
+    return [
+      for (var i = 0; i < totals.length; i++)
+        if (totals[i] == extreme) i,
+    ];
   }
 
   Player operator [](int index) => players[index];
