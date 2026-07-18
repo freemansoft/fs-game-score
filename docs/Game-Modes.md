@@ -20,6 +20,8 @@ The game mode is selected on the splash screen; the scoring filter is set automa
 - Uno
 - Farkle
 - Rummikub
+- Oh Hell
+- Wizard
 
 For modes and games the app could support in the future, see the **[Game-Modes-Roadmap.md](Game-Modes-Roadmap.md)**.
 
@@ -115,6 +117,14 @@ Standard round scoring. Selecting Farkle suggests an end-game target of **10,000
 ## Rummikub Mode
 
 Standard round scoring with **negative round scores** allowed — tiles left in a player's hand count against them. Highest total wins; no fixed end-game target is suggested.
+
+## Oh Hell Mode
+
+A trick-taking game with a **calculated** round score. Each round a player enters their **bid** and the **tricks taken** in the bid/tricks round editor; making the bid exactly scores `10 + bid`, and any miss (over or under) scores `0`. Highest total wins.
+
+## Wizard Mode
+
+A trick-taking game with a **calculated** round score. Each round a player enters their **bid** and **tricks taken**; an exact bid scores `20 + 10 × bid`, and a miss scores `-10` for each trick over or under the bid (negative round scores allowed). Highest total wins.
 
 ## System facts for developers
 

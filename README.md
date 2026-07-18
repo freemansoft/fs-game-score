@@ -84,6 +84,8 @@ Game mode is chosen on the splash screen. The score table layout and round edito
 | **Uno**             | Standard scoring; selecting Uno suggests an end-game target of **500** (highest total wins).                                                                                                                                                    |
 | **Farkle**          | Standard scoring; selecting Farkle suggests **10,000** and restricts entry to scores ending in **0 or 5**.                                                                                                                                      |
 | **Rummikub**        | Standard scoring with **negative round scores** allowed (tiles left in hand); highest total wins, no fixed target.                                                                                                                              |
+| **Oh Hell**         | Trick-taking with a **calculated** round score: enter your **bid** and **tricks taken** — make it exactly for `10 + bid`, miss for `0`. Highest total wins.                                                                                     |
+| **Wizard**          | Trick-taking with a **calculated** round score: exact bid → `20 + 10×bid`, a miss → `−10` per trick over/under (negatives allowed). Highest total wins.                                                                                         |
 
 All modes support editing player names, per-round entry (or French Driving attributes), and optional **end game score** highlighting on the splash screen. In the low-score-wins modes (Golf, Hearts) the current leader—the player with the **lowest** total—is marked in the score table.
 

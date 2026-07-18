@@ -47,6 +47,8 @@ Doing this first is a deliberate trade: it delays the first new game, but Tiers 
 
 ### Tier 1 — build first
 
+**Status: 🟡 1A delivered** — the bid/tricks calculated-score primitive ships as **Oh Hell** and **Wizard** (see [spec](specs/2026-07-18-tier-1-bidding-trick-taking.md)). Team/partnership totals (1B) remain, to unlock Spades/Euchre.
+
 These two were chosen as the first game-facing priority because trick-taking card games are the largest untapped family of "round-based, one scorekeeper" games, and they need the same two new primitives. They are built as Phase 0 descriptors plus the new primitives each requires.
 
 **A. Bidding / trick-taking mode.** Generalize the Phase-10 "extra attribute per round" into **bid + result → calculated round score**, reusing the French Driving calculated-score pattern. Add a new per-round attributes class (e.g. `TrickBidRoundAttributes`) plus a round editor modeled on `french_driving_round_panel.dart`, with a configurable made-vs-set / over-vs-under-bid formula per variant.
