@@ -28,6 +28,12 @@ enum RoundInput {
   /// The round score is calculated from French Driving round attributes;
   /// the typed field is read-only.
   calculatedFrenchDriving,
+
+  /// The round score is calculated from a bid + tricks taken (Oh Hell).
+  calculatedOhHell,
+
+  /// The round score is calculated from a bid + tricks taken (Wizard).
+  calculatedWizard,
 }
 
 /// How player scores are aggregated into standings.
