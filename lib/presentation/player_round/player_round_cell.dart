@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/model/bid_tricks_round_attributes.dart';
 import 'package:fs_score_card/model/french_driving_round_attributes.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_modal.dart';
@@ -17,6 +18,7 @@ class PlayerRoundCell extends StatelessWidget {
     required this.onPhaseChanged,
     required this.onScoreChanged,
     required this.onFrenchDrivingAttributesChanged,
+    required this.onBidTricksAttributesChanged,
     required this.scoreFilter,
     this.readOnly = false,
   }) : super(key: key ?? cellKey(playerIdx, round));
@@ -52,6 +54,7 @@ class PlayerRoundCell extends StatelessWidget {
   final ValueChanged<int?> onScoreChanged;
   final ValueChanged<FrenchDrivingRoundAttributes>
   onFrenchDrivingAttributesChanged;
+  final ValueChanged<BidTricksRoundAttributes> onBidTricksAttributesChanged;
   final String scoreFilter;
 
   /// Added to support sharing in read-only spectator mode.
@@ -67,6 +70,7 @@ class PlayerRoundCell extends StatelessWidget {
       onPhaseChanged: onPhaseChanged,
       onScoreChanged: onScoreChanged,
       onFrenchDrivingAttributesChanged: onFrenchDrivingAttributesChanged,
+      onBidTricksAttributesChanged: onBidTricksAttributesChanged,
       scoreFilter: scoreFilter,
     );
   }

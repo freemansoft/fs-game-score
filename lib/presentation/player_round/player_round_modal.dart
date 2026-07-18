@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/l10n/app_localizations.dart';
+import 'package:fs_score_card/model/bid_tricks_round_attributes.dart';
 import 'package:fs_score_card/model/french_driving_round_attributes.dart';
 import 'package:fs_score_card/model/game.dart';
+import 'package:fs_score_card/presentation/player_round/bid_tricks_round_panel.dart';
 import 'package:fs_score_card/presentation/player_round/french_driving_round_panel.dart';
 import 'package:fs_score_card/presentation/player_round/round_phase_dropdown.dart';
 import 'package:fs_score_card/presentation/player_round/round_score_field.dart';
@@ -18,6 +20,7 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
     required this.onPhaseChanged,
     required this.onScoreChanged,
     required this.onFrenchDrivingAttributesChanged,
+    required this.onBidTricksAttributesChanged,
     required this.scoreFilter,
   });
   static ValueKey<String> modalKey(int playerIdx, int round) {
@@ -39,6 +42,7 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
   final ValueChanged<int?> onScoreChanged;
   final ValueChanged<FrenchDrivingRoundAttributes>
   onFrenchDrivingAttributesChanged;
+  final ValueChanged<BidTricksRoundAttributes> onBidTricksAttributesChanged;
   final String scoreFilter;
 
   static Future<void> show(
@@ -50,6 +54,8 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
     required ValueChanged<int?> onScoreChanged,
     required ValueChanged<FrenchDrivingRoundAttributes>
     onFrenchDrivingAttributesChanged,
+    required ValueChanged<BidTricksRoundAttributes>
+    onBidTricksAttributesChanged,
     required String scoreFilter,
   }) {
     return showDialog(
@@ -61,6 +67,7 @@ class PlayerRoundModal extends ConsumerStatefulWidget {
         onPhaseChanged: onPhaseChanged,
         onScoreChanged: onScoreChanged,
         onFrenchDrivingAttributesChanged: onFrenchDrivingAttributesChanged,
+        onBidTricksAttributesChanged: onBidTricksAttributesChanged,
         scoreFilter: scoreFilter,
       ),
     );
@@ -154,6 +161,9 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
     final rules = rulesFor(widget.gameMode);
     final showFrenchDrivingPanel =
         rules.roundInput == RoundInput.calculatedFrenchDriving;
+    final showBidTricksPanel =
+        rules.roundInput == RoundInput.calculatedOhHell ||
+        rules.roundInput == RoundInput.calculatedWizard;
     final showPhaseDropdown = rules.enablePhases;
 
     final l10n = AppLocalizations.of(context)!;
@@ -185,6 +195,13 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
                           attributes:
                               player.frenchDrivingAttributes[widget.round],
                           onChanged: widget.onFrenchDrivingAttributesChanged,
+                        ),
+                      ],
+                      if (showBidTricksPanel) ...[
+                        const SizedBox(height: 16),
+                        BidTricksRoundPanel(
+                          attributes: player.bidTricksAttributes[widget.round],
+                          onChanged: widget.onBidTricksAttributesChanged,
                         ),
                       ],
                     ],
@@ -220,6 +237,13 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
                   FrenchDrivingRoundPanel(
                     attributes: player.frenchDrivingAttributes[widget.round],
                     onChanged: widget.onFrenchDrivingAttributesChanged,
+                  ),
+                ],
+                if (showBidTricksPanel) ...[
+                  const SizedBox(height: 16),
+                  BidTricksRoundPanel(
+                    attributes: player.bidTricksAttributes[widget.round],
+                    onChanged: widget.onBidTricksAttributesChanged,
                   ),
                 ],
               ],

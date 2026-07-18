@@ -191,6 +191,17 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                                   attrs,
                                 );
                           },
+                    onBidTricksAttributesChanged: readOnly
+                        ? (_) {}
+                        : (attrs) {
+                            ref
+                                .read(playersNotifierProvider.notifier)
+                                .updateBidTricksAttributes(
+                                  playerIdx,
+                                  round,
+                                  attrs,
+                                );
+                          },
                     scoreFilter: game.configuration.scoreFilter,
                   ),
                 );
