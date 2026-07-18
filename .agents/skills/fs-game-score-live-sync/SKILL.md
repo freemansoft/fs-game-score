@@ -57,6 +57,19 @@ Mapper: `game_sync_mapper.dart` ↔ `Game` + `Players`.
 
 ---
 
+## Wire compatibility and versioning (check on every change)
+
+The **shared snapshot shape** is `GameConfiguration.toJson()` keys/types + `Player.toJson()` keys/types + the protocol message structure in `game_sync_protocol.dart`. The compatibility boundary is the **major** semver: `gameSyncAppVersionsMatch` admits a spectator only when its **major** matches the host's (`1.12.0+236` ↔ `1.13.0+200` OK; `2.x` ↔ `1.x` rejected).
+
+**Before finishing any change, ask: did the shared snapshot shape change?**
+
+- **Breaking → bump the MAJOR version** (`pubspec.yaml`, CHANGELOG; see `fs-game-score-release-engineer`): removing, renaming, or retyping any key in `GameConfiguration.toJson` / `Player.toJson`, or changing a protocol message's structure. A same-major spectator would mis-parse, so the major bump is what makes mismatched shapes refuse to connect.
+- **Non-breaking → no major bump:** adding a **new value** to an existing enum field (e.g. a new `GameMode` — `fromJson` falls back to the default for unknown values and same-major peers share the code), or adding an optional key that older readers can ignore.
+
+Adding **`GameMode` values (Golf, Hearts)** was non-breaking — new values in the existing `gameMode` string, shape unchanged. Descriptor-only fields (`GameRules`: `winDirection`, `endCondition`, `roundOptions`, `suggestedMaxRounds`) are derived from `gameMode` and **never serialized**, so they never affect the wire.
+
+---
+
 ## Handshake and validation
 
 1. Spectator sends **`hello`**: `{ pin, appVersion, spectatorName }`.
