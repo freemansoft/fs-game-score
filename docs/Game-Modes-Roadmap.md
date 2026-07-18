@@ -36,7 +36,7 @@ Before this phase, per-mode behaviour was hard-coded as `switch` / `if` on the `
 Phase 0 replaced the per-mode `switch` with a **config-driven rules abstraction** so later tiers add data, not scattered conditionals. The behaviours formerly derived ad hoc on `GameConfiguration` (`numPhases`, `allowNegativeScores`, `enablePhases`) and per-mode UI selection now live in a single **rules descriptor** per mode that declares:
 
 - the per-round **input shape** (`RoundInput.typedScore` / `calculatedFrenchDriving`) and its suggested validation filter;
-- **aggregation** (`ScoreAggregation.sumPerPlayer` today; later per-team roll-up, low-vs-high, subtractive);
+- **aggregation** (`ScoreAggregation.sumPerPlayer` today; later per-team roll-up, subtractive) and **win direction** (`WinDirection.highestWins` today; `lowestWins` shipped in Tier 2 for Golf/Hearts) — kept as separate fields because they compose independently;
 - the **end / win condition** (`EndCondition.reachTargetHighlight` today; loser-threshold and winner detection later);
 - whether phases are collected and the suggested end-game target.
 
@@ -60,6 +60,8 @@ These two were chosen as the first game-facing priority because trick-taking car
 - **Engine gaps:** team assignment at setup (`splash_screen.dart`); team roll-up in the Total column (`player_game_cell.dart`, `lib/model/players.dart`); grouped CSV export. Live-sync payloads are structurally unaffected, but the spectator display changes.
 
 ### Tier 2 — high leverage, smaller
+
+**Status: ✅ delivered** as `WinDirection` + `EndCondition.loserThreshold` with `Players.leaderIndices`; ships Golf and Hearts. See [spec](specs/2026-07-17-tier-2-low-score-wins.md).
 
 **Low-score-wins + loser-threshold end condition.** Today `endGameScore` only bolds players who _reach_ it, identically in every mode. Add a per-mode flag for "lowest total wins" and for "the game ends when someone crosses the target."
 
