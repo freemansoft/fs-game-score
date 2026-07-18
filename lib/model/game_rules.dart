@@ -63,6 +63,8 @@ class GameRules {
     required this.aggregation,
     required this.endCondition,
     required this.winDirection,
+    required this.roundOptions,
+    required this.suggestedMaxRounds,
   });
 
   /// How the round score is entered.
@@ -94,7 +96,28 @@ class GameRules {
   /// [WinDirection.highestWins]; low-score-wins modes set
   /// [WinDirection.lowestWins]).
   final WinDirection winDirection;
+
+  /// The round counts the splash screen offers for this mode, in display
+  /// order (most modes use the full [_standardRoundOptions] range; Golf offers
+  /// only 9 and 18).
+  final List<int> roundOptions;
+
+  /// The round count applied when this mode is selected **if** the current
+  /// selection is not one of [roundOptions] (e.g. selecting Golf from a
+  /// 14-round Standard game snaps to 18).
+  final int suggestedMaxRounds;
 }
+
+/// The default round counts offered for modes without a bespoke set (1–20).
+const List<int> _standardRoundOptions = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, //
+  11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+];
+
+/// The round count suggested for modes without a bespoke default.
+/// Mirrors `GameConfiguration.defaultMaxRounds` (kept in sync manually — the
+/// model layers cannot import each other without a cycle).
+const int _standardSuggestedMaxRounds = 14;
 
 /// The number of phases in Phase 10.
 const int _phase10PhaseCount = 10;
@@ -109,6 +132,8 @@ const GameRules _standardRules = GameRules(
   aggregation: ScoreAggregation.sumPerPlayer,
   endCondition: EndCondition.reachTargetHighlight,
   winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
 );
 
 const GameRules _phase10Rules = GameRules(
@@ -122,6 +147,8 @@ const GameRules _phase10Rules = GameRules(
   aggregation: ScoreAggregation.sumPerPlayer,
   endCondition: EndCondition.reachTargetHighlight,
   winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
 );
 
 const GameRules _frenchDrivingRules = GameRules(
@@ -135,6 +162,8 @@ const GameRules _frenchDrivingRules = GameRules(
   aggregation: ScoreAggregation.sumPerPlayer,
   endCondition: EndCondition.reachTargetHighlight,
   winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
 );
 
 const GameRules _skyjoRules = GameRules(
@@ -147,6 +176,8 @@ const GameRules _skyjoRules = GameRules(
   aggregation: ScoreAggregation.sumPerPlayer,
   endCondition: EndCondition.reachTargetHighlight,
   winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
 );
 
 const GameRules _golfRules = GameRules(
@@ -160,6 +191,9 @@ const GameRules _golfRules = GameRules(
   aggregation: ScoreAggregation.sumPerPlayer,
   endCondition: EndCondition.reachTargetHighlight,
   winDirection: WinDirection.lowestWins,
+  // Golf is played over 9 or 18 holes; default a new game to 18.
+  roundOptions: [9, 18],
+  suggestedMaxRounds: 18,
 );
 
 const GameRules _heartsRules = GameRules(
@@ -173,6 +207,8 @@ const GameRules _heartsRules = GameRules(
   aggregation: ScoreAggregation.sumPerPlayer,
   endCondition: EndCondition.loserThreshold,
   winDirection: WinDirection.lowestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
 );
 
 const Map<GameMode, GameRules> _rulesByMode = {

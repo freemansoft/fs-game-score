@@ -101,6 +101,26 @@ void main() {
       expect(rules.endCondition, EndCondition.loserThreshold);
       expect(rules.suggestedEndGameScore, 100);
     });
+
+    test('golf offers 9 and 18 rounds and defaults to 18', () {
+      final rules = rulesFor(GameMode.golf);
+      expect(rules.roundOptions, [9, 18]);
+      expect(rules.suggestedMaxRounds, 18);
+    });
+
+    test('other modes offer 1..20 rounds and suggest 14', () {
+      for (final mode in [
+        GameMode.standard,
+        GameMode.phase10,
+        GameMode.frenchDriving,
+        GameMode.skyjo,
+        GameMode.hearts,
+      ]) {
+        final rules = rulesFor(mode);
+        expect(rules.roundOptions, [for (var i = 1; i <= 20; i++) i]);
+        expect(rules.suggestedMaxRounds, 14);
+      }
+    });
   });
 
   group('GameConfiguration getters delegate to rules', () {
