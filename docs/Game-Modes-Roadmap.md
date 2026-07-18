@@ -21,7 +21,7 @@ Today's scoring engine is a generic **per-round, per-player integer accumulator*
 - Input validation via `lib/model/score_filters.dart` (`none`, `endsWith0or5`, `signedDigits`).
 - One "reached the target" highlight: when `endGameScore > 0`, a player whose total crosses it is shown bold (`lib/presentation/player_game/player_game_cell.dart`).
 
-**Not modeled today:** winner / low-score detection, teams or partnerships, bidding and tricks, dealer rotation, score multipliers, and a dynamic (unbounded) round count. These gaps are what the tiers below fill.
+**Not modeled today:** winner / low-score detection, teams or partnerships, bidding and tricks, dealer rotation, score multipliers, a dynamic (unbounded) round count, and any **board layout other than the sequential round grid** (for example fixed named categories that are each filled once, as in Yahtzee). These gaps are what the tiers below fill.
 
 The two reusable precedents worth reusing when building new modes are the **calculated round editor** (`lib/presentation/player_round/french_driving_round_panel.dart`) and the **per-round dropdown attribute** (`round_phase_dropdown.dart`), both wired through the splash mode picker (`lib/presentation/splash_screen.dart`, `_buildGameModeField`).
 
@@ -75,8 +75,9 @@ Standard / Skyjo / calculated variants that mostly need a new enum value, some l
 - **Farkle / 10,000** — target 10,000.
 - **Golf (card game)** — Skyjo plus low-score-wins.
 - **Rummikub** — negatives for tiles left in hand.
-- **Yahtzee** — fixed named categories with a section bonus, scored as a French-Driving-style calculated grid.
 - **Boggle / Scrabble / trivia** — Standard, high-score-wins.
+
+(Yahtzee was formerly listed here as a "French-Driving-style calculated grid." It is not a reskin — its board is a fixed set of named categories rather than sequential rounds, so it now lives in [Tier 5](#tier-5--alternative-board-layouts-a-second-axis).)
 
 ### Tier 4 — stretch capabilities
 
@@ -87,8 +88,15 @@ New scoring shapes that go beyond the additive accumulator:
 - **Per-player handicap / starting offset.**
 - **Dynamic (unbounded) round count** for race-to-N games — Cribbage (121), Scrabble.
 
+### Tier 5 — alternative board layouts (a second axis)
+
+Tiers 1–4 all vary the **scoring shape** on top of one fixed **board layout**: the sequential `rounds × players` grid. A distinct family of games keeps per-player columns but replaces sequential rounds with a **fixed set of named categories**, each filled **once**, where players must see at a glance which categories are still available and which are already used. That is a different _board_, not a different _formula_ — the largest new-machinery item on the roadmap, which is why it is called out as its own axis rather than a Tier-3 reskin. It is listed last for effort, not importance.
+
+- **Unlocks:** Yahtzee (13 categories, upper-section +35 bonus, grand total) and Yahtzee-likes (_That's Pretty Clever_, _Roll Through the Ages_). Bowling (ten frames with strike/spare carry-forward) is a related fixed-row board with a custom running total; Wizard / Oh Hell's **bid-vs-made two-value cell** is a related primitive but stays on the round grid (built under [Tier 1](#tier-1--build-first)).
+- **Engine gaps:** a **category-board layout** alongside the round grid — fixed named rows, per-cell **used / available** state, and calculated **section subtotals / bonuses**; a new board widget distinct from the score table (`lib/presentation/player_game/`); splash setup that picks a category set instead of a round count (`splash_screen.dart`). The seam is a **board-layout descriptor on `GameRules`**, mirroring how the `aggregation` / `endCondition` fields were reserved for Tiers 1–2.
+
 ## Architectural note
 
 Before [Phase 0](#phase-0--generic-rules-abstraction-foundation), adding a mode meant a new `GameMode` enum value plus per-mode behaviour hard-coded as `switch` / `if` on the enum across `GameConfiguration` getters, the splash screen, and the round editors. That scaled fine to four modes but would have compounded with each new tier.
 
-Phase 0 introduced the **generic rules abstraction** (`lib/model/game_rules.dart`) ahead of the game-facing tiers, so a mode's behaviour is now declared once in a `GameRules` descriptor. Adding a game still needs its genuinely new primitives — a bid attributes class, a round-editor panel, team grouping, l10n keys, and tests — but it plugs those into the descriptor rather than threading another `switch` case through the model, splash, editors, and tests. First-class team grouping and win/aggregation variants are the descriptor fields (`aggregation`, `endCondition`) that Tiers 1–2 fill in.
+Phase 0 introduced the **generic rules abstraction** (`lib/model/game_rules.dart`) ahead of the game-facing tiers, so a mode's behaviour is now declared once in a `GameRules` descriptor. Adding a game still needs its genuinely new primitives — a bid attributes class, a round-editor panel, team grouping, l10n keys, and tests — but it plugs those into the descriptor rather than threading another `switch` case through the model, splash, editors, and tests. First-class team grouping and win/aggregation variants are the descriptor fields (`aggregation`, `endCondition`) that Tiers 1–2 fill in, and the [Tier-5](#tier-5--alternative-board-layouts-a-second-axis) category board is a further descriptor field — a **board layout** — rather than a fork of the score table.
