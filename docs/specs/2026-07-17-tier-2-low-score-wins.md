@@ -8,27 +8,27 @@ For the descriptor architecture this plugs into, see [Game-Modes-Roadmap.md — 
 
 ## Overview
 
-| Aspect | Selection |
-| ------ | --------- |
-| Scope | **Two new modes** — Golf and Hearts — plus the shared low-score-wins primitive |
-| New capability | **Lowest total wins** (relative, cross-player) + **loser-threshold** end condition |
-| Round input | **`RoundInput.typedScore`** — no custom editor; scorekeeper types the number |
-| New UI | A **leader marker** inside the existing two-row player cell (accent color + inline icon) |
-| Blast radius | Existing modes (standard, phase10, frenchDriving, skyjo) are **behaviorally unchanged** |
-| Out of scope | Global game-over banner, full ranking beyond 1st place, auto-lock at threshold, per-mode default round counts, team roll-up |
+| Aspect         | Selection                                                                                                                   |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Scope          | **Two new modes** — Golf and Hearts — plus the shared low-score-wins primitive                                              |
+| New capability | **Lowest total wins** (relative, cross-player) + **loser-threshold** end condition                                          |
+| Round input    | **`RoundInput.typedScore`** — no custom editor; scorekeeper types the number                                                |
+| New UI         | A **leader marker** inside the existing two-row player cell (accent color + inline icon)                                    |
+| Blast radius   | Existing modes (standard, phase10, frenchDriving, skyjo) are **behaviorally unchanged**                                     |
+| Out of scope   | Global game-over banner, full ranking beyond 1st place, auto-lock at threshold, per-mode default round counts, team roll-up |
 
 ---
 
 ## Selected decisions (summary)
 
-| Decision | Selected | Rationale / change how |
-| -------- | -------- | ---------------------- |
-| Win direction modeling | **New `WinDirection` field** on `GameRules` | Orthogonal to aggregation; avoids a combinatorial enum. Composes with future team roll-up. **Deviates from the roadmap's** "put low-vs-high in `ScoreAggregation`" — roadmap note updated to match. |
-| End condition | **Extend `EndCondition` with `loserThreshold`** | Reuses the seam the roadmap explicitly reserved. |
-| Winner computation | **`Players.leaderIndices(WinDirection)`** | First cross-player primitive; where team roll-up will later hook in. |
-| Leader marker scope | **Low-wins modes only** | High-wins crosser already *is* the winner; keeps existing modes' UX and tests stable. |
-| Leader marker rendering | **Inside the existing two-row cell** (accent color + inline leading icon on the total row) | Cells display exactly two rows; the marker must not add a third. |
-| Hearts "shoot the moon" | **Not modeled** — scorekeeper types the resulting number | Keeps `RoundInput.typedScore`; no engine support needed. |
+| Decision                | Selected                                                                                   | Rationale / change how                                                                                                                                                                              |
+| ----------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Win direction modeling  | **New `WinDirection` field** on `GameRules`                                                | Orthogonal to aggregation; avoids a combinatorial enum. Composes with future team roll-up. **Deviates from the roadmap's** "put low-vs-high in `ScoreAggregation`" — roadmap note updated to match. |
+| End condition           | **Extend `EndCondition` with `loserThreshold`**                                            | Reuses the seam the roadmap explicitly reserved.                                                                                                                                                    |
+| Winner computation      | **`Players.leaderIndices(WinDirection)`**                                                  | First cross-player primitive; where team roll-up will later hook in.                                                                                                                                |
+| Leader marker scope     | **Low-wins modes only**                                                                    | High-wins crosser already _is_ the winner; keeps existing modes' UX and tests stable.                                                                                                               |
+| Leader marker rendering | **Inside the existing two-row cell** (accent color + inline leading icon on the total row) | Cells display exactly two rows; the marker must not add a third.                                                                                                                                    |
+| Hearts "shoot the moon" | **Not modeled** — scorekeeper types the resulting number                                   | Keeps `RoundInput.typedScore`; no engine support needed.                                                                                                                                            |
 
 ---
 
@@ -73,10 +73,10 @@ List<int> leaderIndices(WinDirection dir);
 
 The player cell (`lib/presentation/player_game/player_game_cell.dart`) stays exactly two rows — **name row** and **total row**. Neither highlight adds a third.
 
-| Treatment | Rendering (no new row) | Meaning |
-| --------- | ---------------------- | ------- |
-| **bold + italic** (existing, unchanged) | restyles the same name+total text | crossed the `endGameScore` line — *goal reached* (high-wins) or *limit hit that ends the game* (Hearts) |
-| **leader marker** (new) | **accent color + a small inline leading icon on the total row** — e.g. `▲ 42` as a `Row[icon, total]`, still one visual row | current/final winner = `min` total (**low-wins modes only**) |
+| Treatment                               | Rendering (no new row)                                                                                                      | Meaning                                                                                                 |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **bold + italic** (existing, unchanged) | restyles the same name+total text                                                                                           | crossed the `endGameScore` line — _goal reached_ (high-wins) or _limit hit that ends the game_ (Hearts) |
+| **leader marker** (new)                 | **accent color + a small inline leading icon on the total row** — e.g. `▲ 42` as a `Row[icon, total]`, still one visual row | current/final winner = `min` total (**low-wins modes only**)                                            |
 
 The two treatments are independent: a low-wins cell can show either, both, or neither. `PlayerGameCell` gains an `isLeader` bool (default `false`); a semantics label `playerLeaderLabel` is announced when set.
 
@@ -92,10 +92,10 @@ The two treatments are independent: a low-wins cell can show either, both, or ne
 
 Two new `GameMode` values (`golf`, `hearts`) — `toString()` keys must stay stable for persistence.
 
-| Mode | input | negatives | winDirection | endCondition | suggested target | suggested filter |
-| ---- | ----- | --------- | ------------ | ------------ | ---------------- | ---------------- |
-| **Golf** | typed | false | lowestWins | reachTargetHighlight (unused) | 0 (none — ends at maxRounds) | none |
-| **Hearts** | typed | false | lowestWins | loserThreshold | 100 | none |
+| Mode       | input | negatives | winDirection | endCondition                  | suggested target             | suggested filter |
+| ---------- | ----- | --------- | ------------ | ----------------------------- | ---------------------------- | ---------------- |
+| **Golf**   | typed | false     | lowestWins   | reachTargetHighlight (unused) | 0 (none — ends at maxRounds) | none             |
+| **Hearts** | typed | false     | lowestWins   | loserThreshold                | 100                          | none             |
 
 `maxRounds` / `numPlayers` stay user-chosen on the splash screen (no per-mode round-count suggestion in this slice).
 
@@ -115,13 +115,13 @@ Regenerate with `fvm flutter gen-l10n`; verify key parity across the three `.arb
 
 ## Testing
 
-| Layer | Coverage |
-| ----- | -------- |
-| `test/game_rules_test.dart` | Golf and Hearts descriptors expose the expected `winDirection` / `endCondition` / target; existing four modes still report `highestWins` + `reachTargetHighlight`. |
-| `players` unit test | `leaderIndices`: min selection (lowWins), max selection (highWins), ties return all, empty board returns `[]`. |
-| Widget test | Leader marker renders on the min-total cell in a low-wins mode; **absent** in a high-wins mode; `bold+italic` still applies on `endGameScore` crossing independently. |
-| Integration/splash | The mode picker offers Golf and Hearts; selecting each applies the suggested target/filter. |
-| Integration (full flow) | `integration_test/app_test.dart`: start on the splash screen, pick Golf, continue to the score table, enter round scores through the round modal, verify score-table cell values and player totals, verify modal score **editing** updates the table/total, and confirm the leader marker sits on the lowest total (and moves when the low total moves). |
+| Layer                       | Coverage                                                                                                                                                                                                                                                                                                                                                 |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `test/game_rules_test.dart` | Golf and Hearts descriptors expose the expected `winDirection` / `endCondition` / target; existing four modes still report `highestWins` + `reachTargetHighlight`.                                                                                                                                                                                       |
+| `players` unit test         | `leaderIndices`: min selection (lowWins), max selection (highWins), ties return all, empty board returns `[]`.                                                                                                                                                                                                                                           |
+| Widget test                 | Leader marker renders on the min-total cell in a low-wins mode; **absent** in a high-wins mode; `bold+italic` still applies on `endGameScore` crossing independently.                                                                                                                                                                                    |
+| Integration/splash          | The mode picker offers Golf and Hearts; selecting each applies the suggested target/filter.                                                                                                                                                                                                                                                              |
+| Integration (full flow)     | `integration_test/app_test.dart`: start on the splash screen, pick Golf, continue to the score table, enter round scores through the round modal, verify score-table cell values and player totals, verify modal score **editing** updates the table/total, and confirm the leader marker sits on the lowest total (and moves when the low total moves). |
 
 ---
 
