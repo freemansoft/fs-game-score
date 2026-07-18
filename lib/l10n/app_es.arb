@@ -55,6 +55,10 @@
   "gameModeUno": "Uno",
   "gameModeFarkle": "Farkle",
   "gameModeRummikub": "Rummikub",
+  "gameModeOhHell": "Oh Hell",
+  "gameModeWizard": "Wizard",
+  "bidLabel": "Apuesta",
+  "tricksTakenLabel": "Bazas ganadas",
   "playerLeaderLabel": "El jugador {playerNumber} va en cabeza",
   "@gameModeSkyjo": {
     "description": "Skyjo game mode option"

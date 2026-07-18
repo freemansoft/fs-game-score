@@ -55,6 +55,10 @@
   "gameModeUno": "Uno",
   "gameModeFarkle": "Farkle",
   "gameModeRummikub": "Rummikub",
+  "gameModeOhHell": "Oh Hell",
+  "gameModeWizard": "Wizard",
+  "bidLabel": "Annonce",
+  "tricksTakenLabel": "Plis réalisés",
   "playerLeaderLabel": "Le joueur {playerNumber} est en tête",
   "@gameModeSkyjo": {
     "description": "Skyjo game mode option"

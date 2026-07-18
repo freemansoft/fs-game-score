@@ -76,6 +76,22 @@
   "@gameModeRummikub": {
     "description": "Rummikub tile game mode option"
   },
+  "gameModeOhHell": "Oh Hell",
+  "@gameModeOhHell": {
+    "description": "Oh Hell trick-taking game mode option"
+  },
+  "gameModeWizard": "Wizard",
+  "@gameModeWizard": {
+    "description": "Wizard trick-taking game mode option"
+  },
+  "bidLabel": "Bid",
+  "@bidLabel": {
+    "description": "Label for the bid input in the bid/tricks round editor"
+  },
+  "tricksTakenLabel": "Tricks taken",
+  "@tricksTakenLabel": {
+    "description": "Label for the tricks-taken input in the bid/tricks round editor"
+  },
   "playerLeaderLabel": "Player {playerNumber} is leading",
   "@playerLeaderLabel": {
     "description": "Screen-reader label announced on the leading player's total cell",

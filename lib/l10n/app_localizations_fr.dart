@@ -69,6 +69,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get gameModeRummikub => 'Rummikub';
 
   @override
+  String get gameModeOhHell => 'Oh Hell';
+
+  @override
+  String get gameModeWizard => 'Wizard';
+
+  @override
+  String get bidLabel => 'Annonce';
+
+  @override
+  String get tricksTakenLabel => 'Plis réalisés';
+
+  @override
   String playerLeaderLabel(int playerNumber) {
     return 'Le joueur $playerNumber est en tête';
   }
