@@ -51,6 +51,10 @@
   "gameModeSkyjo": "Skyjo",
   "gameModeGolf": "Golf",
   "gameModeHearts": "Cœurs",
+  "gameModeRummy": "Rummy",
+  "gameModeUno": "Uno",
+  "gameModeFarkle": "Farkle",
+  "gameModeRummikub": "Rummikub",
   "playerLeaderLabel": "Le joueur {playerNumber} est en tête",
   "@gameModeSkyjo": {
     "description": "Skyjo game mode option"
