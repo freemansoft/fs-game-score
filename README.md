@@ -78,8 +78,10 @@ Game mode is chosen on the splash screen. The score table layout and round edito
 | **Skyjo**           | Like general scoring, with **negative round scores** allowed. Selecting Skyjo enables end-game score and suggests **100** points.                                                                                                               |
 | **Phase 10**        | Round scores plus **phase completed** per round. Scores typically end in **0 or 5** (score filter applied automatically). Tap a player’s total to see completed phases.                                                                         |
 | **French Driving**  | Round score is **calculated** from miles, safety cards, Coup Fourré, and trip bonuses—not typed directly. Selecting French Driving enables end-game score and suggests **5000** points. The miles field is focused when the round editor opens. |
+| **Golf**            | Card-game Golf scoring, where the **lowest total wins**. Play the fixed number of rounds; the current leader (lowest total) is marked in the score table.                                                                                       |
+| **Hearts**          | **Lowest total wins.** Selecting Hearts suggests a **loser threshold of 100**—a player crossing it ends the game. The current leader (lowest total) is marked in the score table.                                                               |
 
-All modes support editing player names, per-round entry (or French Driving attributes), and optional **end game score** highlighting on the splash screen.
+All modes support editing player names, per-round entry (or French Driving attributes), and optional **end game score** highlighting on the splash screen. In the low-score-wins modes (Golf, Hearts) the current leader—the player with the **lowest** total—is marked in the score table.
 
 More detail: [docs/Game-Modes.md](docs/Game-Modes.md).
 
