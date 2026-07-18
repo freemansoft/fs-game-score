@@ -42,8 +42,8 @@ enum WinDirection { highestWins, lowestWins }
 enum EndCondition { reachTargetHighlight, loserThreshold } // + loserThreshold
 ```
 
-- `GameRules` gains a `final WinDirection winDirection;` field (default `highestWins`).
-- All four existing descriptors set `winDirection: WinDirection.highestWins` and keep `endCondition: EndCondition.reachTargetHighlight` explicitly — behavior identical to today.
+- `GameRules` gains a `final WinDirection winDirection;` field.
+- `aggregation`, `endCondition`, and `winDirection` are **`required`** (no constructor defaults), so every descriptor states all three explicitly and nothing silently shifts if a default were ever introduced/changed. The existing modes set `winDirection: WinDirection.highestWins` + `endCondition: EndCondition.reachTargetHighlight` — behavior identical to today.
 
 ### Why a dedicated `WinDirection` field (roadmap deviation)
 

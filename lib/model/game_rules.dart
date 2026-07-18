@@ -58,9 +58,11 @@ class GameRules {
     required this.numPhases,
     required this.suggestedScoreFilter,
     required this.suggestedEndGameScore,
-    this.aggregation = ScoreAggregation.sumPerPlayer,
-    this.endCondition = EndCondition.reachTargetHighlight,
-    this.winDirection = WinDirection.highestWins,
+    // Required (no defaults) so every descriptor states these explicitly and
+    // nothing silently shifts if a would-be default were ever changed.
+    required this.aggregation,
+    required this.endCondition,
+    required this.winDirection,
   });
 
   /// How the round score is entered.
@@ -104,6 +106,9 @@ const GameRules _standardRules = GameRules(
   numPhases: 0,
   suggestedScoreFilter: ScoreFilters.none,
   suggestedEndGameScore: 0,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
 );
 
 const GameRules _phase10Rules = GameRules(
@@ -114,6 +119,9 @@ const GameRules _phase10Rules = GameRules(
   // Phase 10 scores always end in 0 or 5.
   suggestedScoreFilter: ScoreFilters.endsWith0or5,
   suggestedEndGameScore: 0,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
 );
 
 const GameRules _frenchDrivingRules = GameRules(
@@ -124,6 +132,9 @@ const GameRules _frenchDrivingRules = GameRules(
   // French Driving mile totals always end in 0 or 5.
   suggestedScoreFilter: ScoreFilters.endsWith0or5,
   suggestedEndGameScore: 5000,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
 );
 
 const GameRules _skyjoRules = GameRules(
@@ -133,6 +144,9 @@ const GameRules _skyjoRules = GameRules(
   numPhases: 0,
   suggestedScoreFilter: ScoreFilters.none,
   suggestedEndGameScore: 100,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
 );
 
 const GameRules _golfRules = GameRules(
@@ -143,6 +157,8 @@ const GameRules _golfRules = GameRules(
   suggestedScoreFilter: ScoreFilters.none,
   // Golf ends when the fixed rounds are played out; no target line.
   suggestedEndGameScore: 0,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
   winDirection: WinDirection.lowestWins,
 );
 
@@ -154,8 +170,9 @@ const GameRules _heartsRules = GameRules(
   suggestedScoreFilter: ScoreFilters.none,
   // Hearts: 100 is a loser limit, not a goal — crossing it ends the game.
   suggestedEndGameScore: 100,
-  winDirection: WinDirection.lowestWins,
+  aggregation: ScoreAggregation.sumPerPlayer,
   endCondition: EndCondition.loserThreshold,
+  winDirection: WinDirection.lowestWins,
 );
 
 const Map<GameMode, GameRules> _rulesByMode = {
