@@ -16,6 +16,10 @@ The game mode is selected on the splash screen; the scoring filter is set automa
 - Skyjo
 - Golf
 - Hearts
+- Rummy
+- Uno
+- Farkle
+- Rummikub
 
 For modes and games the app could support in the future, see the **[Game-Modes-Roadmap.md](Game-Modes-Roadmap.md)**.
 
@@ -95,6 +99,22 @@ Lowest-total-wins scoring for Hearts. Selecting Hearts on the splash screen sets
 ### Hearts Mode internal model
 
 Identical to Standard Mode — a `Scores` object and a `RoundStates` object per `Player`. The winning direction (lowest total) and the loser-threshold end condition are declared in the `GameRules` descriptor.
+
+## Rummy Mode
+
+Standard round scoring. Selecting Rummy suggests an end-game target of **500**; the player with the highest total wins. Round scores are typed directly.
+
+## Uno Mode
+
+Standard round scoring. Selecting Uno suggests an end-game target of **500**; the player with the highest total wins. Round scores are typed directly.
+
+## Farkle Mode
+
+Standard round scoring. Selecting Farkle suggests an end-game target of **10,000** and applies the "ends in 0 or 5" score filter (Farkle scores are multiples of 50). Highest total wins.
+
+## Rummikub Mode
+
+Standard round scoring with **negative round scores** allowed — tiles left in a player's hand count against them. Highest total wins; no fixed end-game target is suggested.
 
 ## System facts for developers
 

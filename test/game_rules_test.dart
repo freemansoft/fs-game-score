@@ -115,11 +115,42 @@ void main() {
         GameMode.frenchDriving,
         GameMode.skyjo,
         GameMode.hearts,
+        GameMode.rummy,
+        GameMode.uno,
+        GameMode.farkle,
+        GameMode.rummikub,
       ]) {
         final rules = rulesFor(mode);
         expect(rules.roundOptions, [for (var i = 1; i <= 20; i++) i]);
         expect(rules.suggestedMaxRounds, 14);
       }
+    });
+
+    test('rummy and uno are high-wins presets to 500', () {
+      for (final mode in [GameMode.rummy, GameMode.uno]) {
+        final rules = rulesFor(mode);
+        expect(rules.roundInput, RoundInput.typedScore);
+        expect(rules.winDirection, WinDirection.highestWins);
+        expect(rules.allowNegativeScores, isFalse);
+        expect(rules.suggestedScoreFilter, ScoreFilters.none);
+        expect(rules.suggestedEndGameScore, 500);
+      }
+    });
+
+    test('farkle is a high-wins preset to 10000 with a 0/5 filter', () {
+      final rules = rulesFor(GameMode.farkle);
+      expect(rules.winDirection, WinDirection.highestWins);
+      expect(rules.suggestedScoreFilter, ScoreFilters.endsWith0or5);
+      expect(rules.suggestedEndGameScore, 10000);
+      expect(rules.allowNegativeScores, isFalse);
+    });
+
+    test('rummikub is a high-wins preset that allows negatives, no target', () {
+      final rules = rulesFor(GameMode.rummikub);
+      expect(rules.winDirection, WinDirection.highestWins);
+      expect(rules.allowNegativeScores, isTrue);
+      expect(rules.suggestedScoreFilter, ScoreFilters.none);
+      expect(rules.suggestedEndGameScore, 0);
     });
   });
 

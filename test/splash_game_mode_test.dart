@@ -44,6 +44,41 @@ void main() {
     expect(find.text('Hearts'), findsWidgets);
   });
 
+  testWidgets('game-mode dropdown offers the Tier-3 reskins', (tester) async {
+    tester.view.physicalSize = const Size(1400, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+        child: const MaterialApp(
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [Locale('en')],
+          home: Scaffold(body: SplashScreen()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Rummy'), findsWidgets);
+    expect(find.text('Uno'), findsWidgets);
+    expect(find.text('Farkle'), findsWidgets);
+    expect(find.text('Rummikub'), findsWidgets);
+  });
+
   testWidgets('selecting Golf offers 9/18 rounds and defaults to 18', (
     tester,
   ) async {

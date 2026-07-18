@@ -7,7 +7,18 @@ import 'package:fs_score_card/model/score_filters.dart';
 /// backward compatibility. Behavior for each mode is declared once in the
 /// [GameRules] descriptor returned by [rulesFor] — not by branching on this
 /// enum across the codebase.
-enum GameMode { standard, phase10, frenchDriving, skyjo, golf, hearts }
+enum GameMode {
+  standard,
+  phase10,
+  frenchDriving,
+  skyjo,
+  golf,
+  hearts,
+  rummy,
+  uno,
+  farkle,
+  rummikub,
+}
 
 /// How a round's score is entered for a mode.
 enum RoundInput {
@@ -211,6 +222,64 @@ const GameRules _heartsRules = GameRules(
   suggestedMaxRounds: _standardSuggestedMaxRounds,
 );
 
+const GameRules _rummyRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  suggestedEndGameScore: 500,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
+);
+
+const GameRules _unoRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  suggestedEndGameScore: 500,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
+);
+
+const GameRules _farkleRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  // Farkle scores are multiples of 50, so they end in 0 or 5.
+  suggestedScoreFilter: ScoreFilters.endsWith0or5,
+  suggestedEndGameScore: 10000,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
+);
+
+const GameRules _rummikubRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  // Tiles left in hand count against the player.
+  allowNegativeScores: true,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  suggestedEndGameScore: 0,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
+);
+
 const Map<GameMode, GameRules> _rulesByMode = {
   GameMode.standard: _standardRules,
   GameMode.phase10: _phase10Rules,
@@ -218,6 +287,10 @@ const Map<GameMode, GameRules> _rulesByMode = {
   GameMode.skyjo: _skyjoRules,
   GameMode.golf: _golfRules,
   GameMode.hearts: _heartsRules,
+  GameMode.rummy: _rummyRules,
+  GameMode.uno: _unoRules,
+  GameMode.farkle: _farkleRules,
+  GameMode.rummikub: _rummikubRules,
 };
 
 /// Returns the [GameRules] descriptor for [mode].

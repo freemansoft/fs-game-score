@@ -190,6 +190,30 @@ abstract class AppLocalizations {
   /// **'Hearts'**
   String get gameModeHearts;
 
+  /// Rummy card game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Rummy'**
+  String get gameModeRummy;
+
+  /// Uno card game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Uno'**
+  String get gameModeUno;
+
+  /// Farkle dice game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Farkle'**
+  String get gameModeFarkle;
+
+  /// Rummikub tile game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Rummikub'**
+  String get gameModeRummikub;
+
   /// Screen-reader label announced on the leading player's total cell
   ///
   /// In en, this message translates to:

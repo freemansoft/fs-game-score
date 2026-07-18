@@ -60,6 +60,22 @@
   "@gameModeHearts": {
     "description": "Hearts card game mode option"
   },
+  "gameModeRummy": "Rummy",
+  "@gameModeRummy": {
+    "description": "Rummy card game mode option"
+  },
+  "gameModeUno": "Uno",
+  "@gameModeUno": {
+    "description": "Uno card game mode option"
+  },
+  "gameModeFarkle": "Farkle",
+  "@gameModeFarkle": {
+    "description": "Farkle dice game mode option"
+  },
+  "gameModeRummikub": "Rummikub",
+  "@gameModeRummikub": {
+    "description": "Rummikub tile game mode option"
+  },
   "playerLeaderLabel": "Player {playerNumber} is leading",
   "@playerLeaderLabel": {
     "description": "Screen-reader label announced on the leading player's total cell",

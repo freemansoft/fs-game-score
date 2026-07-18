@@ -57,6 +57,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gameModeHearts => 'Hearts';
 
   @override
+  String get gameModeRummy => 'Rummy';
+
+  @override
+  String get gameModeUno => 'Uno';
+
+  @override
+  String get gameModeFarkle => 'Farkle';
+
+  @override
+  String get gameModeRummikub => 'Rummikub';
+
+  @override
   String playerLeaderLabel(int playerNumber) {
     return 'Player $playerNumber is leading';
   }
