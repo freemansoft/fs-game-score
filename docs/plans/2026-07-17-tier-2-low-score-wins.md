@@ -834,6 +834,119 @@ git commit -m "docs: mark Tier 2 delivered; record WinDirection deviation"
 
 ---
 
+### Task 9: Full-flow integration test (splash → score table → scores → totals → leader)
+
+End-to-end coverage requested in review: drive the real app from the startup page through scoring, exercising modal score entry/editing, table cell values, totals, and the new leader marker.
+
+**Files:**
+- Modify: `integration_test/app_test.dart`
+
+**Interfaces:**
+- Consumes: `GameMode.golf` (Task 3), the leader marker (Tasks 5–6), and existing helpers in `integration_test/app_test_helpers.dart` (`launchAppOnSplash`, `waitForScoreTable`) plus widget keys (`SplashScreen.*`, `PlayerRoundCell.scoreKey`, `PlayerRoundModal.scoreFieldKey`, `PlayerGameCell.*`).
+
+- [ ] **Step 1: Add the test** (`integration_test/app_test.dart`, before the final closing `}` of `main`)
+
+```dart
+  testWidgets(
+    'Golf full flow: splash to scoring, scores, totals, leader, modal edit',
+    (tester) async {
+      await launchAppOnSplash(tester);
+
+      // Two players keeps the table on-screen.
+      await tester.tap(find.byKey(SplashScreen.numPlayersDropdownKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('2').last);
+      await tester.pumpAndSettle();
+
+      // Select Golf (low-score-wins).
+      await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Golf').last);
+      await tester.pumpAndSettle();
+
+      // Continue to the score table.
+      await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+      await waitForScoreTable(tester);
+
+      // Enters a round score through the round modal, then closes it.
+      Future<void> enterRoundScore(int p, int r, String value) async {
+        await tester.tap(find.byKey(PlayerRoundCell.scoreKey(p, r)));
+        await tester.pumpAndSettle();
+        expect(find.byType(PlayerRoundModal), findsOneWidget);
+        await tester.enterText(
+          find.byKey(PlayerRoundModal.scoreFieldKey(p, r)),
+          value,
+        );
+        await tester.pumpAndSettle();
+        await tester.tapAt(
+          tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+        );
+        await tester.pumpAndSettle();
+      }
+
+      String cellText(Key key) =>
+          (tester.widget(find.byKey(key)) as Text).data!;
+
+      Finder leaderIn(int playerIdx) => find.descendant(
+            of: find.byKey(PlayerGameCell.cellKey(playerIdx)),
+            matching: find.byIcon(Icons.emoji_events),
+          );
+
+      // Player 0: 20 + 40 = 60.
+      await enterRoundScore(0, 0, '20');
+      await enterRoundScore(0, 1, '40');
+      expect(cellText(PlayerRoundCell.scoreKey(0, 0)), '20');
+      expect(cellText(PlayerRoundCell.scoreKey(0, 1)), '40');
+      expect(cellText(PlayerGameCell.totalScoreKey(0)), '60');
+
+      // Player 1: 10 + 20 = 30 (the lower total).
+      await enterRoundScore(1, 0, '10');
+      await enterRoundScore(1, 1, '20');
+      expect(cellText(PlayerGameCell.totalScoreKey(1)), '30');
+
+      // Leader marker sits on the lowest total (player 1), not player 0.
+      expect(leaderIn(1), findsOneWidget);
+      expect(leaderIn(0), findsNothing);
+
+      // Modal score EDITING: change player 0 round 1 from 40 to 5.
+      await enterRoundScore(0, 1, '5');
+      expect(cellText(PlayerRoundCell.scoreKey(0, 1)), '5');
+      expect(cellText(PlayerGameCell.totalScoreKey(0)), '25'); // 20 + 5
+
+      // Player 0 (25) is now below player 1 (30): the leader marker moves.
+      expect(leaderIn(0), findsOneWidget);
+      expect(leaderIn(1), findsNothing);
+
+      // The player game modal opens from the total cell and shows the name field.
+      await tester.tap(find.byKey(PlayerGameCell.cellKey(0)));
+      await tester.pumpAndSettle();
+      expect(find.byType(PlayerGameModal), findsOneWidget);
+      expect(find.byKey(PlayerGameModal.nameFieldKey(0)), findsOneWidget);
+      await tester.tapAt(
+        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(PlayerGameModal), findsNothing);
+    },
+  );
+```
+
+- [ ] **Step 2: Run the integration test**
+
+Run: `fvm flutter test integration_test/app_test.dart --plain-name "Golf full flow"`
+Expected: PASS. (Runs on the headless flutter tester like the other tests in this file.)
+
+- [ ] **Step 3: Format, analyze, commit**
+
+```bash
+fvm dart format integration_test/app_test.dart
+fvm flutter analyze integration_test/app_test.dart
+git add integration_test/app_test.dart
+git commit -m "test: full-flow Golf integration test (scores, totals, leader, modal edit)"
+```
+
+---
+
 ## Self-Review
 
 **Spec coverage:**
@@ -846,6 +959,7 @@ git commit -m "docs: mark Tier 2 delivered; record WinDirection deviation"
 - l10n en/es/fr (mode names + `playerLeaderLabel`) → Task 4 ✅
 - Splash picker offers the modes and auto-applies target → Task 7 ✅
 - Tests: game_rules, players, cell widget, table widget, splash → Tasks 1–7 ✅
+- Full-flow integration test (splash → scores → totals → modal edit → leader) → Task 9 ✅
 - Roadmap deviation action item → Task 8 ✅
 - Out-of-scope items (no game-over banner, no ranking beyond 1st, no auto-lock, no per-mode round counts, no custom editor, no teams) → none implemented ✅
 

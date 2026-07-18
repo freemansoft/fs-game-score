@@ -121,6 +121,7 @@ Regenerate with `fvm flutter gen-l10n`; verify key parity across the three `.arb
 | `players` unit test | `leaderIndices`: min selection (lowWins), max selection (highWins), ties return all, empty board returns `[]`. |
 | Widget test | Leader marker renders on the min-total cell in a low-wins mode; **absent** in a high-wins mode; `bold+italic` still applies on `endGameScore` crossing independently. |
 | Integration/splash | The mode picker offers Golf and Hearts; selecting each applies the suggested target/filter. |
+| Integration (full flow) | `integration_test/app_test.dart`: start on the splash screen, pick Golf, continue to the score table, enter round scores through the round modal, verify score-table cell values and player totals, verify modal score **editing** updates the table/total, and confirm the leader marker sits on the lowest total (and moves when the low total moves). |
 
 ---
 
