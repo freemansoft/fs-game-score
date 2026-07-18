@@ -70,6 +70,8 @@ These two were chosen as the first game-facing priority because trick-taking car
 
 ### Tier 3 — easy reskins (little new machinery)
 
+**Status: ✅ partially delivered** — Rummy, Uno, Farkle, Rummikub (see [spec](specs/2026-07-18-tier-3-reskins.md)) and Golf (Tier 2) ship as descriptor presets. Boggle / Scrabble / trivia remain.
+
 Standard / Skyjo / calculated variants that mostly need a new enum value, some labels, and a suggested target default:
 
 - **Rummy / Gin / 500 Rummy** — Skyjo-like, target 500.
