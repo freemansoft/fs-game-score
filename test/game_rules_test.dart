@@ -51,16 +51,24 @@ void main() {
       expect(rules.suggestedEndGameScore, 100);
     });
 
-    test(
-      'Tier 0 aggregation/end-condition hooks are the single value today',
-      () {
-        for (final mode in GameMode.values) {
-          final rules = rulesFor(mode);
-          expect(rules.aggregation, ScoreAggregation.sumPerPlayer);
-          expect(rules.endCondition, EndCondition.reachTargetHighlight);
-        }
-      },
-    );
+    test('aggregation is sumPerPlayer for every mode', () {
+      for (final mode in GameMode.values) {
+        expect(rulesFor(mode).aggregation, ScoreAggregation.sumPerPlayer);
+      }
+    });
+
+    test('reach-target modes use the reachTargetHighlight end condition', () {
+      // Every mode except the Tier-2 loser-threshold modes (Hearts).
+      for (final mode in [
+        GameMode.standard,
+        GameMode.phase10,
+        GameMode.frenchDriving,
+        GameMode.skyjo,
+        GameMode.golf,
+      ]) {
+        expect(rulesFor(mode).endCondition, EndCondition.reachTargetHighlight);
+      }
+    });
 
     test('existing modes win on the highest total', () {
       for (final mode in [
@@ -75,6 +83,23 @@ void main() {
 
     test('EndCondition exposes a loserThreshold value', () {
       expect(EndCondition.values, contains(EndCondition.loserThreshold));
+    });
+
+    test('golf mode is typed low-score-wins with no threshold', () {
+      final rules = rulesFor(GameMode.golf);
+      expect(rules.roundInput, RoundInput.typedScore);
+      expect(rules.winDirection, WinDirection.lowestWins);
+      expect(rules.endCondition, EndCondition.reachTargetHighlight);
+      expect(rules.suggestedEndGameScore, 0);
+      expect(rules.allowNegativeScores, isFalse);
+    });
+
+    test('hearts mode is typed low-score-wins with a 100 loser threshold', () {
+      final rules = rulesFor(GameMode.hearts);
+      expect(rules.roundInput, RoundInput.typedScore);
+      expect(rules.winDirection, WinDirection.lowestWins);
+      expect(rules.endCondition, EndCondition.loserThreshold);
+      expect(rules.suggestedEndGameScore, 100);
     });
   });
 

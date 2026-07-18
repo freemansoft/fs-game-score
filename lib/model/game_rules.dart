@@ -7,7 +7,7 @@ import 'package:fs_score_card/model/score_filters.dart';
 /// backward compatibility. Behavior for each mode is declared once in the
 /// [GameRules] descriptor returned by [rulesFor] — not by branching on this
 /// enum across the codebase.
-enum GameMode { standard, phase10, frenchDriving, skyjo }
+enum GameMode { standard, phase10, frenchDriving, skyjo, golf, hearts }
 
 /// How a round's score is entered for a mode.
 enum RoundInput {
@@ -135,11 +135,36 @@ const GameRules _skyjoRules = GameRules(
   suggestedEndGameScore: 100,
 );
 
+const GameRules _golfRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  // Golf ends when the fixed rounds are played out; no target line.
+  suggestedEndGameScore: 0,
+  winDirection: WinDirection.lowestWins,
+);
+
+const GameRules _heartsRules = GameRules(
+  roundInput: RoundInput.typedScore,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  // Hearts: 100 is a loser limit, not a goal — crossing it ends the game.
+  suggestedEndGameScore: 100,
+  winDirection: WinDirection.lowestWins,
+  endCondition: EndCondition.loserThreshold,
+);
+
 const Map<GameMode, GameRules> _rulesByMode = {
   GameMode.standard: _standardRules,
   GameMode.phase10: _phase10Rules,
   GameMode.frenchDriving: _frenchDrivingRules,
   GameMode.skyjo: _skyjoRules,
+  GameMode.golf: _golfRules,
+  GameMode.hearts: _heartsRules,
 };
 
 /// Returns the [GameRules] descriptor for [mode].
