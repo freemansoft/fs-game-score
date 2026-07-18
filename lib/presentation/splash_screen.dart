@@ -200,6 +200,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 value: GameMode.skyjo,
                 child: Text(l10n.gameModeSkyjo),
               ),
+              DropdownMenuItem(
+                value: GameMode.golf,
+                child: Text(l10n.gameModeGolf),
+              ),
+              DropdownMenuItem(
+                value: GameMode.hearts,
+                child: Text(l10n.gameModeHearts),
+              ),
             ],
             onChanged: (value) {
               if (value != null) {
