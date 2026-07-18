@@ -1473,4 +1473,163 @@ void main() {
       expect(p0Total.style?.fontStyle, FontStyle.italic);
     },
   );
+
+  testWidgets('Rummy auto-fills a 500 target and highlights on reaching it', (
+    tester,
+  ) async {
+    await launchAppOnSplash(tester);
+
+    await tester.tap(find.byKey(SplashScreen.numPlayersDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('2').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rummy').last);
+    await tester.pumpAndSettle();
+
+    // Rummy auto-fills the end-game target with 500.
+    expect(
+      tester
+          .widget<TextField>(find.byKey(SplashScreen.endGameScoreFieldKey))
+          .controller
+          ?.text,
+      '500',
+    );
+
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await waitForScoreTable(tester);
+
+    Future<void> enterRoundScore(int p, int r, String value) async {
+      await tester.tap(find.byKey(PlayerRoundCell.scoreKey(p, r)));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(PlayerRoundModal.scoreFieldKey(p, r)),
+        value,
+      );
+      await tester.pumpAndSettle();
+      await tester.tapAt(
+        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    // Reach 500 -> the total is bold (target-highlight).
+    await enterRoundScore(0, 0, '300');
+    await enterRoundScore(0, 1, '250');
+    await tester.pumpAndSettle();
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
+      '550',
+    );
+    final total = tester.widget<Text>(
+      find.byKey(PlayerGameCell.totalScoreKey(0)),
+    );
+    expect(total.style?.fontWeight, FontWeight.bold);
+  });
+
+  testWidgets('Uno auto-fills a 500 target', (tester) async {
+    await launchAppOnSplash(tester);
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Uno').last);
+    await tester.pumpAndSettle();
+
+    expect(
+      tester
+          .widget<TextField>(find.byKey(SplashScreen.endGameScoreFieldKey))
+          .controller
+          ?.text,
+      '500',
+    );
+
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await waitForScoreTable(tester);
+
+    await tester.tap(find.byKey(PlayerRoundCell.scoreKey(0, 0)));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(PlayerRoundModal.scoreFieldKey(0, 0)),
+      '25',
+    );
+    await tester.pumpAndSettle();
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
+      '25',
+    );
+  });
+
+  testWidgets('Farkle auto-fills a 10000 target', (tester) async {
+    await launchAppOnSplash(tester);
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Farkle').last);
+    await tester.pumpAndSettle();
+
+    expect(
+      tester
+          .widget<TextField>(find.byKey(SplashScreen.endGameScoreFieldKey))
+          .controller
+          ?.text,
+      '10000',
+    );
+
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await waitForScoreTable(tester);
+
+    // A valid multiple-of-50 score (ends in 0) is accepted.
+    await tester.tap(find.byKey(PlayerRoundCell.scoreKey(0, 0)));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(PlayerRoundModal.scoreFieldKey(0, 0)),
+      '1050',
+    );
+    await tester.pumpAndSettle();
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
+      '1050',
+    );
+  });
+
+  testWidgets('Rummikub allows a negative round score', (tester) async {
+    await launchAppOnSplash(tester);
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rummikub').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await waitForScoreTable(tester);
+
+    await tester.tap(find.byKey(PlayerRoundCell.scoreKey(0, 0)));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(PlayerRoundModal.scoreFieldKey(0, 0)),
+      '-30',
+    );
+    await tester.pumpAndSettle();
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
+      '-30',
+    );
+  });
 }
