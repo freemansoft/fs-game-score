@@ -1,3 +1,6 @@
+// test are clearer if they are explicit
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -1081,8 +1084,6 @@ void main() {
       targetItemFinder,
       dropdownList,
       const Offset(0, -200), // scroll down
-      // clearer test
-      // ignore: avoid_redundant_argument_values
       maxIteration: 50,
     );
     await tester.pumpAndSettle();
