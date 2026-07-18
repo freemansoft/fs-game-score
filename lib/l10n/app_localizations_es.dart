@@ -51,6 +51,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get gameModeSkyjo => 'Skyjo';
 
   @override
+  String get gameModeGolf => 'Golf';
+
+  @override
+  String get gameModeHearts => 'Corazones';
+
+  @override
+  String playerLeaderLabel(int playerNumber) {
+    return 'El jugador $playerNumber va en cabeza';
+  }
+
+  @override
   String get basicSheet => 'Hoja Básica';
 
   @override

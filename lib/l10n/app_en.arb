@@ -52,6 +52,21 @@
   "@gameModeSkyjo": {
     "description": "Skyjo game mode option"
   },
+  "gameModeGolf": "Golf",
+  "@gameModeGolf": {
+    "description": "Golf card game mode option"
+  },
+  "gameModeHearts": "Hearts",
+  "@gameModeHearts": {
+    "description": "Hearts card game mode option"
+  },
+  "playerLeaderLabel": "Player {playerNumber} is leading",
+  "@playerLeaderLabel": {
+    "description": "Screen-reader label announced on the leading player's total cell",
+    "placeholders": {
+      "playerNumber": { "type": "int" }
+    }
+  },
   "basicSheet": "Basic Sheet",
   "@basicSheet": {
     "description": "Option for basic sheet style"
