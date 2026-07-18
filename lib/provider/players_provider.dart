@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fs_score_card/data/players_repository.dart';
+import 'package:fs_score_card/model/bid_tricks_round_attributes.dart';
 import 'package:fs_score_card/model/french_driving_round_attributes.dart';
 import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/model/player.dart';
@@ -166,6 +167,26 @@ class PlayersNotifier extends Notifier<Players> {
     final player = state.players[playerIdx].copyWith();
     player.frenchDrivingAttributes[round] = attributes;
     player.scores.setScore(round, attributes.calculateScore());
+    state = state.withPlayer(player, playerIdx);
+    _requestPersist();
+  }
+
+  void updateBidTricksAttributes(
+    int playerIdx,
+    int round,
+    BidTricksRoundAttributes attributes,
+  ) {
+    final player = state.players[playerIdx].copyWith();
+    player.bidTricksAttributes[round] = attributes;
+    final rules = ref.read(gameNotifierProvider).configuration.rules;
+    player.scores.setScore(
+      round,
+      bidTricksScore(
+        rules.roundInput,
+        bid: attributes.bid,
+        tricksTaken: attributes.tricksTaken,
+      ),
+    );
     state = state.withPlayer(player, playerIdx);
     _requestPersist();
   }
