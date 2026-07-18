@@ -7,6 +7,7 @@ import 'package:fs_score_card/l10n/app_localizations_en.dart';
 import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_cell.dart';
 import 'package:fs_score_card/presentation/player_game/player_game_modal.dart';
+import 'package:fs_score_card/presentation/player_round/bid_tricks_round_panel.dart';
 import 'package:fs_score_card/presentation/player_round/french_driving_round_panel.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_cell.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_modal.dart';
@@ -1630,6 +1631,92 @@ void main() {
     expect(
       (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
       '-30',
+    );
+  });
+
+  testWidgets('Oh Hell computes the round score from bid and tricks', (
+    tester,
+  ) async {
+    // Tall window so the full 12-item mode dropdown renders (Oh Hell/Wizard
+    // are the last entries and are otherwise off-screen/unbuilt).
+    tester.view.physicalSize = const Size(1400, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await launchAppOnSplash(tester);
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Oh Hell').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Oh Hell').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await waitForScoreTable(tester);
+
+    // Open the round editor for player 0, round 0.
+    await tester.tap(find.byKey(PlayerRoundCell.scoreKey(0, 0)));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(BidTricksRoundPanel.bidFieldKey), '3');
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(BidTricksRoundPanel.tricksFieldKey), '3');
+    await tester.pumpAndSettle();
+
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    // Exact bid of 3 -> 10 + 3 = 13.
+    expect(
+      (tester.widget(find.byKey(PlayerRoundCell.scoreKey(0, 0))) as Text).data,
+      '13',
+    );
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
+      '13',
+    );
+  });
+
+  testWidgets('Wizard scores a missed bid negative', (tester) async {
+    // Tall window so the full 12-item mode dropdown renders (Wizard is last).
+    tester.view.physicalSize = const Size(1400, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await launchAppOnSplash(tester);
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Wizard').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Wizard').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await waitForScoreTable(tester);
+
+    await tester.tap(find.byKey(PlayerRoundCell.scoreKey(0, 0)));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(BidTricksRoundPanel.bidFieldKey), '3');
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(BidTricksRoundPanel.tricksFieldKey), '5');
+    await tester.pumpAndSettle();
+
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
+
+    // Missed by 2 -> -10 * 2 = -20.
+    expect(
+      (tester.widget(find.byKey(PlayerGameCell.totalScoreKey(0))) as Text).data,
+      '-20',
     );
   });
 }
