@@ -1722,4 +1722,65 @@ void main() {
       '-20',
     );
   });
+
+  testWidgets('Oh Hell accumulates rounds and re-computes on edit', (
+    tester,
+  ) async {
+    await launchAppOnSplash(tester);
+
+    // Scroll the long mode dropdown to Oh Hell and select it.
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+    final ohHellItem = find.text('Oh Hell', skipOffstage: false).last;
+    await tester.dragUntilVisible(
+      ohHellItem,
+      find.byType(Scrollable).last,
+      const Offset(0, -200),
+      maxIteration: 50,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(ohHellItem);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(SplashScreen.continueButtonKey));
+    await waitForScoreTable(tester);
+
+    // Opens the round editor, enters a bid + tricks, then closes it.
+    Future<void> enterBidTricks(int p, int r, String bid, String tricks) async {
+      await tester.tap(find.byKey(PlayerRoundCell.scoreKey(p, r)));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(BidTricksRoundPanel.bidFieldKey), bid);
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(BidTricksRoundPanel.tricksFieldKey),
+        tricks,
+      );
+      await tester.pumpAndSettle();
+      await tester.tapAt(
+        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    String cellText(Key key) => (tester.widget(find.byKey(key)) as Text).data!;
+
+    // Round 0: bid 2, tricks 2 (exact) -> 12.
+    await enterBidTricks(0, 0, '2', '2');
+    // Round 1: bid 3, tricks 1 (missed) -> 0.
+    await enterBidTricks(0, 1, '3', '1');
+    // Round 2: bid 1, tricks 1 (exact) -> 11.
+    await enterBidTricks(0, 2, '1', '1');
+
+    expect(cellText(PlayerRoundCell.scoreKey(0, 0)), '12');
+    expect(cellText(PlayerRoundCell.scoreKey(0, 1)), '0');
+    expect(cellText(PlayerRoundCell.scoreKey(0, 2)), '11');
+    // Total accumulates across the three rounds: 12 + 0 + 11 = 23.
+    expect(cellText(PlayerGameCell.totalScoreKey(0)), '23');
+
+    // Re-edit round 1 so the bid is now made (tricks 1 -> 3): bid 3 -> 13.
+    await enterBidTricks(0, 1, '3', '3');
+    expect(cellText(PlayerRoundCell.scoreKey(0, 1)), '13');
+    // Total re-computes with the edited round: 12 + 13 + 11 = 36.
+    expect(cellText(PlayerGameCell.totalScoreKey(0)), '36');
+  });
 }
