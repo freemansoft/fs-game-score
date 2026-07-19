@@ -49,6 +49,8 @@ Doing this first is a deliberate trade: it delays the first new game, but Tiers 
 
 **Status: 🟡 1A delivered** — the bid/tricks calculated-score primitive ships as **Oh Hell** and **Wizard** (see [spec](specs/2026-07-18-tier-1-bidding-trick-taking.md)). Team/partnership totals (1B) remain, to unlock Spades/Euchre.
 
+> **Known defect (D1):** a bid 0 / tricks 0 round is not recorded — the bid/tricks fields default to `0` and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score (the cell stays empty). A made 0-bid should score (Oh Hell 10, Wizard 20). Scheduled for [Tier 4](#tier-4--stretch-capabilities-and-deferred-fixes).
+
 These two were chosen as the first game-facing priority because trick-taking card games are the largest untapped family of "round-based, one scorekeeper" games, and they need the same two new primitives. They are built as Phase 0 descriptors plus the new primitives each requires.
 
 **A. Bidding / trick-taking mode.** Generalize the Phase-10 "extra attribute per round" into **bid + result → calculated round score**, reusing the French Driving calculated-score pattern. Add a new per-round attributes class (e.g. `TrickBidRoundAttributes`) plus a round editor modeled on `french_driving_round_panel.dart`, with a configurable made-vs-set / over-vs-under-bid formula per variant.
@@ -85,7 +87,7 @@ Standard / Skyjo / calculated variants that mostly need a new enum value, some l
 
 (Yahtzee was formerly listed here as a "French-Driving-style calculated grid." It is not a reskin — its board is a fixed set of named categories rather than sequential rounds, so it now lives in [Tier 5](#tier-5--alternative-board-layouts-a-second-axis).)
 
-### Tier 4 — stretch capabilities
+### Tier 4 — stretch capabilities and deferred fixes
 
 New scoring shapes that go beyond the additive accumulator:
 
@@ -93,6 +95,10 @@ New scoring shapes that go beyond the additive accumulator:
 - **Par / relative (±)** scoring per round — Golf (the sport), mini-golf.
 - **Per-player handicap / starting offset.**
 - **Dynamic (unbounded) round count** for race-to-N games — Cribbage (121), Scrabble.
+
+Deferred defect fixes for shipped modes:
+
+- **Defect D1 — bid/tricks 0 / 0 round not recorded** (Oh Hell, Wizard; Tier 1A). The round editor's bid and tricks fields default to `0`, and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score and the round cell stays empty (`---`) instead of scoring a made 0-bid (Oh Hell 10, Wizard 20). **Fix:** write the calculated round score whenever the editor confirms a calculated round, even when the inputs equal their defaults — with a decision on how an opened-but-untouched round should be treated. Found 2026-07-19 via the multi-round Oh Hell integration test.
 
 ### Tier 5 — alternative board layouts (a second axis)
 
