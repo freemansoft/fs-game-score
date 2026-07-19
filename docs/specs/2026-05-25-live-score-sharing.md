@@ -122,7 +122,7 @@ FS Score Card is one Flutter codebase for Android, iOS, **web** (GitHub Pages), 
 | **Windows** | Yes        | **Phase 7c**        | Medium–High     | Medium               | Host + spectator after 7a/7b        |
 | Linux       | Present    | Not planned         | —               | —                    | Same as other desktop               |
 
-**v1 product rule (mobile only)**
+**v1 product rule** (mobile only):
 
 - **Host:** Android or iOS — Live share → mDNS + WebSocket → QR + PIN.
 - **Spectator:** Android or iOS — Join via mDNS, QR, or manual URL.

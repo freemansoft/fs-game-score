@@ -1,0 +1,10 @@
+{
+  // Markdown in this repo is formatted by Prettier (`npm run format:md` /
+  // `check:md`, enforced by the Markdown Format CI job). Prettier is the source
+  // of truth for layout, so disable the markdownlint rules whose expectations
+  // Prettier's output does not meet — otherwise editors flag every formatted
+  // doc. Content rules (e.g. MD036) stay on.
+  "MD013": false, // line-length: Prettier does not wrap prose or table rows
+  "MD031": false, // blanks-around-fences: Prettier's fence spacing differs
+  "MD032": false // blanks-around-lists: Prettier's list spacing differs
+}
