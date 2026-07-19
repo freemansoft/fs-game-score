@@ -55,6 +55,11 @@
   "gameModeUno": "Uno",
   "gameModeFarkle": "Farkle",
   "gameModeRummikub": "Rummikub",
+  "gameModeOhHell": "Oh Hell",
+  "gameModeWizard": "Wizard",
+  "bidLabel": "Annonce",
+  "tricksTakenLabel": "Plis réalisés",
+  "bidTricksZeroBidNote": "Annoncer 0 et réaliser 0 pli marque 0 point pour l'instant — une limitation connue.",
   "playerLeaderLabel": "Le joueur {playerNumber} est en tête",
   "@gameModeSkyjo": {
     "description": "Skyjo game mode option"

@@ -47,6 +47,10 @@ Doing this first is a deliberate trade: it delays the first new game, but Tiers 
 
 ### Tier 1 — build first
 
+**Status: 🟡 1A delivered** — the bid/tricks calculated-score primitive ships as **Oh Hell** and **Wizard** (see [spec](specs/2026-07-18-tier-1-bidding-trick-taking.md)). Team/partnership totals (1B) remain, to unlock Spades/Euchre.
+
+> **Known defect (D1):** a bid 0 / tricks 0 round is not recorded — the bid/tricks fields default to `0` and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score (the cell stays empty). A made 0-bid should score (Oh Hell 10, Wizard 20). **Mitigated** in-app: the round editor shows a note explaining the current behavior. The real fix is scheduled for [Tier 4](#tier-4--stretch-capabilities-and-deferred-fixes).
+
 These two were chosen as the first game-facing priority because trick-taking card games are the largest untapped family of "round-based, one scorekeeper" games, and they need the same two new primitives. They are built as Phase 0 descriptors plus the new primitives each requires.
 
 **A. Bidding / trick-taking mode.** Generalize the Phase-10 "extra attribute per round" into **bid + result → calculated round score**, reusing the French Driving calculated-score pattern. Add a new per-round attributes class (e.g. `TrickBidRoundAttributes`) plus a round editor modeled on `french_driving_round_panel.dart`, with a configurable made-vs-set / over-vs-under-bid formula per variant.
@@ -83,7 +87,7 @@ Standard / Skyjo / calculated variants that mostly need a new enum value, some l
 
 (Yahtzee was formerly listed here as a "French-Driving-style calculated grid." It is not a reskin — its board is a fixed set of named categories rather than sequential rounds, so it now lives in [Tier 5](#tier-5--alternative-board-layouts-a-second-axis).)
 
-### Tier 4 — stretch capabilities
+### Tier 4 — stretch capabilities and deferred fixes
 
 New scoring shapes that go beyond the additive accumulator:
 
@@ -92,12 +96,17 @@ New scoring shapes that go beyond the additive accumulator:
 - **Per-player handicap / starting offset.**
 - **Dynamic (unbounded) round count** for race-to-N games — Cribbage (121), Scrabble.
 
+Deferred defect fixes for shipped modes:
+
+- **Defect D1 — bid/tricks 0 / 0 round not recorded** (Oh Hell, Wizard; Tier 1A). The round editor's bid and tricks fields default to `0`, and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score and the round cell stays empty (`---`) instead of scoring a made 0-bid (Oh Hell 10, Wizard 20). **Fix:** write the calculated round score whenever the editor confirms a calculated round, even when the inputs equal their defaults — with a decision on how an opened-but-untouched round should be treated. Found 2026-07-19 via the multi-round Oh Hell integration test. **Interim mitigation shipped:** the bid/tricks round editor shows an in-app note (`bidTricksZeroBidNote`) explaining the current behavior to players.
+
 ### Tier 5 — alternative board layouts (a second axis)
 
 Tiers 1–4 all vary the **scoring shape** on top of one fixed **board layout**: the sequential `rounds × players` grid. A distinct family of games keeps per-player columns but replaces sequential rounds with a **fixed set of named categories**, each filled **once**, where players must see at a glance which categories are still available and which are already used. That is a different _board_, not a different _formula_ — the largest new-machinery item on the roadmap, which is why it is called out as its own axis rather than a Tier-3 reskin. It is listed last for effort, not importance.
 
 - **Unlocks:** Yahtzee (13 categories, upper-section +35 bonus, grand total) and Yahtzee-likes (_That's Pretty Clever_, _Roll Through the Ages_). Bowling (ten frames with strike/spare carry-forward) is a related fixed-row board with a custom running total; Wizard / Oh Hell's **bid-vs-made two-value cell** is a related primitive but stays on the round grid (built under [Tier 1](#tier-1--build-first)).
 - **Engine gaps:** a **category-board layout** alongside the round grid — fixed named rows, per-cell **used / available** state, and calculated **section subtotals / bonuses**; a new board widget distinct from the score table (`lib/presentation/player_game/`); splash setup that picks a category set instead of a round count (`splash_screen.dart`). The seam is a **board-layout descriptor on `GameRules`**, mirroring how the `aggregation` / `endCondition` fields were reserved for Tiers 1–2.
+- **Collaboration model (decide before building):** the app's core assumption is a **single scorekeeper** with **read-only spectators** (live share = one host writes, others mirror). Yahtzee is naturally played with **each player filling their own card**, which breaks that model. For category-board games we may want **each user to keep their own score** (per device / per user) and **not offer live share** at all — rather than force the read-only host/spectator flow onto a game it doesn't fit. This is likely a **general decision for any mode that is not a single-scorekeeper score sheet**, not just Yahtzee: such modes either opt out of live share or need a genuinely multi-writer model instead of read-only mirroring. Settle the interaction model first, before the board widget.
 
 ## Architectural note
 

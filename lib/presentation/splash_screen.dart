@@ -226,6 +226,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 value: GameMode.rummikub,
                 child: Text(l10n.gameModeRummikub),
               ),
+              DropdownMenuItem(
+                value: GameMode.ohHell,
+                child: Text(l10n.gameModeOhHell),
+              ),
+              DropdownMenuItem(
+                value: GameMode.wizard,
+                child: Text(l10n.gameModeWizard),
+              ),
             ],
             onChanged: (value) {
               if (value != null) {

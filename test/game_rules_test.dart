@@ -152,6 +152,25 @@ void main() {
       expect(rules.suggestedScoreFilter, ScoreFilters.none);
       expect(rules.suggestedEndGameScore, 0);
     });
+
+    test(
+      'oh hell is a calculated bid/tricks mode, high-wins, no negatives',
+      () {
+        final rules = rulesFor(GameMode.ohHell);
+        expect(rules.roundInput, RoundInput.calculatedOhHell);
+        expect(rules.winDirection, WinDirection.highestWins);
+        expect(rules.allowNegativeScores, isFalse);
+        expect(rules.suggestedEndGameScore, 0);
+      },
+    );
+
+    test('wizard is a calculated bid/tricks mode allowing negatives', () {
+      final rules = rulesFor(GameMode.wizard);
+      expect(rules.roundInput, RoundInput.calculatedWizard);
+      expect(rules.winDirection, WinDirection.highestWins);
+      expect(rules.allowNegativeScores, isTrue);
+      expect(rules.suggestedEndGameScore, 0);
+    });
   });
 
   group('GameConfiguration getters delegate to rules', () {

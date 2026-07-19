@@ -126,4 +126,37 @@ void main() {
     expect(find.text('18'), findsWidgets);
     expect(find.text('14'), findsNothing);
   });
+
+  testWidgets('game-mode dropdown offers Oh Hell and Wizard', (tester) async {
+    tester.view.physicalSize = const Size(1400, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+        child: const MaterialApp(
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [Locale('en')],
+          home: Scaffold(body: SplashScreen()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(SplashScreen.gameModeDropdownKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Oh Hell'), findsWidgets);
+    expect(find.text('Wizard'), findsWidgets);
+  });
 }

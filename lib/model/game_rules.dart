@@ -18,6 +18,8 @@ enum GameMode {
   uno,
   farkle,
   rummikub,
+  ohHell,
+  wizard,
 }
 
 /// How a round's score is entered for a mode.
@@ -28,6 +30,12 @@ enum RoundInput {
   /// The round score is calculated from French Driving round attributes;
   /// the typed field is read-only.
   calculatedFrenchDriving,
+
+  /// The round score is calculated from a bid + tricks taken (Oh Hell).
+  calculatedOhHell,
+
+  /// The round score is calculated from a bid + tricks taken (Wizard).
+  calculatedWizard,
 }
 
 /// How player scores are aggregated into standings.
@@ -280,6 +288,35 @@ const GameRules _rummikubRules = GameRules(
   suggestedMaxRounds: _standardSuggestedMaxRounds,
 );
 
+const GameRules _ohHellRules = GameRules(
+  roundInput: RoundInput.calculatedOhHell,
+  allowNegativeScores: false,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  suggestedEndGameScore: 0,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
+);
+
+const GameRules _wizardRules = GameRules(
+  roundInput: RoundInput.calculatedWizard,
+  // A missed bid scores negative in Wizard.
+  allowNegativeScores: true,
+  enablePhases: false,
+  numPhases: 0,
+  suggestedScoreFilter: ScoreFilters.none,
+  suggestedEndGameScore: 0,
+  aggregation: ScoreAggregation.sumPerPlayer,
+  endCondition: EndCondition.reachTargetHighlight,
+  winDirection: WinDirection.highestWins,
+  roundOptions: _standardRoundOptions,
+  suggestedMaxRounds: _standardSuggestedMaxRounds,
+);
+
 const Map<GameMode, GameRules> _rulesByMode = {
   GameMode.standard: _standardRules,
   GameMode.phase10: _phase10Rules,
@@ -291,6 +328,8 @@ const Map<GameMode, GameRules> _rulesByMode = {
   GameMode.uno: _unoRules,
   GameMode.farkle: _farkleRules,
   GameMode.rummikub: _rummikubRules,
+  GameMode.ohHell: _ohHellRules,
+  GameMode.wizard: _wizardRules,
 };
 
 /// Returns the [GameRules] descriptor for [mode].

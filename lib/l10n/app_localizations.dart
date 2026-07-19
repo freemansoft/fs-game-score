@@ -214,6 +214,36 @@ abstract class AppLocalizations {
   /// **'Rummikub'**
   String get gameModeRummikub;
 
+  /// Oh Hell trick-taking game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Oh Hell'**
+  String get gameModeOhHell;
+
+  /// Wizard trick-taking game mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Wizard'**
+  String get gameModeWizard;
+
+  /// Label for the bid input in the bid/tricks round editor
+  ///
+  /// In en, this message translates to:
+  /// **'Bid'**
+  String get bidLabel;
+
+  /// Label for the tricks-taken input in the bid/tricks round editor
+  ///
+  /// In en, this message translates to:
+  /// **'Tricks taken'**
+  String get tricksTakenLabel;
+
+  /// Note on the bid/tricks round editor explaining that a made zero-bid is not yet scored
+  ///
+  /// In en, this message translates to:
+  /// **'Bidding 0 and taking 0 tricks scores 0 points for now — a known limitation.'**
+  String get bidTricksZeroBidNote;
+
   /// Screen-reader label announced on the leading player's total cell
   ///
   /// In en, this message translates to:

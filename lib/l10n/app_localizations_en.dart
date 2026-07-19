@@ -69,6 +69,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gameModeRummikub => 'Rummikub';
 
   @override
+  String get gameModeOhHell => 'Oh Hell';
+
+  @override
+  String get gameModeWizard => 'Wizard';
+
+  @override
+  String get bidLabel => 'Bid';
+
+  @override
+  String get tricksTakenLabel => 'Tricks taken';
+
+  @override
+  String get bidTricksZeroBidNote =>
+      'Bidding 0 and taking 0 tricks scores 0 points for now — a known limitation.';
+
+  @override
   String playerLeaderLabel(int playerNumber) {
     return 'Player $playerNumber is leading';
   }
