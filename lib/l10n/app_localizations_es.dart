@@ -81,6 +81,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tricksTakenLabel => 'Bazas ganadas';
 
   @override
+  String get bidTricksZeroBidNote =>
+      'Apostar 0 y ganar 0 bazas suma 0 puntos por ahora — una limitación conocida.';
+
+  @override
   String playerLeaderLabel(int playerNumber) {
     return 'El jugador $playerNumber va en cabeza';
   }

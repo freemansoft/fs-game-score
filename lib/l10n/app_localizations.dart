@@ -238,6 +238,12 @@ abstract class AppLocalizations {
   /// **'Tricks taken'**
   String get tricksTakenLabel;
 
+  /// Note on the bid/tricks round editor explaining that a made zero-bid is not yet scored
+  ///
+  /// In en, this message translates to:
+  /// **'Bidding 0 and taking 0 tricks scores 0 points for now — a known limitation.'**
+  String get bidTricksZeroBidNote;
+
   /// Screen-reader label announced on the leading player's total cell
   ///
   /// In en, this message translates to:

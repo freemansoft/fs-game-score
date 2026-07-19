@@ -49,7 +49,7 @@ Doing this first is a deliberate trade: it delays the first new game, but Tiers 
 
 **Status: 🟡 1A delivered** — the bid/tricks calculated-score primitive ships as **Oh Hell** and **Wizard** (see [spec](specs/2026-07-18-tier-1-bidding-trick-taking.md)). Team/partnership totals (1B) remain, to unlock Spades/Euchre.
 
-> **Known defect (D1):** a bid 0 / tricks 0 round is not recorded — the bid/tricks fields default to `0` and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score (the cell stays empty). A made 0-bid should score (Oh Hell 10, Wizard 20). Scheduled for [Tier 4](#tier-4--stretch-capabilities-and-deferred-fixes).
+> **Known defect (D1):** a bid 0 / tricks 0 round is not recorded — the bid/tricks fields default to `0` and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score (the cell stays empty). A made 0-bid should score (Oh Hell 10, Wizard 20). **Mitigated** in-app: the round editor shows a note explaining the current behavior. The real fix is scheduled for [Tier 4](#tier-4--stretch-capabilities-and-deferred-fixes).
 
 These two were chosen as the first game-facing priority because trick-taking card games are the largest untapped family of "round-based, one scorekeeper" games, and they need the same two new primitives. They are built as Phase 0 descriptors plus the new primitives each requires.
 
@@ -98,7 +98,7 @@ New scoring shapes that go beyond the additive accumulator:
 
 Deferred defect fixes for shipped modes:
 
-- **Defect D1 — bid/tricks 0 / 0 round not recorded** (Oh Hell, Wizard; Tier 1A). The round editor's bid and tricks fields default to `0`, and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score and the round cell stays empty (`---`) instead of scoring a made 0-bid (Oh Hell 10, Wizard 20). **Fix:** write the calculated round score whenever the editor confirms a calculated round, even when the inputs equal their defaults — with a decision on how an opened-but-untouched round should be treated. Found 2026-07-19 via the multi-round Oh Hell integration test.
+- **Defect D1 — bid/tricks 0 / 0 round not recorded** (Oh Hell, Wizard; Tier 1A). The round editor's bid and tricks fields default to `0`, and `TextField.onChanged` only fires on a value change, so entering `0`/`0` writes no score and the round cell stays empty (`---`) instead of scoring a made 0-bid (Oh Hell 10, Wizard 20). **Fix:** write the calculated round score whenever the editor confirms a calculated round, even when the inputs equal their defaults — with a decision on how an opened-but-untouched round should be treated. Found 2026-07-19 via the multi-round Oh Hell integration test. **Interim mitigation shipped:** the bid/tricks round editor shows an in-app note (`bidTricksZeroBidNote`) explaining the current behavior to players.
 
 ### Tier 5 — alternative board layouts (a second axis)
 

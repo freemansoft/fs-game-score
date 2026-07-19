@@ -92,6 +92,10 @@
   "@tricksTakenLabel": {
     "description": "Label for the tricks-taken input in the bid/tricks round editor"
   },
+  "bidTricksZeroBidNote": "Bidding 0 and taking 0 tricks scores 0 points for now — a known limitation.",
+  "@bidTricksZeroBidNote": {
+    "description": "Note on the bid/tricks round editor explaining that a made zero-bid is not yet scored"
+  },
   "playerLeaderLabel": "Player {playerNumber} is leading",
   "@playerLeaderLabel": {
     "description": "Screen-reader label announced on the leading player's total cell",

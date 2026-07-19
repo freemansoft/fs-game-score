@@ -81,6 +81,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tricksTakenLabel => 'Plis réalisés';
 
   @override
+  String get bidTricksZeroBidNote =>
+      'Annoncer 0 et réaliser 0 pli marque 0 point pour l\'instant — une limitation connue.';
+
+  @override
   String playerLeaderLabel(int playerNumber) {
     return 'Le joueur $playerNumber est en tête';
   }

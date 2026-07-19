@@ -22,6 +22,9 @@ class BidTricksRoundPanel extends StatefulWidget {
   static const ValueKey<String> tricksFieldKey = ValueKey<String>(
     'bt_tricks_field',
   );
+  static const ValueKey<String> zeroBidNoteKey = ValueKey<String>(
+    'bt_zero_bid_note',
+  );
 
   @override
   State<BidTricksRoundPanel> createState() => _BidTricksRoundPanelState();
@@ -58,29 +61,43 @@ class _BidTricksRoundPanelState extends State<BidTricksRoundPanel> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: TextField(
-            key: BidTricksRoundPanel.bidFieldKey,
-            controller: _bidController,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            decoration: InputDecoration(labelText: l10n.bidLabel),
-            onChanged: (v) => _emit(bid: int.tryParse(v) ?? 0),
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: TextField(
+                key: BidTricksRoundPanel.bidFieldKey,
+                controller: _bidController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(labelText: l10n.bidLabel),
+                onChanged: (v) => _emit(bid: int.tryParse(v) ?? 0),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: TextField(
+                key: BidTricksRoundPanel.tricksFieldKey,
+                controller: _tricksController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(labelText: l10n.tricksTakenLabel),
+                onChanged: (v) => _emit(tricksTaken: int.tryParse(v) ?? 0),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: TextField(
-            key: BidTricksRoundPanel.tricksFieldKey,
-            controller: _tricksController,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            decoration: InputDecoration(labelText: l10n.tricksTakenLabel),
-            onChanged: (v) => _emit(tricksTaken: int.tryParse(v) ?? 0),
-          ),
+        const SizedBox(height: 8),
+        // Stopgap for known defect D1: a made 0-bid is not yet scored. Explain
+        // the current behavior in-line until the fix lands (see the roadmap).
+        Text(
+          key: BidTricksRoundPanel.zeroBidNoteKey,
+          l10n.bidTricksZeroBidNote,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

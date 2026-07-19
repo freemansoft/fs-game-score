@@ -36,4 +36,9 @@ void main() {
     await tester.pump();
     expect(latest?.tricksTaken, 2);
   });
+
+  testWidgets('shows the known-limitation note about a 0 bid', (tester) async {
+    await tester.pumpWidget(wrap((_) {}));
+    expect(find.byKey(BidTricksRoundPanel.zeroBidNoteKey), findsOneWidget);
+  });
 }
