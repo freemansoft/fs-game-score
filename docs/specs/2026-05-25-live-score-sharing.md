@@ -248,7 +248,7 @@ If production web spectator must work on GitHub Pages (HTTPS), host may need **W
 
 ## Implementation status
 
-**v1 (Option A, Android/iOS view-only) — implemented in repo.** Operational detail: [Game-Sync.md](../Game-Sync.md). Skill: `.agents/skills/fs-game-score-live-sync/SKILL.md`.
+**v1 (Option A, Android/iOS view-only) — implemented in repo.** Operational detail: [Game-Sync.md](../Game-Sync.md). Skill: `.claude/skills/fs-game-score-live-sync/SKILL.md`.
 
 | Area                          | Status | Notes                                                                                         |
 | ----------------------------- | ------ | --------------------------------------------------------------------------------------------- |
@@ -300,6 +300,6 @@ If production web spectator must work on GitHub Pages (HTTPS), host may need **W
 | Sync layer             | `lib/sync/` — protocol, mapper, LAN I/O, QR, platform gates                                  |
 | Providers              | `lib/provider/game_sync_host_provider.dart`, `game_sync_spectator_provider.dart`             |
 | UI                     | `live_share_control.dart`, `join_live_game_screen.dart`, `spectator_score_table_screen.dart` |
-| Agent skill            | `.agents/skills/fs-game-score-live-sync/SKILL.md`                                            |
+| Agent skill            | `.claude/skills/fs-game-score-live-sync/SKILL.md`                                            |
 
 Wire protocol and message types: `lib/sync/game_sync_protocol.dart` (documented in [Game-Sync.md](../Game-Sync.md)).

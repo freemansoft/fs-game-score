@@ -4,146 +4,146 @@
     "dart-add-unit-test": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-add-unit-test/SKILL.md",
+      "skillPath": ".claude/skills/dart-add-unit-test/SKILL.md",
       "computedHash": "1f52a9c88c35ba01d12c1a65cbe5c6034e9dde3799b49fe931d08baadf79be53"
     },
     "dart-build-cli-app": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-build-cli-app/SKILL.md",
+      "skillPath": ".claude/skills/dart-build-cli-app/SKILL.md",
       "computedHash": "39c82e4ca39fadc8d065bad8c39a08cd719a3fc481b6a74ed6175f33ee3fb412"
     },
     "dart-collect-coverage": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-collect-coverage/SKILL.md",
+      "skillPath": ".claude/skills/dart-collect-coverage/SKILL.md",
       "computedHash": "229035193bfd785368c48e3dd8ee059df43fcbdfe227dfd8a9a0178b995ee6c6"
     },
     "dart-fix-runtime-errors": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-fix-runtime-errors/SKILL.md",
+      "skillPath": ".claude/skills/dart-fix-runtime-errors/SKILL.md",
       "computedHash": "0c18be0cbda925cb1322c2c47a52c288cce1dc34218705a20c4c071eed1b066d"
     },
     "dart-generate-test-mocks": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-generate-test-mocks/SKILL.md",
+      "skillPath": ".claude/skills/dart-generate-test-mocks/SKILL.md",
       "computedHash": "ca58b0e0d045595aa99990715bbf48fc75b1c5dca4053bc1940ef289cbcf2f00"
     },
     "dart-migrate-to-checks-package": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-migrate-to-checks-package/SKILL.md",
+      "skillPath": ".claude/skills/dart-migrate-to-checks-package/SKILL.md",
       "computedHash": "f24ab3460c0994ab9c69efc053092f6866f3053acc6d6ce5cfe9cb2613e63d7c"
     },
     "dart-resolve-package-conflicts": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-resolve-package-conflicts/SKILL.md",
+      "skillPath": ".claude/skills/dart-resolve-package-conflicts/SKILL.md",
       "computedHash": "967093ae2bca2784ba6a104dba3821ad809b399ca22071e9afc512915f60fa0a"
     },
     "dart-run-static-analysis": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-run-static-analysis/SKILL.md",
+      "skillPath": ".claude/skills/dart-run-static-analysis/SKILL.md",
       "computedHash": "5e41a03011647bcaee182ddc5d4471122f45f93fec6570480c237077e7f9438c"
     },
     "dart-use-pattern-matching": {
       "source": "dart-lang/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/dart-use-pattern-matching/SKILL.md",
+      "skillPath": ".claude/skills/dart-use-pattern-matching/SKILL.md",
       "computedHash": "39d71b585417a2cca7958d41e19916303053c654a4de5aade8564addfaba1968"
     },
     "flutter-add-integration-test": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-add-integration-test/SKILL.md",
+      "skillPath": ".claude/skills/flutter-add-integration-test/SKILL.md",
       "computedHash": "8d81b053c5fdf5b61aa7d0165cbc35e7a9a1c5bdcd7a301b8293a108771e6bab"
     },
     "flutter-add-widget-preview": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-add-widget-preview/SKILL.md",
+      "skillPath": ".claude/skills/flutter-add-widget-preview/SKILL.md",
       "computedHash": "88cfeb7084e798714f5ac59cff62e5441759bcbe096c0fdc37abd21111b20212"
     },
     "flutter-add-widget-test": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-add-widget-test/SKILL.md",
+      "skillPath": ".claude/skills/flutter-add-widget-test/SKILL.md",
       "computedHash": "6c449ebd844e331e661b12630b6ad2a218e84d1bd8ea8377ba9dbd62ffe2798a"
     },
     "flutter-apply-architecture-best-practices": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-apply-architecture-best-practices/SKILL.md",
+      "skillPath": ".claude/skills/flutter-apply-architecture-best-practices/SKILL.md",
       "computedHash": "00497869976a903c83f509a59d4b6a501d409fa711eb8e1f89945921e1983b65"
     },
     "flutter-build-responsive-layout": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "skillPath": ".claude/skills/flutter-build-responsive-layout/SKILL.md",
       "computedHash": "c7a5d18071c625137cad2def9b13f3579d9bdf0aae29621a1825f12b560394c0"
     },
     "flutter-fix-layout-issues": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-fix-layout-issues/SKILL.md",
+      "skillPath": ".claude/skills/flutter-fix-layout-issues/SKILL.md",
       "computedHash": "e82c82b4245ef502bd93bc543d4f5968f4ee8043fa7556ffebcb34f30651fc9b"
     },
     "flutter-implement-json-serialization": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-implement-json-serialization/SKILL.md",
+      "skillPath": ".claude/skills/flutter-implement-json-serialization/SKILL.md",
       "computedHash": "05a4478e0a3d119f26ae6e6983da3d5c2ea134763aeff59a06cef346bef391b1"
     },
     "flutter-setup-declarative-routing": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-setup-declarative-routing/SKILL.md",
+      "skillPath": ".claude/skills/flutter-setup-declarative-routing/SKILL.md",
       "computedHash": "3a52fc5663cf37d68b6e096ef3e59f5056a01e9151b64cdf0728672a13398953"
     },
     "flutter-setup-localization": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-setup-localization/SKILL.md",
+      "skillPath": ".claude/skills/flutter-setup-localization/SKILL.md",
       "computedHash": "dda4ef8b74976a3e51faa43d7ad00f03eab64d6d5ed0ef89cf4184a04196da17"
     },
     "flutter-use-http-package": {
       "source": "flutter/skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/flutter-use-http-package/SKILL.md",
+      "skillPath": ".claude/skills/flutter-use-http-package/SKILL.md",
       "computedHash": "439fec047f07e9ec7cd387bf506801bb11b2b9037e5d2c5c03602360532980c4"
     },
     "fs-game-score-flutter-patterns": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/fs-game-score-flutter-patterns/SKILL.md"
+      "skillPath": ".claude/skills/fs-game-score-flutter-patterns/SKILL.md"
     },
     "fs-game-score-live-sync": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/fs-game-score-live-sync/SKILL.md"
+      "skillPath": ".claude/skills/fs-game-score-live-sync/SKILL.md"
     },
     "fs-game-score-testing-workflow": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/fs-game-score-testing-workflow/SKILL.md"
+      "skillPath": ".claude/skills/fs-game-score-testing-workflow/SKILL.md"
     },
     "fs-game-score-widgets-holding-player-game-data": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/fs-game-score-widgets-holding-player-game-data/SKILL.md"
+      "skillPath": ".claude/skills/fs-game-score-widgets-holding-player-game-data/SKILL.md"
     },
     "fs-game-score-release-engineer": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/fs-game-score-release-engineer/SKILL.md"
+      "skillPath": ".claude/skills/fs-game-score-release-engineer/SKILL.md"
     },
     "fs-game-score-release-flutter-upgrade-sdk": {
       "source": "local",
       "sourceType": "project",
-      "skillPath": ".agents/skills/fs-game-score-release-flutter-upgrade-sdk/SKILL.md"
+      "skillPath": ".claude/skills/fs-game-score-release-flutter-upgrade-sdk/SKILL.md"
     }
   }
 }
