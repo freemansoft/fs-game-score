@@ -13,7 +13,7 @@ import 'package:integration_test/integration_test_driver_extended.dart';
 ///
 /// Usage (from repo root), with `chromedriver --port=4444` already running:
 ///   fvm flutter drive \
-///     --driver=.agents/skills/run-fs-game-score/drive_screenshots.dart \
+///     --driver=.claude/skills/run-fs-game-score/drive_screenshots.dart \
 ///     --target=integration_test/run_skill_smoke_test.dart \
 ///     -d web-server --browser-name=chrome --driver-port=4444
 Future<void> main() async {

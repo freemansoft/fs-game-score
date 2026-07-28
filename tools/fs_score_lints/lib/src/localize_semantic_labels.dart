@@ -10,7 +10,7 @@ import 'package:custom_lint_builder/custom_lint_builder.dart';
 /// `'...'` literal. Violations surface live in the IDE and via
 /// `dart run custom_lint`.
 ///
-/// Canonical rule: .agents/skills/fs-game-score-flutter-patterns/SKILL.md.
+/// Canonical rule: .claude/skills/fs-game-score-flutter-patterns/SKILL.md.
 class LocalizeSemanticLabels extends DartLintRule {
   const LocalizeSemanticLabels() : super(code: _code);
 

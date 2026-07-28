@@ -2,11 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Setup Claude Skills Link",
+      "label": "Setup Agents Skills Link",
       "type": "shell",
-      "command": "sh scripts/setup-claude.sh",
+      "command": "sh scripts/setup-agents.sh",
       "windows": {
-        "command": "pwsh scripts/setup-claude.ps1"
+        "command": "pwsh scripts/setup-agents.ps1"
       },
       "runOptions": {
         "runOn": "folderOpen"

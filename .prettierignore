@@ -21,6 +21,6 @@ web/
 
 # Externally-sourced (vendored) skills — keep byte-identical to upstream so
 # diffs from the source repos stay obvious. Do not reformat.
-.agents/skills/dart-*/
-.agents/skills/flutter-*/
-.agents/skills/fs-game-score-release-flutter-upgrade-sdk/
+.claude/skills/dart-*/
+.claude/skills/flutter-*/
+.claude/skills/fs-game-score-release-flutter-upgrade-sdk/

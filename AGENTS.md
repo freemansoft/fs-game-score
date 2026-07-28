@@ -42,7 +42,7 @@ Flutter app (multi-platform) for a player/round score card. Key folders:
 - `lib/data/` — `GameRepository` / `PlayersRepository` (SharedPreferences persistence)
 - `lib/model/` — plain Dart model classes (`Game`, `Players`, `Player`, `Scores`)
 - `integration_test/` and `test/` — widget/unit and integration tests
-- `.agents/skills/` — upstream Dart/Flutter skills and project skills (`fs-game-score-*`)
+- `.claude/skills/` — upstream Dart/Flutter skills and project skills (`fs-game-score-*`); symlinked at `.agents/skills/` for Cursor/Antigravity
 - `docs/` — architecture and feature docs (see [Quick file references](#quick-file-references))
 
 ---
@@ -118,7 +118,7 @@ fvm flutter test integration_test/*_test.dart
 
 ## Project skills
 
-Cursor and Antigravity auto-discover skills in [`.agents/skills/`](.agents/skills/) when frontmatter is valid. Copilot reads this file — open the skill file when the task matches.
+Cursor and Antigravity auto-discover skills via the [`.agents/skills/`](.agents/skills/) symlink (target: [`.claude/skills/`](.claude/skills/)) when frontmatter is valid. Copilot reads this file — open the skill file when the task matches.
 
 | Skill                                            | Use when                                                |
 | :----------------------------------------------- | :------------------------------------------------------ |
@@ -149,7 +149,7 @@ Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests,
 | Persistence & splash | [game_repository.dart](lib/data/game_repository.dart), [players_repository.dart](lib/data/players_repository.dart), [splash_screen.dart](lib/presentation/splash_screen.dart)                                                                                                                                                                                                                                                                                                |
 | Docs                 | State: [State-Management.md](docs/State-Management.md) (concepts), [State-Reference.md](docs/State-Reference.md) (model/keys), [How-To-Riverpod.md](docs/How-To-Riverpod.md) (rules). Sync: [Game-Sync.md](docs/Game-Sync.md), [Live-Sync-Architecture.md](docs/Live-Sync-Architecture.md), [Live score sharing design (spec)](docs/specs/2026-05-25-live-score-sharing.md). Modes: [Game-Modes.md](docs/Game-Modes.md), [How-To-Edit-Scores.md](docs/How-To-Edit-Scores.md) |
 | Tests                | `integration_test/*_test.dart`, [app_test_helpers.dart](integration_test/app_test_helpers.dart)                                                                                                                                                                                                                                                                                                                                                                              |
-| Project skills       | `.agents/skills/fs-game-score-*/SKILL.md`, [fs-game-score-release-flutter-upgrade-sdk](.agents/skills/fs-game-score-release-flutter-upgrade-sdk/SKILL.md)                                                                                                                                                                                                                                                                                                                    |
-| Release              | [fs-game-score-release-engineer](.agents/skills/fs-game-score-release-engineer/SKILL.md), [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md)                                                                                                                                                                                                                                                                                                                           |
+| Project skills       | `.claude/skills/fs-game-score-*/SKILL.md`, [fs-game-score-release-flutter-upgrade-sdk](.claude/skills/fs-game-score-release-flutter-upgrade-sdk/SKILL.md)                                                                                                                                                                                                                                                                                                                    |
+| Release              | [fs-game-score-release-engineer](.claude/skills/fs-game-score-release-engineer/SKILL.md), [tag-push.sh](tag-push.sh), [CHANGELOG.md](CHANGELOG.md)                                                                                                                                                                                                                                                                                                                           |
 
 Thank you for building responsibly!

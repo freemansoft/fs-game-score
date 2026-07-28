@@ -9,7 +9,7 @@ is `flutter drive` against a **Chrome web** target: `chromedriver` + a smoke
 flow that walks splash → score table and writes PNGs. The two harness pieces:
 
 - **Flow (drive target):** [integration_test/run_skill_smoke_test.dart](../../../integration_test/run_skill_smoke_test.dart) — mounts the real `Phase10App` widget tree, drives splash → score table, calls `takeScreenshot`.
-- **Host driver:** [.agents/skills/run-fs-game-score/drive_screenshots.dart](drive_screenshots.dart) — the `flutter drive` `--driver` script that writes each screenshot to `build/driver-screenshots/`.
+- **Host driver:** [.claude/skills/run-fs-game-score/drive_screenshots.dart](drive_screenshots.dart) — the `flutter drive` `--driver` script that writes each screenshot to `build/driver-screenshots/`.
 
 All paths below are relative to the repo root. **Always use `fvm flutter` /
 `fvm dart`, never bare `flutter` / `dart`** (see AGENTS.md — FVM pins Flutter
@@ -46,7 +46,7 @@ chromedriver --port=4444 >/tmp/chromedriver.log 2>&1 &
 curl -s http://localhost:4444/status | grep -q '"ready"' && echo "chromedriver ready"
 
 fvm flutter drive \
-  --driver=.agents/skills/run-fs-game-score/drive_screenshots.dart \
+  --driver=.claude/skills/run-fs-game-score/drive_screenshots.dart \
   --target=integration_test/run_skill_smoke_test.dart \
   -d web-server --browser-name=chrome --driver-port=4444
 ```
