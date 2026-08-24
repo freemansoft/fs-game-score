@@ -55,9 +55,9 @@ Some skills pin the Flutter version in prose (e.g. `run-fs-game-score` states th
 `.fvmrc`-pinned version so agents don't corrupt the build cache with a mismatched
 system Flutter). Stale mentions silently mislead future sessions.
 
-- Grep `.claude/skills/` (canonical location; `.agents/skills` is a symlink to it)
+- Grep `.claude/skills/`
   for the **old** Flutter version and update every hit to the new version.
-- Do the same for `AGENTS.md` and `README.md` if they name the version.
+- Do the same for `CLAUDE.md` and `README.md` if they name the version.
 
 ## 6. Verify the Upgrade
 

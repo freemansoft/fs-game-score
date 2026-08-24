@@ -25,7 +25,7 @@ Every prose doc under [`docs/`](../../../docs) belongs to **exactly one** [Diát
 | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | `docs/*-Design.md` design / decision logs                                                              | Design / decision log — a record, not Diátaxis prose                                        |
 | Anything under `docs/specs/`, `docs/plans/`, `archive/`, `adr/`, `rfc/`                                | Planning artifacts (e.g. `docs/specs/2026-05-25-live-score-sharing.md`), superseded content |
-| `CHANGELOG.md`, `AGENTS.md`, `CLAUDE.md`, `README.md`                                                  | Project meta / release records                                                              |
+| `CHANGELOG.md`, `CLAUDE.md`, `README.md`                                                               | Project meta / release records                                                              |
 | Files whose title or front matter reads "design", "spec", "plan", "proposal", "decision", "RFC", "ADR" | Same reason — record, not documentation                                                     |
 
 When asked to "Diátaxis the docs," **skip excluded files silently** and list them under a "Skipped (out of scope)" heading so the exclusion is visible.
@@ -117,7 +117,7 @@ Current doc set after the 2026-07-07 restructure. Each doc is one quadrant; veri
 - `State-Management.md` → **Provider Architecture** keeps two repository-vs-notifier comparison tables inline; they illuminate the distinction (explanation's job) rather than serving cold lookup, so they stay. Field inventory lives in `State-Reference.md`.
 - `State-Management.md` → **Identified … Problems … Resolved** is a record (out-of-scope quadrant); left in place, candidate to move to `CHANGELOG.md` later.
 
-When restructuring, keep these anchors in their current file — they are linked from AGENTS.md / README / skills / the design doc:
+When restructuring, keep these anchors in their current file — they are linked from CLAUDE.md / README / skills / the design doc:
 `State-Management.md#splash-entry-and-coalesced-persist-race`, `State-Management.md#live-score-sync-lan-v1`, `State-Management.md#provider-architecture`, `How-To-Riverpod.md#integration-and-widget-testing`, `Game-Sync.md#handshake-and-validation`, `Game-Sync.md#join-ui-behavior`.
 
 ---

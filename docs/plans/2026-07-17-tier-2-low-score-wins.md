@@ -8,7 +8,7 @@ Planning artifact for **Tier 2** of the [Game-Modes-Roadmap](../Game-Modes-Roadm
 
 **Architecture:** A new `WinDirection` descriptor field and a `loserThreshold` end condition are added to `GameRules` (data, not `switch`-on-`GameMode`). `Players.leaderIndices()` is the first cross-player ranking primitive. The score table computes the leader(s) once per build (only in low-wins modes) and passes an `isLeader` flag to `PlayerGameCell`, which renders a leader marker **inside its existing two rows**.
 
-**Tech Stack:** Flutter/Dart, Riverpod 3 (`Notifier`), `flutter_test`, `flutter gen-l10n` (`.arb`), `data_table_2`. All Flutter/Dart commands are prefixed with **`fvm`** per [AGENTS.md](../../AGENTS.md).
+**Tech Stack:** Flutter/Dart, Riverpod 3 (`Notifier`), `flutter_test`, `flutter gen-l10n` (`.arb`), `data_table_2`. All Flutter/Dart commands are prefixed with **`fvm`** per [CLAUDE.md](../../CLAUDE.md).
 
 ## Global Constraints
 

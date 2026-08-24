@@ -8,7 +8,7 @@ description: >
 
 # FS Score Card — Release engineer
 
-Always use **`fvm`** for Flutter/Dart commands per [AGENTS.md](../../../AGENTS.md).
+Always use **`fvm`** for Flutter/Dart commands per [CLAUDE.md](../../../CLAUDE.md).
 
 For **Flutter/Dart SDK upgrades** (FVM, CI workflows, pubspec constraints), use
 **`fs-game-score-release-flutter-upgrade-sdk`**

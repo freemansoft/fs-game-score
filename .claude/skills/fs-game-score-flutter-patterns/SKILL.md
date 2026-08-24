@@ -15,7 +15,7 @@ Project-specific implementation patterns. Full architecture: [docs/State-Managem
 
 **Related skills:** `fs-game-score-widgets-holding-player-game-data` (keys/semantics/modals), `fs-game-score-live-sync` (LAN sharing), `fs-game-score-testing-workflow` (tests).
 
-Always prefix Flutter/Dart commands with **`fvm`** per [AGENTS.md](../../../AGENTS.md).
+Always prefix Flutter/Dart commands with **`fvm`** per [CLAUDE.md](../../../CLAUDE.md).
 
 ---
 
@@ -155,7 +155,7 @@ One project convention beyond those:
 
 | Anti-pattern                                   | Why                                                                                                                    |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `switch (gameMode)` / `== GameMode.x` behavior | Put per-mode behavior in the `GameRules` descriptor (`lib/model/game_rules.dart`) — enforced convention, see AGENTS.md |
+| `switch (gameMode)` / `== GameMode.x` behavior | Put per-mode behavior in the `GameRules` descriptor (`lib/model/game_rules.dart`) — enforced convention, see CLAUDE.md |
 
 ---
 
