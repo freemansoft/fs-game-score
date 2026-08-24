@@ -13,7 +13,7 @@ description: >
 
 See [docs/How-To-Riverpod.md — Integration and widget testing](../../../docs/How-To-Riverpod.md#integration-and-widget-testing).
 
-Always run tests with **`fvm flutter test`** per [AGENTS.md](../../../AGENTS.md).
+Always run tests with **`fvm flutter test`** per [CLAUDE.md](../../../CLAUDE.md).
 
 ---
 

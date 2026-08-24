@@ -12,7 +12,7 @@ flow that walks splash → score table and writes PNGs. The two harness pieces:
 - **Host driver:** [.claude/skills/run-fs-game-score/drive_screenshots.dart](drive_screenshots.dart) — the `flutter drive` `--driver` script that writes each screenshot to `build/driver-screenshots/`.
 
 All paths below are relative to the repo root. **Always use `fvm flutter` /
-`fvm dart`, never bare `flutter` / `dart`** (see AGENTS.md — FVM pins Flutter
+`fvm dart`, never bare `flutter` / `dart`** (see CLAUDE.md — FVM pins Flutter
 3.44.0; a mismatched system Flutter corrupts the build cache).
 
 ## Prerequisites
