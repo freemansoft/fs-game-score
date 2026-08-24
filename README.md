@@ -411,23 +411,28 @@ _. Markdown All in One
 _. Markdown Preview Mermaid Support
 _. Prettier
 
-#### Antigravity Extensions
-
-_. Dart
-_. Flutter
-_. markdownlint
-_. Prettier (legacy) - Code formatter
-
 ### LLM Agent Support and Rules
 
 #### LLM Agent Support
 
 AI coding tools share a single rules layout:
 
-- **[AGENTS.md](AGENTS.md)** — project rules for Cursor, GitHub Copilot, and Antigravity (keep under 12,000 characters for Antigravity)
-- **[`.claude/skills/`](.claude/skills/)** — upstream [Dart](https://github.com/dart-lang/skills) and [Flutter](https://github.com/flutter/skills) skills, plus project skills (`fs-game-score-*`); symlinked at `.agents/skills/` for other tools
+- **[AGENTS.md](AGENTS.md)** — project rules for Cursor and GitHub Copilot
+- **[`.claude/skills/`](.claude/skills/)** — project skills only (`fs-game-score-*`, `run-fs-game-score`); symlinked at `.agents/skills/` for other tools
+- **Upstream Dart/Flutter skills** — not checked in. They come from the `dart-flutter` plugin published by the Flutter team at [flutter/agent-plugins](https://github.com/flutter/agent-plugins), which also wires up the Dart MCP server.
 
-Cursor and Antigravity auto-discover skills from `.agents/skills/` (a symlink to `.claude/skills/`, recreated by `scripts/setup-agents.sh`/`.ps1`) when each skill has a valid `SKILL.md` with YAML frontmatter. Copilot reads `AGENTS.md`; project skills are referenced there for deeper workflows (live sync, testing, widget keys).
+Cursor auto-discovers skills from `.agents/skills/` (a symlink to `.claude/skills/`, recreated by `scripts/setup-agents.sh`/`.ps1`) when each skill has a valid `SKILL.md` with YAML frontmatter. Copilot reads `AGENTS.md`; project skills are referenced there for deeper workflows (live sync, testing, widget keys).
+
+#### Dart/Flutter skills plugin
+
+Claude Code picks the plugin up automatically from [`.claude/settings.json`](.claude/settings.json) (`extraKnownMarketplaces` + `enabledPlugins`). To install it by hand — or for another tool — run:
+
+```bash
+claude plugin marketplace add flutter/agent-plugins
+claude plugin install dart-flutter@dart-flutter
+```
+
+The same repository ships Cursor (`.cursor-plugin`) and Codex (`.codex-plugin`) manifests, so those tools install it through their own plugin mechanism rather than through `.agents/skills/`.
 
 Removed redundant copies: `.cursor/rules/`, `.agents/rules/`, `.github/copilot-instructions.md`, and `.github/instructions/copilot.instructions.md`.
 
@@ -435,9 +440,8 @@ Removed redundant copies: `.cursor/rules/`, `.agents/rules/`, `.github/copilot-i
 
 This workspace auto configures superpowers in the workspace for `cursor` and `claude`.
 
-| Tool              | Project-level plugin declaration | Config file                                                                           |
-| ----------------- | -------------------------------- | ------------------------------------------------------------------------------------- |
-| Claude Code       | ✅ Yes                           | .claude/settings.json → enabledPlugins                                                |
-| Cursor            | ✅ Yes                           | .cursor/settings.json → plugins                                                       |
-| GitHub Copilot    | ❌ No                            | No project-scoped config exists                                                       |
-| Antigravity (agy) | ❌ No                            | No project-scoped config exists; all plugin state lives in ~/.gemini/antigravity-cli/ |
+| Tool           | Project-level plugin declaration | Config file                            |
+| -------------- | -------------------------------- | -------------------------------------- |
+| Claude Code    | ✅ Yes                           | .claude/settings.json → enabledPlugins |
+| Cursor         | ✅ Yes                           | .cursor/settings.json → plugins        |
+| GitHub Copilot | ❌ No                            | No project-scoped config exists        |

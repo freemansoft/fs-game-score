@@ -42,7 +42,7 @@ Flutter app (multi-platform) for a player/round score card. Key folders:
 - `lib/data/` — `GameRepository` / `PlayersRepository` (SharedPreferences persistence)
 - `lib/model/` — plain Dart model classes (`Game`, `Players`, `Player`, `Scores`)
 - `integration_test/` and `test/` — widget/unit and integration tests
-- `.claude/skills/` — upstream Dart/Flutter skills and project skills (`fs-game-score-*`); symlinked at `.agents/skills/` for Cursor/Antigravity
+- `.claude/skills/` — project skills (`fs-game-score-*`); symlinked at `.agents/skills/` for Cursor. Upstream Dart/Flutter skills are not vendored — they ship with the `dart-flutter` plugin ([flutter/agent-plugins](https://github.com/flutter/agent-plugins)).
 - `docs/` — architecture and feature docs (see [Quick file references](#quick-file-references))
 
 ---
@@ -118,7 +118,7 @@ fvm flutter test integration_test/*_test.dart
 
 ## Project skills
 
-Cursor and Antigravity auto-discover skills via the [`.agents/skills/`](.agents/skills/) symlink (target: [`.claude/skills/`](.claude/skills/)) when frontmatter is valid. Copilot reads this file — open the skill file when the task matches.
+Cursor auto-discovers skills via the [`.agents/skills/`](.agents/skills/) symlink (target: [`.claude/skills/`](.claude/skills/)) when frontmatter is valid. Copilot reads this file — open the skill file when the task matches.
 
 | Skill                                            | Use when                                                |
 | :----------------------------------------------- | :------------------------------------------------------ |
@@ -129,7 +129,7 @@ Cursor and Antigravity auto-discover skills via the [`.agents/skills/`](.agents/
 | `fs-game-score-release-engineer`                 | Version tagging, builds, CHANGELOG, store release notes |
 | `fs-game-score-release-flutter-upgrade-sdk`      | Flutter/Dart SDK upgrades (FVM, CI, changelogs)         |
 
-Upstream Dart/Flutter skills in the same folder cover generic tasks (unit tests, widget tests, l10n, routing, etc.).
+Generic tasks (unit tests, widget tests, l10n, routing) are covered by the upstream `dart-*` / `flutter-*` skills, which are not checked in — they come from the `dart-flutter` plugin ([flutter/agent-plugins](https://github.com/flutter/agent-plugins)), enabled for Claude Code in [`.claude/settings.json`](.claude/settings.json).
 
 ---
 
