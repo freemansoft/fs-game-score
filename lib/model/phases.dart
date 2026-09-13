@@ -1,8 +1,8 @@
 class Phases {
-  Phases(int numRounds) : completedPhases = List.filled(numRounds, null);
+  new(int numRounds) : completedPhases = List.filled(numRounds, null);
 
   /// Creates a Phases instance from a JSON list
-  Phases.fromJson(List<dynamic> json)
+  new fromJson(List<dynamic> json)
     : completedPhases = json.map((e) => e as int?).toList();
 
   final List<int?> completedPhases;

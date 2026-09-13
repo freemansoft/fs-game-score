@@ -7,7 +7,7 @@ import 'package:fs_score_card/presentation/score_table.dart';
 import 'package:fs_score_card/provider/game_sync_host_provider.dart';
 
 class ScoreTableScreen extends ConsumerStatefulWidget {
-  const ScoreTableScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ScoreTableScreen> createState() => _ScoreTableScreenState();

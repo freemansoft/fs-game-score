@@ -95,9 +95,8 @@ void main() {
     test('returns score table when game and players are restorable', () async {
       final config = GameConfiguration(numPlayers: 2, maxRounds: 5);
       await GameRepository(prefs).saveGame(Game(configuration: config));
-      await PlayersRepository(prefs).savePlayers(
-        Players(numPlayers: 2, maxRounds: 5),
-      );
+      await PlayersRepository(prefs)
+          .savePlayers(Players(numPlayers: 2, maxRounds: 5));
 
       expect(initialLocation(prefs), '/score-table');
     });
@@ -108,9 +107,8 @@ void main() {
         await GameRepository(prefs).saveGame(
           Game(configuration: GameConfiguration(numPlayers: 4, maxRounds: 5)),
         );
-        await PlayersRepository(prefs).savePlayers(
-          Players(numPlayers: 2, maxRounds: 5),
-        );
+        await PlayersRepository(prefs)
+            .savePlayers(Players(numPlayers: 2, maxRounds: 5));
 
         expect(initialLocation(prefs), '/');
       },
@@ -118,9 +116,8 @@ void main() {
 
     test('returns splash when game key has invalid JSON', () async {
       await prefs.setString('game_state', 'not-json');
-      await PlayersRepository(prefs).savePlayers(
-        Players(numPlayers: 2, maxRounds: 5),
-      );
+      await PlayersRepository(prefs)
+          .savePlayers(Players(numPlayers: 2, maxRounds: 5));
 
       expect(initialLocation(prefs), '/');
     });

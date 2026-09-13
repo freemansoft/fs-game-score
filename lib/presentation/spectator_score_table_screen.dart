@@ -9,7 +9,7 @@ import 'package:fs_score_card/sync/game_sync_transport.dart';
 
 /// Read-only score table fed by [gameSyncSpectatorProvider].
 class SpectatorScoreTableScreen extends ConsumerWidget {
-  const SpectatorScoreTableScreen({super.key});
+  const new({super.key});
 
   static const ValueKey<String> screenKey = ValueKey(
     'spectator_score_table_screen',

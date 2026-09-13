@@ -27,7 +27,7 @@ enum GameSyncConnectResult {
 
 /// Spectator-side live sync: connection status + mirrored game state.
 class GameSyncSpectatorState {
-  const GameSyncSpectatorState({
+  const new({
     this.connectionState = GameSyncConnectionState.idle,
     this.game,
     this.players,
@@ -79,9 +79,7 @@ final gameSyncSpectatorProvider =
 
 /// Override in tests with a factory that returns [FakeGameSyncTransport].
 final gameSyncTransportFactoryProvider = Provider<GameSyncTransport Function()>(
-  (
-    ref,
-  ) {
+  (ref) {
     if (canJoinLiveSync) {
       return createLanGameSyncTransport;
     }
@@ -229,7 +227,7 @@ class GameSyncSpectatorNotifier extends Notifier<GameSyncSpectatorState> {
       finish(GameSyncConnectResult.failed);
     }
 
-    return completer.future;
+    return await completer.future;
   }
 
   Future<GameSyncConnectResult> connectToDiscovered(
@@ -244,7 +242,7 @@ class GameSyncSpectatorNotifier extends Notifier<GameSyncSpectatorState> {
       );
       return GameSyncConnectResult.failed;
     }
-    return connect(wsUrl: url, pin: pin);
+    return await connect(wsUrl: url, pin: pin);
   }
 
   Future<void> disconnect() async {

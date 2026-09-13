@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// [SharedPreferences] dependency through the constructor, enabling clean
 /// testability and eliminating the need for singleton global state.
 class GameRepository {
-  GameRepository(this._prefs);
+  new(this._prefs);
 
   final SharedPreferences _prefs;
 
@@ -48,10 +48,7 @@ class GameRepository {
       }
     } else {
       assert(() {
-        developer.log(
-          'Game not found in prefs.',
-          name: runtimeType.toString(),
-        );
+        developer.log('Game not found in prefs.', name: runtimeType.toString());
         return true;
       }());
       return null;
@@ -74,10 +71,7 @@ class GameRepository {
   Future<void> clearGame() async {
     await _prefs.remove(_gamePrefsKey);
     assert(() {
-      developer.log(
-        'Game cleared from prefs',
-        name: runtimeType.toString(),
-      );
+      developer.log('Game cleared from prefs', name: runtimeType.toString());
       return true;
     }());
   }

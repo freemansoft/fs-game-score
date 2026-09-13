@@ -5,7 +5,7 @@ import 'package:fs_score_card/model/player.dart';
 
 /// The collection of players in a game.
 class Players {
-  Players({
+  new({
     required int numPlayers,
     required int maxRounds,
     List<Player>? initialPlayers,
@@ -13,16 +13,12 @@ class Players {
            initialPlayers ??
            List.generate(
              numPlayers,
-             (i) => Player(
-               name: 'Player ${i + 1}',
-               maxRounds: maxRounds,
-             ),
+             (i) => Player(name: 'Player ${i + 1}', maxRounds: maxRounds),
            );
 
   /// Creates a Players instance from a JSON string
   /// The JSON should be an array of player objects
-  Players.fromJson(String jsonString)
-    : players = _parsePlayersFromJson(jsonString);
+  new fromJson(String jsonString) : players = _parsePlayersFromJson(jsonString);
 
   static List<Player> _parsePlayersFromJson(String jsonString) {
     if (jsonString.isEmpty) {

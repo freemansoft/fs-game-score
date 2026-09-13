@@ -14,7 +14,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 /// Browse LAN hosts, scan QR, or paste a connection URL to join as spectator.
 class JoinLiveGameScreen extends ConsumerStatefulWidget {
-  const JoinLiveGameScreen({super.key});
+  const new({super.key});
 
   static const ValueKey<String> screenKey = ValueKey('join_live_game_screen');
   static const ValueKey<String> manualUrlFieldKey = ValueKey(
@@ -74,9 +74,7 @@ class _JoinLiveGameScreenState extends ConsumerState<JoinLiveGameScreen> {
       GameSyncConnectResult.connected => null,
     };
     if (message != null) {
-      messenger.showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+      messenger.showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
@@ -109,10 +107,7 @@ class _JoinLiveGameScreenState extends ConsumerState<JoinLiveGameScreen> {
     try {
       final result = await ref
           .read(gameSyncSpectatorProvider.notifier)
-          .connect(
-            wsUrl: info.wsUrl,
-            pin: info.pin,
-          );
+          .connect(wsUrl: info.wsUrl, pin: info.pin);
       if (!context.mounted) return;
       gameSyncLog(
         'JoinLiveGameScreen connect result: $result',
@@ -190,10 +185,7 @@ class _JoinLiveGameScreenState extends ConsumerState<JoinLiveGameScreen> {
     final spectatorState = ref.watch(gameSyncSpectatorProvider);
     return Scaffold(
       key: JoinLiveGameScreen.screenKey,
-      appBar: AppBar(
-        title: Text(l10n.joinLiveGameTitle),
-        toolbarHeight: 40,
-      ),
+      appBar: AppBar(title: Text(l10n.joinLiveGameTitle), toolbarHeight: 40),
       body: Stack(
         children: [
           ListView(
@@ -290,10 +282,7 @@ class _JoinLiveGameScreenState extends ConsumerState<JoinLiveGameScreen> {
 
 /// QR scan dialog — [MobileScanner.onDetect] fires repeatedly; only pop once.
 class _JoinLiveScanDialog extends StatefulWidget {
-  const _JoinLiveScanDialog({
-    required this.title,
-    required this.cancelLabel,
-  });
+  const new({required this.title, required this.cancelLabel});
 
   final String title;
   final String cancelLabel;
@@ -348,10 +337,7 @@ class _JoinLiveScanDialogState extends State<_JoinLiveScanDialog> {
       content: SizedBox(
         height: 280,
         width: 280,
-        child: MobileScanner(
-          controller: _controller,
-          onDetect: _onDetect,
-        ),
+        child: MobileScanner(controller: _controller, onDetect: _onDetect),
       ),
       actions: [
         TextButton(

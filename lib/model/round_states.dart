@@ -1,8 +1,8 @@
 class RoundStates {
-  RoundStates(int numRounds) : enabledRounds = List.filled(numRounds, true);
+  new(int numRounds) : enabledRounds = List.filled(numRounds, true);
 
   /// Creates a RoundStates instance from a JSON list
-  RoundStates.fromJson(List<dynamic> json)
+  new fromJson(List<dynamic> json)
     : enabledRounds = json.map((e) => e as bool).toList();
 
   final List<bool> enabledRounds; // default enabled

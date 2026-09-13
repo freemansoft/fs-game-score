@@ -12,7 +12,7 @@ import 'package:fs_score_card/provider/game_sync_spectator_provider.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
-  const ScoreTable({super.key, this.readOnly = false});
+  const new({super.key, this.readOnly = false});
 
   /// Added to support sharing in read-only spectator mode.
   final bool readOnly;

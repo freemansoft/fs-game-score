@@ -6,7 +6,7 @@ import 'package:fs_score_card/provider/players_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ShareGameControl extends ConsumerWidget {
-  const ShareGameControl({super.key});
+  const new({super.key});
 
   static const ValueKey<String> shareButtonKey = ValueKey('share_button');
 

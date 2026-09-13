@@ -12,6 +12,9 @@ analyzer:
     # Prototype: fs_score_lints custom rules (localize_semantic_labels).
     - custom_lint
   errors:
+    # Dart 3.13 warns that custom_lint uses the legacy analyzer plugin API.
+    # custom_lint has no release on the new plugin system yet; silence until it does.
+    analysis_options_deprecated_plugins: ignore
     # key: on widget is not named but is usually first by convention
     always_put_required_named_parameters_first: ignore
     # ignored because some comments are longer than 80 lines_longer_than_80_chars:
@@ -21,6 +24,14 @@ analyzer:
     omit_local_variable_types: ignore
     public_member_api_docs: ignore
     prefer_asserts_with_message: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 include: package:very_good_analysis/analysis_options.yaml
 
 linter:

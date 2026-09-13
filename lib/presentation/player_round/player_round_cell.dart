@@ -6,7 +6,7 @@ import 'package:fs_score_card/model/game.dart';
 import 'package:fs_score_card/presentation/player_round/player_round_modal.dart';
 
 class PlayerRoundCell extends StatelessWidget {
-  PlayerRoundCell({
+  new({
     Key? key,
     required this.playerIdx,
     required this.round,
@@ -92,9 +92,8 @@ class PlayerRoundCell extends StatelessWidget {
               color: enabled ? null : Theme.of(context).disabledColor,
             ),
             textAlign: TextAlign.center,
-            semanticsLabel: AppLocalizations.of(
-              context,
-            )!.playerRoundScoreLabel(playerIdx + 1, round + 1),
+            semanticsLabel: AppLocalizations.of(context)!
+                .playerRoundScoreLabel(playerIdx + 1, round + 1),
           ),
           if (rulesFor(gameMode).enablePhases) ...[
             const SizedBox(height: 2),
@@ -109,9 +108,8 @@ class PlayerRoundCell extends StatelessWidget {
                     : Theme.of(context).disabledColor,
               ),
               textAlign: TextAlign.center,
-              semanticsLabel: AppLocalizations.of(
-                context,
-              )!.playerRoundPhaseLabel(playerIdx + 1, round + 1),
+              semanticsLabel: AppLocalizations.of(context)!
+                  .playerRoundPhaseLabel(playerIdx + 1, round + 1),
             ),
           ],
         ],
@@ -119,17 +117,15 @@ class PlayerRoundCell extends StatelessWidget {
     );
     if (readOnly || !enabled) {
       return Semantics(
-        label: AppLocalizations.of(
-          context,
-        )!.playerRoundScoreLabel(playerIdx + 1, round + 1),
+        label: AppLocalizations.of(context)!
+            .playerRoundScoreLabel(playerIdx + 1, round + 1),
         child: cell,
       );
     }
     return Semantics(
       button: true,
-      label: AppLocalizations.of(
-        context,
-      )!.playerRoundScoreLabel(playerIdx + 1, round + 1),
+      label: AppLocalizations.of(context)!
+          .playerRoundScoreLabel(playerIdx + 1, round + 1),
       child: InkWell(
         key: roundCellKey(playerIdx, round),
         onTap: () => _openModal(context),

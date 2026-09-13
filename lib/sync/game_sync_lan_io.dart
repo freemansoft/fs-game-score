@@ -12,7 +12,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 /// Host session metadata when live sharing is active.
 class GameSyncHostSession {
-  const GameSyncHostSession({
+  const new({
     required this.wsUrl,
     required this.hostIp,
     required this.port,
@@ -31,7 +31,7 @@ class GameSyncHostSession {
 
 /// Discovered host on the LAN.
 class DiscoveredGameSyncHost {
-  const DiscoveredGameSyncHost({
+  const new({
     required this.name,
     required this.host,
     required this.port,
@@ -99,10 +99,7 @@ Future<GameSyncHostSession> startGameSyncHost({
     name: serviceName,
     type: gameSyncServiceType,
     port: port,
-    attributes: {
-      'gameId': initialSnapshot.gameId,
-      'pin': pin,
-    },
+    attributes: {'gameId': initialSnapshot.gameId, 'pin': pin},
   );
   _broadcast = BonsoirBroadcast(service: service);
   await _broadcast!.initialize();
@@ -316,7 +313,7 @@ GameSyncTransport createLanGameSyncTransport() => LanWsGameSyncTransport();
 
 /// Spectator WebSocket client (Option A).
 class LanWsGameSyncTransport implements GameSyncTransport {
-  LanWsGameSyncTransport();
+  new();
 
   final _connectionController =
       StreamController<GameSyncConnectionState>.broadcast();

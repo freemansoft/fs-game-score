@@ -10,7 +10,7 @@ import 'package:fs_score_card/provider/players_provider.dart';
 ///
 /// Usually shown in the app bar
 class NewGameControl extends ConsumerWidget {
-  const NewGameControl({super.key});
+  const new({super.key});
 
   static const ValueKey<String> clearNamesCheckboxKey = ValueKey<String>(
     'new_game_clear_names_checkbox',

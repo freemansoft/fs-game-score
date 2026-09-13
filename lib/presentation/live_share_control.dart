@@ -8,7 +8,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 /// App bar control to start/stop LAN live score sharing (host).
 class LiveShareControl extends ConsumerWidget {
-  const LiveShareControl({super.key});
+  const new({super.key});
 
   static const ValueKey<String> liveShareButtonKey = ValueKey(
     'live_share_button',
@@ -59,9 +59,8 @@ class LiveShareControl extends ConsumerWidget {
       final message = updated.errorMessage == 'live_sync_app_version_unknown'
           ? l10n.liveSyncAppVersionUnknown
           : updated.errorMessage!;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
@@ -77,11 +76,7 @@ class LiveShareControl extends ConsumerWidget {
             return AlertDialog(
               key: const ValueKey('live_host_dialog'),
               scrollable: true,
-              titlePadding: const EdgeInsets.only(
-                left: 24,
-                right: 8,
-                top: 12,
-              ),
+              titlePadding: const EdgeInsets.only(left: 24, right: 8, top: 12),
               contentPadding: const EdgeInsets.only(
                 left: 24,
                 right: 24,
@@ -124,9 +119,8 @@ class LiveShareControl extends ConsumerWidget {
                             child: QrImageView(
                               data: session.wsUrl,
                               size: 200,
-                              semanticsLabel: AppLocalizations.of(
-                                context,
-                              )!.liveConnectionQrLabel,
+                              semanticsLabel: AppLocalizations.of(context)!
+                                  .liveConnectionQrLabel,
                             ),
                           ),
                         ),

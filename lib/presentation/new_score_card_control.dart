@@ -10,7 +10,7 @@ import 'package:go_router/go_router.dart';
 ///
 /// Usually shown in the app bar
 class NewScoreCardControl extends ConsumerWidget {
-  const NewScoreCardControl({super.key});
+  const new({super.key});
 
   static const ValueKey<String> iconButtonKey = ValueKey(
     'new_scorecard_icon_button',

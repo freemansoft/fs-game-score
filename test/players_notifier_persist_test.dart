@@ -10,7 +10,7 @@ import 'package:fs_score_card/provider/prefs_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _RecordingPlayersRepository extends PlayersRepository {
-  _RecordingPlayersRepository(super._prefs);
+  new(super._prefs);
 
   int saveCount = 0;
   Completer<void>? saveGate;

@@ -7,7 +7,7 @@ import 'package:fs_score_card/presentation/new_score_card_control.dart';
 import 'package:fs_score_card/presentation/share_game_control.dart';
 
 class InGameAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const InGameAppBar({super.key});
+  const new({super.key});
 
   static const double _toolbarHeight = 40;
 

@@ -6,7 +6,7 @@ import 'package:fs_score_card/presentation/player_game/player_name_field.dart';
 
 /// A modal dialog for editing a player's name and viewing their phases
 class PlayerGameModal extends StatelessWidget {
-  const PlayerGameModal({
+  const new({
     super.key,
     required this.playerIdx,
     required this.name,
@@ -74,10 +74,7 @@ class PlayerGameModal extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          l10n.name,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text(l10n.name, style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 4),
         PlayerNameField(
           key: nameFieldKey(playerIdx),
@@ -99,10 +96,7 @@ class PlayerGameModal extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          l10n.phasesByRound,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text(l10n.phasesByRound, style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 4),
         Builder(
           builder: (context) {
@@ -143,9 +137,8 @@ class PlayerGameModal extends StatelessWidget {
     return AlertDialog(
       //title: Text('Player ${playerIdx + 1}'),
       key: modalKey(playerIdx),
-      semanticLabel: AppLocalizations.of(
-        context,
-      )!.playerGameModalLabel(playerIdx + 1),
+      semanticLabel: AppLocalizations.of(context)!
+          .playerGameModalLabel(playerIdx + 1),
       scrollable: true,
       content: SingleChildScrollView(
         child: orientation == Orientation.landscape && enablePhases

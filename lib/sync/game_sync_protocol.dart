@@ -22,7 +22,7 @@ enum GameSyncMessageType {
 
 /// Full authoritative game state broadcast by the host.
 class GameSyncSnapshot {
-  const GameSyncSnapshot({
+  const new({
     required this.protocolVersion,
     required this.gameId,
     required this.revision,
@@ -32,7 +32,7 @@ class GameSyncSnapshot {
     this.status = 'playing',
   });
 
-  factory GameSyncSnapshot.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     return GameSyncSnapshot(
       protocolVersion: json['protocolVersion'] as int? ?? 1,
       gameId: json['gameId'] as String,
@@ -69,7 +69,7 @@ class GameSyncSnapshot {
 
 /// Parsed inbound or outbound sync message.
 class GameSyncMessage {
-  const GameSyncMessage({
+  const new({
     required this.type,
     this.pin,
     this.appVersion,
@@ -78,7 +78,7 @@ class GameSyncMessage {
     this.snapshot,
   });
 
-  factory GameSyncMessage.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     final typeName = json['type'] as String?;
     final type = GameSyncMessageType.values.firstWhere(
       (e) => e.name == typeName,

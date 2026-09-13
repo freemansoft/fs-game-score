@@ -2,10 +2,7 @@
 ///
 /// Prefers a short [gameId] prefix; falls back to [hostIp] when the game id
 /// is unavailable. Never returns device hostnames such as `localhost`.
-String liveSyncConnectionLabel({
-  required String gameId,
-  String? hostIp,
-}) {
+String liveSyncConnectionLabel({required String gameId, String? hostIp}) {
   final shortGameId = _shortGameId(gameId);
   if (shortGameId.isNotEmpty) {
     return shortGameId;

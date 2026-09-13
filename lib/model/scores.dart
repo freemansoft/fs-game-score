@@ -1,8 +1,8 @@
 class Scores {
-  Scores(int numRounds) : roundScores = List.filled(numRounds, null);
+  new(int numRounds) : roundScores = List.filled(numRounds, null);
 
   /// Creates a Scores instance from a JSON list
-  Scores.fromJson(List<dynamic> json)
+  new fromJson(List<dynamic> json)
     : roundScores = json.map((e) => e as int?).toList();
 
   final List<int?> roundScores;

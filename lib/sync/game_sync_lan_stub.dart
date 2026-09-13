@@ -4,7 +4,7 @@ import 'package:fs_score_card/sync/game_sync_transport.dart';
 
 /// Host session metadata when live sharing is active.
 class GameSyncHostSession {
-  const GameSyncHostSession({
+  const new({
     required this.wsUrl,
     required this.hostIp,
     required this.port,
@@ -23,7 +23,7 @@ class GameSyncHostSession {
 
 /// Discovered host on the LAN.
 class DiscoveredGameSyncHost {
-  const DiscoveredGameSyncHost({
+  const new({
     required this.name,
     required this.host,
     required this.port,

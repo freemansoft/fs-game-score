@@ -13,17 +13,14 @@ String encodeGameSyncConnectionUrl({
     scheme: 'ws',
     host: host,
     port: port,
-    queryParameters: {
-      'game': gameId,
-      'pin': pin,
-    },
+    queryParameters: {'game': gameId, 'pin': pin},
   );
   return uri.toString();
 }
 
 /// Parsed connection details from a host QR or pasted URL.
 class GameSyncConnectionInfo {
-  const GameSyncConnectionInfo({
+  const new({
     required this.host,
     required this.port,
     required this.gameId,

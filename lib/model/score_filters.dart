@@ -3,7 +3,7 @@
 /// These patterns are used by score fields and configuration to validate
 /// user input against game-specific scoring rules.
 class ScoreFilters {
-  ScoreFilters._();
+  new _();
 
   /// No filtering — any score is accepted.
   static const String none = '';

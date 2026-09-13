@@ -5,7 +5,7 @@ import 'package:fs_score_card/l10n/app_localizations.dart';
 ///
 /// Usually shown in the score table
 class PlayerGameCell extends StatelessWidget {
-  const PlayerGameCell({
+  const new({
     super.key,
     required this.playerIdx,
     required this.name,
@@ -75,9 +75,8 @@ class PlayerGameCell extends StatelessWidget {
             softWrap: true,
             textAlign: TextAlign.center,
             style: textStyle,
-            semanticsLabel: AppLocalizations.of(
-              context,
-            )!.playerNameValueLabel(playerIdx + 1),
+            semanticsLabel: AppLocalizations.of(context)!
+                .playerNameValueLabel(playerIdx + 1),
           ),
           if (isLeader)
             Row(
@@ -88,9 +87,8 @@ class PlayerGameCell extends StatelessWidget {
                   Icons.emoji_events,
                   size: 14,
                   color: Theme.of(context).colorScheme.primary,
-                  semanticLabel: AppLocalizations.of(
-                    context,
-                  )!.playerLeaderLabel(playerIdx + 1),
+                  semanticLabel: AppLocalizations.of(context)!
+                      .playerLeaderLabel(playerIdx + 1),
                 ),
                 const SizedBox(width: 2),
                 Text(
@@ -101,9 +99,8 @@ class PlayerGameCell extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
-                  semanticsLabel: AppLocalizations.of(
-                    context,
-                  )!.playerTotalScoreLabel(playerIdx + 1),
+                  semanticsLabel: AppLocalizations.of(context)!
+                      .playerTotalScoreLabel(playerIdx + 1),
                 ),
               ],
             )
@@ -113,31 +110,24 @@ class PlayerGameCell extends StatelessWidget {
               key: totalScoreKey(playerIdx),
               textAlign: TextAlign.center,
               style: textStyle,
-              semanticsLabel: AppLocalizations.of(
-                context,
-              )!.playerTotalScoreLabel(playerIdx + 1),
+              semanticsLabel: AppLocalizations.of(context)!
+                  .playerTotalScoreLabel(playerIdx + 1),
             ),
         ],
       ),
     );
     if (readOnly || onTap == null) {
       return Semantics(
-        label: AppLocalizations.of(
-          context,
-        )!.playerNameAndTotalLabel(playerIdx + 1),
+        label: AppLocalizations.of(context)!
+            .playerNameAndTotalLabel(playerIdx + 1),
         child: content,
       );
     }
     return Semantics(
-      label: AppLocalizations.of(
-        context,
-      )!.playerNameAndTotalLabel(playerIdx + 1),
+      label: AppLocalizations.of(context)!
+          .playerNameAndTotalLabel(playerIdx + 1),
       button: true,
-      child: InkWell(
-        key: cellKey(playerIdx),
-        onTap: onTap,
-        child: content,
-      ),
+      child: InkWell(key: cellKey(playerIdx), onTap: onTap, child: content),
     );
   }
 }

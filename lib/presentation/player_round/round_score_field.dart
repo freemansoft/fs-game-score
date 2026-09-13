@@ -8,7 +8,7 @@ import 'package:fs_score_card/model/score_filters.dart';
 /// Callers **must** pass a `key:` argument so the widget is locatable in tests.
 /// Use PlayerRoundModal.scoreFieldKey to construct a repeatable key.
 class RoundScoreField extends StatefulWidget {
-  const RoundScoreField({
+  const new({
     super.key,
     required this.score,
     required this.onChanged,

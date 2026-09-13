@@ -13,7 +13,7 @@ import 'package:fs_score_card/sync/game_sync_protocol.dart';
 
 /// Active host session details for the Live Share UI.
 class GameSyncHostState {
-  const GameSyncHostState({
+  const new({
     this.isHosting = false,
     this.session,
     this.pin,
@@ -21,7 +21,7 @@ class GameSyncHostState {
     this.errorMessage,
   });
 
-  const GameSyncHostState.idle() : this();
+  const new idle() : this();
 
   final bool isHosting;
   final GameSyncHostSession? session;
@@ -96,9 +96,7 @@ class GameSyncHostNotifier extends Notifier<GameSyncHostState> {
       _attachListeners();
       broadcastCurrentState();
     } on Object catch (e) {
-      state = GameSyncHostState(
-        errorMessage: e.toString(),
-      );
+      state = GameSyncHostState(errorMessage: e.toString());
     }
   }
 
