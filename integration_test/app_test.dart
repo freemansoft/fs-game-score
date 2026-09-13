@@ -91,9 +91,7 @@ void main() {
   });
 
   /// Tests that share functionality includes gameId in subject
-  testWidgets('Share functionality includes gameId in subject', (
-    tester,
-  ) async {
+  testWidgets('Share functionality includes gameId in subject', (tester) async {
     await launchAppOnSplash(tester);
 
     // Define ValueKeys used in the test
@@ -194,9 +192,7 @@ void main() {
   });
 
   /// Tests that multiple game resets produce different gameIds
-  testWidgets('Multiple game resets produce different gameIds', (
-    tester,
-  ) async {
+  testWidgets('Multiple game resets produce different gameIds', (tester) async {
     await launchAppOnSplash(tester);
 
     // Define ValueKeys used in the test
@@ -293,18 +289,14 @@ void main() {
   /// and preserves the selected number of players and rounds
   testWidgets(
     'NewScoreCardControl returns to splash screen and preserves settings',
-    (
-      tester,
-    ) async {
+    (tester) async {
       await launchAppOnSplash(tester);
 
       // Verify we're on the splash screen
       expect(find.byType(SplashScreen), findsOneWidget);
 
       // Set the number of players to 2
-      final playersDropdown = find.byKey(
-        SplashScreen.numPlayersDropdownKey,
-      );
+      final playersDropdown = find.byKey(SplashScreen.numPlayersDropdownKey);
       expect(playersDropdown, findsOneWidget);
       await tester.tap(playersDropdown);
       await tester.pumpAndSettle();
@@ -312,9 +304,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Set the number of rounds to 3
-      final roundsDropdown = find.byKey(
-        SplashScreen.maxRoundsDropdownKey,
-      );
+      final roundsDropdown = find.byKey(SplashScreen.maxRoundsDropdownKey);
       expect(roundsDropdown, findsOneWidget);
       await tester.tap(roundsDropdown);
       await tester.pumpAndSettle();
@@ -370,9 +360,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the number of rounds is still 3
-      final roundsDropdownAfter = find.byKey(
-        SplashScreen.maxRoundsDropdownKey,
-      );
+      final roundsDropdownAfter = find.byKey(SplashScreen.maxRoundsDropdownKey);
       expect(roundsDropdownAfter, findsOneWidget);
       // Tap to open and check the selected value
       await tester.tap(roundsDropdownAfter);
@@ -391,17 +379,13 @@ void main() {
     await launchAppOnSplash(tester);
 
     // Set players to 2 and rounds to 2, then continue
-    final playersDropdown = find.byKey(
-      SplashScreen.numPlayersDropdownKey,
-    );
+    final playersDropdown = find.byKey(SplashScreen.numPlayersDropdownKey);
     await tester.tap(playersDropdown);
     await tester.pumpAndSettle();
     await tester.tap(find.text('2').last);
     await tester.pumpAndSettle();
 
-    final roundsDropdown = find.byKey(
-      SplashScreen.maxRoundsDropdownKey,
-    );
+    final roundsDropdown = find.byKey(SplashScreen.maxRoundsDropdownKey);
     await tester.tap(roundsDropdown);
     await tester.pumpAndSettle();
     await Future<void>.delayed(const Duration(milliseconds: 100));
@@ -629,8 +613,9 @@ void main() {
 
     // Validate the round score field at player round 2 is disabled and has the same value
     expect(
-      (tester.widget(find.byKey(playerRoundCellP0R2Key)) as PlayerRoundCell)
-          .enabled,
+      (tester.widget(
+        find.byKey(playerRoundCellP0R2Key),
+      ) as PlayerRoundCell).enabled,
       false,
     );
     expect(
@@ -639,8 +624,9 @@ void main() {
     );
 
     expect(
-      (tester.widget(find.byKey(playerRoundCellP1R2Key)) as PlayerRoundCell)
-          .enabled,
+      (tester.widget(
+        find.byKey(playerRoundCellP1R2Key),
+      ) as PlayerRoundCell).enabled,
       false,
     );
     expect(
@@ -668,8 +654,9 @@ void main() {
 
     // Validate the round score field at player 0 round 2 is enabled and has the same values
     expect(
-      (tester.widget(find.byKey(playerRoundCellP0R2Key)) as PlayerRoundCell)
-          .enabled,
+      (tester.widget(
+        find.byKey(playerRoundCellP0R2Key),
+      ) as PlayerRoundCell).enabled,
       true,
     );
     expect(
@@ -678,8 +665,9 @@ void main() {
     );
     // Validate the round score field at player 1 round 2 is enabled and has the same values
     expect(
-      (tester.widget(find.byKey(playerRoundCellP1R2Key)) as PlayerRoundCell)
-          .enabled,
+      (tester.widget(
+        find.byKey(playerRoundCellP1R2Key),
+      ) as PlayerRoundCell).enabled,
       true,
     );
     expect(
@@ -766,46 +754,45 @@ void main() {
     },
   );
 
-  testWidgets(
-    'Entering Splash Screen Scoring table clears player state',
-    (tester) async {
-      await launchAppOnSplash(tester);
+  testWidgets('Entering Splash Screen Scoring table clears player state', (
+    tester,
+  ) async {
+    await launchAppOnSplash(tester);
 
-      // Press Continue to start a game
-      final continueButton = find.byKey(SplashScreen.continueButtonKey);
-      await tester.tap(continueButton);
-      await waitForScoreTable(tester);
+    // Press Continue to start a game
+    final continueButton = find.byKey(SplashScreen.continueButtonKey);
+    await tester.tap(continueButton);
+    await waitForScoreTable(tester);
 
-      // Enter a score to ensure state has something to save
-      final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
-      await tester.tap(find.byKey(playerRoundScoreP0R0Key));
-      await tester.pumpAndSettle();
-      await tester.enterText(
-        find.byKey(PlayerRoundModal.scoreFieldKey(0, 0)),
-        '50',
-      );
-      await tester.pumpAndSettle();
+    // Enter a score to ensure state has something to save
+    final playerRoundScoreP0R0Key = PlayerRoundCell.scoreKey(0, 0);
+    await tester.tap(find.byKey(playerRoundScoreP0R0Key));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(PlayerRoundModal.scoreFieldKey(0, 0)),
+      '50',
+    );
+    await tester.pumpAndSettle();
 
-      // Close modal
-      await tester.tapAt(
-        tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
-      );
-      await tester.pumpAndSettle();
+    // Close modal
+    await tester.tapAt(
+      tester.getTopLeft(find.byType(Phase10App)).translate(5, 5),
+    );
+    await tester.pumpAndSettle();
 
-      // Click "New Score Card" button
-      await tapNewScoreCardControlIconButton(tester);
+    // Click "New Score Card" button
+    await tapNewScoreCardControlIconButton(tester);
 
-      // Confirm "Change Scorecard"
-      final changeScorecardButton = find.byKey(
-        NewScoreCardControl.changeScorecardButtonKey,
-      );
-      await tester.tap(changeScorecardButton);
-      await tester.pumpAndSettle();
+    // Confirm "Change Scorecard"
+    final changeScorecardButton = find.byKey(
+      NewScoreCardControl.changeScorecardButtonKey,
+    );
+    await tester.tap(changeScorecardButton);
+    await tester.pumpAndSettle();
 
-      // Verify we are back on the Splash Screen and player prefs are cleared
-      await waitForSplashPlayersCleared(tester);
-    },
-  );
+    // Verify we are back on the Splash Screen and player prefs are cleared
+    await waitForSplashPlayersCleared(tester);
+  });
 
   // ========== Splash Screen Tests ==========
 
@@ -817,9 +804,7 @@ void main() {
     await launchAppOnSplash(tester);
 
     // Select 4 players
-    final playersDropdown = find.byKey(
-      SplashScreen.numPlayersDropdownKey,
-    );
+    final playersDropdown = find.byKey(SplashScreen.numPlayersDropdownKey);
     expect(playersDropdown, findsOneWidget);
     await tester.tap(playersDropdown);
     await tester.pumpAndSettle();
@@ -827,9 +812,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Select 5 rounds
-    final roundsDropdown = find.byKey(
-      SplashScreen.maxRoundsDropdownKey,
-    );
+    final roundsDropdown = find.byKey(SplashScreen.maxRoundsDropdownKey);
     expect(roundsDropdown, findsOneWidget);
     await tester.tap(roundsDropdown);
     await tester.pumpAndSettle();
@@ -852,9 +835,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Enable "Phase 10"
-    final gameModeDropdown = find.byKey(
-      SplashScreen.gameModeDropdownKey,
-    );
+    final gameModeDropdown = find.byKey(SplashScreen.gameModeDropdownKey);
     expect(gameModeDropdown, findsOneWidget);
     await tester.tap(gameModeDropdown);
     await tester.pumpAndSettle();
@@ -907,9 +888,7 @@ void main() {
   });
 
   /// Tests that pressing Continue on splash screen creates a new gameId
-  testWidgets('Continue button creates new gameId', (
-    tester,
-  ) async {
+  testWidgets('Continue button creates new gameId', (tester) async {
     await launchAppOnSplash(tester);
 
     // Get the initial gameId before any user interaction
@@ -998,9 +977,7 @@ void main() {
     expect(textFieldWidgetFinal.controller?.text, isEmpty);
   });
 
-  testWidgets('French Driving mode scoring works correctly', (
-    tester,
-  ) async {
+  testWidgets('French Driving mode scoring works correctly', (tester) async {
     await launchAppOnSplash(tester);
 
     // Select "Mille Bornes" mode (formerly labelled "French Driving")
@@ -1114,9 +1091,7 @@ void main() {
       // We drag the table row left by a small amount repeatedly until cell is found.
       await tester.dragUntilVisible(
         find.byKey(cellKey),
-        find
-            .byType(Scrollable)
-            .first, // The horizontal scrolling area of DataTable2 is usually the first scrollable or we can just drag
+        find.byType(Scrollable).first, // The horizontal scrolling area of DataTable2 is usually the first scrollable or we can just drag
         const Offset(-300, 0),
         maxIteration: 100,
       );
@@ -1162,23 +1137,13 @@ void main() {
     final p1Rounds = [1, 3, 9, 12, 15, 16, 20];
     final p1Phases = [1, 2, 3, 4, 5, 6, 7];
     for (int i = 0; i < p1Rounds.length; i++) {
-      await enterPlayerScoreAndPhase(
-        0,
-        p1Rounds[i] - 1,
-        200,
-        p1Phases[i],
-      );
+      await enterPlayerScoreAndPhase(0, p1Rounds[i] - 1, 200, p1Phases[i]);
     }
 
     final p2Rounds = [2, 4, 6, 8, 10, 12, 14, 18, 20];
     final p2Phases = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     for (int i = 0; i < p2Rounds.length; i++) {
-      await enterPlayerScoreAndPhase(
-        1,
-        p2Rounds[i] - 1,
-        150,
-        p2Phases[i],
-      );
+      await enterPlayerScoreAndPhase(1, p2Rounds[i] - 1, 150, p2Phases[i]);
     }
 
     // Get l10n to construct localized strings
@@ -1228,9 +1193,7 @@ void main() {
     );
   });
 
-  testWidgets('Negative numbers via skyjo', (
-    tester,
-  ) async {
+  testWidgets('Negative numbers via skyjo', (tester) async {
     await launchAppOnSplash(tester);
 
     // Define all ValueKeys used in the test

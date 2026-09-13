@@ -70,7 +70,7 @@ enum EndCondition {
 /// to thread a new enum case through the model, splash screen, round editors,
 /// and tests.
 class GameRules {
-  const GameRules({
+  const new({
     required this.roundInput,
     required this.allowNegativeScores,
     required this.enablePhases,

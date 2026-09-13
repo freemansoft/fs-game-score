@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 ///
 /// Usually shown in the spectator app bar.
 class LiveViewDisconnectControl extends ConsumerWidget {
-  const LiveViewDisconnectControl({super.key});
+  const new({super.key});
 
   static const ValueKey<String> iconButtonKey = ValueKey(
     'live_view_disconnect_icon_button',

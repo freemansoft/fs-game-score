@@ -12,7 +12,7 @@ import 'package:fs_score_card/presentation/player_round/round_score_field.dart';
 import 'package:fs_score_card/provider/players_provider.dart';
 
 class PlayerRoundModal extends ConsumerStatefulWidget {
-  const PlayerRoundModal({
+  const new({
     super.key,
     required this.playerIdx,
     required this.round,
@@ -97,10 +97,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          l10n.score,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text(l10n.score, style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 4),
         RoundScoreField(
           key: PlayerRoundModal.scoreFieldKey(widget.playerIdx, widget.round),
@@ -126,10 +123,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          l10n.phase,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text(l10n.phase, style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 4),
         RoundPhaseDropdown(
           key: PlayerRoundModal.phaseDropdownKey(
@@ -226,11 +220,7 @@ class _PlayerRoundModalState extends ConsumerState<PlayerRoundModal> {
                 _buildScoreField(context, currentScore),
                 if (showPhaseDropdown) ...[
                   const SizedBox(height: 16),
-                  _buildPhaseDropdown(
-                    context,
-                    selectedPhase,
-                    completedPhases,
-                  ),
+                  _buildPhaseDropdown(context, selectedPhase, completedPhases),
                 ],
                 if (showFrenchDrivingPanel) ...[
                   const SizedBox(height: 16),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:fs_score_card/model/game_rules.dart';
 import 'package:fs_score_card/model/score_filters.dart';
 import 'package:uuid/uuid.dart';
@@ -9,7 +10,7 @@ import 'package:uuid/uuid.dart';
 export 'package:fs_score_card/model/game_rules.dart';
 
 class GameConfiguration {
-  GameConfiguration({
+  new({
     this.maxRounds = defaultMaxRounds,
     this.numPlayers = defaultNumPlayers,
     this.gameMode = defaultGameMode,
@@ -18,7 +19,7 @@ class GameConfiguration {
     this.version = '0.0.0+0',
   });
 
-  factory GameConfiguration.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     var mode = defaultGameMode;
     if (json['gameMode'] != null) {
       mode = GameMode.values.firstWhere(
@@ -98,16 +99,14 @@ class GameConfiguration {
 class Game {
   // the gameId is really a game session id
 
-  Game({
-    GameConfiguration? configuration,
-    String? gameId,
-  }) : configuration = configuration ?? GameConfiguration(),
-       gameId = gameId ?? const Uuid().v4();
+  new({GameConfiguration? configuration, String? gameId})
+    : configuration = configuration ?? GameConfiguration(),
+      gameId = gameId ?? const Uuid().v4();
 
   /// Creates a Game instance from a JSON string.
   /// If a key is missing, it uses default values.
   /// Note: gameId is not deserialized - each load creates a new game instance with a fresh UUID.
-  factory Game.fromJson(String jsonString) {
+  factory fromJson(String jsonString) {
     final json = _decodeJson(jsonString);
     final configJson = json['configuration'] as Map<String, dynamic>?;
 
@@ -148,10 +147,7 @@ class Game {
   // but better to refactor call sites to be explicit.
   // I will refactor call sites.
 
-  Game copyWith({
-    GameConfiguration? configuration,
-    String? gameId,
-  }) {
+  Game copyWith({GameConfiguration? configuration, String? gameId}) {
     return Game(
       configuration: configuration ?? this.configuration,
       gameId: gameId ?? this.gameId,

@@ -32,7 +32,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 2.1.0+269
 
 environment:
-  sdk: ^3.12.0
+  sdk: ^3.13.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -45,14 +45,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   bonsoir: ^7.1.0
   cupertino_icons: ^1.0.8
-  data_table_2: ^2.6.0
+  data_table_2: ^2.8.0
   flex_color_scheme: ^8.4.0
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^3.1.0
-  go_router: ^17.0.1
+  go_router: ^18.0.1
   hooks_riverpod: ^3.1.0
   intl: any
   mobile_scanner: ^7.2.0
@@ -79,7 +79,7 @@ dev_dependencies:
     sdk: flutter
   msix: ^3.16.12
   # Use Very Good Ventures' analysis package for stronger opinionated rules.
-  very_good_analysis: ^10.0.0
+  very_good_analysis: ^11.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -136,8 +136,8 @@ flutter_launcher_icons:
   web:
     generate: true
     image_path: "assets/logos/flutter-phone-score.png"
-    background_color: "#hexcode"
-    theme_color: "#hexcode"
+    background_color: "#0175C2"
+    theme_color: "#0175C2"
   windows:
     generate: true
     image_path: "assets/logos/flutter-phone-score.png"

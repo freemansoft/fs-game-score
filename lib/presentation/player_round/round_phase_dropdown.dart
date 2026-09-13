@@ -7,7 +7,7 @@ import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/provider/game_provider.dart';
 
 class RoundPhaseDropdown extends ConsumerStatefulWidget {
-  const RoundPhaseDropdown({
+  const new({
     required this.selectedPhase,
     required this.onChanged,
     required this.playerIdx,
@@ -95,10 +95,7 @@ class _RoundPhaseDropdownState extends ConsumerState<RoundPhaseDropdown> {
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
             decoration: BoxDecoration(
               color: backgroundColor,
-              border: Border.all(
-                color: borderColor,
-                width: hasFocus ? 2 : 1,
-              ),
+              border: Border.all(color: borderColor, width: hasFocus ? 2 : 1),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(

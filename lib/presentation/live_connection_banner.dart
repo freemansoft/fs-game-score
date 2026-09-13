@@ -5,7 +5,7 @@ import 'package:fs_score_card/sync/game_sync_transport.dart';
 
 /// Connection status banner for the live spectator score table.
 class LiveConnectionBanner extends StatelessWidget {
-  const LiveConnectionBanner({
+  const new({
     required this.connectionState,
     this.gameId,
     this.hostDeviceName,

@@ -63,9 +63,7 @@ Future<void> bootstrapApp() async {
   // runApp. UncontrolledProviderScope attaches this container to the element tree
   // without replacing it — see docs/State-Management.md.
   final container = ProviderContainer(
-    overrides: [
-      sharedPreferencesProvider.overrideWithValue(sharedPrefs),
-    ],
+    overrides: [sharedPreferencesProvider.overrideWithValue(sharedPrefs)],
   );
 
   if (kIsWeb) {

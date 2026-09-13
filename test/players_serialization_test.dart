@@ -172,10 +172,7 @@ void main() {
       });
 
       test('should handle empty players list', () {
-        final emptyPlayers = Players(
-          numPlayers: 0,
-          maxRounds: 5,
-        );
+        final emptyPlayers = Players(numPlayers: 0, maxRounds: 5);
 
         final jsonString = emptyPlayers.toJson();
         final deserialized = Players.fromJson(jsonString);

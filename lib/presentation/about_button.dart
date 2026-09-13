@@ -3,7 +3,7 @@ import 'package:fs_score_card/l10n/app_localizations.dart';
 import 'package:fs_score_card/main.dart'; // For appVersion
 
 class AboutButton extends StatelessWidget {
-  const AboutButton({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

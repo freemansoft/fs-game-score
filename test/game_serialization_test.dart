@@ -25,10 +25,7 @@ void main() {
     expect(fromJson.configuration.maxRounds, game.configuration.maxRounds);
     expect(fromJson.configuration.numPhases, game.configuration.numPhases);
     expect(fromJson.configuration.numPlayers, game.configuration.numPlayers);
-    expect(
-      fromJson.configuration.gameMode,
-      game.configuration.gameMode,
-    );
+    expect(fromJson.configuration.gameMode, game.configuration.gameMode);
     expect(fromJson.configuration.version, game.configuration.version);
   });
 
@@ -39,10 +36,7 @@ void main() {
     expect(fromJson.configuration.maxRounds, game.configuration.maxRounds);
     expect(fromJson.configuration.numPhases, game.configuration.numPhases);
     expect(fromJson.configuration.numPlayers, game.configuration.numPlayers);
-    expect(
-      fromJson.configuration.gameMode,
-      game.configuration.gameMode,
-    );
+    expect(fromJson.configuration.gameMode, game.configuration.gameMode);
     expect(fromJson.configuration.version, game.configuration.version);
   });
 
@@ -61,9 +55,7 @@ void main() {
   });
 
   test('copyWith preserves original gameId', () {
-    final originalGame = Game(
-      configuration: GameConfiguration(maxRounds: 10),
-    );
+    final originalGame = Game(configuration: GameConfiguration(maxRounds: 10));
     final originalGameId = originalGame.gameId;
 
     final copiedGame = originalGame.copyWith(

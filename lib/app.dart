@@ -17,7 +17,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 });
 
 class Phase10App extends ConsumerWidget {
-  const Phase10App({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

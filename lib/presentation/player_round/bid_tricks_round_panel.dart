@@ -9,11 +9,7 @@ import 'package:fs_score_card/model/bid_tricks_round_attributes.dart';
 /// field changes; the calculated round score is derived elsewhere from the
 /// mode's `RoundInput` (see `bidTricksScore`).
 class BidTricksRoundPanel extends StatefulWidget {
-  const BidTricksRoundPanel({
-    super.key,
-    required this.attributes,
-    required this.onChanged,
-  });
+  const new({super.key, required this.attributes, required this.onChanged});
 
   final BidTricksRoundAttributes attributes;
   final ValueChanged<BidTricksRoundAttributes> onChanged;

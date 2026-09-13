@@ -1,5 +1,5 @@
 class FrenchDrivingRoundAttributes {
-  FrenchDrivingRoundAttributes({
+  new({
     this.miles = 0,
     List<bool>? safetyCards,
     List<bool>? coupFourre,
@@ -9,7 +9,7 @@ class FrenchDrivingRoundAttributes {
   }) : safetyCards = safetyCards ?? List.filled(4, false),
        coupFourre = coupFourre ?? List.filled(4, false);
 
-  FrenchDrivingRoundAttributes.fromJson(Map<String, dynamic> json)
+  new fromJson(Map<String, dynamic> json)
     : miles = (json['miles'] as num?)?.toInt() ?? 0,
       safetyCards =
           (json['safetyCards'] as List<dynamic>?)

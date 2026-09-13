@@ -6,7 +6,7 @@ import 'package:fs_score_card/model/scores.dart';
 
 /// A Player in a game
 class Player {
-  Player({required this.name, required int maxRounds})
+  new({required this.name, required int maxRounds})
     : scores = Scores(maxRounds),
       phases = Phases(maxRounds),
       frenchDrivingAttributes = List.generate(
@@ -19,7 +19,7 @@ class Player {
       ),
       roundStates = RoundStates(maxRounds);
 
-  Player.withData({
+  new withData({
     required this.name,
     required this.scores,
     required this.phases,
@@ -35,7 +35,7 @@ class Player {
        roundStates = roundStates ?? RoundStates(scores.roundScores.length);
 
   /// Creates a Player instance from a JSON map
-  Player.fromJson(Map<String, dynamic> json)
+  new fromJson(Map<String, dynamic> json)
     : name = json['name'] as String,
       scores = Scores.fromJson(json['scores'] as List<dynamic>),
       phases = Phases.fromJson(json['phases'] as List<dynamic>),

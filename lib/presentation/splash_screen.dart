@@ -12,7 +12,7 @@ import 'package:fs_score_card/sync/game_sync_platform.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
-  const SplashScreen({super.key});
+  const new({super.key});
   static const ValueKey<String> numPlayersDropdownKey = ValueKey(
     'splash_num_players_dropdown',
   );
@@ -63,13 +63,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     });
 
     // Auto-set score filter based on the initially loaded game mode.
-    final autoFilter = rulesFor(
-      thisGame.configuration.gameMode,
-    ).suggestedScoreFilter;
+    final autoFilter = rulesFor(thisGame.configuration.gameMode)
+        .suggestedScoreFilter;
     thisGame = thisGame.copyWith(
-      configuration: thisGame.configuration.copyWith(
-        scoreFilter: autoFilter,
-      ),
+      configuration: thisGame.configuration.copyWith(scoreFilter: autoFilter),
     );
 
     _endGameScoreEnabled = thisGame.configuration.endGameScore > 0;
@@ -467,9 +464,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         centerTitle: true,
         //backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: const [
-          AboutButton(),
-        ],
+        actions: const [AboutButton()],
       ),
       body: Center(
         child: Column(

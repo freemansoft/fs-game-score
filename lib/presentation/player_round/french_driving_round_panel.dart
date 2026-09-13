@@ -5,11 +5,7 @@ import 'package:fs_score_card/model/french_driving_round_attributes.dart';
 import 'package:fs_score_card/model/score_filters.dart';
 
 class FrenchDrivingRoundPanel extends StatefulWidget {
-  const FrenchDrivingRoundPanel({
-    super.key,
-    required this.attributes,
-    required this.onChanged,
-  });
+  const new({super.key, required this.attributes, required this.onChanged});
 
   final FrenchDrivingRoundAttributes attributes;
   final ValueChanged<FrenchDrivingRoundAttributes> onChanged;
@@ -222,13 +218,9 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
             child: DropdownButton<int>(
               key: FrenchDrivingRoundPanel.safetiesDropdownKey,
               value: numSafeties,
-              items:
-                  List.generate(
-                        5,
-                        (i) => i,
-                      )
-                      .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
-                      .toList(),
+              items: List.generate(5, (i) => i)
+                  .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
+                  .toList(),
               onChanged: (val) {
                 if (val != null) {
                   final newSafeties = List.filled(4, false);
@@ -287,18 +279,11 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
         if (isPortrait)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              safetiesRow,
-              coupFourreRow,
-            ],
+            children: [safetiesRow, coupFourreRow],
           )
         else
           Row(
-            children: [
-              safetiesRow,
-              const SizedBox(width: 24),
-              coupFourreRow,
-            ],
+            children: [safetiesRow, const SizedBox(width: 24), coupFourreRow],
           ),
       ],
     );
@@ -361,11 +346,7 @@ class _FrenchDrivingRoundPanelState extends State<FrenchDrivingRoundPanel> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Checkbox(
-          key: key,
-          value: value,
-          onChanged: onChanged,
-        ),
+        Checkbox(key: key, value: value, onChanged: onChanged),
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
       ],
     );

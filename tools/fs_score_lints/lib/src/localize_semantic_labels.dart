@@ -12,7 +12,7 @@ import 'package:custom_lint_builder/custom_lint_builder.dart';
 ///
 /// Canonical rule: .claude/skills/fs-game-score-flutter-patterns/SKILL.md.
 class LocalizeSemanticLabels extends DartLintRule {
-  const LocalizeSemanticLabels() : super(code: _code);
+  const new() : super(code: _code);
 
   static const _code = LintCode(
     name: 'localize_semantic_labels',

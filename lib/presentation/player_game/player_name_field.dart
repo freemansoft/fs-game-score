@@ -6,7 +6,7 @@ import 'package:fs_score_card/l10n/app_localizations.dart';
 /// Callers **must** pass a `key:` argument so the widget is locatable in tests.
 /// Use PlayerGameModal.nameFieldKey to construct a repeatable key.
 class PlayerNameField extends StatefulWidget {
-  const PlayerNameField({
+  const new({
     super.key,
     required this.name,
     required this.onChanged,

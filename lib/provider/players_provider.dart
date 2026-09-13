@@ -90,7 +90,8 @@ class PlayersNotifier extends Notifier<Players> {
   /// Safe to call multiple times; concurrent callers share one in-flight future.
   Future<void> prepareForSplashEntry() async {
     if (_splashEntryInProgress != null) {
-      return _splashEntryInProgress;
+      await _splashEntryInProgress;
+      return;
     }
     final future = _prepareForSplashEntryImpl();
     _splashEntryInProgress = future;
@@ -213,10 +214,7 @@ class PlayersNotifier extends Notifier<Players> {
     for (int i = 0; i < state.length; i++) {
       final oldPlayer = state.players[i];
       final newName = clearNames ? 'Player ${i + 1}' : oldPlayer.name;
-      final newPlayer = Player(
-        name: newName,
-        maxRounds: maxRounds,
-      );
+      final newPlayer = Player(name: newName, maxRounds: maxRounds);
       newPlayers.add(newPlayer);
     }
     state = Players(

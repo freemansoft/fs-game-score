@@ -2,9 +2,9 @@ import 'package:fs_score_card/model/game_rules.dart';
 
 /// Per-round inputs for a bid/tricks trick-taking game (Oh Hell, Wizard).
 class BidTricksRoundAttributes {
-  BidTricksRoundAttributes({this.bid = 0, this.tricksTaken = 0});
+  new({this.bid = 0, this.tricksTaken = 0});
 
-  factory BidTricksRoundAttributes.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     return BidTricksRoundAttributes(
       bid: (json['bid'] as num?)?.toInt() ?? 0,
       tricksTaken: (json['tricksTaken'] as num?)?.toInt() ?? 0,

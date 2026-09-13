@@ -5,7 +5,7 @@ import 'package:fs_score_card/presentation/live_view_disconnect_control.dart';
 
 class SpectatorViewAppBar extends ConsumerWidget
     implements PreferredSizeWidget {
-  const SpectatorViewAppBar({super.key});
+  const new({super.key});
 
   static const double _toolbarHeight = 40;
 
@@ -18,9 +18,7 @@ class SpectatorViewAppBar extends ConsumerWidget
     return AppBar(
       title: Text(l10n.liveSpectatorTitle),
       toolbarHeight: _toolbarHeight,
-      actions: const [
-        LiveViewDisconnectControl(),
-      ],
+      actions: const [LiveViewDisconnectControl()],
     );
   }
 }

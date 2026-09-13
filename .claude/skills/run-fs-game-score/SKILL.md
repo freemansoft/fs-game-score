@@ -13,11 +13,11 @@ flow that walks splash → score table and writes PNGs. The two harness pieces:
 
 All paths below are relative to the repo root. **Always use `fvm flutter` /
 `fvm dart`, never bare `flutter` / `dart`** (see CLAUDE.md — FVM pins Flutter
-3.44.0; a mismatched system Flutter corrupts the build cache).
+3.47.4; a mismatched system Flutter corrupts the build cache).
 
 ## Prerequisites
 
-macOS host with FVM already set up (this repo pins Flutter 3.44.0 via `.fvmrc`).
+macOS host with FVM already set up (this repo pins Flutter 3.47.4 via `.fvmrc`).
 Screenshots go through `chromedriver`, whose **major version must match your
 installed Chrome** (Chrome 150 → chromedriver 150 here):
 

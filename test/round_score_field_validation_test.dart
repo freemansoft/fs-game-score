@@ -11,10 +11,7 @@ void main() {
       // Setup for tests
     });
 
-    Widget createTestWidget({
-      String scoreFilter = '',
-      int? initialScore,
-    }) {
+    Widget createTestWidget({String scoreFilter = '', int? initialScore}) {
       return MaterialApp(
         localizationsDelegates: const [
           AppLocalizations.delegate,
@@ -39,9 +36,7 @@ void main() {
     }
 
     group('Score Filter: Any Score (Empty String)', () {
-      testWidgets('should accept any valid number', (
-        tester,
-      ) async {
+      testWidgets('should accept any valid number', (tester) async {
         // be explicit about the test parameters
         // ignore: avoid_redundant_argument_values
         await tester.pumpWidget(createTestWidget(scoreFilter: ''));
@@ -55,9 +50,7 @@ void main() {
         expect(find.byType(TextFormField), findsOneWidget);
       });
 
-      testWidgets('should accept numbers ending in 0 or 5', (
-        tester,
-      ) async {
+      testWidgets('should accept numbers ending in 0 or 5', (tester) async {
         // be explicit about the test parameters
         // ignore: avoid_redundant_argument_values
         await tester.pumpWidget(createTestWidget(scoreFilter: ''));
@@ -191,9 +184,7 @@ void main() {
         expect(find.text('19'), findsOneWidget);
       });
 
-      testWidgets('should allow valid score after invalid', (
-        tester,
-      ) async {
+      testWidgets('should allow valid score after invalid', (tester) async {
         await tester.pumpWidget(
           createTestWidget(scoreFilter: ScoreFilters.endsWith0or5),
         );
@@ -300,9 +291,7 @@ void main() {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('en'),
-          ],
+          supportedLocales: const [Locale('en')],
           home: Scaffold(
             body: RoundScoreField(
               score: initialScore,
@@ -316,9 +305,7 @@ void main() {
       testWidgets('should accept negative scores when allowNegative is true', (
         tester,
       ) async {
-        await tester.pumpWidget(
-          createNegativeTestWidget(allowNegative: true),
-        );
+        await tester.pumpWidget(createNegativeTestWidget(allowNegative: true));
 
         await tester.enterText(find.byType(TextFormField), '-10');
         await tester.pump();
@@ -329,9 +316,7 @@ void main() {
 
       testWidgets(
         'should accept just a minus sign when allowNegative is true',
-        (
-          tester,
-        ) async {
+        (tester) async {
           await tester.pumpWidget(
             createNegativeTestWidget(allowNegative: true),
           );
@@ -360,18 +345,17 @@ void main() {
         expect(find.text('10'), findsOneWidget);
       });
 
-      testWidgets(
-        'should filter out minus sign with default allowNegative',
-        (tester) async {
-          await tester.pumpWidget(createNegativeTestWidget());
+      testWidgets('should filter out minus sign with default allowNegative', (
+        tester,
+      ) async {
+        await tester.pumpWidget(createNegativeTestWidget());
 
-          await tester.enterText(find.byType(TextFormField), '-25');
-          await tester.pump();
+        await tester.enterText(find.byType(TextFormField), '-25');
+        await tester.pump();
 
-          // Default allowNegative is false, minus should be filtered
-          expect(find.text('25'), findsOneWidget);
-        },
-      );
+        // Default allowNegative is false, minus should be filtered
+        expect(find.text('25'), findsOneWidget);
+      });
     });
   });
 }
